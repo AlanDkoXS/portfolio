@@ -182,7 +182,7 @@ html {
 .btn {
   display: inline-block;
   white-space: nowrap;
-  padding: 1rem 5rem;
+  padding: 1rem 4rem;
   border: none;
   outline: none;
   border-radius: 5px;
@@ -286,7 +286,7 @@ html {
   z-index: var(--z-modal);
   animation: animation-nav linear both;
   animation-timeline: scroll(root block);
-  animation-range: 0 200px;
+  animation-range: 0 1000px;
   opacity: 0;
   .navbar {
     justify-content: space-between;
@@ -307,7 +307,7 @@ html {
 
     .navbar__menu {
       position: fixed;
-      top: -500%;
+      top: -600%;
       left: 0;
       width: 100%;
       border-radius: 0 0 12px 12px;
@@ -589,7 +589,7 @@ html {
     .about {
       animation: animation-nav linear both;
       animation-timeline: scroll(root block);
-      animation-range: 0 200px;
+      animation-range: 0 1000px;
       opacity: 0;
     }
 
