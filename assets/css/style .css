@@ -182,7 +182,7 @@ html {
 .btn {
   display: inline-block;
   white-space: nowrap;
-  padding: 1rem 4rem;
+  padding: 1.5rem 4rem;
   border: none;
   outline: none;
   border-radius: 5px;
@@ -286,7 +286,7 @@ html {
   z-index: var(--z-modal);
   animation: animation-nav linear both;
   animation-timeline: scroll(root block);
-  animation-range: 0 1000px;
+  animation-range: 0 200px;
   opacity: 0;
   .navbar {
     justify-content: space-between;
@@ -985,7 +985,7 @@ html {
     }
   }
 
-  .projects {
+  /* .projects {
     .projects__container {
       padding: 3rem 0;
       gap: 5rem;
@@ -1011,7 +1011,7 @@ html {
         }
       }
     }
-  }
+  } */
 
   .contact {
     .contact__container {
