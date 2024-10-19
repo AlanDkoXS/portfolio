@@ -796,25 +796,24 @@ html {
       .contatc__info-data {
         font-style: normal;
         display: flex;
-        color: inherit; 
+        color: inherit;
         text-decoration: none;
         flex-direction: column;
         gap: 1rem;
         padding: 2rem 0;
       }
-      
     }
 
-.contact__info-data {
-  .contact__form a {
-    color: inherit; /* Hereda el color del elemento padre */
-    text-decoration: none; /* Elimina el subrayado del enlace */
-  }
-  
-  .contact__form a:visited {
-    color: inherit; /* Elimina el color del enlace visitado */
-  }
-}
+    .contact__info-data {
+      .contact__form a {
+        color: inherit; /* Hereda el color del elemento padre */
+        text-decoration: none; /* Elimina el subrayado del enlace */
+      }
+
+      .contact__form a:visited {
+        color: inherit; /* Elimina el color del enlace visitado */
+      }
+    }
 
     .contact__form {
       width: 100%;
@@ -935,17 +934,13 @@ html {
       height: auto;
     }
 
-    .bgGrain {
-      position: fixed;
-    }
-    
     .bgBack svg {
       filter: blur(4px) brightness(0.5)
         drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
     }
 
     .bgMiddle svg {
-      filter: blur(3px) brightness(.7)
+      filter: blur(3px) brightness(0.7)
         drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
     }
 
