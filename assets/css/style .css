@@ -927,7 +927,6 @@ html {
   }
 
   .background-container {
-    .bgGrain,
     .bgBack,
     .bgMiddle,
     .bgFront {
@@ -936,6 +935,10 @@ html {
       height: auto;
     }
 
+    .bgGrain {
+      position: fixed;
+    }
+    
     .bgBack svg {
       filter: blur(4px) brightness(0.5)
         drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));

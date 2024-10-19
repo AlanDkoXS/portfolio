@@ -68,7 +68,7 @@ function parallax() {
         const beta = event.beta; // Movimiento hacia adelante y hacia atrás
 
         // Aumentar la sensibilidad de los ejes para un movimiento más pronunciado
-        targetX = (gamma / 90) * 4; // Aumentar el efecto multiplicando por 2
+        targetX = (gamma / 90) * 6; // Aumentar el efecto multiplicando por 2
         targetY = (beta / 90) * 1; // Aumentar el efecto multiplicando por 2
 
         // Reiniciar el temporizador y la bandera al mover el dispositivo
