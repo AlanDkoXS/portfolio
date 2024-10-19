@@ -112,42 +112,31 @@ html {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100%;
+  width: 150%;
   height: 100%;
-  object-fit: cover; /* Cambiado para evitar distorsiones */
+  object-fit: cover;
   transform: translate(-50%, -50%);
-  transition: transform 0.3s ease, filter 0.3s ease; /* Transición más corta */
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .bgGrain svg {
-  opacity: 0.2;
-  filter: blur(2px);
+  color: #111;
+  opacity: 1;
+  filter: blur(0px);
 }
 
 .bgBack svg {
-  opacity: 0.5;
-  filter: blur(5px) brightness(0.5);
+  filter: blur(2px) brightness(0.5);
 }
 
 .bgMiddle svg {
-  opacity: 0.5;
-  filter: blur(5px) brightness(1);
+  filter: blur(1px) brightness(1) drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
 }
 
 .bgFront svg {
-  opacity: 0.6;
-  filter: blur(1px) brightness(1.5);
+  filter: blur(.5px) brightness(1.5) drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
 }
 
-.bgGrain,
-.bgBack svg,
-.bgMiddle svg,
-.bgFront svg {
-  top: 30%;
-  left: 50%;
-  width: 150%;
-  height: auto;
-}
 
 /* ============= REUSABLE CLASSES ============= */
 .section {
@@ -181,12 +170,13 @@ html {
 
 .btn {
   display: inline-block;
+
   white-space: nowrap;
-  padding: 1.5rem 4rem;
+  padding: 1rem 5rem;
   border: none;
   outline: none;
   border-radius: 5px;
-  width: auto;
+  width: 300px;
   height: auto;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
@@ -206,7 +196,7 @@ html {
   border: none;
   padding: 15px 20vw;
   margin: 0.5rem;
-  border-radius: 52px;
+  border-radius: 5px;
   transition: background 0.3s ease;
 }
 
@@ -252,7 +242,7 @@ html {
 
   .loader__name-light {
     font-family: "Poppins", sans-serif;
-    /font-weight: 300;
+    font-weight: 300;
     font-size: 4rem;
   }
 
@@ -301,13 +291,13 @@ html {
     }
 
     .logo {
-      width: 5vw;
+      width: 8vw;
       height: auto;
     }
 
     .navbar__menu {
       position: fixed;
-      top: -600%;
+      top: -500%;
       left: 0;
       width: 100%;
       border-radius: 0 0 12px 12px;
@@ -458,7 +448,7 @@ html {
             position: absolute;
             top: 2px;
             left: 2px;
-            background-image: url(../img/espana.png);
+            background-image: url(../img/reino-unido.png);
             background-size: cover;
             background-repeat: no-repeat;
             border-radius: 50%;
@@ -474,7 +464,7 @@ html {
             &::after {
               left: 40px;
               transform: translateX(-100%);
-              background-image: url(../img/reino-unido.png);
+              background-image: url(../img/espana.png);
             }
           }
         }
@@ -589,7 +579,7 @@ html {
     .about {
       animation: animation-nav linear both;
       animation-timeline: scroll(root block);
-      animation-range: 0 1000px;
+      animation-range: 0 200px;
       opacity: 0;
     }
 
@@ -632,7 +622,7 @@ html {
           border-radius: 1rem;
           text-align: center;
           width: inherit;
-          transition: height 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045); /* Transición suave en altura */
+          transition: height 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
           overflow: visible;
         }
 
@@ -689,7 +679,7 @@ html {
 
 /* ============= Portfolio ============= */
 .portfolio {
-  max-width: 300px;
+  max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
@@ -789,7 +779,7 @@ html {
     .contact__form {
       width: 100%;
       padding: 3rem 1.5rem 2rem;
-      background-color: var(--bg-color-section2);
+      background-color: var(--bg-color-section1);
       border-radius: 5px;
       margin: 0 auto;
 
@@ -809,6 +799,7 @@ html {
             font-weight: var(--font-semi-bold);
             border-radius: 5px;
             background-color: var(--bg-color-buttons);
+            color: var(--primary-color);
             border: 0;
           }
 
@@ -864,7 +855,7 @@ html {
 
 /* ============= Media Queries ============= */
 
-@media (width >= 768px) {
+@media (min-width: 768px) {
   :root {
     --header-height: 90px;
     --normal-font-size: 18px;
@@ -897,16 +888,28 @@ html {
     }
   }
 
-  .bgBack svg {
-    filter: blur(5px);
-  }
+  .background-container {
+    .bgGrain,
+    .bgBack,
+    .bgMiddle,
+    .bgFront {
+      opacity: 1;
+      width: 100%;
+      height: auto;
+    }
 
-  .bgMiddle svg {
-    filter: blur(3px);
-  }
+    .bgBack svg {
+      filter: blur(5px) brightness(.5) drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
+    }
 
-  .bgFront svg {
-    filter: blur(2px);
+    .bgMiddle svg {
+      filter: blur(2px) brightness(1) drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
+    }
+
+    .bgFront svg {
+      box-shadow: 2px 2px 2px #0000001a;
+      filter: blur(1px) brightness(1.5) drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
+    }
   }
 
   .home {
@@ -985,7 +988,7 @@ html {
     }
   }
 
-  /* .projects {
+  .projects {
     .projects__container {
       padding: 3rem 0;
       gap: 5rem;
@@ -1011,7 +1014,7 @@ html {
         }
       }
     }
-  } */
+  }
 
   .contact {
     .contact__container {

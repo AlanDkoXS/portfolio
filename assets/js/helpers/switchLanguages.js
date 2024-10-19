@@ -11,7 +11,7 @@ const translations = {
         en: "Skills",
         es: "Habilidades",
       },
-      navAbout: {
+      navPortfolio: {
         en: "Portfolio",
         es: "Portafolio",
       },
@@ -43,8 +43,8 @@ const translations = {
       },
       
       aboutDescription: {
-        en: "I am a self-taught graphic designer with over 3 years of experience in digital illustration, branding, and photography. I specialize in using Adobe Creative Suite (Photoshop, Illustrator, InDesign) and Procreate to create impactful visual designs. My passion for creativity, problem-solving, and teamwork has allowed me to work with clients across various industries, including technology, fashion, and hospitality. In addition to my design expertise, I am currently learning Full Stack Web Development and have acquired skills in HTML, CSS, and JavaScript. I am always eager to learn new technologies and apply them to enhance user experiences and improve design workflows. My goal is to continue developing my skills and contribute to innovative projects, especially in a remote work environment.",
-        es: "Soy un diseñador gráfico autodidacta con más de 3 años de experiencia en ilustración digital, branding y fotografía. Me especializo en el uso de Adobe Creative Suite (Photoshop, Illustrator, InDesign) y Procreate para crear diseños visuales impactantes. Mi pasión por la creatividad, la resolución de problemas y el trabajo en equipo me ha permitido trabajar con clientes de diversas industrias, incluidas la tecnología, la moda y la hostelería. Además de mi experiencia en diseño, actualmente estoy aprendiendo Desarrollo Web Full Stack y he adquirido habilidades en HTML, CSS y JavaScript. Siempre estoy ansioso por aprender nuevas tecnologías y aplicarlas para mejorar las experiencias de usuario y los flujos de trabajo de diseño. Mi objetivo es seguir desarrollando mis habilidades y contribuir a proyectos innovadores, especialmente en un entorno de trabajo remoto.",
+        en: "I am a self-taught graphic designer with over 3 years of experience in digital illustration, branding, and photography. I specialize in using Adobe Creative Suite (Photoshop, Illustrator, InDesign) to create impactful visual designs. My passion for creativity, problem-solving, and teamwork has allowed me to work with clients across various industries, including technology, fashion, and hospitality. In addition to my design expertise, I am currently learning Full Stack Web Development and have acquired skills in HTML, CSS, and JavaScript. I am always eager to learn new technologies and apply them to enhance user experiences and improve design workflows. My goal is to continue developing my skills and contribute to innovative projects, especially in a remote work environment.",
+        es: "Soy un diseñador gráfico autodidacta con más de 3 años de experiencia en ilustración digital, branding y fotografía. Me especializo en el uso de Adobe Creative Suite (Photoshop, Illustrator, InDesign) para crear diseños visuales impactantes. Mi pasión por la creatividad, la resolución de problemas y el trabajo en equipo me ha permitido trabajar con clientes de diversas industrias, incluidas la tecnología, la moda y la hostelería. Además de mi experiencia en diseño, actualmente estoy aprendiendo Desarrollo Web Full Stack y he adquirido habilidades en HTML, CSS y JavaScript. Siempre estoy ansioso por aprender nuevas tecnologías y aplicarlas para mejorar las experiencias de usuario y los flujos de trabajo de diseño. Mi objetivo es seguir desarrollando mis habilidades y contribuir a proyectos innovadores, especialmente en un entorno de trabajo remoto.",
       },
 
       skillsTitle: {
