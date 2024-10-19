@@ -121,8 +121,6 @@ html {
 
 .bgGrain svg {
   color: #111;
-  opacity: 1;
-  filter: blur(0px);
 }
 
 .bgBack svg {
@@ -215,7 +213,7 @@ html {
   backdrop-filter: blur(10px);
   background: var(--bg-color-buttons);
   border: none;
-  padding: 15px 20vw;
+  padding: 15px 15vw;
   margin: 0.5rem;
   border-radius: 5px;
   transition: background 0.3s ease;
@@ -890,8 +888,8 @@ html {
         background-color: transparent;
         box-shadow: none;
 
-        .logo {
-          width: 8vw;
+        .navbar__logo {
+          width: 5px;
           height: auto;
         }
 
@@ -913,7 +911,6 @@ html {
     .bgBack,
     .bgMiddle,
     .bgFront {
-      opacity: 1;
       width: 100%;
       height: auto;
     }
@@ -934,8 +931,6 @@ html {
         drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
     }
   }
-
-  
 
   .home {
     .home__container {
@@ -1049,7 +1044,7 @@ html {
 
   .footer {
     .footer__container {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 2fr);
     }
   }
 }
