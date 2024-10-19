@@ -50,7 +50,7 @@ function parallax() {
 
     // Función para manejar el movimiento del mouse
     const handleMouseMove = (e) => {
-        targetX = (window.innerWidth / 2 - e.pageX) / 100; // Cambia la sensibilidad aquí
+        targetX = (window.innerWidth / 2 - e.pageX) / 50; // Cambia la sensibilidad aquí
         targetY = (window.innerHeight / 2 - e.pageY) / 100; // Cambia la sensibilidad aquí
 
         // Reiniciar el temporizador y la bandera al mover el mouse
@@ -69,7 +69,7 @@ function parallax() {
 
         // Aumentar la sensibilidad de los ejes para un movimiento más pronunciado
         targetX = (gamma / 90) * 4; // Aumentar el efecto multiplicando por 2
-        targetY = (beta / 90) * 4; // Aumentar el efecto multiplicando por 2
+        targetY = (beta / 90) * 1; // Aumentar el efecto multiplicando por 2
 
         // Reiniciar el temporizador y la bandera al mover el dispositivo
         clearTimeout(resetTimer);
