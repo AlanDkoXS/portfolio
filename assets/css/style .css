@@ -137,18 +137,34 @@ html {
   filter: blur(0.5px) brightness(1) drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
 }
 
+/* Efecto hover */
+.background-container:hover .bgBack {
+  transform: translate(-50%, -50%) translate(-40px, 20px); /* Aumentar desplazamiento */
+}
+
+.background-container:hover .bgMiddle {
+  transform: translate(-50%, -50%) translate(-30px, -15px); /* Aumentar desplazamiento */
+}
+
+.background-container:hover .bgFront {
+  transform: translate(-50%, -50%) translate(40px, -10px); /* Aumentar desplazamiento */
+}
+
+.bgBack,
+.bgMiddle,
+.bgFront {
+  transition: transform 0.5s ease-in-out; /* Ajustar a 0.5s para el hover */
+}
+
 /* ============= REUSABLE CLASSES ============= */
 .section {
   padding: 2rem 0;
 }
 
-.about,
-.skills,
-.portfolio,
-.projects {
+.about {
   animation: animation-nav linear both;
   animation-timeline: scroll(root block);
-  animation-range: 0 200px;
+  animation-range: 0 500px;
   opacity: 0;
 }
 
@@ -199,7 +215,7 @@ html {
   backdrop-filter: blur(10px);
   background: var(--bg-color-buttons);
   border: none;
-  padding: 15px 30vw;
+  padding: 15px 20vw;
   margin: 0.5rem;
   border-radius: 5px;
   transition: background 0.3s ease;
@@ -247,13 +263,13 @@ html {
 
   .loader__name-light {
     font-family: "Poppins", sans-serif;
-    font-weight: 300;
+    font-weight: 100;
     font-size: 4rem;
   }
 
   .loader__name-semibold {
     font-family: "Poppins", sans-serif;
-    font-weight: 600;
+    font-weight: 800;
     font-size: 4rem;
   }
 }
@@ -296,7 +312,7 @@ html {
     }
 
     .logo {
-      width: 8vw;
+      width: 10vw;
       height: auto;
     }
 
@@ -584,7 +600,7 @@ html {
     .about {
       animation: animation-nav linear both;
       animation-timeline: scroll(root block);
-      animation-range: 0 200px;
+      animation-range: 0 500px;
       opacity: 0;
     }
 
@@ -684,7 +700,7 @@ html {
 
 /* ============= Portfolio ============= */
 .portfolio {
-  max-width: 400px;
+  max-width: 300px;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
@@ -918,6 +934,8 @@ html {
         drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
     }
   }
+
+  
 
   .home {
     .home__container {
