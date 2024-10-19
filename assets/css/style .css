@@ -484,7 +484,7 @@ html {
             &::after {
               left: 40px;
               transform: translateX(-100%);
-              background-image: url(../img/espana.png);
+              background-image: url(../img/español.png);
             }
           }
         }
