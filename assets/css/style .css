@@ -310,13 +310,13 @@ html {
     }
 
     .logo {
-      width: 5vw;
+      width: 10vw;
       height: auto;
     }
 
     .navbar__menu {
       position: fixed;
-      top: -500%;
+      top: -600%;
       left: 0;
       width: 100%;
       border-radius: 0 0 12px 12px;
@@ -889,7 +889,7 @@ html {
         box-shadow: none;
 
         .navbar__logo {
-          width: 5px;
+          width: 5vw;
           height: auto;
         }
 
