@@ -26,7 +26,7 @@ Codepen - muchas ideas y desarrollos
   --primary-color: light-dark(#f3ce3a, #ffffffcc);
   --bg-color-section1: light-dark(#001219, #111);
   --bg-color-section2: light-dark(#001219, transparent);
-  --bg-color-buttons: light-dark(#000f14, #6a6a6a);
+  --bg-color-buttons: light-dark(#031e2985, #6a6a6a);
 
   /* Typografy */
   --normal-font-size: 16px;
@@ -69,9 +69,10 @@ html {
     background-color: var(--bg-color-section1);
     overflow-x: hidden;
     user-select: none;
-    -webkit-user-select: none; /* Para navegadores basados en WebKit (Chrome, Safari) */
-    -moz-user-select: none; /* Para Firefox */
-    -ms-user-select: none; /* Para versiones antiguas de Internet Explorer y Edge */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
   ul {
@@ -200,7 +201,7 @@ html {
   border: none;
   outline: none;
   border-radius: 5px;
-  width: 200px;
+  width: 15em;
   height: auto;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
@@ -214,28 +215,18 @@ html {
 }
 
 .btn--primary {
+  text-transform: uppercase;
+  font-weight: 600;
   color: var(--primary-color);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(100px);
   background: var(--bg-color-buttons);
   border: none;
   padding: 15px 15vw;
   margin: 0.5rem;
-  border-radius: 5px;
-  transition: background 0.3s ease;
+  border-radius: 10px;
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-}
 
-::-webkit-scrollbar-track {
-  background: var(--bg-color-section1);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--bg-color-buttons);
-  border-radius: 4px;
-}
 
 /* ============== LOADER ================= */
 .loader {
