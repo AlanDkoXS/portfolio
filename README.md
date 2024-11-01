@@ -47,7 +47,7 @@ Usage
     Use the language switcher to toggle between English and Spanish.
     Fill out the contact form to send a message using EmailJS.
 
-Deployment
+## Deployment
 
 The webpage is deployed via Netlify. You can access the live site here.
 Contributing
@@ -56,7 +56,8 @@ Feel free to fork this repository, create a branch, and submit a pull request fo
 License
 
 This project is open source and available under the MIT License.
-Contact
+
+## Contact
 
 For any questions, you can reach me at:
 
