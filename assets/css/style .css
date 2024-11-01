@@ -260,16 +260,16 @@ html {
     align-items: center;
   }
 
-  .loader__name-light {
+  .loader__name--light {
     font-family: "Poppins", sans-serif;
     font-weight: 300;
-    font-size: 4rem;
+    font-size: 2rem;
   }
 
-  .loader__name-semibold {
+  .loader__name--semibold {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
-    font-size: 4rem;
+    font-size: 2rem;
   }
 }
 
@@ -296,8 +296,10 @@ html {
   z-index: var(--z-modal);
   animation: animation-nav linear both;
   animation-timeline: scroll(root block);
-  animation-range: 0 200px;
+  animation-range: 0 100px;
   opacity: 0;
+
+
   .navbar {
     justify-content: space-between;
 
@@ -305,13 +307,12 @@ html {
       display: flex;
       align-items: center;
       column-gap: 0.25rem;
-      font-weight: var(--font-semi-bold);
       color: var(--primary-color);
       fill: var(--primary-color);
     }
 
     .logo {
-      width: 10vw;
+      width: 8vw;
       height: auto;
     }
 
