@@ -26,7 +26,7 @@ Codepen - muchas ideas y desarrollos
   --primary-color: light-dark(#f3ce3a, #ffffffcc);
   --bg-color-section1: light-dark(#001219, #111);
   --bg-color-section2: light-dark(#001219, transparent);
-  --bg-color-buttons: light-dark(#011b24cc, #6a6a6a);
+  --bg-color-buttons: light-dark(#000f14, #6a6a6a);
 
   /* Typografy */
   --normal-font-size: 16px;
@@ -68,6 +68,10 @@ html {
     color: var(--primary-color);
     background-color: var(--bg-color-section1);
     overflow-x: hidden;
+    user-select: none;
+    -webkit-user-select: none; /* Para navegadores basados en WebKit (Chrome, Safari) */
+    -moz-user-select: none; /* Para Firefox */
+    -ms-user-select: none; /* Para versiones antiguas de Internet Explorer y Edge */
   }
 
   ul {
@@ -236,40 +240,40 @@ html {
 /* ============== LOADER ================= */
 .loader {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #001219;
+  background-color: var(--bg-color-section1);
   z-index: 3;
   opacity: 1;
   visibility: visible;
   transition: opacity 0.4s, visibility 0.4s;
 
   .loader__logo {
-    color: #f3ce3a;
-    width: 2rem;
-    height: 2rem;
+    color: var(--primary-color);
+    width: 3rem;
+    height: 3rem;
     animation: jump 1.1s infinite linear;
   }
-
   .loader__name {
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
   .loader__name--light {
     font-family: "Poppins", sans-serif;
-    font-weight: 300;
-    font-size: 2rem;
+    font-weight: 200;
+    font-size: 1rem;
   }
-
   .loader__name--semibold {
     font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-size: 2rem;
+    font-weight: 500;
+    font-size: 1rem;
   }
 }
 
@@ -299,7 +303,6 @@ html {
   animation-range: 0 100px;
   opacity: 0;
 
-
   .navbar {
     justify-content: space-between;
 
@@ -312,7 +315,7 @@ html {
     }
 
     .logo {
-      width: 5vw;
+      width: 2.2em;
       height: auto;
     }
 
@@ -586,36 +589,13 @@ html {
 
 /* ============= About ============= */
 .about {
-  background-color: var(--bg-color-section2);
-  overflow: hidden;
   .about__container {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
     gap: 2rem;
     padding: 3rem;
-  }
-
-  @media (max-width: 768px) {
-    .about {
-      animation: animation-nav linear both;
-      animation-timeline: scroll(root block);
-      animation-range: 0 500px;
-      opacity: 0;
-    }
-
-    .about__container {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .about__card--img {
-      margin-bottom: 1rem;
-    }
-
-    .about__description {
-      text-align: center;
-    }
   }
 }
 
@@ -627,8 +607,6 @@ html {
     .skills__description {
       text-align: center;
     }
-
-    /* SLIDER */
     .skills__wrapper {
       .skills__cards {
         display: grid;
@@ -636,43 +614,25 @@ html {
         gap: 1rem;
         width: 100%;
 
-        .skills__cards-container {
+        .skills__cards--container {
           background-color: transparent;
           height: auto;
           padding: 20px;
           border-radius: 1rem;
           text-align: center;
           width: inherit;
-          transition: height 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-          overflow: visible;
+          margin-top: 2rem;
+          margin-bottom: 2rem;
+          filter: drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
         }
-
         .skills__cards-title {
           list-style: none;
           cursor: pointer;
           height: auto;
           align-items: start;
-
           .icon_skills {
             width: 20vw;
             transition: width 0.3s;
-          }
-        }
-
-        .skills__card-container {
-          color: var(--primary-color);
-          height: auto;
-          width: auto;
-          overflow: hidden;
-        }
-
-        &[open] {
-          height: auto;
-          .skills__cards-title {
-            height: auto;
-          }
-          .icon_skills {
-            width: 25vw;
           }
         }
       }
@@ -693,6 +653,7 @@ html {
       font-size: var(--small-font-size);
       background-color: var(--primary-color);
       color: var(--bg-color-section1);
+      filter: drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
       border-radius: 5px;
     }
   }
@@ -907,12 +868,6 @@ html {
         border-radius: 0;
         background-color: transparent;
         box-shadow: none;
-
-        .navbar__logo {
-          width: 5vw;
-          height: auto;
-        }
-
         .navbar__list {
           flex-direction: row;
         }
@@ -985,27 +940,12 @@ html {
 
   .about {
     .about__container {
-      .about__cards {
-        flex-direction: row;
-
-        .about__card {
-          transition: transform 0.2s;
-
-          &:nth-child(1) {
-            transform: rotate(-8deg);
-          }
-
-          &:nth-child(3) {
-            transform: rotate(8deg);
-          }
-
-          &:hover {
-            z-index: var(--z-fixed);
-            cursor: pointer;
-            transform: scale(1.1);
-          }
-        }
-      }
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      padding: 3rem;
     }
   }
 
@@ -1015,7 +955,7 @@ html {
       .skills__wrapper {
         .skills__cards {
           flex-direction: row;
-          .skills__cards-container {
+          .skills__cards--container {
             height: 500px;
             width: 130px;
             &[open] {
