@@ -818,11 +818,12 @@ html {
   background-color: #111;
   color: #efefef;
   padding-bottom: 2rem;
+  bottom: 0;
 }
 
 .footer__container {
   display: grid;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .footer__info .footer__title {
