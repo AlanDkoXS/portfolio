@@ -26,7 +26,7 @@ Codepen - muchas ideas y desarrollos
   --primary-color: light-dark(#f3ce3a, #ffffffcc);
   --bg-color-section1: light-dark(#001219, #111);
   --bg-color-section2: light-dark(#001219, transparent);
-  --bg-color-buttons: light-dark(#031e2985, #6a6a6a);
+  --bg-color-buttons: light-dark(#020e12, #6a6a6a);
 
   /* Typografy */
   --normal-font-size: 16px;
@@ -162,7 +162,7 @@ html {
 
 /* ============= REUSABLE CLASSES ============= */
 .section {
-  padding: 2rem 0;
+  padding: 3rem 0;
 }
 
 .about {
@@ -209,8 +209,14 @@ html {
   background-color: var(--primary-color);
 
   &:hover {
+    color: var(--bg-color-section1);
+    background-color: var(--primary-color);
     translate: 0px -4px;
     box-shadow: 0px 3px 10px #0202023b;
+  }
+  .btn:active {
+    transform: scale(0.95);
+    box-shadow: 0px 1px 5px #0202023b;
   }
 }
 
@@ -223,10 +229,8 @@ html {
   border: none;
   padding: 15px 15vw;
   margin: 0.5rem;
-  border-radius: 10px;
+  border-radius: 5px;
 }
-
-
 
 /* ============== LOADER ================= */
 .loader {
@@ -596,24 +600,22 @@ html {
 
   .skills__container {
     .skills__description {
+      padding: 1rem;
       text-align: center;
     }
     .skills__wrapper {
       .skills__cards {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        padding: 1rem;
         gap: 1rem;
         width: 100%;
 
         .skills__cards--container {
           background-color: transparent;
           height: auto;
-          padding: 20px;
-          border-radius: 1rem;
           text-align: center;
           width: inherit;
-          margin-top: 2rem;
-          margin-bottom: 2rem;
           filter: drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
         }
         .skills__cards-title {
@@ -621,8 +623,9 @@ html {
           cursor: pointer;
           height: auto;
           align-items: start;
+
           .icon_skills {
-            width: 20vw;
+            width: 100px;
             transition: width 0.3s;
           }
         }
@@ -738,7 +741,13 @@ html {
 }
 
 .carousel__button:hover {
-  background-color: (--primary-color);
+  background-color: var(--primary-color);
+  color: var(--bg-color-section1);
+}
+
+.carousel__button:checked {
+  background-color: var(--primary-color);
+  color: var(--bg-color-section1);
 }
 /* ============= Contact ============= */
 .contact {
@@ -838,7 +847,7 @@ html {
   text-shadow: 2px 3px #52525255;
 }
 
-.footer__copy {
+.footer__copyrightright {
   text-align: center;
   padding-top: 2rem;
 }
@@ -939,26 +948,7 @@ html {
       padding: 3rem;
     }
   }
-
-  .skills {
-    .skills__container {
-      /* SLIDER  */
-      .skills__wrapper {
-        .skills__cards {
-          flex-direction: row;
-          .skills__cards--container {
-            height: 500px;
-            width: 130px;
-            &[open] {
-              height: 500px;
-              width: inherit;
-            }
-          }
-        }
-      }
-    }
-  }
-
+  
   .projects {
     .projects__container {
       padding: 3rem 0;
