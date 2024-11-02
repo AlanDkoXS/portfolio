@@ -844,7 +844,7 @@ html {
 }
 
 .footer__social-link:hover {
-  text-shadow: 2px 3px #52525255;
+  transform: scale(1.2);
 }
 
 .footer__copyrightright {
