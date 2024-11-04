@@ -940,6 +940,8 @@ html {
         .home__social-link {
             transition: color 0.3s;
             text-align: center;
+            &:hover {
+                color: var(--bg-color-buttons);
             }
         }
     }
@@ -1007,3 +1009,4 @@ html {
       grid-template-columns: repeat(2, 2fr);
     }
   }
+}
