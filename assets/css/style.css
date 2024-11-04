@@ -540,6 +540,18 @@ html {
     width: 100%;
     height: 100%;
 
+    .home__social {
+        .home__social-link {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+             transition: color 0.3s;
+            text-align: center;
+            &:hover {
+                color: var(--bg-color-buttons);
+            }
+        }
+    }
+
     .home__image {
       width: clamp(min(100px, 100%), 85vw, 200px);
       height: auto;
@@ -549,10 +561,10 @@ html {
     .home__info {
       .home__title,
       .home__description {
-        text-align: center;
-      }
+          text-align: center;
+     }
       .home__title {
-        margin: 0 auto;
+        margin:  auto;
         margin-bottom: var(--mr-2);
         text-transform: capitalize;
         border-right: 4px solid;
@@ -913,17 +925,24 @@ html {
       grid-auto-rows: auto;
 
       .home__image {
-        width: clamp(min(375px, 100%), 48vw, 500px);
+        width: clamp(min(375px, 100%), 30vw, 500px);
         grid-column: 2 / 3;
         grid-row: 1 / 4;
         transform: translateY(3.3rem);
       }
 
       .home__social {
-        visibility: hidden;
-        display: none;
-      }
-
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        flex-direction: column;
+        row-gap: var(--mr-2);
+        .home__social-link {
+            transition: color 0.3s;
+            text-align: center;
+            }
+        }
+    }
       .home__info {
         .home__title {
           margin-top: 2rem;
@@ -988,4 +1007,3 @@ html {
       grid-template-columns: repeat(2, 2fr);
     }
   }
-}
