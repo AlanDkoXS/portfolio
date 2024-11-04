@@ -227,7 +227,7 @@ html {
   background: var(--bg-color-buttons);
   border: none;
   padding: 15px 15vw;
-  margin: 0.5rem;
+  margin: 0.2rem;
   border-radius: 5px;
 }
 
@@ -544,10 +544,12 @@ html {
         .home__social-link {
             color: var(--primary-color);
             font-size: 1.8rem;
-             transition: color 0.3s;
+            padding-left: .9rem;
+            padding-right: .9rem;
+            transition: color 0.3s;
             text-align: center;
             &:hover {
-                color: var(--bg-color-buttons);
+            color: var(--bg-color-buttons);
             }
         }
     }
@@ -565,7 +567,6 @@ html {
      }
       .home__title {
         margin:  auto;
-        margin-bottom: var(--mr-2);
         text-transform: capitalize;
         border-right: 4px solid;
         white-space: nowrap;
@@ -930,7 +931,10 @@ html {
         grid-row: 1 / 4;
         transform: translateY(3.3rem);
       }
-
+      .home__buttons {
+        text-align: center;
+        margin-left: 2rem;
+      }
       .home__social {
         position: absolute;
         top: 50%;
@@ -953,7 +957,7 @@ html {
 
         .home__description {
           font-size: 1.3rem;
-          padding: 0 30px;
+          padding: 0 2rem;
         }
       }
     }
