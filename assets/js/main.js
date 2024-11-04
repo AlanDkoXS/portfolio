@@ -1,5 +1,5 @@
-import parallax from './components/parallax.js';
-import activeMenu from './components/selected_menu.js';
+import parallax from './helpers/parallax.js';
+import activeMenu from './helpers/selected_menu.js';
 import updateDateYear from './helpers/date_updater.js';
 import loader from './helpers/loader.js';
 import resetToHome from './helpers/reload_page.js';
@@ -19,5 +19,3 @@ updateDateYear();
 sendEmail();
 
 switchLanguages();
-
-

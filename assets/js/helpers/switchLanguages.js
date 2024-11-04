@@ -55,8 +55,8 @@ const translations = {
   },
 
   aboutDescription: {
-    en: "I am a self-taught graphic designer with over 3 years of experience in digital illustration, branding, and photography. I specialize in using Adobe Creative Suite (Photoshop, Illustrator, etc) to create impactful visual designs. My passion for creativity, problem-solving, and teamwork has allowed me to work with clients across various industries, including technology, fashion, and hospitality. In addition to my design expertise, I am currently learning Full Stack Web Development and have acquired skills in HTML, CSS, and JavaScript. My goal is to continue developing my skills and contribute to innovative projects, especially in a remote work environment.",
-    es: "Diseñador gráfico autodidacta con más de 3 años de experiencia en ilustración digital, branding y fotografía. Me especializo en el uso de Adobe Creative Suite (Photoshop, Illustrator, etc) para crear diseños visuales impactantes. Mi pasión por la creatividad, la resolución de problemas y el trabajo en equipo me ha permitido trabajar con clientes de diversas industrias, incluidas la tecnología, la moda y la hostelería. Además de mi experiencia en diseño, actualmente estoy aprendiendo Desarrollo Web Full Stack y he adquirido habilidades en HTML, CSS y JavaScript. Mi objetivo es seguir desarrollando mis habilidades y contribuir a proyectos innovadores, especialmente en un entorno de trabajo remoto.",
+    en: "I am a self-taught graphic designer with over 3 years of experience in digital illustration, branding, and photography. I specialize in creating impactful visual designs with a focus on mobile-first design, using Adobe Creative Suite and Figma. My passion for creativity, problem-solving, and teamwork has allowed me to collaborate with a wide variety of clients. Currently, I am learning Full Stack Web Development and have acquired knowledge in HTML, CSS, JavaScript, React, and Node.js. My goal is to continue developing my skills and contribute to innovative projects, especially in a remote work environment.",
+    es: "Diseñador gráfico autodidacta con más de 3 años de experiencia en ilustración digital, branding y fotografía. Me especializo en crear diseños visuales impactantes con un enfoque en el diseño mobile-first, utilizando Adobe Creative Suite y Figma. Mi pasión por la creatividad, la resolución de problemas y el trabajo en equipo me ha permitido colaborar con una amplia variedad de clientes. Actualmente, estoy aprendiendo Desarrollo Web Full Stack y he adquirido conocimientos en HTML, CSS, JavaScript, React y Node.js. Mi objetivo es seguir desarrollando mis habilidades y contribuir a proyectos innovadores, especialmente en un entorno de trabajo remoto.",
   },
 
   skillsTitle: {
@@ -87,68 +87,12 @@ const translations = {
       "Proactivo",
     ],
   },
-  // Traducciones de las tarjetas de habilidades
-  skillCard1Title: {
-    en: "Photoshop",
-    es: "Photoshop",
-  },
-  skillCard1Description: {
-    en: "I have a strong understanding of Adobe Photoshop, which allows me to manipulate and enhance images effectively.",
-    es: "Tengo un sólido entendimiento de Adobe Photoshop, lo que me permite manipular y mejorar imágenes de manera efectiva.",
-  },
-  skillCard2Title: {
-    en: "Illustrator",
-    es: "Illustrator",
-  },
-  skillCard2Description: {
-    en: "I have a solid understanding of Adobe Illustrator, which enables me to create high-quality vector graphics and illustrations. I am skilled in using the various tools and features, such as the Pen tool, shapes, and brushes, to design logos, icons, and complex illustrations.",
-    es: "Tengo un sólido entendimiento de Adobe Illustrator, lo que me permite crear gráficos vectoriales e ilustraciones de alta calidad. Soy hábil en el uso de diversas herramientas y funciones, como la herramienta Pluma, formas y pinceles, para diseñar logotipos, iconos e ilustraciones complejas.",
-  },
-  skillCard3Title: {
-    en: "After Effects",
-    es: "After Effects",
-  },
-  skillCard3Description: {
-    en: "I have a solid understanding of Adobe After Effects, which enables me to create stunning motion graphics and visual effects.",
-    es: "Tengo un sólido entendimiento de Adobe After Effects, lo que me permite crear impresionantes gráficos en movimiento y efectos visuales.",
-  },
-  skillCard4Title: {
-    en: "HTML",
-    es: "HTML",
-  },
-  skillCard4Description: {
-    en: "I possess a foundational understanding of HTML, enabling me to create structured and well-organized web pages.",
-    es: "Poseo un entendimiento fundamental de HTML, lo que me permite crear páginas web estructuradas y bien organizadas.",
-  },
-  skillCard5Title: {
-    en: "CSS3",
-    es: "CSS3",
-  },
-  skillCard5Description: {
-    en: "I have a solid understanding of CSS, which allows me to design visually appealing and responsive web layouts.",
-    es: "Tengo un sólido entendimiento de CSS, lo que me permite diseñar diseños web visualmente atractivos y responsivos.",
-  },
-  skillCard6Title: {
-    en: "JavaScript",
-    es: "JavaScript",
-  },
-  skillCard6Description: {
-    en: "I have a basic understanding of JavaScript, enabling me to add interactivity and dynamic features to web pages.",
-    es: "Tengo un entendimiento básico de JavaScript, lo que me permite agregar interactividad y funciones dinámicas a las páginas web.",
-  },
-  skillCard7Title: {
-    en: "React",
-    es: "React",
-  },
-  skillCard7Description: {
-    en: "I have a foundational understanding of React, allowing me to build dynamic and interactive user interfaces.",
-    es: "Poseo un entendimiento fundamental de React, lo que me permite construir interfaces de usuario dinámicas e interactivas.",
-  },
+
   portfolioTitle:{
     en: "Portfolio",
     es: "Portafolio",
   },
-  designsTittle: {
+  designsTitle: {
     en: "My Designs",
     es: "Illustraciones",
   },
@@ -197,7 +141,7 @@ const translations = {
     en: "Close",
     es: "Cerrar",
   },
-  submitButton: {
+  sendButton: {
     en: "Send",
     es: "Enviar",
   },
@@ -252,31 +196,16 @@ const switchLanguages = () => {
     skillsTags.forEach((tag, index) => {
       tag.textContent = translations.skillsTags[lang][index];
     });
-
-    const skillsCards = document.querySelectorAll(".skills__card-container");
-    skillsCards.forEach((card, index) => {
-      const title = card.querySelector(".skills__card-title");
-      const description = card.querySelector(".skills__card-description");
-
-      title.textContent = translations[`skillCard${index + 1}Title`][lang];
-      description.textContent =
-        translations[`skillCard${index + 1}Description`][lang];
-    });
-
     document.querySelector("#skills .section__title").textContent =
-      translations.skillsTitle[lang]; // Selector específico para "Skills"
-    document.querySelector(".skills__description").textContent =
-      translations.skillsDescription[lang];
+      translations.skillsTitle[lang];
     document.querySelector(".skills__tags-title").textContent =
       translations.skillsTagsTitle[lang];
 
     /* ====================== Portfolio Section ==========================*/
     document.querySelector(".portfolio__title").textContent =
-      translations.portfolioTitle[lang];
-    document.querySelector(".designs__title").textContent =
-      translations.designsTittle[lang];
-
-    /* ====================== Portfolio Section ==========================*/
+    translations.portfolioTitle[lang];
+  document.querySelector(".designs__title").textContent =
+    translations.designsTitle[lang];
     document.querySelector("#projects .section__title").textContent =
     translations.projectsTitle[lang];
   document.querySelector(".projects__name").textContent =
@@ -297,6 +226,8 @@ const switchLanguages = () => {
       translations.subjectLabel[lang]; // "Subject" o "Asunto"
     document.querySelector('.contact__form-label[for="message"]').textContent =
       translations.messageLabel[lang]; // "Text" o "Texto"
+      document.querySelector(".contact__form-button").textContent =
+      translations.sendButton[lang]; // "Send" o "Enviar"
     document.querySelector("#modal").textContent =
       translations.submitSuccessMessage[lang]; // Mensaje de éxito
     document.querySelector("#btn_close-modal").textContent =
@@ -307,11 +238,9 @@ const switchLanguages = () => {
     document.querySelector(".footer__description").textContent =
     translations.footerDescription[lang];
     const currentYear = new Date().getFullYear();
-    document.querySelector(".footer__copy").textContent =
+    document.querySelector(".footer__copyright").textContent =
       `© ${currentYear}, ${translations.footerCopyright[lang]}`;
 
 };
-
-
 
 export default switchLanguages;
