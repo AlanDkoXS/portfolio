@@ -32,28 +32,27 @@ Welcome to my personal webpage repository! This project showcases my portfolio a
 To run this project locally:
 
 1. Clone this repository:
-   ```bash
-   git clone https://github.com/AlanDkoXS/portfolio.git
-   ```
+   ```git clone https://github.com/AlanDkoXS/portfolio.git   ```
 2. Open the project folder:
 
 ```cd portfolio```
 
 3. Open index.html in your browser.
 
-Usage
+## Usage
 
-    Open the webpage and explore the different sections.
-    Use the language switcher to toggle between English and Spanish.
-    Fill out the contact form to send a message using EmailJS.
+- Open the webpage and explore the different sections.
+- Use the language switcher to toggle between English and Spanish.
+- Fill out the contact form to send a message using EmailJS.
 
 ## Deployment
 
-The webpage is deployed via Netlify. You can access the live site here.
+The webpage is deployed via Netlify. You can access the live site [here](https://alanquintana.pro).
 Contributing
 
 Feel free to fork this repository, create a branch, and submit a pull request for any improvements or suggestions!
-License
+
+## License
 
 This project is open source and available under the MIT License.
 
@@ -61,9 +60,7 @@ This project is open source and available under the MIT License.
 
 For any questions, you can reach me at:
 
-    Email: alan.quintanapacheco@gmail.com
+    Email: hello@alanquintana.pro
     Instagram: @anotherguyontheroad
     Twitter: @AlanDKO
     LinkedIn: Alan Quintana
-
-   
