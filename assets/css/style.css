@@ -121,7 +121,9 @@ html {
   height: 100%;
   object-fit: cover;
   transform: translate(-50%, -50%);
-  transition: transform 0.3s ease, filter 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
 }
 
 .bgGrain svg {
@@ -169,6 +171,7 @@ html {
   animation-timeline: scroll(root block);
   animation-range: 0 500px;
   opacity: 0;
+  background-color: var(--bg-color-section1);
 }
 
 .section__title {
@@ -245,7 +248,9 @@ html {
   z-index: 3;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.4s, visibility 0.4s;
+  transition:
+    opacity 0.4s,
+    visibility 0.4s;
 
   .loader__logo {
     color: var(--primary-color);
@@ -382,7 +387,9 @@ html {
           display: block;
           background: #ebebeb;
           border-radius: 20px;
-          box-shadow: inset 0px 2px 5px #00000066, inset 0px -2px 5px #ffffff66;
+          box-shadow:
+            inset 0px 2px 5px #00000066,
+            inset 0px -2px 5px #ffffff66;
           cursor: pointer;
           transition: 0.3s;
 
@@ -455,7 +462,9 @@ html {
           display: block;
           background: #ebebeb;
           border-radius: 20px;
-          box-shadow: inset 0px 2px 5px #00000066, inset 0px -2px 5px #ffffff66;
+          box-shadow:
+            inset 0px 2px 5px #00000066,
+            inset 0px -2px 5px #ffffff66;
           cursor: pointer;
           transition: 0.3s;
 
@@ -526,7 +535,9 @@ html {
     height: 100%;
     color: var(--primary-color);
     transform: translate(-50%, -50%);
-    transition: transform 1s ease, filter 1s ease;
+    transition:
+      transform 1s ease,
+      filter 1s ease;
   }
 
   .home__container {
@@ -541,17 +552,17 @@ html {
     height: 100%;
 
     .home__social {
-        .home__social-link {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            padding-left: .9rem;
-            padding-right: .9rem;
-            transition: color 0.3s;
-            text-align: center;
-            &:hover {
-            color: var(--bg-color-buttons);
-            }
+      .home__social-link {
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        padding-left: 0.9rem;
+        padding-right: 0.9rem;
+        transition: color 0.3s;
+        text-align: center;
+        &:hover {
+          color: var(--bg-color-buttons);
         }
+      }
     }
 
     .home__image {
@@ -563,15 +574,16 @@ html {
     .home__info {
       .home__title,
       .home__description {
-          text-align: center;
-     }
+        text-align: center;
+      }
       .home__title {
-        margin:  auto;
+        margin: auto;
         text-transform: capitalize;
         border-right: 4px solid;
         white-space: nowrap;
         width: 8ch;
-        animation: typing 2s infinite steps(8) alternate,
+        animation:
+          typing 2s infinite steps(8) alternate,
           blink 0.3s infinite step-end alternate;
         overflow: hidden;
       }
@@ -595,15 +607,32 @@ html {
 }
 
 /* ============= About ============= */
-.about {
-  .about__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 2rem;
-    padding: 3rem;
-  }
+.about__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2rem;
+  padding: 3rem;
+}
+.about__img--container {
+  display: flex;
+  justify-content: center; /* Centra el contenedor de la imagen */
+  width: 100%; /* Hace que el contenedor de la imagen ocupe todo el ancho */
+}
+
+.about__img {
+  display: flex;
+  justify-content: center; /* Centra la imagen dentro de su contenedor */
+  align-items: center;
+  width: 100%; /* Asegura que ocupe todo el espacio disponible en el contenedor */
+}
+
+.about__img img {
+  border-radius: 50%;
+  width: 70%;
+  max-width: 200px;
+  object-fit: cover;
 }
 
 /* ============= Skills ============= */
@@ -916,13 +945,14 @@ html {
     .bgFront svg {
       box-shadow: 2px 2px 2px #0000001a;
       filter: blur(2px) brightness(1)
-        drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
+      drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
     }
-  }
+}
+/* ABOUT MIN WIDTH 768px ========================== */
 
   .home {
-    .home__container {
-      grid-template-columns: repeat(2, 1fr);
+      .home__container {
+          grid-template-columns: repeat(2, 1fr);
       grid-auto-rows: auto;
 
       .home__image {
@@ -932,23 +962,22 @@ html {
         transform: translateY(3.3rem);
       }
       .home__buttons {
-        text-align: center;
-        margin-left: 2rem;
+        margin-left: 4em;
       }
       .home__social {
-        position: absolute;
+        position: fixed;
         top: 50%;
-        left: 1rem;
+        left: 0;
         flex-direction: column;
         row-gap: var(--mr-2);
         .home__social-link {
-            transition: color 0.3s;
-            text-align: center;
-            &:hover {
-                color: var(--bg-color-buttons);
-            }
+          transition: color 0.3s;
+          text-align: center;
+          &:hover {
+            color: var(--bg-color-buttons);
+          }
         }
-    }
+      }
       .home__info {
         .home__title {
           margin-top: 2rem;
@@ -963,17 +992,22 @@ html {
     }
   }
 
-  .about {
-    .about__container {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      gap: 2rem;
-      padding: 3rem;
-    }
+  /* ABOUT MIN WIDTH 768px ========================== */
+
+  .about__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 3rem;
   }
 
+  .about__img img {
+    width: 25vw;
+  }
+
+  /* PROJECTS MIN WIDTH 768px ========================== */
   .projects {
     .projects__container {
       padding: 3rem 0;

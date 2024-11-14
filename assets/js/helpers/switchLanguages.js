@@ -55,8 +55,8 @@ const translations = {
   },
 
   aboutDescription: {
-    en: "I am a self-taught graphic designer with over 3 years of experience in digital illustration, branding, and photography. I specialize in creating impactful visual designs with a focus on mobile-first design, using Adobe Creative Suite and Figma. My passion for creativity, problem-solving, and teamwork has allowed me to collaborate with a wide variety of clients. Currently, I am learning Full Stack Web Development and have acquired knowledge in HTML, CSS, JavaScript, React, and Node.js. My goal is to continue developing my skills and contribute to innovative projects, especially in a remote work environment.",
-    es: "Diseñador gráfico autodidacta con más de 3 años de experiencia en ilustración digital, branding y fotografía. Me especializo en crear diseños visuales impactantes con un enfoque en el diseño mobile-first, utilizando Adobe Creative Suite y Figma. Mi pasión por la creatividad, la resolución de problemas y el trabajo en equipo me ha permitido colaborar con una amplia variedad de clientes. Actualmente, estoy aprendiendo Desarrollo Web Full Stack y he adquirido conocimientos en HTML, CSS, JavaScript, React y Node.js. Mi objetivo es seguir desarrollando mis habilidades y contribuir a proyectos innovadores, especialmente en un entorno de trabajo remoto.",
+    en: "Self-taught graphic designer with over 3 years of experience in digital illustration, branding, and photography. I specialize in creating impactful visual designs with a mobile-first approach. Currently, I am updating my knowledge on Full Stack Web Development and have acquired skills in HTML, CSS, JavaScript, React, and Node.js.",
+    es: "Diseñador gráfico autodidacta con más de 3 años de experiencia en ilustración digital, branding y fotografía. Me especializo en crear diseños visuales impactantes con un enfoque en el diseño mobile-first. Actualmente, estoy actualizando mis conocimientos sobre Desarrollo Web Full Stack y he adquirido habilidades en HTML, CSS, JavaScript, React y Node.js.",
   },
 
   skillsTitle: {
@@ -72,13 +72,7 @@ const translations = {
     es: "Habilidades Blandas",
   },
   skillsTags: {
-    en: [
-      "Responsible",
-      "Teamwork",
-      "Creative",
-      "Autodidact",
-      "Proactive",
-    ],
+    en: ["Responsible", "Teamwork", "Creative", "Autodidact", "Proactive"],
     es: [
       "Responsable",
       "Trabajo en Equipo",
@@ -88,7 +82,7 @@ const translations = {
     ],
   },
 
-  portfolioTitle:{
+  portfolioTitle: {
     en: "Portfolio",
     es: "Portafolio",
   },
@@ -150,9 +144,9 @@ const translations = {
     es: "Hecho con ❤️. Gracias a mi tutora Alejandra Olazagasti",
   },
   footerCopyright: {
-  en: "All rights reserved",
-  es: "Todos los derechos reservados",
-},
+    en: "All rights reserved",
+    es: "Todos los derechos reservados",
+  },
 };
 
 const switchLanguages = () => {
@@ -180,7 +174,7 @@ const switchLanguages = () => {
     document.querySelector('.btn.btn--primary[href="#about"]').textContent =
       translations.aboutButton[lang];
     document.querySelector(
-      '.btn.btn--primary[href="assets/resume.pdf"]'
+      '.btn.btn--primary[href="assets/resume.pdf"]',
     ).textContent = translations.resumeButton[lang];
     document.querySelector('.btn.btn--primary[href="#portfolio"]').textContent =
       translations.portfolioButton[lang];
@@ -203,15 +197,15 @@ const switchLanguages = () => {
 
     /* ====================== Portfolio Section ==========================*/
     document.querySelector(".portfolio__title").textContent =
-    translations.portfolioTitle[lang];
-  document.querySelector(".designs__title").textContent =
-    translations.designsTitle[lang];
+      translations.portfolioTitle[lang];
+    document.querySelector(".designs__title").textContent =
+      translations.designsTitle[lang];
     document.querySelector("#projects .section__title").textContent =
-    translations.projectsTitle[lang];
-  document.querySelector(".projects__name").textContent =
-    translations.projectsName[lang];
-  document.querySelector(".projects__description").textContent =
-    translations.projectsDescription[lang];
+      translations.projectsTitle[lang];
+    document.querySelector(".projects__name").textContent =
+      translations.projectsName[lang];
+    document.querySelector(".projects__description").textContent =
+      translations.projectsDescription[lang];
 
     /* ====================== Contact Section ==========================*/
     document.querySelector("#contact .section__title").textContent =
@@ -226,7 +220,7 @@ const switchLanguages = () => {
       translations.subjectLabel[lang]; // "Subject" o "Asunto"
     document.querySelector('.contact__form-label[for="message"]').textContent =
       translations.messageLabel[lang]; // "Text" o "Texto"
-      document.querySelector(".contact__form-button").textContent =
+    document.querySelector(".contact__form-button").textContent =
       translations.sendButton[lang]; // "Send" o "Enviar"
     document.querySelector("#modal").textContent =
       translations.submitSuccessMessage[lang]; // Mensaje de éxito
@@ -234,13 +228,12 @@ const switchLanguages = () => {
       translations.closeButton[lang]; // "Close" o "Cerrar"
   });
 
-    /* ====================== Footer Section ==========================*/
-    document.querySelector(".footer__description").textContent =
+  /* ====================== Footer Section ==========================*/
+  document.querySelector(".footer__description").textContent =
     translations.footerDescription[lang];
-    const currentYear = new Date().getFullYear();
-    document.querySelector(".footer__copyright").textContent =
-      `© ${currentYear}, ${translations.footerCopyright[lang]}`;
-
+  const currentYear = new Date().getFullYear();
+  document.querySelector(".footer__copyright").textContent =
+    `© ${currentYear}, ${translations.footerCopyright[lang]}`;
 };
 
 export default switchLanguages;
