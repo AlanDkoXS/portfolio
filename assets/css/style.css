@@ -567,6 +567,7 @@ html {
       .home__description {
         text-align: center;
       }
+
       .home__title {
         margin: auto;
         text-transform: capitalize;
@@ -578,6 +579,11 @@ html {
           blink 0.3s infinite step-end alternate;
         overflow: hidden;
       }
+
+      .home__description {
+        padding: 0 1rem;
+      }
+
     }
     .home__buttons {
       text-align: center;
