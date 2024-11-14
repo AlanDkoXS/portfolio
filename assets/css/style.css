@@ -21,29 +21,29 @@ Codepen - muchas ideas y desarrollos
 :root {
   --header-height: 60px;
 
-  /* Colors */
+  /* Colors ====================================*/
   --primary-color: light-dark(#f3ce3a, #ffffffcc);
   --bg-color-section1: light-dark(#001219, #111);
   --bg-color-section2: light-dark(#001219, transparent);
   --bg-color-buttons: light-dark(#020e12, #6a6a6a);
 
-  /* Typografy */
+  /* Typografy ====================================*/
   --normal-font-size: 16px;
   --small-font-size: 12px;
 
-  /* Weight */
+  /* Weight ====================================*/
   --font-semi-bold: 600;
 
-  /* Margin */
+  /* Margin ====================================*/
   --mr-2: 16px;
   --mr-3: 10px;
   --mr-4: 26px;
 
-  /* z-index */
+  /* z-index ====================================*/
   --z-fixed: 1;
   --z-modal: 2;
 
-  /* Shadows */
+  /* Shadows ====================================*/
   --box-shadow: 0px 10px 100px #0000001a;
 }
 
@@ -91,7 +91,7 @@ html {
     display: block;
   }
 
-  /* darkmode  */
+  /* darkmode ====================================*/
   color-scheme: light dark;
   &:has([name="color-scheme"]:checked) {
     color-scheme: dark;
@@ -142,36 +142,27 @@ html {
   filter: blur(0.5px) brightness(1) drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
 }
 
-/* Efecto hover */
 .background-container:hover .bgBack {
-  transform: translate(-50%, -50%) translate(-40px, 20px); /* Aumentar desplazamiento */
+  transform: translate(-50%, -50%) translate(-40px, 20px);
 }
 
 .background-container:hover .bgMiddle {
-  transform: translate(-50%, -50%) translate(-30px, -15px); /* Aumentar desplazamiento */
+  transform: translate(-50%, -50%) translate(-30px, -15px);
 }
 
 .background-container:hover .bgFront {
-  transform: translate(-50%, -50%) translate(40px, -10px); /* Aumentar desplazamiento */
+  transform: translate(-50%, -50%) translate(40px, -10px);
 }
 
 .bgBack,
 .bgMiddle,
 .bgFront {
-  transition: transform 0.5s ease-in-out; /* Ajustar a 0.5s para el hover */
+  transition: transform 0.5s ease-in-out;
 }
 
 /* ============= REUSABLE CLASSES ============= */
 .section {
   padding: 3rem 0;
-}
-
-.about {
-  animation: animation-nav linear both;
-  animation-timeline: scroll(root block);
-  animation-range: 0 500px;
-  opacity: 0;
-  background-color: var(--bg-color-section1);
 }
 
 .section__title {
@@ -374,11 +365,11 @@ html {
       }
     }
 
-    /* toggles  */
+    /* Toggles ====================================*/
     .navbar__toggles {
       gap: 1rem;
 
-      /* darkmode toggle */
+      /* Darkmode Toggle ====================================*/
       .navbar__toggle--darkmode {
         .navbar__toggle--darkmode-label {
           width: 42px;
@@ -453,7 +444,7 @@ html {
         }
       }
 
-      /* language toggle */
+      /* Language toggle ====================================*/
       .navbar__toggle--language {
         .navbar__toggle--language-label {
           width: 42px;
@@ -607,7 +598,16 @@ html {
 }
 
 /* ============= About ============= */
+.about {
+  animation: animation-nav linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 0 500px;
+  opacity: 0;
+  background-color: var(--bg-color-section1);
+}
+
 .about__container {
+  font-size: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -617,15 +617,15 @@ html {
 }
 .about__img--container {
   display: flex;
-  justify-content: center; /* Centra el contenedor de la imagen */
-  width: 100%; /* Hace que el contenedor de la imagen ocupe todo el ancho */
+  justify-content: center;
+  width: 100%;
 }
 
 .about__img {
   display: flex;
-  justify-content: center; /* Centra la imagen dentro de su contenedor */
+  justify-content: center;
   align-items: center;
-  width: 100%; /* Asegura que ocupe todo el espacio disponible en el contenedor */
+  width: 100%;
 }
 
 .about__img img {
@@ -765,8 +765,8 @@ html {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
-  align-items: center; /* Para centrar horizontalmente */
-  gap: 10px; /* Espaciado entre los botones */
+  align-items: center;
+  gap: 10px;
 }
 
 .carousel__button {
@@ -809,12 +809,12 @@ html {
 
     .contact__info-data {
       .contact__form a {
-        color: inherit; /* Hereda el color del elemento padre */
-        text-decoration: none; /* Elimina el subrayado del enlace */
+        color: inherit;
+        text-decoration: none;
       }
 
       .contact__form a:visited {
-        color: inherit; /* Elimina el color del enlace visitado */
+        color: inherit;
       }
     }
 
@@ -945,14 +945,14 @@ html {
     .bgFront svg {
       box-shadow: 2px 2px 2px #0000001a;
       filter: blur(2px) brightness(1)
-      drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
+        drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
     }
-}
-/* ABOUT MIN WIDTH 768px ========================== */
+  }
+  /* ABOUT MIN WIDTH 768px ========================== */
 
   .home {
-      .home__container {
-          grid-template-columns: repeat(2, 1fr);
+    .home__container {
+      grid-template-columns: repeat(2, 1fr);
       grid-auto-rows: auto;
 
       .home__image {
