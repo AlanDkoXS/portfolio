@@ -287,6 +287,7 @@ html {
   height: var(--header-height);
   align-content: center;
   background-color: transparent;
+  box-shadow: 0px 1px 9px 2px #00000024;
   z-index: var(--z-modal);
   animation: animation-nav linear both;
   animation-timeline: scroll(root block);
@@ -508,7 +509,6 @@ html {
 @keyframes animation-nav {
   to {
     opacity: 1;
-    background-color: var(--bg-color-section1);
     backdrop-filter: blur(10px);
     box-shadow: var(--box-shadow);
   }
@@ -546,12 +546,14 @@ html {
       .home__social-link {
         color: var(--primary-color);
         font-size: 1.8rem;
-        padding-left: 0.9rem;
-        padding-right: 0.9rem;
-        transition: color 0.3s;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
         text-align: center;
+      }
+      .home__social-item {
+        transition: transform 0.3s ease-in-out;
         &:hover {
-          color: var(--bg-color-buttons);
+          transform: scale(1.2);
         }
       }
     }
@@ -583,7 +585,6 @@ html {
       .home__description {
         padding: 0 1rem;
       }
-
     }
     .home__buttons {
       text-align: center;
@@ -609,7 +610,6 @@ html {
   animation-timeline: scroll(root block);
   animation-range: 0 500px;
   opacity: 0;
-  background-color: var(--bg-color-section1);
 }
 
 .about__container {
@@ -904,9 +904,13 @@ html {
 
 @media (min-width: 768px) {
   :root {
-    --header-height: 90px;
+    --header-height: 6rem;
     --normal-font-size: 18px;
     --small-font-size: 14px;
+  }
+
+  .section {
+    padding: 2em 2em;
   }
 
   .header {
@@ -967,23 +971,19 @@ html {
         grid-row: 1 / 4;
         transform: translateY(3.3rem);
       }
+
       .home__buttons {
         margin-left: 4em;
       }
+
       .home__social {
         position: fixed;
         top: 50%;
         left: 0;
         flex-direction: column;
         row-gap: var(--mr-2);
-        .home__social-link {
-          transition: color 0.3s;
-          text-align: center;
-          &:hover {
-            color: var(--bg-color-buttons);
-          }
-        }
       }
+
       .home__info {
         .home__title {
           margin-top: 2rem;

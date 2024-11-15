@@ -153,20 +153,19 @@ const switchLanguages = () => {
   const languageToggle = document.getElementById("language-toggle");
 
   languageToggle.addEventListener("change", function () {
-    const lang = this.checked ? "es" : "en"; // Cambia el idioma según el estado del checkbox
-
+    const lang = this.checked ? "es" : "en";
     document.querySelector('.navbar__link[href="#home"]').textContent =
-      translations.navHome[lang]; // "Home" o "Inicio"
+      translations.navHome[lang];
     document.querySelector('.navbar__link[href="#about"]').textContent =
-      translations.navAbout[lang]; // "About me" o "Sobre mí"
+      translations.navAbout[lang];
     document.querySelector('.navbar__link[href="#skills"]').textContent =
-      translations.navSkills[lang]; // "Skills" o "Habilidades"
+      translations.navSkills[lang];
     document.querySelector('.navbar__link[href="#portfolio"]').textContent =
-      translations.navPortfolio[lang]; // "Skills" o "Habilidades"
+      translations.navPortfolio[lang];
     document.querySelector('.navbar__link[href="#projects"]').textContent =
-      translations.navProjects[lang]; // "Projects" o "Proyectos"
+      translations.navProjects[lang];
     document.querySelector('.navbar__link[href="#contact"]').textContent =
-      translations.navContact[lang]; // "Contact" o "Contacto"
+      translations.navContact[lang];
     document.querySelector(".home__title").textContent =
       translations.homeTitle[lang];
     document.querySelector(".home__description").textContent =
@@ -181,7 +180,7 @@ const switchLanguages = () => {
     document.querySelector('.btn.btn--primary[href="#projects"]').textContent =
       translations.projectButton[lang];
     document.querySelector("#about .section__title").textContent =
-      translations.aboutTitle[lang]; // Selector específico para "About"
+      translations.aboutTitle[lang];
     document.querySelector(".about__description").textContent =
       translations.aboutDescription[lang];
 
@@ -209,23 +208,23 @@ const switchLanguages = () => {
 
     /* ====================== Contact Section ==========================*/
     document.querySelector("#contact .section__title").textContent =
-      translations.contactTitle[lang]; // "Contact" o "Contacto"
+      translations.contactTitle[lang];
     document.querySelector(".contact__form-title").textContent =
-      translations.contactFormTitle[lang]; // "Send Message" o "Enviar Mensaje"
+      translations.contactFormTitle[lang];
     document.querySelector('.contact__form-label[for="name"]').textContent =
-      translations.nameLabel[lang]; // "Name" o "Nombre"
+      translations.nameLabel[lang];
     document.querySelector('.contact__form-label[for="email"]').textContent =
-      translations.emailLabel[lang]; // "Email" o "Correo Electrónico"
+      translations.emailLabel[lang];
     document.querySelector('.contact__form-label[for="subject"]').textContent =
-      translations.subjectLabel[lang]; // "Subject" o "Asunto"
+      translations.subjectLabel[lang];
     document.querySelector('.contact__form-label[for="message"]').textContent =
-      translations.messageLabel[lang]; // "Text" o "Texto"
+      translations.messageLabel[lang];
     document.querySelector(".contact__form-button").textContent =
-      translations.sendButton[lang]; // "Send" o "Enviar"
+      translations.sendButton[lang];
     document.querySelector("#modal").textContent =
-      translations.submitSuccessMessage[lang]; // Mensaje de éxito
+      translations.submitSuccessMessage[lang];
     document.querySelector("#btn_close-modal").textContent =
-      translations.closeButton[lang]; // "Close" o "Cerrar"
+      translations.closeButton[lang];
   });
 
   /* ====================== Footer Section ==========================*/
