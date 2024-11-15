@@ -28,11 +28,9 @@ Codepen - muchas ideas y desarrollos
   --bg-color-buttons: light-dark(#020e12, #6a6a6a);
 
   /* Typografy ====================================*/
-  --normal-font-size: 16px;
-  --small-font-size: 12px;
-
-  /* Weight ====================================*/
-  --font-semi-bold: 600;
+  --normal-font-size: 1.2rem;
+  --small-font-size: 1rem /* Weight ====================================*/
+    --font-semi-bold: 600;
 
   /* Margin ====================================*/
   --mr-2: 16px;
@@ -613,7 +611,6 @@ html {
 }
 
 .about__container {
-  font-size: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -781,7 +778,7 @@ html {
   border: none;
   padding: 10px;
   width: 2rem;
-  font-size: 16px;
+  font-size: var(--small-font-size);
   margin: 0;
   border-radius: 5px;
   transition: background-color 0.3s ease;
@@ -905,8 +902,8 @@ html {
 @media (min-width: 768px) {
   :root {
     --header-height: 6rem;
-    --normal-font-size: 18px;
-    --small-font-size: 14px;
+    --normal-font-size: 1.5rem;
+    --small-font-size: 1.2rem;
   }
 
   .section {
@@ -987,11 +984,9 @@ html {
       .home__info {
         .home__title {
           margin-top: 2rem;
-          font-size: 2rem;
         }
 
         .home__description {
-          font-size: 1.3rem;
           padding: 0 2rem;
         }
       }
