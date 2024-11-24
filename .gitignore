@@ -13,3 +13,6 @@
 
 # Prettier
 .prettierrc
+
+# Eslint Config
+eslint.config.mjs
