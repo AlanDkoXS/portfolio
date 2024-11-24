@@ -604,7 +604,7 @@ html {
 
 /* ============= About ============= */
 .about {
-  animation: animation-nav linear both;
+  animation: animation-section 1s ease both;
   animation-timeline: scroll(root block);
   animation-range: 0 500px;
   opacity: 0;
@@ -637,6 +637,14 @@ html {
   max-width: 200px;
   object-fit: cover;
 }
+
+
+@keyframes animation-section {
+    to {
+      opacity: 1;
+
+    }
+  }
 
 /* ============= Skills ============= */
 .skills {
@@ -901,18 +909,19 @@ html {
 
 @media (min-width: 768px) {
   :root {
-    --header-height: 6rem;
-    --normal-font-size: 1.5rem;
-    --small-font-size: 1.2rem;
+    --header-height: 4rem;
+    --normal-font-size: 1.2rem;
+    --small-font-size: 1rem;
   }
 
   .section {
-    padding: 2em 2em;
+    padding: 2.5em 2em;
   }
 
   .header {
     .navbar {
       .navbar__menu {
+        padding: 10px;
         position: static;
         border-radius: 0;
         background-color: transparent;
@@ -955,12 +964,13 @@ html {
         drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
     }
   }
-  /* ABOUT MIN WIDTH 768px ========================== */
+  /* HOME MIN WIDTH 768px ========================== */
 
   .home {
     .home__container {
       grid-template-columns: repeat(2, 1fr);
       grid-auto-rows: auto;
+      padding-top: 0;
 
       .home__image {
         width: clamp(min(375px, 100%), 30vw, 500px);
@@ -975,7 +985,7 @@ html {
 
       .home__social {
         position: fixed;
-        top: 50%;
+        top: 30%;
         left: 0;
         flex-direction: column;
         row-gap: var(--mr-2);
@@ -994,7 +1004,12 @@ html {
   }
 
   /* ABOUT MIN WIDTH 768px ========================== */
-
+  .about {
+    animation: animation-section 1s ease both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 700px;
+    opacity: 0;
+  }
   .about__container {
     display: flex;
     flex-direction: row;

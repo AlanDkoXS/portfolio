@@ -1,88 +1,127 @@
-const initParallax = () => {
-    const bgBack = document.querySelector('.bgBack');
-    const bgMiddle = document.querySelector('.bgMiddle');
-    const bgFront = document.querySelector('.bgFront');
+const bgBack = document.querySelector(".bgBack");
+const bgMiddle = document.querySelector(".bgMiddle");
+const bgFront = document.querySelector(".bgFront");
 
-    let lastX = 0;
-    let lastY = 0;
+function parallax() {
+  let lastX = 0;
+  let lastY = 0;
+  let targetX = 0;
+  let targetY = 0;
+  const smoothing = 0.1;
 
-    // Guardar las posiciones originales
-    const originalPositions = {
-      bgBack: { x: 0, y: 0 },
-      bgMiddle: { x: 0, y: 0 },
-      bgFront: { x: 0, y: 0 },
-    };
+  let autoMovementX = 0;
+  let autoMovementY = 0;
+  const autoSpeed = 0.1;
+  const autoLimitX = 20;
+  const autoLimitY = 10;
+  let autoDirectionX = 1;
+  let autoDirectionY = 1;
 
-    // Variables para el movimiento automático
-    let autoMovementX = 0;
-    let autoMovementSpeed = 0.5; // Velocidad del movimiento automático
-    let isMobile = window.matchMedia('(max-width: 768px)').matches; // Detección de dispositivos móviles
+  let resetTimer;
+  let isMoving = true;
 
-    // Función para actualizar la posición de las capas
-    const updateLayers = (deltaX, deltaY, gamma, beta) => {
-      const bgBackSensitivity = 4; // Sensibilidad para el bgGrain
-      const bgMiddleSensitivity = 2.5; // Sensibilidad para el bgMiddle
-      const bgFrontSensitivity = 1.5; // Sensibilidad para el bgFront
+  const updateLayers = (deltaX, deltaY) => {
+    const bgBackSensitivity = 4;
+    const bgMiddleSensitivity = 2.5;
+    const bgFrontSensitivity = 1.5;
 
-      // Movimiento inverso en bgGrain y bgFront, movimiento normal en bgMiddle
-      bgBack.style.transform = `translate(-50%, -50%) translate(${
-        -deltaX * bgBackSensitivity - gamma * 4 - autoMovementX
-      }px, 0)`;
-      bgMiddle.style.transform = `translate(-50%, -50%) translate(${
-        deltaX * bgMiddleSensitivity + gamma * 2 + autoMovementX
-      }px, 0)`;
-      bgFront.style.transform = `translate(-50%, -50%) translate(${
-        -deltaX * bgFrontSensitivity - gamma * 2 + autoMovementX
-      }px, 0)`;
-    };
-
-    // Función para volver a la posición original
-    const resetPositions = () => {
-      bgBack.style.transition = 'transform 0.5s ease'; // Transición suave
-      bgMiddle.style.transition = 'transform 0.5s ease'; // Transición suave
-      bgFront.style.transition = 'transform 0.5s ease'; // Transición suave
-
-      bgBack.style.transform = `translate(-50%, -50%)`;
-      bgMiddle.style.transform = `translate(-50%, -50%)`;
-      bgFront.style.transform = `translate(-50%, -50%)`;
-    };
-
-    const touchMoveHandler = (event) => {
-      const touch = event.touches[0];
-      const deltaX = touch.clientX - lastX;
-      lastX = touch.clientX;
-
-      updateLayers(deltaX, 0, 0, 0); // Solo movimiento horizontal
-    };
-
-    window.addEventListener('deviceorientation', function (event) {
-      const gamma = event.gamma; // Movimiento lateral
-      const beta = event.beta; // Movimiento hacia adelante y hacia atrás
-
-      updateLayers(0, 0, gamma, beta); // Aquí puedes decidir si quieres usar beta
-    });
-
-    document.addEventListener('touchstart', (event) => {
-      const touch = event.touches[0];
-      lastX = touch.clientX;
-    });
-
-    document.addEventListener('touchmove', touchMoveHandler, { passive: true });
-
-    // Evento para detectar cuando se deja de tocar
-    document.addEventListener('touchend', resetPositions);
-
-    // Movimiento automático solo en móviles
-    if (isMobile) {
-      setInterval(() => {
-        autoMovementX += autoMovementSpeed;
-        if (autoMovementX > 10 || autoMovementX < -10) {
-          autoMovementSpeed *= -1; // Cambiar dirección cuando alcanza el límite
-        }
-        updateLayers(0, 0, 0, 0); // Actualiza las capas con el movimiento automático
-      }, 30); // Intervalo de tiempo en milisegundos
-    }
+    bgBack.style.transform = `translate(-50%, -50%) translate(${
+      -deltaX * bgBackSensitivity
+    }px, ${-deltaY * bgBackSensitivity}px)`;
+    bgMiddle.style.transform = `translate(-50%, -50%) translate(${
+      deltaX * bgMiddleSensitivity
+    }px, ${deltaY * bgMiddleSensitivity}px)`;
+    bgFront.style.transform = `translate(-50%, -50%) translate(${
+      -deltaX * bgFrontSensitivity
+    }px, ${-deltaY * bgFrontSensitivity}px)`;
   };
 
-  // Exporta la función para que la puedas importar en otro archivo
-  export default initParallax;
+  const handleMouseMove = (e) => {
+    targetX = (window.innerWidth / 2 - e.pageX) / 50;
+    targetY = (window.innerHeight / 2 - e.pageY) / 100;
+
+    clearTimeout(resetTimer);
+    isMoving = true;
+    resetTimer = setTimeout(() => {
+      isMoving = false;
+      resetPositions();
+    }, 2000);
+  };
+
+  const handleDeviceOrientation = (event) => {
+    const gamma = event.gamma;
+    const beta = event.beta;
+
+    targetX = (gamma / 90) * 8;
+    targetY = (beta / 90) * 1;
+
+    clearTimeout(resetTimer);
+    isMoving = true;
+    resetTimer = setTimeout(() => {
+      isMoving = false;
+      resetPositions();
+    }, 2000);
+  };
+
+  document.addEventListener("mousemove", handleMouseMove);
+  window.addEventListener("deviceorientation", handleDeviceOrientation);
+
+  const smoothMove = () => {
+    if (isMoving) {
+      lastX += (targetX - lastX) * smoothing;
+      lastY += (targetY - lastY) * smoothing;
+
+      if (Math.abs(autoMovementX) >= autoLimitX) {
+        autoDirectionX *= -1;
+      }
+      if (Math.abs(autoMovementY) >= autoLimitY) {
+        autoDirectionY *= -1;
+      }
+
+      autoMovementX += autoDirectionX * autoSpeed;
+      autoMovementY += autoDirectionY * autoSpeed;
+
+      lastX += autoMovementX * 0.1;
+      lastY += autoMovementY * 0.1;
+
+      updateLayers(lastX, lastY);
+    }
+
+    requestAnimationFrame(smoothMove);
+  };
+
+  smoothMove();
+
+  document.addEventListener("mouseleave", () => {
+    resetPositions();
+  });
+
+  const resetPositions = () => {
+    bgBack.style.transition = "transform 0.5s ease";
+    bgMiddle.style.transition = "transform 0.5s ease";
+    bgFront.style.transition = "transform 0.5s ease";
+
+    bgBack.style.transform = `translate(-50%, -50%)`;
+    bgMiddle.style.transform = `translate(-50%, -50%)`;
+    bgFront.style.transform = `translate(-50%, -50%)`;
+
+    autoMovementX = 0;
+    autoMovementY = 0;
+  };
+}
+
+const isMobile = window.innerWidth <= 768; // Considera como móvil si el ancho es menor o igual a 768px
+
+if (isMobile) {
+    setInterval(() => {
+      autoMovementX += autoMovementSpeed;
+      if (autoMovementX > 10 || autoMovementX < -10) {
+        autoMovementSpeed *= -1; // Cambiar dirección cuando alcanza el límite
+      }
+      updateLayers(0, 0, 0, 0); // Actualiza las capas con el movimiento automático
+    }, 30); // Intervalo de tiempo en milisegundos
+  }
+
+
+
+export default parallax;
