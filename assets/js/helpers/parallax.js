@@ -1,126 +1,92 @@
-const bgBack = document.querySelector(".bgBack");
-const bgMiddle = document.querySelector(".bgMiddle");
-const bgFront = document.querySelector(".bgFront");
 
 function parallax() {
-  let lastX = 0;
-  let lastY = 0;
-  let targetX = 0;
-  let targetY = 0;
-  const smoothing = 0.1;
+    
+document.addEventListener("DOMContentLoaded", function () {
+    const bgBack = document.querySelector(".bgBack");
+    const bgMiddle = document.querySelector(".bgMiddle");
+    const bgFront = document.querySelector(".bgFront");
 
-  let autoMovementX = 0;
-  let autoMovementY = 0;
-  const autoSpeed = 0.1;
-  const autoLimitX = 20;
-  const autoLimitY = 10;
-  let autoDirectionX = 1;
-  let autoDirectionY = 1;
+    let lastX = 0;
+    let lastY = 0;
 
-  let resetTimer;
-  let isMoving = true;
+    // Guardar las posiciones originales
+    const originalPositions = {
+      bgBack: { x: 0, y: 0 },
+      bgMiddle: { x: 0, y: 0 },
+      bgFront: { x: 0, y: 0 }
+    };
 
-  const updateLayers = (deltaX, deltaY) => {
-    const bgBackSensitivity = 4;
-    const bgMiddleSensitivity = 2.5;
-    const bgFrontSensitivity = 1.5;
+    // Variables para el movimiento automático
+    let autoMovementX = 0;
+    let autoMovementSpeed = 0.5; // Velocidad del movimiento automático
+    let isMobile = window.matchMedia("(max-width: 768px)").matches; // Detección de dispositivos móviles
 
-    bgBack.style.transform = `translate(-50%, -50%) translate(${
-      -deltaX * bgBackSensitivity
-    }px, ${-deltaY * bgBackSensitivity}px)`;
-    bgMiddle.style.transform = `translate(-50%, -50%) translate(${
-      deltaX * bgMiddleSensitivity
-    }px, ${deltaY * bgMiddleSensitivity}px)`;
-    bgFront.style.transform = `translate(-50%, -50%) translate(${
-      -deltaX * bgFrontSensitivity
-    }px, ${-deltaY * bgFrontSensitivity}px)`;
-  };
+    // Función para actualizar la posición de las capas
+    const updateLayers = (deltaX, deltaY, gamma, beta) => {
+      const bgBackSensitivity = 4; // Sensibilidad para el bgGrain
+      const bgMiddleSensitivity = 2.5; // Sensibilidad para el bgMiddle
+      const bgFrontSensitivity = 1.5; // Sensibilidad para el bgFront
 
-  const handleMouseMove = (e) => {
-    targetX = (window.innerWidth / 2 - e.pageX) / 50;
-    targetY = (window.innerHeight / 2 - e.pageY) / 100;
+      // Movimiento inverso en bgGrain y bgFront, movimiento normal en bgMiddle
+      bgBack.style.transform = `translate(-50%, -50%) translate(${
+        -deltaX * bgBackSensitivity - gamma * 4 - autoMovementX
+      }px, 0)`;
+      bgMiddle.style.transform = `translate(-50%, -50%) translate(${
+        deltaX * bgMiddleSensitivity + gamma * 2 + autoMovementX
+      }px, 0)`;
+      bgFront.style.transform = `translate(-50%, -50%) translate(${
+        -deltaX * bgFrontSensitivity - gamma * 2 + autoMovementX
+      }px, 0)`;
+    };
 
-    clearTimeout(resetTimer);
-    isMoving = true;
-    resetTimer = setTimeout(() => {
-      isMoving = false;
-      resetPositions();
-    }, 2000);
-  };
+    // Función para volver a la posición original
+    const resetPositions = () => {
+      bgBack.style.transition = "transform 0.5s ease"; // Transición suave
+      bgMiddle.style.transition = "transform 0.5s ease"; // Transición suave
+      bgFront.style.transition = "transform 0.5s ease"; // Transición suave
 
-  const handleDeviceOrientation = (event) => {
-    const gamma = event.gamma;
-    const beta = event.beta;
+      bgBack.style.transform = `translate(-50%, -50%)`;
+      bgMiddle.style.transform = `translate(-50%, -50%)`;
+      bgFront.style.transform = `translate(-50%, -50%)`;
+    };
 
-    targetX = (gamma / 90) * 8;
-    targetY = (beta / 90) * 1;
+    const touchMoveHandler = (event) => {
+      const touch = event.touches[0];
+      const deltaX = touch.clientX - lastX;
+      lastX = touch.clientX;
 
-    clearTimeout(resetTimer);
-    isMoving = true;
-    resetTimer = setTimeout(() => {
-      isMoving = false;
-      resetPositions();
-    }, 2000);
-  };
+      updateLayers(deltaX, 0, 0, 0); // Solo movimiento horizontal
+    };
 
-  document.addEventListener("mousemove", handleMouseMove);
-  window.addEventListener("deviceorientation", handleDeviceOrientation);
+    window.addEventListener("deviceorientation", function (event) {
+      const gamma = event.gamma; // Movimiento lateral
+      const beta = event.beta; // Movimiento hacia adelante y hacia atrás
 
-  const smoothMove = () => {
-    if (isMoving) {
-      lastX += (targetX - lastX) * smoothing;
-      lastY += (targetY - lastY) * smoothing;
+      updateLayers(0, 0, gamma, beta); // Aquí puedes decidir si quieres usar beta
+    });
 
-      if (Math.abs(autoMovementX) >= autoLimitX) {
-        autoDirectionX *= -1;
-      }
-      if (Math.abs(autoMovementY) >= autoLimitY) {
-        autoDirectionY *= -1;
-      }
+    document.addEventListener("touchstart", (event) => {
+      const touch = event.touches[0];
+      lastX = touch.clientX;
+    });
 
-      autoMovementX += autoDirectionX * autoSpeed;
-      autoMovementY += autoDirectionY * autoSpeed;
+    document.addEventListener("touchmove", touchMoveHandler, { passive: true });
 
-      lastX += autoMovementX * 0.1;
-      lastY += autoMovementY * 0.1;
+    // Evento para detectar cuando se deja de tocar
+    document.addEventListener("touchend", resetPositions);
 
-      updateLayers(lastX, lastY);
+    // Movimiento automático solo en móviles
+    if (isMobile) {
+      setInterval(() => {
+        autoMovementX += autoMovementSpeed;
+        if (autoMovementX > 10 || autoMovementX < -10) {
+          autoMovementSpeed *= -1; // Cambiar dirección cuando alcanza el límite
+        }
+        updateLayers(0, 0, 0, 0); // Actualiza las capas con el movimiento automático
+      }, 30); // Intervalo de tiempo en milisegundos
     }
-
-    requestAnimationFrame(smoothMove);
-  };
-
-  smoothMove();
-
-  document.addEventListener("mouseleave", () => {
-    resetPositions();
   });
-
-  const resetPositions = () => {
-    bgBack.style.transition = "transform 0.5s ease";
-    bgMiddle.style.transition = "transform 0.5s ease";
-    bgFront.style.transition = "transform 0.5s ease";
-
-    bgBack.style.transform = `translate(-50%, -50%)`;
-    bgMiddle.style.transform = `translate(-50%, -50%)`;
-    bgFront.style.transform = `translate(-50%, -50%)`;
-
-    autoMovementX = 0;
-    autoMovementY = 0;
-  };
 }
-
-const isMobile = window.innerWidth <= 768; // Considera como móvil si el ancho es menor o igual a 768px
-
-if (isMobile) {
-    setInterval(() => {
-      autoMovementX += autoMovementSpeed;
-      if (autoMovementX > 10 || autoMovementX < -10) {
-        autoMovementSpeed *= -1; // Cambiar dirección cuando alcanza el límite
-      }
-      updateLayers(0, 0, 0, 0); // Actualiza las capas con el movimiento automático
-    }, 30); // Intervalo de tiempo en milisegundos
-  }
 
 
 

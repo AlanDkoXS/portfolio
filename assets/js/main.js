@@ -1,4 +1,5 @@
 import parallax from './helpers/parallax.js';
+import profileParallax from './helpers/profile_parallax.js';
 import activeMenu from './helpers/selected_menu.js';
 import updateDateYear from './helpers/date_updater.js';
 import loader from './helpers/loader.js';
@@ -13,6 +14,8 @@ resetToHome();
 activeMenu();
 
 parallax();
+
+profileParallax();
 
 updateDateYear();
 
