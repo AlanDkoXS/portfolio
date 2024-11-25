@@ -25,7 +25,7 @@ Codepen - muchas ideas y desarrollos
   --primary-color: light-dark(#f3ce3a, #ffffffcc);
   --bg-color-section1: light-dark(#001219, #111);
   --bg-color-section2: light-dark(#001219, transparent);
-  --bg-color-buttons: light-dark(#020e12, #6a6a6a);
+  --bg-color-buttons: light-dark(#00000080, #6a6a6a);
 
   /* Typografy ====================================*/
   --normal-font-size: 1rem;
@@ -575,13 +575,13 @@ html {
 
     .home__image--sprite {
       max-width: none;
-      filter: drop-shadow(2px -2px 8px rgba(0, 0, 0, 0.8));
+      filter: drop-shadow(0px -5px 10px rgba(0, 0, 0, 0.4));
       width: 6000px;
       height: 300px;
       position: absolute;
       top: 0;
       left: 0;
-      animation: animateSprite 1s steps(20) 3s;
+      animation: animateSprite 1s steps(20) 2s;
       z-index: var(--z-fixed);
     }
   }
@@ -751,7 +751,6 @@ html {
 .portfolio {
   max-width: 300px;
   margin: 0 auto;
-  padding: 20px;
   text-align: center;
 }
 
