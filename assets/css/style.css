@@ -554,6 +554,8 @@ html {
   transition:
     opacity 0.3s ease,
     visibility 0.3s ease;
+  right: 50%;
+  transform: translateX(50%);
 }
 
 .btn__cv .btn {
@@ -561,8 +563,9 @@ html {
   border-radius: 5px;
   text-decoration: none;
   color: var(--primary-color);
-  background-color: var(var(--bg-color-buttons));
-  backdrop-filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  background-color: var(var(--bg-color-section2));
+  width: 100%;
+  max-width: 200px;
 }
 
 .btn__cv .btn:hover {
@@ -582,6 +585,16 @@ html {
   .resume__container h2,
   .resume__container h3 {
     font-size: 2rem;
+  }
+
+  .btn__cv {
+    right: 20px;
+    transform: translateX(0);
+    align-items: flex-start;
+  }
+
+  .btn__cv .btn {
+    width: 300px;
   }
 }
 
