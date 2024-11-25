@@ -1,9 +1,4 @@
 /*
-Metodología BEM: https://en.bem.info/methodology/quick-start/
-Generador de animaciones: https://animista.net/
-Loaders con CSS: https://css-loaders.com/
-Sombras con CSS: https://getcssscan.com/css-box-shadow-examples
-Codepen - muchas ideas y desarrollos
 ==============================
   * CSS TABLE CONTENT *
 ==============================
@@ -512,6 +507,84 @@ html {
   }
 }
 
+/* ============= Resume ============= */
+.resume__container {
+  margin: 2rem auto;
+  padding: 1rem;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  overflow: auto;
+  text-align: justify;
+  display: flex;
+  flex-direction: column;
+}
+
+.resume__container h1,
+.resume__container h2,
+.resume__container h3 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+.resume__container p,
+.resume__container ul {
+  color: var(--primary-color);
+  line-height: 1.5;
+}
+
+.resume__container ul {
+  padding-left: 1rem;
+}
+
+.resume__container hr {
+  border: none;
+  border-top: 2px solid var(--primary-color);
+  margin: 10px 0;
+  width: 100%;
+}
+
+.btn__cv {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.btn__cv .btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: var(--primary-color);
+  background-color: var(var(--bg-color-buttons));
+  backdrop-filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.btn__cv .btn:hover {
+  background-color: var(--primary-color);
+  color: var(--bg-color-section1);
+}
+
+.show-btns {
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .resume__container {
+    max-width: 900px;
+  }
+  .resume__container h1,
+  .resume__container h2,
+  .resume__container h3 {
+    font-size: 2rem;
+  }
+}
+
 /* ============= Home ============= */
 .home {
   position: relative;
@@ -565,7 +638,7 @@ html {
     }
 
     .home__image--background {
-        margin-top: .5rem;
+      margin-top: 0.5rem;
       width: 100%;
       height: auto;
       position: absolute;
@@ -625,12 +698,10 @@ html {
 
 @keyframes moveBackground {
   0% {
-    transform: translateX(0); /* Inicia en la posición original */
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(
-      -300px
-    ); /* Mueve el fondo un poco hacia la izquierda */
+    transform: translateX(-300px);
   }
 }
 

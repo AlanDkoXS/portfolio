@@ -6,6 +6,7 @@ import loader from './helpers/loader.js';
 import resetToHome from './helpers/reload_page.js';
 import sendEmail from './helpers/send_form.js';
 import switchLanguages from './helpers/switchLanguages.js';
+import showScrollButtons from './helpers/scroll_buttons.js';
 
 loader();
 
@@ -22,3 +23,5 @@ updateDateYear();
 sendEmail();
 
 switchLanguages();
+
+showScrollButtons();
