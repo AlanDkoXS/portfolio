@@ -173,7 +173,7 @@ const switchLanguages = () => {
     document.querySelector('.btn.btn--primary[href="#about"]').textContent =
       translations.aboutButton[lang];
     document.querySelector(
-      '.btn.btn--primary[href="assets/resume.pdf"]'
+      '.btn.btn--primary[href="/assets/html/resume.html"]'
     ).textContent = translations.resumeButton[lang];
     document.querySelector('.btn.btn--primary[href="#portfolio"]').textContent =
       translations.portfolioButton[lang];
