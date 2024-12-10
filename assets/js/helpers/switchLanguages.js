@@ -53,7 +53,7 @@ const translations = {
     },
     aboutDescription: {
       en: 'I can help you develop modern, responsive, and functional web applications tailored to your business needs. My approach combines visually appealing design with a seamless user experience, ensuring that the applications are not only aesthetically pleasing but also intuitive and easy to use. Leveraging technologies like HTML, CSS, JavaScript, React, and Node.js, I build scalable and efficient solutions, from interactive interfaces to complete backend systems. My goal is to create digital tools that streamline processes, enhance user engagement, and add value to your business.',
-      es: 'Puedo ayudarte a fortalecer la identidad visual de tu marca mediante la creación de logotipos, guías de estilo y contenido gráfico personalizado, además de desarrollar estrategias de diseño enfocadas en captar la atención de tu audiencia. También ofrezco servicios de diseño y desarrollo web, creando sitios modernos, responsivos y optimizados para ofrecer una experiencia de usuario impecable en cualquier dispositivo. Mi experiencia incluye la creación de interfaces intuitivas y atractivas, con un enfoque en UI/UX, así como la producción de contenido digital que impulsa campañas de marketing efectivas. Gracias a mis conocimientos en diseño y desarrollo, puedo ofrecer soluciones integrales que combinen estética y funcionalidad para satisfacer las necesidades de tu negocio.',
+      es: 'Puedo ayudarte a desarrollar aplicaciones web modernas, responsivas y funcionales, adaptadas a las necesidades de tu negocio. Mi enfoque combina un diseño visualmente atractivo con una experiencia de usuario fluida, asegurando que las aplicaciones no solo sean estéticamente agradables, sino también intuitivas y fáciles de usar. Aprovechando tecnologías como HTML, CSS, JavaScript, React y Node.js, creo soluciones escalables y eficientes, desde interfaces interactivas hasta sistemas backend completos. Mi objetivo es crear herramientas digitales que optimicen procesos, mejoren la interacción con los usuarios y aporten valor a tu negocio.',
     },
     skillsTitle: {
       en: 'Skills',
@@ -89,7 +89,6 @@ const translations = {
     },
   };
 
-  // Función para actualizar texto de una sección
   const updateSectionText = (selector, key, lang) => {
     const element = document.querySelector(selector);
     if (element && translations[key]) {
@@ -97,7 +96,6 @@ const translations = {
     }
   };
 
-  // Función para actualizar etiquetas dinámicas
   const updateSkillsTags = (selector, key, lang) => {
     const elements = document.querySelectorAll(selector);
     if (elements && translations[key]) {
@@ -107,14 +105,12 @@ const translations = {
     }
   };
 
-  // Función principal para manejar el cambio de idioma
   const switchLanguages = () => {
     const languageToggle = document.getElementById('language-toggle');
 
     languageToggle.addEventListener('change', function () {
       const lang = this.checked ? 'es' : 'en';
 
-      // Navbar
       const navLinks = [
         { selector: '.navbar__link[href="#home"]', key: 'navHome' },
         { selector: '.navbar__link[href="#about"]', key: 'navAbout' },
@@ -125,11 +121,12 @@ const translations = {
       ];
       navLinks.forEach(link => updateSectionText(link.selector, link.key, lang));
 
-      // Home Section
       updateSectionText('.home__title', 'homeTitle', lang);
       updateSectionText('.home__description', 'homeDescription', lang);
       updateSectionText('.btn.btn--primary[href="#about"]', 'aboutButton', lang);
       updateSectionText('.btn.btn--primary[href="/assets/html/resume.html"]', 'resumeButton', lang);
+      updateSectionText('.btn.btn--primary[href="#portfolio"]', 'portfolioButton', lang);
+      updateSectionText('.btn.btn--primary[href="#projects"]', 'projectButton', lang);
 
       // About Section
       updateSectionText('#about .section__title', 'aboutTitle', lang);
