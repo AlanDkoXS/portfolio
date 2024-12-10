@@ -52,8 +52,8 @@ const translations = {
       es: 'Sobre mí',
     },
     aboutDescription: {
-      en: 'Self-taught graphic designer with over 3 years of experience in digital illustration, branding, and photography. I specialize in creating impactful visual designs with a mobile-first approach. Currently, I am updating my knowledge on Full Stack Web Development and have acquired skills in HTML, CSS, JavaScript, React, and Node.js.',
-      es: 'Diseñador gráfico autodidacta con más de 3 años de experiencia en ilustración digital, branding y fotografía. Me especializo en crear diseños visuales impactantes con un enfoque en el diseño mobile-first. Estoy actualizando mis conocimientos sobre Desarrollo Web Full Stack y he adquirido habilidades en HTML, CSS, JavaScript, React y Node.js.',
+      en: 'I can help you develop modern, responsive, and functional web applications tailored to your business needs. My approach combines visually appealing design with a seamless user experience, ensuring that the applications are not only aesthetically pleasing but also intuitive and easy to use. Leveraging technologies like HTML, CSS, JavaScript, React, and Node.js, I build scalable and efficient solutions, from interactive interfaces to complete backend systems. My goal is to create digital tools that streamline processes, enhance user engagement, and add value to your business.',
+      es: 'Puedo ayudarte a fortalecer la identidad visual de tu marca mediante la creación de logotipos, guías de estilo y contenido gráfico personalizado, además de desarrollar estrategias de diseño enfocadas en captar la atención de tu audiencia. También ofrezco servicios de diseño y desarrollo web, creando sitios modernos, responsivos y optimizados para ofrecer una experiencia de usuario impecable en cualquier dispositivo. Mi experiencia incluye la creación de interfaces intuitivas y atractivas, con un enfoque en UI/UX, así como la producción de contenido digital que impulsa campañas de marketing efectivas. Gracias a mis conocimientos en diseño y desarrollo, puedo ofrecer soluciones integrales que combinen estética y funcionalidad para satisfacer las necesidades de tu negocio.',
     },
     skillsTitle: {
       en: 'Skills',
@@ -137,7 +137,7 @@ const translations = {
 
       // Skills Section
       updateSectionText('#skills .section__title', 'skillsTitle', lang);
-      updateSectionText('.skills__description', 'skillsDescription', lang); 
+      updateSectionText('.skills__description', 'skillsDescription', lang);
       updateSectionText('.skills__tags-title', 'skillsTagsTitle', lang);
       updateSkillsTags('.skills__tag', 'skillsTags', lang);
 

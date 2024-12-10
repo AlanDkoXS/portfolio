@@ -18,9 +18,9 @@
 
   /* Colors ====================================*/
   --primary-color: light-dark(#f3ce3a, #ffffffcc);
-  --bg-color-section1: light-dark(#001219, #111);
-  --bg-color-section2: light-dark(#001219, transparent);
+  --bg-color-section: light-dark(#001219, #111);
   --bg-color-buttons: light-dark(#00000080, #6a6a6a);
+  --bg-color-buttons2: light-dark(#001219, transparent);
 
   /* Typografy ====================================*/
   --normal-font-size: 1rem;
@@ -28,9 +28,9 @@
     --font-semi-bold: 600;
 
   /* Margin ====================================*/
-  --mr-2: 16px;
-  --mr-3: 10px;
-  --mr-4: 26px;
+  --mr-2: 1rem;
+  --mr-3: 0.8rem;
+  --mr-4: 2rem;
 
   /* z-index ====================================*/
   --z-fixed: 1;
@@ -58,7 +58,7 @@ html {
     font-family: 'Poppins', sans-serif;
     font-size: var(--normal-font-size);
     color: var(--primary-color);
-    background-color: var(--bg-color-section1);
+    background-color: var(--bg-color-section);
     overflow-x: hidden;
     user-select: none;
     -webkit-user-select: none;
@@ -120,6 +120,9 @@ html {
 }
 
 .bgGrain svg {
+  position: fixed;
+  height: 100%;
+  width: auto;
   color: #111;
 }
 
@@ -191,11 +194,11 @@ html {
   height: auto;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  color: var(--bg-color-section1);
+  color: var(--bg-color-section);
   background-color: var(--primary-color);
 
   &:hover {
-    color: var(--bg-color-section1);
+    color: var(--bg-color-section);
     background-color: var(--primary-color);
     translate: 0px -4px;
     box-shadow: 0px 3px 10px #0202023b;
@@ -228,7 +231,7 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--bg-color-section1);
+  background-color: var(--bg-color-section);
   z-index: 3;
   opacity: 1;
   visibility: visible;
@@ -309,7 +312,7 @@ html {
       left: 0;
       width: 100%;
       border-radius: 0 0 12px 12px;
-      background-color: var(--bg-color-section1);
+      background-color: var(--bg-color-section);
       box-shadow: 0px 1px 9px 2px #00000024;
       padding: 2rem 0;
       transition: all 0.6s;
@@ -348,7 +351,7 @@ html {
         position: absolute;
         top: var(--mr-2);
         right: var(--mr-2);
-        background-color: var(--bg-color-section1);
+        background-color: var(--bg-color-section);
         width: 38px;
         height: 38px;
         border-radius: 50%;
@@ -403,7 +406,7 @@ html {
 
             &.navbar__toggle--darkmode-sun {
               left: 3px;
-              color: var(--bg-color-section2);
+              color: var(--bg-color-buttons2);
               transition: 0.3s;
             }
 
@@ -432,7 +435,7 @@ html {
             }
 
             .bx-moon {
-              color: var(--bg-color-section2);
+              color: var(--bg-color-buttons2);
             }
           }
         }
@@ -563,14 +566,14 @@ html {
   border-radius: 5px;
   text-decoration: none;
   color: var(--primary-color);
-  background-color: var(var(--bg-color-section2));
+  background-color: var(var(--bg-color-buttons2));
   width: 100%;
   max-width: 200px;
 }
 
 .btn__cv .btn:hover {
   background-color: var(--primary-color);
-  color: var(--bg-color-section1);
+  color: var(--bg-color-section);
 }
 
 .show-btns {
@@ -741,7 +744,6 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   gap: 2rem;
   padding: 3rem;
 }
@@ -774,12 +776,11 @@ html {
 
 /* ============= Skills ============= */
 .skills {
-  background-color: var(--bg-color-section1);
+  background-color: var(--bg-color-section);
 
   .skills__container {
     .skills__description {
       padding: 1rem;
-      text-align: center;
     }
     .skills__wrapper {
       .skills__cards {
@@ -824,7 +825,7 @@ html {
       font-weight: var(--font-semi-bold);
       font-size: var(--small-font-size);
       background-color: var(--primary-color);
-      color: var(--bg-color-section1);
+      color: var(--bg-color-section);
       filter: drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
       border-radius: 5px;
     }
@@ -919,16 +920,16 @@ html {
 
 .carousel__button:hover {
   background-color: var(--primary-color);
-  color: var(--bg-color-section1);
+  color: var(--bg-color-section);
 }
 
 .carousel__button:checked {
   background-color: var(--primary-color);
-  color: var(--bg-color-section1);
+  color: var(--bg-color-section);
 }
 /* ============= Contact ============= */
 .contact {
-  background-color: var(--bg-color-section1);
+  background-color: var(--bg-color-section);
   .contact__container {
     gap: 2rem;
     .contact__info {
@@ -957,7 +958,7 @@ html {
     .contact__form {
       width: 100%;
       padding: 3rem 1.5rem 2rem;
-      background-color: var(--bg-color-section1);
+      background-color: var(--bg-color-section);
       border-radius: 5px;
       margin: 0 auto;
 
@@ -1030,7 +1031,7 @@ html {
   padding-top: 2rem;
 }
 
-/* ============= Media Queries ============= */
+/* ============= Media Queries MIN WIDTH (768px)============= */
 
 @media (min-width: 768px) {
   :root {
@@ -1038,6 +1039,10 @@ html {
     --normal-font-size: 1.2rem;
     --small-font-size: 1rem;
   }
+
+html {
+    box-sizing:inherit;
+}
 
   .section {
     padding: 2.5em 2em;

@@ -56,44 +56,5 @@
         <priority>0.7</priority>
     </url>
 
-    <!-- LinkedIn -->
-    <url>
-        <loc>https://www.linkedin.com/in/alanxs/</loc>
-        <lastmod>2024-12-09</lastmod>
-        <changefreq>yearly</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <!-- Instagram -->
-    <url>
-        <loc>https://www.instagram.com/anotherguyontheroad/</loc>
-        <lastmod>2024-12-09</lastmod>
-        <changefreq>yearly</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <!-- GitHub -->
-    <url>
-        <loc>https://github.com/AlanDkoXS</loc>
-        <lastmod>2024-12-09</lastmod>
-        <changefreq>yearly</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <!-- Dribbble -->
-    <url>
-        <loc>https://dribbble.com/Alan3XS</loc>
-        <lastmod>2024-12-09</lastmod>
-        <changefreq>yearly</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <!-- Twitter -->
-    <url>
-        <loc>https://x.com/AlanDKO</loc>
-        <lastmod>2024-12-09</lastmod>
-        <changefreq>yearly</changefreq>
-        <priority>0.5</priority>
-    </url>
 
 </urlset>
