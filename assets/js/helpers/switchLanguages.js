@@ -149,100 +149,90 @@ const translations = {
   },
 };
 
-const setTextContent = (selector, key, lang) => {
-  const element = document.querySelector(selector);
-  if (element) {
-    element.textContent = translations[key][lang];
-  }
-};
-
-const setTextContentForMultipleElements = (selectors, key, lang) => {
-  selectors.forEach((selector) => setTextContent(selector, key, lang));
-};
-
-const setSkillsTags = (lang) => {
-  const skillsTags = document.querySelectorAll('.skills__tag');
-  skillsTags.forEach((tag, index) => {
-    tag.textContent = translations.skillsTags[lang][index];
-  });
-};
-
 const switchLanguages = () => {
   const languageToggle = document.getElementById('language-toggle');
 
   languageToggle.addEventListener('change', function () {
     const lang = this.checked ? 'es' : 'en';
+    document.querySelector('.navbar__link[href="#home"]').textContent =
+      translations.navHome[lang];
+    document.querySelector('.navbar__link[href="#about"]').textContent =
+      translations.navAbout[lang];
+    document.querySelector('.navbar__link[href="#skills"]').textContent =
+      translations.navSkills[lang];
+    document.querySelector('.navbar__link[href="#portfolio"]').textContent =
+      translations.navPortfolio[lang];
+    document.querySelector('.navbar__link[href="#projects"]').textContent =
+      translations.navProjects[lang];
+    document.querySelector('.navbar__link[href="#contact"]').textContent =
+      translations.navContact[lang];
+    document.querySelector('.home__title').textContent =
+      translations.homeTitle[lang];
+    document.querySelector('.home__description').textContent =
+      translations.homeDescription[lang];
+    document.querySelector('.btn.btn--primary[href="#about"]').textContent =
+      translations.aboutButton[lang];
+    document.querySelector(
+      '.btn.btn--primary[href="assets/resume.pdf"]'
+    ).textContent = translations.resumeButton[lang];
+    document.querySelector('.btn.btn--primary[href="#portfolio"]').textContent =
+      translations.portfolioButton[lang];
+    document.querySelector('.btn.btn--primary[href="#projects"]').textContent =
+      translations.projectButton[lang];
+    document.querySelector('#about .section__title').textContent =
+      translations.aboutTitle[lang];
+    document.querySelector('.about__description').textContent =
+      translations.aboutDescription[lang];
 
-    // Navbar
-    setTextContentForMultipleElements(
-      [
-        '.navbar__link[href="#home"]',
-        '.navbar__link[href="#about"]',
-        '.navbar__link[href="#skills"]',
-        '.navbar__link[href="#portfolio"]',
-        '.navbar__link[href="#projects"]',
-        '.navbar__link[href="#contact"]',
-      ],
-      'navHome',
-      lang
-    );
+    /* ====================== Skills Section ==========================*/
+    const skillsTags = document.querySelectorAll('.skills__tag');
+    skillsTags.forEach((tag, index) => {
+      tag.textContent = translations.skillsTags[lang][index];
+    });
+    document.querySelector('#skills .section__title').textContent =
+      translations.skillsTitle[lang];
+    document.querySelector('.skills__tags-title').textContent =
+      translations.skillsTagsTitle[lang];
 
-    // Home Section
-    setTextContent('.home__title', 'homeTitle', lang);
-    setTextContent('.home__description', 'homeDescription', lang);
+    /* ====================== Portfolio Section ==========================*/
+    document.querySelector('.portfolio__title').textContent =
+      translations.portfolioTitle[lang];
+    document.querySelector('.designs__title').textContent =
+      translations.designsTitle[lang];
+    document.querySelector('#projects .section__title').textContent =
+      translations.projectsTitle[lang];
+    document.querySelector('.projects__name').textContent =
+      translations.projectsName[lang];
+    document.querySelector('.projects__description').textContent =
+      translations.projectsDescription[lang];
 
-    // Buttons
-    setTextContent('.btn.btn--primary[href="#about"]', 'aboutButton', lang);
-    setTextContent(
-      '.btn.btn--primary[href="assets/resume.pdf"]',
-      'resumeButton',
-      lang
-    );
-    setTextContent(
-      '.btn.btn--primary[href="#portfolio"]',
-      'portfolioButton',
-      lang
-    );
-    setTextContent(
-      '.btn.btn--primary[href="#projects"]',
-      'projectButton',
-      lang
-    );
-
-    // About Section
-    setTextContent('#about .section__title', 'aboutTitle', lang);
-    setTextContent('.about__description', 'aboutDescription', lang);
-
-    // Skills Section
-    setTextContent('#skills .section__title', 'skillsTitle', lang);
-    setTextContent('.skills__tags-title', 'skillsTagsTitle', lang);
-    setSkillsTags(lang);
-
-    // Portfolio Section
-    setTextContent('.portfolio__title', 'portfolioTitle', lang);
-    setTextContent('.designs__title', 'designsTitle', lang);
-    setTextContent('#projects .section__title', 'projectsTitle', lang);
-    setTextContent('.projects__name', 'projectsName', lang);
-    setTextContent('.projects__description', 'projectsDescription', lang);
-
-    // Contact Section
-    setTextContent('#contact .section__title', 'contactTitle', lang);
-    setTextContent('.contact__form-title', 'contactFormTitle', lang);
-    setTextContent('.contact__form-label[for="name"]', 'nameLabel', lang);
-    setTextContent('.contact__form-label[for="email"]', 'emailLabel', lang);
-    setTextContent('.contact__form-label[for="subject"]', 'subjectLabel', lang);
-    setTextContent('.contact__form-label[for="message"]', 'messageLabel', lang);
-    setTextContent('.contact__form-button', 'sendButton', lang);
-    setTextContent('#modal', 'submitSuccessMessage', lang);
-    setTextContent('#btn_close-modal', 'closeButton', lang);
-
-    // Footer Section
-    setTextContent('.footer__description', 'footerDescription', lang);
-    const currentYear = new Date().getFullYear();
-    setTextContent('.footer__copyright', 'footerCopyright', lang);
-    document.querySelector('.footer__copyright').textContent =
-      `© ${currentYear}, ${translations.footerCopyright[lang]}`;
+    /* ====================== Contact Section ==========================*/
+    document.querySelector('#contact .section__title').textContent =
+      translations.contactTitle[lang];
+    document.querySelector('.contact__form-title').textContent =
+      translations.contactFormTitle[lang];
+    document.querySelector('.contact__form-label[for="name"]').textContent =
+      translations.nameLabel[lang];
+    document.querySelector('.contact__form-label[for="email"]').textContent =
+      translations.emailLabel[lang];
+    document.querySelector('.contact__form-label[for="subject"]').textContent =
+      translations.subjectLabel[lang];
+    document.querySelector('.contact__form-label[for="message"]').textContent =
+      translations.messageLabel[lang];
+    document.querySelector('.contact__form-button').textContent =
+      translations.sendButton[lang];
+    document.querySelector('#modal').textContent =
+      translations.submitSuccessMessage[lang];
+    document.querySelector('#btn_close-modal').textContent =
+      translations.closeButton[lang];
   });
+
+  /* ====================== Footer Section ==========================*/
+  document.querySelector('.footer__description').textContent =
+    translations.footerDescription[lang];
+  const currentYear = new Date().getFullYear();
+  document.querySelector('.footer__copyright').textContent =
+    `© ${currentYear}, ${translations.footerCopyright[lang]}`;
 };
 
 export default switchLanguages;
