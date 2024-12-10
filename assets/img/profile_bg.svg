@@ -16,8 +16,8 @@
       }
     </style>
     <linearGradient id="gradient-1" bx:pinned="true">
-      <stop offset="0" style="stop-color: rgb(243, 206, 58);"/>
-      <stop offset="1" style="stop-color: rgb(146, 123, 34);"/>
+      <stop offset="0" style="stop-color: rgb(249, 238, 193);"/>
+      <stop offset="1" style="stop-color: rgb(232, 213, 133);"/>
     </linearGradient>
     <linearGradient id="gradient-1-0" href="#gradient-1" gradientUnits="userSpaceOnUse" x1="149.935" y1="19.02" x2="149.935" y2="249"/>
   </defs>

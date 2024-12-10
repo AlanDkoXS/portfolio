@@ -190,7 +190,7 @@ html {
   border: none;
   outline: none;
   border-radius: 5px;
-  width: 15em;
+  width: 90%;
   height: auto;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
@@ -204,8 +204,8 @@ html {
     box-shadow: 0px 3px 10px #0202023b;
   }
   .btn:active {
-    transform: scale(0.95);
-    box-shadow: 0px 1px 5px #0202023b;
+    transform: scale(0.5);
+    box-shadow: var(--box-shadow);
   }
 }
 
@@ -270,7 +270,7 @@ html {
 
 @keyframes jump {
   50% {
-    transform: translateY(-10%) scaleY(1.05);
+    transform: translateY(-1.05) scaleY(1.05);
   }
 }
 
@@ -650,27 +650,27 @@ html {
       position: relative;
       aspect-ratio: 1/1;
       overflow: hidden;
-      transform: translateX(40px);
     }
 
     .home__image--background {
+      background-image: url('/assets/img/profile_bg.svg');
       margin-top: 0.5rem;
-      width: 100%;
-      height: auto;
+      width: 300px;
+      height: 300px;
       position: absolute;
       z-index: var(--z-fixed);
-      filter: drop-shadow(2px -2px 10px rgba(0, 0, 0, 0.8));
     }
 
     .home__image--sprite {
+      background-image: url('/assets/img/profile_sprite.svg');
       max-width: none;
-      filter: drop-shadow(0px -5px 10px rgba(0, 0, 0, 1));
+      filter: drop-shadow(0px -5px 10px rgba(0, 18, 25, 1));
       width: 6000px;
       height: 300px;
       position: absolute;
       top: 0;
       left: 0;
-      animation: animateSprite 0.6s steps(20) 2.5s;
+      animation: animateSprite 1s steps(20, end) 2.5s;
       z-index: var(--z-fixed);
     }
   }
@@ -1040,9 +1040,9 @@ html {
     --small-font-size: 1rem;
   }
 
-html {
-    box-sizing:inherit;
-}
+  html {
+    box-sizing: inherit;
+  }
 
   .section {
     padding: 2.5em 2em;
@@ -1067,6 +1067,10 @@ html {
     .btn__open {
       display: none;
     }
+  }
+
+  .btn {
+    width: 5rem;
   }
 
   .background-container {
