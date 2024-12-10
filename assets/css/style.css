@@ -650,7 +650,7 @@ html {
       position: relative;
       aspect-ratio: 1/1;
       overflow: hidden;
-      transform: translateX(40px);
+      transform: translateX(60px) scale(0.85);
     }
 
     .home__image--background {
@@ -664,7 +664,7 @@ html {
 
     .home__image--sprite {
       max-width: none;
-      filter: drop-shadow(5px -5px 5px rgba(0, 18, 25, .5));
+      filter: drop-shadow(5px -5px 5px rgba(0, 18, 25, 0.5));
       width: 6000px;
       height: 300px;
       position: absolute;
