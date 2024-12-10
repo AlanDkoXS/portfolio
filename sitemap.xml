@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Home section -->
+    <url>
+        <loc>https://www.alanquintana.pro/#home</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- About section -->
+    <url>
+        <loc>https://www.alanquintana.pro/#about</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Skills section -->
+    <url>
+        <loc>https://www.alanquintana.pro/#skills</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Portfolio section -->
+    <url>
+        <loc>https://www.alanquintana.pro/#portfolio</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Projects section -->
+    <url>
+        <loc>https://www.alanquintana.pro/#projects</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Contact section -->
+    <url>
+        <loc>https://www.alanquintana.pro/#contact</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Resume section -->
+    <url>
+        <loc>https://www.alanquintana.pro/assets/html/resume.html</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- LinkedIn -->
+    <url>
+        <loc>https://www.linkedin.com/in/alanxs/</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Instagram -->
+    <url>
+        <loc>https://www.instagram.com/anotherguyontheroad/</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- GitHub -->
+    <url>
+        <loc>https://github.com/AlanDkoXS</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Dribbble -->
+    <url>
+        <loc>https://dribbble.com/Alan3XS</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Twitter -->
+    <url>
+        <loc>https://x.com/AlanDKO</loc>
+        <lastmod>2024-12-09</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+</urlset>
