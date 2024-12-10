@@ -19,7 +19,7 @@
   /* Colors ====================================*/
   --primary-color: light-dark(#f3ce3a, #ffffffcc);
   --bg-color-section: light-dark(#001219, #111);
-  --bg-color-buttons: light-dark(#00000080, #6a6a6a);
+  --bg-color-buttons: light-dark(#000000, #6a6a6a);
   --bg-color-buttons2: light-dark(#001219, transparent);
 
   /* Typografy ====================================*/
@@ -653,7 +653,7 @@ html {
       position: relative;
       aspect-ratio: 1/1;
       overflow: hidden;
-      transform: translateX(60px) scale(1);
+      transform: translateX(50px) scale(1);
     }
 
     .home__image--background {
@@ -909,11 +909,11 @@ html {
 }
 
 .carousel__controls {
-  margin-top: 10px;
+  margin-top: var(--mr-2);
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  gap: 1em;
 }
 
 .carousel__button {
