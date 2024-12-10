@@ -672,7 +672,7 @@ html {
       position: absolute;
       top: 0;
       left: 0;
-      animation: animateSprite 0.6s steps(20) 2.5s;
+      animation: animateSprite 1s steps(20) 2s;
       z-index: var(--z-fixed);
     }
   }
