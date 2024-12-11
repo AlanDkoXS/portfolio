@@ -653,7 +653,7 @@ html {
       position: relative;
       aspect-ratio: 1/1;
       overflow: hidden;
-      transform: translateX(50px) scale(1);
+      transform: translateX(30px);
     }
 
     .home__image--background {
