@@ -1,5 +1,5 @@
 const loaderContainer = document.querySelector('.loader');
-const spriteImage = document.querySelector('.home__sprite');
+const spriteImage = document.querySelector('.home__image');
 
 function loader() {
   window.addEventListener('load', () => {

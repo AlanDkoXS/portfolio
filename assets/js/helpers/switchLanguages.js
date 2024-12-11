@@ -249,9 +249,8 @@ const switchLanguages = () => {
 
     // Footer Section
     updateSectionText('.footer__description', 'footerDescription', lang);
-    const currentYear = new Date().getFullYear();
-    document.querySelector('.footer__copyright').textContent =
-      `© ${currentYear}, ${translations.footerCopyright[lang]}`;
+    updateSectionText('.footer__copyright', 'footerCopyright', lang);
+
   });
 };
 
