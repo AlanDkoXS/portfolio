@@ -273,7 +273,7 @@ html {
 
 @keyframes jump {
   50% {
-    transform: translateY(-1.05) scaleY(1.05);
+    transform: translateY(-20%) scaleY(1.05);
   }
 }
 
