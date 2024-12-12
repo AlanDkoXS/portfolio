@@ -19,15 +19,12 @@
   /* Colors ====================================*/
   --primary-color: light-dark(#f3ce3a, #ffffffcc);
   --bg-color-section: light-dark(#001219, #111);
-  --bg-color-buttons: light-dark(#000, #6a6a6a);
+  --bg-color-buttons: light-dark(#030b0d, #6a6a6a);
   --bg-color-buttons2: light-dark(#001219, transparent);
 
   /* Typografy ====================================*/
   --normal-font-size: 1rem;
   --small-font-size: 0.8rem
-
-  /* Weight ====================================*/
-    --font-semi-bold: 600;
 
   /* Margin ====================================*/
   --mr-2: 1rem;
@@ -348,7 +345,7 @@ html {
           .navbar__link {
             color: var(--primary-color);
             font-size: 1.1rem;
-            font-weight: var(--font-semi-bold);
+            font-weight: 600;
             transition: color 0.3s;
 
             &:hover {
