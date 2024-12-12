@@ -1,0 +1,208 @@
+/* ============= Media Queries MIN WIDTH (768px)============= */
+
+@media (min-width: 768px) {
+  :root {
+    --header-height: 4rem;
+    --normal-font-size: 1.2rem;
+    --small-font-size: 1rem;
+  }
+
+  html {
+    box-sizing: inherit;
+  }
+
+  .section {
+    padding: 2.5em 2em;
+  }
+
+  .header {
+    .navbar {
+      .navbar__menu {
+        padding: 10px;
+        position: static;
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+        .navbar__list {
+          flex-direction: row;
+        }
+        .btn__close {
+          display: none;
+        }
+      }
+    }
+    .btn__open {
+      display: none;
+    }
+  }
+
+  .btn {
+    width: 5rem;
+  }
+
+  /* Background WIDTH 768px====================================*/
+  .background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .bgGrain {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url('/assets/img/bgGrain.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    opacity: .5;
+    height: 100%;
+  }
+
+  .bgBack,
+  .bgMiddle,
+  .bgFront {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .bgBack {
+    filter: blur(2px) brightness(0.5);
+  }
+
+  .bgMiddle {
+    filter: blur(1px) brightness(0.9) drop-shadow(2px 2px 5px rgba(1, 1, 1, 1));
+  }
+
+  .bgFront {
+    filter: blur(0.5px) brightness(1) drop-shadow(2px 2px 5px rgba(1, 1, 1, 1));
+  }
+
+  .background-container:hover .bgBack {
+    transform: translate(-50%, -50%) translate(-40px, 20px);
+  }
+
+  .background-container:hover .bgMiddle {
+    transform: translate(-50%, -50%) translate(-30px, -15px);
+  }
+
+  .background-container:hover .bgFront {
+    transform: translate(-50%, -50%) translate(40px, -10px);
+  }
+
+  .bgBack,
+  .bgMiddle,
+  .bgFront {
+    transition: transform 0.5s ease-in-out;
+  }
+  /* HOME MIN WIDTH 768px ========================== */
+
+  .home {
+    .home__container {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: auto;
+      padding-top: var(--header-height);
+
+      .home__image {
+        width: clamp(min(375px, 100%) 500px);
+        grid-column: 2 / 3;
+        grid-row: 1 / 4;
+        transform: translateY(3.3rem);
+      }
+
+      .home__buttons {
+        margin-left: 4em;
+      }
+
+      .home__social {
+        position: fixed;
+        top: 30%;
+        left: 0;
+        flex-direction: column;
+        row-gap: var(--mr-2);
+      }
+
+      .home__info {
+        .home__title {
+          margin-top: 2rem;
+        }
+
+        .home__description {
+          padding: 0 2rem;
+        }
+      }
+    }
+  }
+
+  /* ABOUT MIN WIDTH 768px ========================== */
+  .about {
+    animation: animation-section 1s ease both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 700px;
+    opacity: 0;
+  }
+  .about__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 3rem;
+  }
+
+  .about__img img {
+    width: 25vw;
+  }
+
+  /* PROJECTS MIN WIDTH 768px ========================== */
+  .projects {
+    .projects__container {
+      padding: 3rem 0;
+      gap: 5rem;
+
+      .projects__project {
+        .projects__inner {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        &:nth-child(even) {
+          .projects__image {
+            order: 2;
+          }
+
+          .projects__info {
+            order: 1;
+            text-align: right;
+          }
+
+          .projects__buttons {
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+
+  .contact {
+    .contact__container {
+      grid-template-columns: 0.5fr 1fr;
+    }
+  }
+
+  .footer {
+    .footer__container {
+      grid-template-columns: repeat(2, 2fr);
+    }
+  }
+}

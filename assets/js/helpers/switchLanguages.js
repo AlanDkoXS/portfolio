@@ -52,16 +52,16 @@ const translations = {
     es: 'Sobre mí',
   },
   aboutDescription: {
-    en: 'I can help you develop modern, responsive, and functional web applications tailored to your business needs. My approach combines visually appealing design with a seamless user experience, ensuring that the applications are not only aesthetically pleasing but also intuitive and easy to use. Leveraging technologies like HTML, CSS, JavaScript, React, and Node.js, I build scalable and efficient solutions, from interactive interfaces to complete backend systems. My goal is to create digital tools that streamline processes, enhance user engagement, and add value to your business.',
-    es: 'Puedo ayudarte a desarrollar aplicaciones web modernas, responsivas y funcionales, adaptadas a las necesidades de tu negocio. Mi enfoque combina un diseño visualmente atractivo con una experiencia de usuario fluida, asegurando que las aplicaciones no solo sean estéticamente agradables, sino también intuitivas y fáciles de usar. Aprovechando tecnologías como HTML, CSS, JavaScript, React y Node.js, creo soluciones escalables y eficientes, desde interfaces interactivas hasta sistemas backend completos. Mi objetivo es crear herramientas digitales que optimicen procesos, mejoren la interacción con los usuarios y aporten valor a tu negocio.',
+    en: 'I can help you develop modern, responsive, and functional web applications tailored to your business needs. My approach combines visually appealing design with a seamless user experience, ensuring that the applications are not only aesthetically pleasing but also intuitive and easy to use.',
+    es: 'Puedo ayudarte a desarrollar aplicaciones web modernas, responsivas y funcionales, adaptadas a las necesidades de tu negocio. Mi enfoque combina un diseño visualmente atractivo con una experiencia de usuario fluida, asegurando que las aplicaciones no solo sean estéticamente agradables, sino también intuitivas y fáciles de usar.',
   },
   skillsTitle: {
     en: 'Skills',
     es: 'Habilidades',
   },
   skillsDescription: {
-    en: 'I have a diverse skill set in graphic design, web development, and project management. Proficient in Adobe Creative Suite (Photoshop, Illustrator, After Effects) and Figma, I create engaging visuals. My web development knowledge includes HTML, CSS, JavaScript, and React, enabling me to build interactive user interfaces. I also have strong interpersonal skills, such as effective communication and creativity, which enhance my collaboration in team environments.',
-    es: 'Tengo un conjunto diverso de habilidades en diseño gráfico, desarrollo web y gestión de proyectos. Soy competente en Adobe Creative Suite (Photoshop, Illustrator, After Effects) y Figma, creando visuales atractivos. Mi conocimiento en desarrollo web incluye HTML, CSS, JavaScript y React, lo que me permite construir interfaces de usuario interactivas. También tengo fuertes habilidades interpersonales, como comunicación efectiva y creatividad, que mejoran mi colaboración en entornos de equipo.',
+    en: 'Leveraging technologies like HTML, CSS, JavaScript, React, and Node.js, I build scalable and efficient solutions, from interactive interfaces to complete backend systems. My goal is to create digital tools that streamline processes, enhance user engagement, and add value to your business.',
+    es: 'Aprovechando tecnologías como HTML, CSS, JavaScript, React y Node.js, creo soluciones escalables y eficientes, desde interfaces interactivas hasta sistemas backend completos. Mi objetivo es crear herramientas digitales que optimicen procesos, mejoren la interacción con los usuarios y aporten valor a tu negocio.',
   },
   skillsTagsTitle: {
     en: 'Soft Skills',
@@ -250,7 +250,6 @@ const switchLanguages = () => {
     // Footer Section
     updateSectionText('.footer__description', 'footerDescription', lang);
     updateSectionText('.footer__copyright', 'footerCopyright', lang);
-
   });
 };
 

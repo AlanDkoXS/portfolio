@@ -6,8 +6,8 @@
       }
 
       .cls-2 {
-        fill: #666;
-        opacity: .2;
+        fill: #000;
+        opacity: 1;
       }
 
       .cls-3 {

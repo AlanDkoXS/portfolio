@@ -16,3 +16,6 @@
 
 # Eslint Config
 eslint.config.mjs
+
+# Public Key
+config.js
