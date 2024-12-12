@@ -151,10 +151,10 @@
 }
 
 .about__description {
-    padding: 0.5rem;
-    text-align: center;
-    text-wrap: wrap;
-  }
+  padding: 0.5rem;
+  text-align: center;
+  text-wrap: wrap;
+}
 
 .about__img--container {
   display: flex;
@@ -358,14 +358,12 @@
   opacity: 0;
 }
 
-.container {
+.project__container {
   overflow: hidden;
   padding: 20px;
-  margin-top: 2em;
-  background: rgba(0, 0, 0, 0.1);
-}
+  margin-top: 2em;}
 
-.card-carousel {
+.project__card--carousel {
   --card-width: 80%;
   --card-max-width: 280px;
   --card-height: 350px;
@@ -380,16 +378,16 @@
 }
 
 @media screen and (max-width: 640px) {
-  .card-carousel {
+  .project__card--carousel {
     margin-left: calc((100vw - var(--carousel-min-width) - 40px) / 2);
   }
 }
 
-.card-carousel.smooth-return {
+.project__card--carousel.smooth-return {
   transition: all 0.2s ease;
 }
 
-.card-carousel .card {
+.project__card--carousel .project__card {
   background: whitesmoke;
   width: var(--card-width);
   max-width: var(--card-max-width);
@@ -412,29 +410,29 @@
   justify-content: center;
 }
 
-.card.highlight {
+.project__card.highlight {
   filter: brightness(1);
 }
 
-.card:nth-of-type(1) .image-container {
+.project__card:nth-of-type(1) .project__image--container {
   background-image: url('https://static.addtoany.com/images/dracaena-cinnabari.jpg');
 }
 
-.card:nth-of-type(2) .image-container {
+.project__card:nth-of-type(2) .project__image--container {
   background-image: url('https://www.w3schools.com/w3css/img_lights.jpg');
 }
 
-.card:nth-of-type(3) .image-container {
+.project__card:nth-of-type(3) .project__image--container {
   background-image: url('https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
 }
-.card:nth-of-type(4) .image-container {
+.project__card:nth-of-type(4) .project__image--container {
   background-image: url('https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
 }
-.card:nth-of-type(5) .image-container {
+.project__card:nth-of-type(5) .project__image--container {
   background-image: url('https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg');
 }
 
-.image-container {
+.project__image--container {
   width: 8em;
   height: 8em;
   position: relative;
@@ -447,7 +445,7 @@
   box-shadow: inset 0px 0px 17px 0px rgba(0, 0, 0, 0.3);
 }
 
-.image-container::after {
+.project__image--container::after {
   content: '';
   display: block;
   width: 120%;

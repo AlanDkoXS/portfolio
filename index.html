@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/mobile.css" />
     <link rel="stylesheet" href="assets/css/screen.css" />
-    <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/main.js" defer></script>
     <!-- EmailJS  -------------------------------------------------------------->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
@@ -194,25 +194,23 @@
                         <img src="assets/img/aboutme.png" alt="About me image" title="About me image" />
                     </div>
                 </div>
-                <div class="about__description">
-                    <p>
-                        I can help you develop modern, responsive, and functional web applications tailored to your
-                        business needs. My approach combines visually appealing design with a seamless user experience,
-                        ensuring that the applications are not only aesthetically pleasing but also intuitive and easy
-                        to use.
-                    </p>
-                </div>
+                <p class="about__description">
+                    I can help you develop modern, responsive, and functional web applications tailored to your
+                    business needs. My approach combines visually appealing design with a seamless user experience,
+                    ensuring that the applications are not only aesthetically pleasing but also intuitive and easy
+                    to use.
+                </p>
             </div>
         </section>
         <!-- Skilss ---------------------------------------------------------------->
         <section id="skills" class="skills section">
             <h2 class="section__title">Skills</h2>
             <div class="skills__container grid--container">
-            <p class="skills__description">
-                Leveraging technologies like HTML, CSS, JavaScript, React, and Node.js, I build scalable and
-                efficient solutions, from interactive interfaces to complete backend systems. My goal is to create
-                digital tools that streamline processes, enhance user engagement, and add value to your business.
-            </p>
+                <p class="skills__description">
+                    Leveraging technologies like HTML, CSS, JavaScript, React, and Node.js, I build scalable and
+                    efficient solutions, from interactive interfaces to complete backend systems. My goal is to create
+                    digital tools that streamline processes, enhance user engagement, and add value to your business.
+                </p>
                 <div class="skills__wrapper">
                     <div class="skills__icons">
                         <!--Design Tools -->
@@ -369,33 +367,31 @@
 
         <!-- Projects ---------------------------------------------------------------->
         <section id="projects" class="projects section">
-
-            <h2>Projects</h2>
-
-            <div class="container">
-                <div class="card-carousel">
-                    <div class="card" id="1">
-                        <div class="image-container"></div>
+            <h2 class="section__title">Projects</h2>
+            <div class="project__container">
+                <div class="project__card--carousel">
+                    <div class="project__card" id="1">
+                        <div class="project__image--container"></div>
                         <p>1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
                     </div>
-                    <div class="card" id="2">
-                        <div class="image-container"></div>
+                    <div class="project__card" id="2">
+                        <div class="project__image--container"></div>
                         <p>2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
                     </div>
-                    <div class="card" id="3">
-                        <div class="image-container"></div>
+                    <div class="project__card" id="3">
+                        <div class="project__image--container"></div>
                         <p>3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
                     </div>
-                    <div class="card" id="4">
-                        <div class="image-container"></div>
+                    <div class="project__card" id="4">
+                        <div class="project__image--container"></div>
                         <p>4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
                     </div>
-                    <div class="card" id="5">
-                        <div class="image-container"></div>
+                    <div class="project__card" id="5">
+                        <div class="project__image--container"></div>
                         <p>5 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
                     </div>
                 </div>
-                <a href="#" class="visuallyhidden card-controller">Carousel controller</a>
+                <a href="#" class="visuallyhidden project__card--controller">Carousel controller</a>
             </div>
         </section>
 

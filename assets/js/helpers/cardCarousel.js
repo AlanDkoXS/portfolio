@@ -1,9 +1,9 @@
-function initializeCarousel() {
-  const cardsContainer = document.querySelector('.card-carousel');
-  const cardsController = document.querySelector(
-    '.card-carousel + .card-controller'
-  );
+const cardsContainer = document.querySelector('.project__card--carousel');
+const cardsController = document.querySelector(
+  '.project__card--carousel + .project__card--controller'
+);
 
+export function cardCarousel() {
   class DraggingEvent {
     constructor(target = undefined) {
       this.target = target;
@@ -18,17 +18,13 @@ function initializeCarousel() {
         handler = callback(e);
 
         window.addEventListener('mousemove', handler);
-
         document.addEventListener('mouseleave', clearDraggingEvent);
-
         window.addEventListener('mouseup', clearDraggingEvent);
 
         function clearDraggingEvent() {
           window.removeEventListener('mousemove', handler);
           window.removeEventListener('mouseup', clearDraggingEvent);
-
           document.removeEventListener('mouseleave', clearDraggingEvent);
-
           handler(null);
         }
       });
@@ -37,21 +33,17 @@ function initializeCarousel() {
         handler = callback(e);
 
         window.addEventListener('touchmove', handler);
-
         window.addEventListener('touchend', clearDraggingEvent);
-
         document.body.addEventListener('mouseleave', clearDraggingEvent);
 
         function clearDraggingEvent() {
           window.removeEventListener('touchmove', handler);
           window.removeEventListener('touchend', clearDraggingEvent);
-
           handler(null);
         }
       });
     }
 
-    // Get the distance that the user has dragged
     getDistance(callback) {
       function distanceInit(e1) {
         let startingX, startingY;
@@ -91,18 +83,15 @@ function initializeCarousel() {
     constructor(container, controller = undefined) {
       super(container);
 
-      // DOM elements
       this.container = container;
       this.controllerElement = controller;
-      this.cards = container.querySelectorAll('.card');
+      this.cards = container.querySelectorAll('.project__card');
 
-      // Carousel data
       this.centerIndex = (this.cards.length - 1) / 2;
       this.cardWidth =
         (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
       this.xScale = {};
 
-      // Resizing
       window.addEventListener('resize', this.updateCardWidth.bind(this));
 
       if (this.controllerElement) {
@@ -112,10 +101,8 @@ function initializeCarousel() {
         );
       }
 
-      // Initializers
       this.build();
 
-      // Bind dragging event
       super.getDistance(this.moveCards.bind(this));
     }
 
@@ -150,7 +137,6 @@ function initializeCarousel() {
       const temp = { ...this.xScale };
 
       if (e.keyCode === 39) {
-        // Left arrow
         for (let x in this.xScale) {
           const newX =
             parseInt(x) - 1 < -this.centerIndex
@@ -162,7 +148,6 @@ function initializeCarousel() {
       }
 
       if (e.keyCode == 37) {
-        // Right arrow
         for (let x in this.xScale) {
           const newX =
             parseInt(x) + 1 > this.centerIndex
@@ -195,15 +180,12 @@ function initializeCarousel() {
 
       if (x < 0) {
         formula = (scale * 100 - this.cardWidth) / 2;
-
         return formula;
       } else if (x > 0) {
         formula = 100 - (scale * 100 + this.cardWidth) / 2;
-
         return formula;
       } else {
         formula = 100 - (scale * 100 + this.cardWidth) / 2;
-
         return formula;
       }
     }
@@ -243,11 +225,9 @@ function initializeCarousel() {
 
       if (x <= 0) {
         formula = 1 - (-1 / 5) * x;
-
         return formula;
       } else if (x > 0) {
         formula = 1 - (1 / 5) * x;
-
         return formula;
       }
     }
@@ -326,7 +306,9 @@ function initializeCarousel() {
     }
   }
 
-  const carousel = new CardCarousel(cardsContainer);
+  const carousel = new CardCarousel(cardsContainer, cardsController);
 }
 
-export default initializeCarousel;
+cardCarousel();
+
+export default cardCarousel;
