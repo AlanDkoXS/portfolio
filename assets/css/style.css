@@ -24,18 +24,8 @@
 
   /* Typografy ====================================*/
   --normal-font-size: 1rem;
-  --small-font-size: 0.8rem
-
-  /* Margin ====================================*/
-  --mr-2: 1rem;
-  --mr-3: 0.8rem;
-  --mr-4: 2rem;
-
-  /* Padding ====================================*/
-  --pad-1: 1.5rem;
-
-  /* z-index ====================================*/
-  --z-fixed: 1;
+  --small-font-size: 0.8rem /* z-index ====================================*/
+    --z-fixed: 1;
   --z-modal: 2;
 
   /* Shadows ====================================*/
@@ -87,7 +77,7 @@ html {
   }
 
   svg {
-    color: var(--primary-color)
+    color: var(--primary-color);
   }
 
   /* Darkmode ====================================*/
@@ -177,14 +167,14 @@ html {
 
 .section__title {
   text-align: center;
-  margin: var(--mr-3) 0;
+  margin: 0.8rem 0;
 }
 
 .grid--container {
   max-width: 1024px;
   display: grid;
   margin: 0 auto;
-  padding: 0 var(--mr-2);
+  padding: 0 1rem;
 }
 
 .flex--container {

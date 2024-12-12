@@ -147,8 +147,14 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  padding: var(--pad-1);
+  padding: 1rem;
 }
+
+.about__description {
+    padding: 0.5rem;
+    text-align: center;
+    text-wrap: wrap;
+  }
 
 .about__img--container {
   display: flex;
@@ -465,7 +471,7 @@
         text-decoration: none;
         flex-direction: column;
         gap: 1rem;
-        padding: var(--pad-1);
+        padding: 1rem;
       }
     }
 
