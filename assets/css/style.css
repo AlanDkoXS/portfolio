@@ -19,12 +19,14 @@
   /* Colors ====================================*/
   --primary-color: light-dark(#f3ce3a, #ffffffcc);
   --bg-color-section: light-dark(#001219, #111);
-  --bg-color-buttons: light-dark(#020e12, #6a6a6a);
+  --bg-color-buttons: light-dark(#000, #6a6a6a);
   --bg-color-buttons2: light-dark(#001219, transparent);
 
   /* Typografy ====================================*/
   --normal-font-size: 1rem;
-  --small-font-size: 0.8rem /* Weight ====================================*/
+  --small-font-size: 0.8rem
+
+  /* Weight ====================================*/
     --font-semi-bold: 600;
 
   /* Margin ====================================*/
@@ -85,6 +87,10 @@ html {
     max-width: 100%;
     height: auto;
     display: block;
+  }
+
+  svg {
+    color: var(--primary-color)
   }
 
   /* Darkmode ====================================*/

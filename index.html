@@ -209,34 +209,72 @@
             <h2 class="section__title">Skills</h2>
 
             <div class="skills__container grid--container">
-                <p class="skills__description flex--container">
+                <p class="skills__description">
                     Leveraging technologies like HTML, CSS, JavaScript, React, and Node.js, I build scalable and
                     efficient solutions, from interactive interfaces to complete backend systems. My goal is to create
                     digital tools that streamline processes, enhance user engagement, and add value to your business.
                 </p>
                 <div class="skills__wrapper">
-                    <div class="skills__cards">
-                        <!--Card 1 -->
-                        <img class="skills__cards--container" class="icon_skills" src="/assets/img/skills/icons-01.svg"
-                            alt="Photoshop" />
-                        <!--Card 2 -->
-                        <img class="skills__cards--container" class="icon_skills" src="/assets/img/skills/icons-02.svg"
-                            alt="Illustrator" />
-                        <!--Card 3 -->
-                        <img class="skills__cards--container" class="icon_skills" src="/assets/img/skills/icons-03.svg"
-                            alt="After Effects" />
-                        <!--Card 4 -->
-                        <img class="skills__cards--container" class="icon_skills" src="/assets/img/skills/icons-04.svg"
-                            alt="HTML" />
-                        <!--Card 5 -->
-                        <img class="skills__cards--container" class="icon_skills" src="/assets/img/skills/icons-05.svg"
-                            alt="CSS" />
-                        <!--Card 6 -->
-                        <img class="skills__cards--container" class="icon_skills" src="/assets/img/skills/icons-06.svg"
-                            alt="Javascript" />
-                        <!--Card 7 -->
-                        <img class="skills__cards--container" class="icon_skills" src="/assets/img/skills/icons-07.svg"
-                            alt="React" />
+                    <div class="skills__icons">
+                        <!--Design Tools -->
+                        <h3> Design Tools</h3>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/photoshop.svg#iconPhotoshop"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/illustrator.svg#iconIllustrator"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/after-effects.svg#iconAFX"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/creative-cloud.svg#iconCreativeCloud"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/figma.svg#iconFigma"></use>
+                        </svg>
+                        <!--Frontend Tools -->
+                        <h3>Frontend Tools</h3>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/html.svg#iconHTML"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/css.svg#iconCSS"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/javascript.svg#iconJavascript"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/react.svg#iconReact"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/vitejs.svg#iconViteJS"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/tailwind-CSS.svg#iconTailwindCSS"></use>
+                        </svg>
+                        <!--Backend Tools -->
+                        <h3>Backend Tools</h3>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/nodejs.svg#iconNodeJS"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/nextjs.svg#iconNextJS"></use>
+                        </svg>
+                        <!--Development Tools -->
+                        <h3>Development Tools</h3>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/code.svg#iconVSCode"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/git.svg#iconGit"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/npm.svg#iconNPM"></use>
+                        </svg>
+                        <svg class="skills__icons--container icon_skills">
+                            <use xlink:href="/assets/img/skills/bash.svg#iconBash"></use>
+                        </svg>
                     </div>
                 </div>
                 <div class="skills__tags flex--container">
@@ -245,7 +283,7 @@
                         <span class="skills__tag">Responsible</span>
                         <span class="skills__tag">Teamwork</span>
                         <span class="skills__tag">Creative</span>
-                        <span class="skills__tag">Autodidact</span>
+                        <span class="skills__tag">Sense of urgency</span>
                         <span class="skills__tag">Proactive</span>
                     </div>
                 </div>
@@ -330,22 +368,40 @@
             </div>
         </section>
 
+        <!-- Projects ---------------------------------------------------------------->
         <section id="projects" class="projects section">
-            <h2 class="section__title">Projects</h2>
 
-            <div class="projects__container grid--container">
-                <div class="projects__project">
-                    <div class="projects__inner grid--container">
-                        <div class="projects__info">
-                            <h3 class="projects__name">Projects</h3>
-                            <p class="projects__description">Coming Soon</p>
-                            <div id="dribbble-shots" class="projects__shots"></div>
-                        </div>
+            <h2>Projects</h2>
+
+            <div class="container">
+                <div class="card-carousel">
+                    <div class="card" id="1">
+                        <div class="image-container"></div>
+                        <p>1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
+                    </div>
+                    <div class="card" id="2">
+                        <div class="image-container"></div>
+                        <p>2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
+                    </div>
+                    <div class="card" id="3">
+                        <div class="image-container"></div>
+                        <p>3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
+                    </div>
+                    <div class="card" id="4">
+                        <div class="image-container"></div>
+                        <p>4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
+                    </div>
+                    <div class="card" id="5">
+                        <div class="image-container"></div>
+                        <p>5 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
                     </div>
                 </div>
+                <a href="#" class="visuallyhidden card-controller">Carousel controller</a>
             </div>
         </section>
 
+
+        <!-- Contact ---------------------------------------------------------------->
         <section id="contact" class="contact section">
             <h2 class="section__title">Contact</h2>
 

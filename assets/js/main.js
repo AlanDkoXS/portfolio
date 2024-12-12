@@ -8,6 +8,8 @@ import resetToHome from './helpers/reload_page.js';
 import sendEmail from './helpers/send_form.js';
 import switchLanguages from './helpers/switchLanguages.js';
 import showScrollButtons from './helpers/scroll_buttons.js';
+import initializeCarousel from './helpers/carousel.js';
+
 
 loader();
 
@@ -28,3 +30,7 @@ sendEmail();
 switchLanguages();
 
 showScrollButtons();
+
+document.addEventListener("DOMContentLoaded", function() {
+    initializeCarousel();
+  });

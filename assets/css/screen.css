@@ -40,7 +40,7 @@
     width: 5rem;
   }
 
-  /* Background WIDTH 768px====================================*/
+  /* Background MIN WIDTH 768px====================================*/
   .background-container {
     position: absolute;
     top: 0;
@@ -64,7 +64,7 @@
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
-    opacity: .5;
+    opacity: 0.5;
     height: 100%;
   }
 
@@ -165,6 +165,18 @@
     width: 25vw;
   }
 
+  /* SKILLS MIN WIDTH 768px ========================== */
+  .skills {
+    .skills__wrapper {
+      .skills__icons {
+        grid-template-columns: repeat(6, 1fr);
+      }
+      .skills__icons--container {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
   /* PROJECTS MIN WIDTH 768px ========================== */
   .projects {
     .projects__container {
