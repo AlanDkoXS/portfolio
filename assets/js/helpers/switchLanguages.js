@@ -17,6 +17,22 @@ const updateSkillsTags = (selector, key, lang) => {
   }
 };
 
+function updateProjectText(lang) {
+    const titles = document.querySelectorAll('.project__title');
+    const descriptions = document.querySelectorAll('.project__description');
+
+    titles.forEach((title, index) => {
+      const titleKey = `projectTitle${index + 1}`;
+      const descriptionKey = `projectDescription${index + 1}`;
+
+      if (title && descriptions[index]) {
+        title.textContent = translations[titleKey][lang] || translations[titleKey]['en'];
+        descriptions[index].textContent = translations[descriptionKey][lang] || translations[descriptionKey]['en'];
+      }
+    });
+  }
+
+
 const switchLanguages = () => {
   const languageToggle = document.getElementById('language-toggle');
 
@@ -27,7 +43,7 @@ const switchLanguages = () => {
       { selector: '.navbar__link[href="#home"]', key: 'navHome' },
       { selector: '.navbar__link[href="#about"]', key: 'navAbout' },
       { selector: '.navbar__link[href="#skills"]', key: 'navSkills' },
-      { selector: '.navbar__link[href="#portfolio"]', key: 'navPortfolio' },
+      /* { selector: '.navbar__link[href="#portfolio"]', key: 'navPortfolio' }, */
       { selector: '.navbar__link[href="#projects"]', key: 'navProjects' },
       { selector: '.navbar__link[href="#contact"]', key: 'navContact' },
     ];
@@ -44,8 +60,8 @@ const switchLanguages = () => {
       lang
     );
     updateSectionText(
-      '.btn.btn--primary[href="#portfolio"]',
-      'portfolioButton',
+      '.btn.btn--primary[href="#skills"]',
+      'skillsButton',
       lang
     );
     updateSectionText(
@@ -54,24 +70,35 @@ const switchLanguages = () => {
       lang
     );
 
-    // About Section
+    /* <-- About Section --> */
     updateSectionText('#about .section__title', 'aboutTitle', lang);
     updateSectionText('.about__description', 'aboutDescription', lang);
 
-    // Skills Section
+    /* <-- Skills Section --> */
     updateSectionText('#skills .section__title', 'skillsTitle', lang);
     updateSectionText('.skills__description', 'skillsDescription', lang);
     updateSectionText('.skills__tags-title', 'skillsTagsTitle', lang);
     updateSkillsTags('.skills__tag', 'skillsTags', lang);
+    updateSectionText('.skills__title', 'skillsDesignTools', lang);
+    updateSectionText(
+      '.skills__frontend-tools-title',
+      'skillsFrontendTools',
+      lang
+    );
+    updateSectionText(
+      '.skills__development-tools-title',
+      'skillsDevelopmentTools',
+      lang
+    );
 
     // Portfolio Section
-    updateSectionText('.portfolio__title', 'portfolioTitle', lang);
-    updateSectionText('.designs__title', 'designsTitle', lang);
+/*     updateSectionText('.portfolio__title', 'portfolioTitle', lang);
+    updateSectionText('.designs__title', 'designsTitle', lang); */
 
     // Project Section
-    updateSectionText('#projects .section__title', 'projectsTitle', lang);
-    updateSectionText('.projects__name', 'projectsName', lang);
-    updateSectionText('.projects__description', 'projectsDescription', lang);
+    updateProjectText(lang);
+
+
 
     // Contact Section
     updateSectionText('#contact .section__title', 'contactTitle', lang);

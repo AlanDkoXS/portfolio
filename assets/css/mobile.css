@@ -353,6 +353,12 @@
   margin-top: 2em;
 }
 
+.project__card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
 .project__card--carousel {
   --card-width: 80%;
   --card-max-width: 280px;
@@ -413,7 +419,7 @@
 }
 
 .project__card:nth-of-type(3) .project__image--container {
-  background-image: url('https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
+  background-image: url('../img/project_img/rick.webp');
 }
 .project__card:nth-of-type(4) .project__image--container {
   background-image: url('https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
@@ -423,30 +429,50 @@
 }
 
 .project__image--container {
-  width: 8em;
-  height: 8em;
-  position: relative;
-  background-size: cover;
-  margin-bottom: 2em;
-  border-radius: 100%;
-  padding: 1em;
-  -webkit-box-shadow: inset 0px 0px 17px 0px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: inset 0px 0px 17px 0px rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0px 0px 17px 0px rgba(0, 0, 0, 0.3);
-}
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -1; /* Coloca la imagen detrás del texto */
+  }
 
-.project__image--container::after {
-  content: '';
-  display: block;
-  width: 120%;
-  height: 120%;
-  border: solid 3px rgba(0, 0, 0, 0.1);
-  border-radius: 100%;
-  position: absolute;
-  top: calc(-10% - 3px);
-  left: calc(-10% - 3px);
-}
+/* Capa de blur */
+.project__image--container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px); /* Aplica el efecto de desenfoque */
+    -webkit-backdrop-filter: blur(10px); /* Compatibilidad para Safari */
+    z-index: 2; /* Encima de la imagen pero debajo del texto */
+  }
 
+  /* Capa con degradado de oscuro a transparente */
+  .project__image--container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%; /* Ajusta la altura del degradado */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    z-index: 3; /* Encima del blur */
+  }
+
+  /* Estilo del texto para asegurarse de que esté encima */
+  .project__card h3.project__title,
+  .project__card p.project__description {
+    position: relative; /* Necesario para estar encima del fondo */
+    z-index: 4; /* Encima de todo */
+    color: var(--primary-color); /* Contraste con el fondo */
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Opcional para mayor legibilidad */
+    margin: 1em;
+  }
 /* ============= Contact ============= */
 .contact {
   .contact__container {

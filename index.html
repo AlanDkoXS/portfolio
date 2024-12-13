@@ -174,7 +174,7 @@
             </div>
             </a>
         </section>
-        <!-- Skilss ---------------------------------------------------------------->
+        <!-- Skills ---------------------------------------------------------------->
         <section id="skills" class="skills section">
             <h2 class="section__title">Skills</h2>
             <div class="skills__container grid--container">
@@ -186,7 +186,7 @@
                 <div class="skills__wrapper">
                     <div class="skills__icons">
                         <!--Design Tools -->
-                        <h3> Design Tools</h3>
+                        <h3 class='skills__title'> Design Tools</h3>
                         <svg class="skills__icons--container icon_skills">
                             <use xlink:href="/assets/img/skills/photoshop.svg#iconPhotoshop"></use>
                         </svg>
@@ -203,7 +203,7 @@
                             <use xlink:href="/assets/img/skills/figma.svg#iconFigma"></use>
                         </svg>
                         <!--Frontend Tools -->
-                        <h3>Frontend Tools</h3>
+                        <h3 class="skills__frontend-tools-title">Frontend Tools</h3>
                         <svg class="skills__icons--container icon_skills">
                             <use xlink:href="/assets/img/skills/html.svg#iconHTML"></use>
                         </svg>
@@ -223,7 +223,7 @@
                             <use xlink:href="/assets/img/skills/tailwind-CSS.svg#iconTailwindCSS"></use>
                         </svg>
                         <!--Backend Tools -->
-                        <!-- <h3>Backend Tools</h3>
+                        <!-- <h3 class='skills__title'>Backend Tools</h3>
                         <svg class="skills__icons--container icon_skills">
                             <use xlink:href="/assets/img/skills/nodejs.svg#iconNodeJS"></use>
                         </svg>
@@ -231,7 +231,7 @@
                             <use xlink:href="/assets/img/skills/nextjs.svg#iconNextJS"></use>
                         </svg> -->
                         <!--Development Tools -->
-                        <h3>Development Tools</h3>
+                        <h3 class="skills__development-tools-title">Development Tools</h3>
                         <svg class="skills__icons--container icon_skills">
                             <use xlink:href="/assets/img/skills/code.svg#iconVSCode"></use>
                         </svg>
@@ -343,29 +343,45 @@
             <div class="project__container">
                 <div class="project__card--carousel" loading="lazy">
                     <div class="project__card" id="1">
-                        <div class="project__image--container" loading="lazy"></div>
-                        <p>1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
+                        <a href="https://marvelwiki.alanquintana.pro/" target="_blank">
+                            <div class="project__image--container" loading="lazy"></div>
+                            <h3 class="project__title">Marvel</h3>
+                            <p class="project__description">An application that displays information about Marvel characters, using <code>useReducer</code> for state management and <code>useRef</code> for referencing DOM elements.</p>
+                        </a>
                     </div>
                     <div class="project__card" id="2">
-                        <div class="project__image--container" loading="lazy"></div>
-                        <p>2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
+                        <a href="https://crudusers.alanquintana.pro/" target="_blank">
+                            <div class="project__image--container" loading="lazy"></div>
+                            <h3 class="project__title">CRUD Users</h3>
+                            <p class="project__description">An application for user registration, with create, read, update, and delete (CRUD) functions, allowing full user management.</p>
+                        </a>
                     </div>
                     <div class="project__card" id="3">
-                        <div class="project__image--container" loading="lazy"></div>
-                        <p>3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
+                        <a href="https://rickandmorty.alanquintana.pro/" target="_blank">
+                            <div class="project__image--container" loading="lazy"></div>
+                            <h3 class="project__title">Rick and Morty Wiki</h3>
+                            <p class="project__description">An application that fetches data from an API to display information about characters, episodes, and locations from the Rick and Morty series, using <code>useFetch</code> for handling HTTP requests.</p>
+                        </a>
                     </div>
                     <div class="project__card" id="4">
-                        <div class="project__image--container" loading="lazy"></div>
-                        <p>4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
+                        <a href="https://weatherapp.alanquintana.pro/" target="_blank">
+                            <div class="project__image--container" loading="lazy"></div>
+                            <h3 class="project__title">Weather App</h3>
+                            <p class="project__description">An application that shows current weather information using an external API, with various hooks to manage state and application logic.</p>
+                        </a>
                     </div>
                     <div class="project__card" id="5">
-                        <div class="project__image--container" loading="lazy"></div>
-                        <p>5 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, explicabo!</p>
+                        <a href="https://fortunecookie.alanquintana.pro" target="_blank">
+                            <div class="project__image--container" loading="lazy"></div>
+                            <h3 class="project__title">Fortune Cookie App</h3>
+                            <p class="project__description">An application that generates random quotes, displaying a list of phrases with basic interaction features.</p>
+                        </a>
                     </div>
                 </div>
                 <a href="#" class="visuallyhidden project__card--controller">Carousel controller</a>
             </div>
         </section>
+
 
 
         <!-- Contact ---------------------------------------------------------------->
