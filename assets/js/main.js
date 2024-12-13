@@ -7,9 +7,9 @@ import updateDateYear from './helpers/date_updater.js';
 import resetToHome from './helpers/reload_page.js';
 import sendEmail from './helpers/send_form.js';
 import switchLanguages from './helpers/switchLanguages.js';
-import showScrollButtons from './helpers/scroll_buttons.js';
 import { cardCarousel } from './helpers/cardCarousel.js';
 
+// Llamar a la función que inicializa los FABs
 cardCarousel();
 loader();
 resetToHome();
@@ -20,4 +20,3 @@ profileParallax();
 updateDateYear();
 sendEmail();
 switchLanguages();
-showScrollButtons();

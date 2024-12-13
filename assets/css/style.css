@@ -193,13 +193,14 @@ html {
   padding: 1rem 5rem;
   border: none;
   outline: none;
-  border-radius: 5px;
+  border-radius: .5rem;
   width: 90%;
   height: auto;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   color: var(--bg-color-section);
   background-color: var(--primary-color);
+  box-shadow: var(--box-shadow);
 
   &:hover {
     color: var(--bg-color-section);
@@ -209,7 +210,6 @@ html {
   }
   .btn:active {
     transform: scale(0.5);
-    box-shadow: var(--box-shadow);
   }
 }
 
@@ -220,9 +220,9 @@ html {
   backdrop-filter: blur(100px);
   background: var(--bg-color-buttons);
   border: none;
-  padding: 15px 15vw;
+  padding: 1rem;
   margin: 0.2rem;
-  border-radius: 5px;
+  border-radius: .5rem;
 }
 
 /* ============== LOADER ================= */

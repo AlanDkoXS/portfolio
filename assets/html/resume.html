@@ -6,138 +6,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume - Alan Quintana Pacheco</title>
     <link rel="shortcut icon" href="/assets/img/logo.svg" type="image/x-icon" />
+    <!-- Scripts -->
+    <script type="module">
+        import initFab from '/assets/js/helpers/resume_fab_buttons.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initFab(); // Inicia los botones flotantes
+            setupScrollDetection(); // Configura la detección del scroll
+        });
+
+        // Configuración del evento de scroll
+        function setupScrollDetection() {
+            const pdfContainer = document.getElementById('pdf-container');
+            pdfContainer.addEventListener('scroll', handleScroll);
+        }
+
+        function handleScroll() {
+            const pdfContainer = document.getElementById('pdf-container');
+            const scrollTop = pdfContainer.scrollTop;
+            const scrollHeight = pdfContainer.scrollHeight;
+            const clientHeight = pdfContainer.clientHeight;
+
+            const scrollPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100;
+
+            console.log(`Scrolled: ${scrollPercentage.toFixed(2)}%`);
+
+            // Puedes hacer que los botones flotantes cambien de estilo o posición aquí
+            // por ejemplo:
+            if (scrollPercentage > 50) {
+                document.getElementById('btn-download').style.backgroundColor = '#4CAF50'; // Cambia color de fondo
+            } else {
+                document.getElementById('btn-download').style.backgroundColor = ''; // Restaura el color
+            }
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/resume.css" />
-    <!-- Fonts ----------------------------------------------------------------->
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet" />
-    <!-- Icons  ---------------------------------------------------------------->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+
+    <!-- Icons -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+    <!-- Add the CSS for centering the PDF -->
+    <style>
+        #pdf-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh; /* Ocupa toda la altura de la ventana */
+            overflow-y: scroll; /* Habilita el scroll vertical */
+            padding: 20px; /* Espaciado alrededor del contenido */
+            gap: 20px; /* Espacio entre las páginas */
+        }
+
+        canvas {
+            display: block;
+            max-width: 100%; /* Asegura que el canvas no se desborde horizontalmente */
+            margin: 0 auto; /* Centra el canvas dentro del contenedor */
+        }
+    </style>
 </head>
 
 <body>
-    <div class="resume__container">
-        <!-- Contact Info -->
-        <div class="resume__info">
-            <h1>Alan Quintana Pacheco</h1>
-            <p><strong>Phone:</strong> +526141105668</p>
-            <p><strong>Email:</strong> <a
-                    href="mailto:alan.quintanapacheco@gmail.com">alan.quintanapacheco@gmail.com</a></p>
-            <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/alanxs"
-                    target="_blank">linkedin.com/in/alanxs</a></p>
-            <p><strong>Portfolio:</strong> <a href="https://alanquintana.pro"
-                    target="_blank">alanquintana.netlify.app</a></p>
-            <!-- Buttons -->
-            <div class="btn__cv">
-                <a href="/assets/docs/resume.pdf" download class="btn btn--primary">Download CV</a>
-                <a href="/index.html" class="btn btn--primary">Back</a>
-            </div>
-        </div>
-        <hr>
-
-        <!-- Professional Profile -->
-        <div class="section">
-            <h2>Professional Profile</h2>
-            <p>Highly organized virtual assistant with over 2 years of experience in operational and administrative
-                management in the restaurant industry. Additionally, a freelance graphic designer with 2 years of
-                experience, skilled in project management and utilizing Agile and Scrum methodologies. Proficient in
-                digital tools like Asana and Google Suite to facilitate communication and collaboration. Experience in
-                customer service and problem resolution, with strong graphic design and video editing skills.
-                Intermediate English proficiency (B1-B2) certified.</p>
-        </div>
-        <hr>
-
-        <!-- Professional Experience -->
-        <div class="section">
-            <h2>Professional Experience</h2>
-            <h3>Freelance Graphic Designer</h3>
-            <p><strong>Freelancer | Chihuahua, Mx</strong> <br> Jan 2022 – Present</p>
-            <ul>
-                <li>Designed visual content for various clients, including logos, branding materials, and promotional
-                    graphics.</li>
-                <li>Managed multiple projects simultaneously, ensuring timely delivery and client satisfaction.</li>
-                <li>Utilized Agile and Scrum methodologies to streamline workflows and enhance project management
-                    efficiency.</li>
-            </ul>
-
-            <h3>Owner and Manager</h3>
-            <p><strong>Indian Food Restaurant The Spice Delight | Chihuahua, Mexico</strong> <br> Jan 2023 – Aug 2024
-            </p>
-            <ul>
-                <li>Developed and managed a restaurant from project conception to daily operations.</li>
-                <li>Oversaw inventory control and budgeting, optimizing resources and operational costs.</li>
-                <li>Adapted to market needs, enhancing organizational and time management skills.</li>
-            </ul>
-
-            <h3>Restaurant Manager</h3>
-            <p><strong>Restaurant Chihua Tacos y Cortes | Chihuahua, Mexico</strong> <br> Dec 2018 – Dec 2020</p>
-            <ul>
-                <li>Coordinated daily restaurant operations, ensuring efficiency and service quality.</li>
-                <li>Utilized Google Docs and Sheets to manage schedules and reports, facilitating internal
-                    communication.</li>
-                <li>Implemented Asana for task planning, achieving improved team productivity.</li>
-                <li>Managed customer service, effectively resolving conflicts and maintaining high satisfaction levels.
-                </li>
-            </ul>
-        </div>
-        <hr>
-
-        <!-- Technical Skills -->
-        <div class="section">
-            <h2>Technical Skills</h2>
-            <ul>
-                <li><strong>Project Management:</strong> Agile, Scrum, Asana.</li>
-                <li><strong>Administrative Tools:</strong> Google Docs, Sheets, Calendar.</li>
-                <li><strong>Microsoft Office:</strong> Word, Excel, PowerPoint.</li>
-                <li><strong>Graphic Design:</strong> Adobe Photoshop, Illustrator.</li>
-                <li><strong>Video Editing:</strong> Adobe After Effects.</li>
-                <li><strong>Web Development:</strong> HTML, CSS, JavaScript, React.</li>
-                <li><strong>Effective Communication:</strong> Customer service, conflict resolution.</li>
-                <li><strong>English:</strong> Intermediate level (B1-B2).</li>
-            </ul>
-        </div>
-        <hr>
-
-        <!-- Education -->
-        <div class="section">
-            <h2>Education</h2>
-            <ul>
-                <li><strong>Google Project Management Certification</strong> – 2024</li>
-                <li><strong>Bachelor of Law (80% Completed)</strong> – Universidad Autónoma de Chihuahua (UACH) | 2011
-                </li>
-                <li><strong>Programming High School Certificate</strong> – Academlo | 2024</li>
-            </ul>
-        </div>
-        <hr>
-
-        <!-- Languages -->
-        <div class="section">
-            <h2>Languages</h2>
-            <ul>
-                <li><strong>Spanish:</strong> Native.</li>
-                <li><strong>English:</strong> Intermediate (B1-B2).</li>
-            </ul>
-        </div>
-        <hr>
-
-        <!-- Interests -->
-        <div class="section">
-            <h2>Interests</h2>
-            <p>Project management, administrative organization, graphic design, programming, and digital content
-                creation.</p>
-        </div>
-        <hr>
-
-        <!-- References -->
-        <div class="section">
-            <h2>References</h2>
-            <p>Available upon request.</p>
-        </div>
-        <hr>
+    <!-- Buttons -->
+    <div class="fab-container">
+        <a href="/assets/docs/resume.pdf" download class="fab btn btn--primary" id="btn-download">
+            <i class='bx bxs-download'></i>
+            <span class="fab-text">Download</span>
+        </a>
+        <a href="/index.html" class="fab btn btn--primary" id="btn-back">
+            <i class='bx bxs-chevron-left'></i>
+            <span class="fab-text">Back</span>
+        </a>
     </div>
+
+    <div id="pdf-container"></div>
+
+    <script>
+        const url = '/assets/docs/resume.pdf';
+
+        // Cargar el PDF
+        pdfjsLib.getDocument(url).promise.then(function (pdf) {
+            const numPages = pdf.numPages;
+            for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+                pdf.getPage(pageNum).then(function (page) {
+                    const scale = 1.5;
+                    const viewport = page.getViewport({ scale: scale });
+
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    page.render({
+                        canvasContext: context,
+                        viewport: viewport
+                    });
+
+                    document.getElementById('pdf-container').appendChild(canvas);
+                });
+            }
+        });
+    </script>
+
     <footer class="footer section">
         <div class="footer__container grid--container">
             <div class="footer__info">
@@ -151,27 +130,21 @@
                 <h3 class="footer__title">Social</h3>
                 <ul class="footer__social-list">
                     <li class="footer__social-item">
-                        <a class="footer__social-link" href="https://github.com/AlanDkoXS" target="_blank"
-                            rel="noreferrer nofollow"><i class="bx bxl-github"></i></a>
+                        <a class="footer__social-link" href="https://github.com/AlanDkoXS" target="_blank" rel="noreferrer nofollow"><i class="bx bxl-github"></i></a>
                     </li>
                     <li class="footer__social-item">
-                        <a class="footer__social-link" href="https://www.instagram.com/anotherguyontheroad/"
-                            target="_blank" rel="noreferrer nofollow"><i class="bx bxl-instagram"></i></a>
+                        <a class="footer__social-link" href="https://www.instagram.com/anotherguyontheroad/" target="_blank" rel="noreferrer nofollow"><i class="bx bxl-instagram"></i></a>
                     </li>
                     <li class="footer__social-item">
-                        <a class="footer__social-link" href="https://x.com/AlanDKO" target="_blank"
-                            rel="noreferrer nofollow"><i class="bx bxl-twitter"></i></a>
+                        <a class="footer__social-link" href="https://x.com/AlanDKO" target="_blank" rel="noreferrer nofollow"><i class="bx bxl-twitter"></i></a>
                     </li>
                     <li class="footer__social-item">
-                        <a class="footer__social-link" href="https://www.linkedin.com/in/alanxs/" target="_blank"
-                            rel="noreferrer nofollow"><i class="bx bxl-linkedin"></i></a>
+                        <a class="footer__social-link" href="https://www.linkedin.com/in/alanxs/" target="_blank" rel="noreferrer nofollow"><i class="bx bxl-linkedin"></i></a>
                     </li>
                 </ul>
             </div>
         </div>
     </footer>
-    <script src="/assets/js/helpers/scroll_buttons.js" type="module"></script>
-
 </body>
 
 </html>
