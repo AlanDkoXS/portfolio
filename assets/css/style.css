@@ -24,8 +24,9 @@
 
   /* Typografy ====================================*/
   --normal-font-size: 1rem;
-  --small-font-size: 0.8rem /* z-index ====================================*/
-    --z-fixed: 1;
+  --small-font-size: 0.8rem;
+  /* z-index ====================================*/
+  --z-fixed: 1;
   --z-modal: 2;
 
   /* Shadows ====================================*/
@@ -193,7 +194,7 @@ html {
   padding: 1rem 5rem;
   border: none;
   outline: none;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   width: 90%;
   height: auto;
   cursor: pointer;
@@ -222,7 +223,7 @@ html {
   border: none;
   padding: 1rem;
   margin: 0.2rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 
 /* ============== LOADER ================= */
