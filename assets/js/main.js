@@ -13,11 +13,10 @@ import { loadGoogleTagManager } from './helpers/google-tag-manager.js';
 import { loadEmailJS } from './helpers/email-js.js';
 import initObserver from './helpers/observer.js';
 
-
 document.addEventListener('DOMContentLoaded', async function () {
-    await loadGoogleTagManager();
-    await loadEmailJS();
-    setAutoDarkMode();
+  await loadGoogleTagManager();
+  await loadEmailJS();
+  setAutoDarkMode();
 });
 
 initObserver();
