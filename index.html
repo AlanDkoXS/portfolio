@@ -2,17 +2,6 @@
 <html lang="en">
 
 <head>
-    <!-- Google tag (gtag.js) ------------------------------------------------->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8QH5RNPMBF"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'G-8QH5RNPMBF');
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Alan Quintana" />
@@ -34,6 +23,17 @@
     <link rel="stylesheet" href="assets/css/mobile.css" />
     <link rel="stylesheet" href="assets/css/screen.css" />
     <script type="module" src="assets/js/main.js" defer></script>
+    <!-- Google tag (gtag.js) ------------------------------------------------->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8QH5RNPMBF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-8QH5RNPMBF');
+    </script>
     <!-- EmailJS  -------------------------------------------------------------->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
@@ -48,14 +48,9 @@
 <body>
     <!-- Loader ---------------------------------------------------------->
     <div class="loader flex--container">
-        <svg class="loader__logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 216">
-            <g id="grupo_logo">
-                <!-- SVG -->
-                <path fill="currentColor" id="logo_Q"
-                    d="M242.74,162.9c9.66-16.17,15.21-35.08,15.21-55.29,0-37.84-19.47-71.13-48.93-90.41-5.91-3.86-12.21-7.16-18.84-9.82-5.11-2.05-10.42-3.72-15.89-4.98-2.66-.61-5.36-1.13-8.1-1.54-2.48-.37-5.56-.66-8.09-.86v215.26c2.73-.2,5.42-.5,8.09-.91,2.74-.41,5.44-.92,8.1-1.53,8.66-1.99,16.92-5.03,24.65-8.96,6.71-3.42,13.02-7.52,18.83-12.22,5.03-4.06,9.68-8.55,13.9-13.44,8.89,7.8,18.42,14.88,28.51,21.15,14.1-.29,27.54-3.28,39.82-8.48-20.71-6.25-40-15.77-57.26-27.97ZM201.59,183.5c-5.3,3.61-11,6.68-17.01,9.13-3.34,1.36-6.77,2.53-10.29,3.49v-98.09c10.68,25.93,26.27,49.33,45.6,69.03-5.32,6.26-11.48,11.8-18.3,16.44ZM229.79,152.95c-23.88-19.97-43.02-45.4-55.5-74.39-3.09-7.17-5.77-14.56-8.01-22.14-.03.05-.06.09-.09.14v-.43c-1.45-4.93-2.71-9.93-3.78-15h0c-1.72-8.12-2.94-16.41-3.63-24.86,2.37.24,5.19.61,7.41,1,2.75.49,5.45,1.1,8.1,1.83.94.26,1.87.53,2.79.81,5.75,1.77,11.25,4.09,16.46,6.91,28.71,15.5,48.22,45.87,48.22,80.79,0,16.49-4.35,31.97-11.97,45.34Z" />
-                <path fill="currentColor" id="logo_A"
-                    d="M141.9,0c-2.73.2-5.42.5-8.09.91-2.74.41-5.44.92-8.1,1.53-8.66,1.99-16.92,5.03-24.65,8.96-6.71,3.42-13.02,7.52-18.83,12.22-5.03,4.06-9.68,8.55-13.9,13.44-8.89-7.8-18.42-14.88-28.51-21.15-14.1.29-27.54,3.28-39.82,8.48,20.71,6.25,40,15.77,57.26,27.97-9.66,16.17-15.21,35.08-15.21,55.29,0,37.84,19.47,71.13,48.93,90.41,5.91,3.86,12.21,7.16,18.84,9.82,5.11,2.05,10.42,3.72,15.89,4.98,2.66.61,5.36,1.13,8.1,1.54,2.48.37,5.56.66,8.09.86v-16.2c-2.5-.24-5.65-.64-8.09-1.07-2.75-.49-5.45-1.1-8.1-1.83-.94-.26-1.87-.53-2.79-.81-5.75-1.77-11.25-4.09-16.46-6.91-28.71-15.5-48.22-45.87-48.22-80.79,0-16.49,4.35-31.97,11.97-45.34,23.88,19.97,43.02,45.4,55.5,74.39,3.09,7.17,5.77,14.56,8.01,22.14.03-.05.06-.09.09-.14v.43c1.45,4.93,2.71,9.93,3.78,15h0c1.72,8.12,2.94,16.42,3.63,24.87.23.02.45.04.68.06V0ZM125.71,117.23c-10.68-25.93-26.27-49.33-45.6-69.03,5.32-6.26,11.48-11.8,18.3-16.44,5.3-3.61,11-6.68,17.01-9.13,3.34-1.36,6.77-2.53,10.29-3.49v98.09Z" />
-            </g>
+        <svg class="loader__logo">
+            <use xlink:href="assets/img/logo.svg#logo"></use>
+        </svg>
         </svg>
         <span class="loader__name--light">alan</span>
         <span class="loader__name--semibold">quintana</span>
@@ -79,17 +74,12 @@
     <header class="header">
         <nav class="navbar grid--container flex--container">
             <a class="navbar__logo flex--container" href="#">
-                <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 216">
-                    <g id="grupo_logo">
-                        <!-- SVG -->
-                        <path id="logo_Q"
-                            d="M242.74,162.9c9.66-16.17,15.21-35.08,15.21-55.29,0-37.84-19.47-71.13-48.93-90.41-5.91-3.86-12.21-7.16-18.84-9.82-5.11-2.05-10.42-3.72-15.89-4.98-2.66-.61-5.36-1.13-8.1-1.54-2.48-.37-5.56-.66-8.09-.86v215.26c2.73-.2,5.42-.5,8.09-.91,2.74-.41,5.44-.92,8.1-1.53,8.66-1.99,16.92-5.03,24.65-8.96,6.71-3.42,13.02-7.52,18.83-12.22,5.03-4.06,9.68-8.55,13.9-13.44,8.89,7.8,18.42,14.88,28.51,21.15,14.1-.29,27.54-3.28,39.82-8.48-20.71-6.25-40-15.77-57.26-27.97ZM201.59,183.5c-5.3,3.61-11,6.68-17.01,9.13-3.34,1.36-6.77,2.53-10.29,3.49v-98.09c10.68,25.93,26.27,49.33,45.6,69.03-5.32,6.26-11.48,11.8-18.3,16.44ZM229.79,152.95c-23.88-19.97-43.02-45.4-55.5-74.39-3.09-7.17-5.77-14.56-8.01-22.14-.03.05-.06.09-.09.14v-.43c-1.45-4.93-2.71-9.93-3.78-15h0c-1.72-8.12-2.94-16.41-3.63-24.86,2.37.24,5.19.61,7.41,1,2.75.49,5.45,1.1,8.1,1.83.94.26,1.87.53,2.79.81,5.75,1.77,11.25,4.09,16.46,6.91,28.71,15.5,48.22,45.87,48.22,80.79,0,16.49-4.35,31.97-11.97,45.34Z" />
-                        <path id="logo_A"
-                            d="M141.9,0c-2.73.2-5.42.5-8.09.91-2.74.41-5.44.92-8.1,1.53-8.66,1.99-16.92,5.03-24.65,8.96-6.71,3.42-13.02,7.52-18.83,12.22-5.03,4.06-9.68,8.55-13.9,13.44-8.89-7.8-18.42-14.88-28.51-21.15-14.1.29-27.54,3.28-39.82,8.48,20.71,6.25,40,15.77,57.26,27.97-9.66,16.17-15.21,35.08-15.21,55.29,0,37.84,19.47,71.13,48.93,90.41,5.91,3.86,12.21,7.16,18.84,9.82,5.11,2.05,10.42,3.72,15.89,4.98,2.66.61,5.36,1.13,8.1,1.54,2.48.37,5.56.66,8.09.86v-16.2c-2.5-.24-5.65-.64-8.09-1.07-2.75-.49-5.45-1.1-8.1-1.83-.94-.26-1.87-.53-2.79-.81-5.75-1.77-11.25-4.09-16.46-6.91-28.71-15.5-48.22-45.87-48.22-80.79,0-16.49,4.35-31.97,11.97-45.34,23.88,19.97,43.02,45.4,55.5,74.39,3.09,7.17,5.77,14.56,8.01,22.14.03-.05.06-.09.09-.14v.43c1.45,4.93,2.71,9.93,3.78,15h0c1.72,8.12,2.94,16.42,3.63,24.87.23.02.45.04.68.06V0ZM125.71,117.23c-10.68-25.93-26.27-49.33-45.6-69.03,5.32-6.26,11.48-11.8,18.3-16.44,5.3-3.61,11-6.68,17.01-9.13,3.34-1.36,6.77-2.53,10.29-3.49v98.09Z" />
-                    </g>
+                <svg class="logo">
+                    <use xlink:href="assets/img/logo.svg#logo"></use>
                 </svg>
+                <span class="navbar__logo--name">alan</span>
+                <span class="navbar__logo--lastname">quintana</span>
             </a>
-
             <!-- Menu Nav ------------------------------------------------------------->
             <div id="nav" class="navbar__menu">
                 <a href="#close"><i class="bx bx-x btn__close navbar__icon flex--container"></i></a>
@@ -103,9 +93,9 @@
                     <li class="navbar__item">
                         <a class="navbar__link" href="#skills">Skills</a>
                     </li>
-                    <li class="navbar__item">
+                    <!--                     <li class="navbar__item">
                         <a class="navbar__link" href="#portfolio">Portfolio</a>
-                    </li>
+                    </li> -->
                     <li class="navbar__item">
                         <a class="navbar__link" href="#projects">Projects</a>
                     </li>
@@ -113,23 +103,23 @@
                         <a class="navbar__link" href="#contact">Contact</a>
                     </li>
                 </ul>
+                <div class="navbar__toggles flex--container">
+                    <div class="navbar__toggle--darkmode flex--container">
+                        <input type="checkbox" name="color-scheme" id="darkmode-toggle"
+                            class="navbar__toggle--darkmode-input" />
+                        <label for="darkmode-toggle" class="navbar__toggle--darkmode-label">
+                            <i class="bx bx-sun navbar__toggle--darkmode-sun"></i>
+                            <i class="bx bx-moon navbar__toggle--darkmode-moon"></i>
+                        </label>
+                    </div>
+                    <div class="navbar__toggle--language flex--container">
+                        <input type="checkbox" name="language-toggle" id="language-toggle"
+                            class="navbar__toggle--language-input" />
+                        <label for="language-toggle" class="navbar__toggle--language-label"></label>
+                    </div>
+                </div>
             </div>
             <!-- Toggles -------------------------------------------------------------->
-            <div class="navbar__toggles flex--container">
-                <div class="navbar__toggle--darkmode flex--container">
-                    <input type="checkbox" name="color-scheme" id="darkmode-toggle"
-                        class="navbar__toggle--darkmode-input" />
-                    <label for="darkmode-toggle" class="navbar__toggle--darkmode-label">
-                        <i class="bx bx-sun navbar__toggle--darkmode-sun"></i>
-                        <i class="bx bx-moon navbar__toggle--darkmode-moon"></i>
-                    </label>
-                </div>
-                <div class="navbar__toggle--language flex--container">
-                    <input type="checkbox" name="language-toggle" id="language-toggle"
-                        class="navbar__toggle--language-input" />
-                    <label for="language-toggle" class="navbar__toggle--language-label"></label>
-                </div>
-            </div>
             <a href="#nav"><i class="bx bx-menu btn__open navbar__icon"></i></a>
         </nav>
     </header>

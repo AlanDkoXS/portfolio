@@ -278,7 +278,7 @@ html {
     visibility 0.4s;
 
   .loader__logo {
-    color: var(--primary-color);
+    fill: var(--primary-color);
     width: 3rem;
     height: 3rem;
     animation: jump 1.1s infinite linear;
@@ -339,12 +339,7 @@ html {
       fill: var(--primary-color);
     }
 
-    .logo {
-      width: 2.2em;
-      height: auto;
-    }
-
-    .navbar__menu {
+     .navbar__menu {
       position: fixed;
       top: -700%;
       left: 0;
@@ -403,6 +398,7 @@ html {
     /* Toggles ====================================*/
     .navbar__toggles {
       gap: 1rem;
+      margin-top: 2rem;
 
       /* Darkmode Toggle ====================================*/
       .navbar__toggle--darkmode {
@@ -531,6 +527,21 @@ html {
     font-size: 2.2rem;
     color: var(--primary-color);
     transition: background 0.3s;
+  }
+
+  .logo {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+
+  .navbar__logo--name{
+    font-weight: 300;
+  }
+
+  .navbar__logo--lastname{
+    margin-left: -3.5px;
+    font-weight: 600;
   }
 
   .btn__open {
