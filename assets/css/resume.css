@@ -1,33 +1,37 @@
 /* ============= Resume ============= */
 #pdf-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Ocupa toda la altura de la ventana */
-  overflow: auto; /* Habilita el scroll si el contenido es mayor que el contenedor */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    overflow-y: scroll; /* Habilita el scroll vertical */
+    padding: 20px; /* Espaciado alrededor del contenido */
+    gap: 20px; /* Espacio entre las páginas */
 }
 
 canvas {
-  display: block;
-  margin: 0 auto; /* Centra el canvas dentro del contenedor */
+    display: block;
+    max-width: 100%; /* Asegura que el canvas no se desborde horizontalmente */
+    margin: 0 auto; /* Centra el canvas dentro del contenedor */
 }
 
 .fab-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 1rem;
+  right: 1rem;
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Espacio entre los botones */
+  gap: 10px;
 }
 
 .fab {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
+  width: 4rem;
+  height: 4rem;
   border-radius: 0.5rem;
   background-color: var(--bg-color-buttons);
   color: var(--primary-color);
@@ -38,31 +42,28 @@ canvas {
     font-size 0.3s,
     padding 0.3s;
   text-decoration: none;
-  overflow: hidden; /* Asegura que no haya texto fuera del botón */
+  overflow: hidden;
 }
 
-.fab i {
-  transition: margin-right 0.3s;
+.fab-text {
+  transition: margin-left 0.3s;
 }
 
 .fab .fab-text {
-  display: none; /* Oculta el texto por defecto */
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-  margin-left: 10px; /* Espacio entre el icono y el texto */
+  display: none;
+  white-space: nowrap;
+  margin-left: .2rem;
 }
 
 .fab.expanded {
-  width: 200px; /* Tamaño del botón expandido */
-  height: 56px; /* Mantener la altura */
-  font-size: 18px; /* Ajustar tamaño del ícono */
-  padding-left: 16px;
-  padding-right: 16px;
+  width: 10rem;
+  height: 4rem;
+  font-size: 18px;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-.fab.expanded i {
-  margin-right: 12px; /* Espacio entre el ícono y el texto */
-}
 
 .fab.expanded .fab-text {
-  display: inline-block; /* Muestra el texto al expandir */
+  display: inline-block;
 }

@@ -6,73 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume - Alan Quintana Pacheco</title>
     <link rel="shortcut icon" href="/assets/img/logo.svg" type="image/x-icon" />
-    <!-- Scripts -->
-    <script type="module">
-        import initFab from '/assets/js/helpers/resume_fab_buttons.js';
-        document.addEventListener('DOMContentLoaded', () => {
-            initFab(); // Inicia los botones flotantes
-            setupScrollDetection(); // Configura la detección del scroll
-        });
-
-        // Configuración del evento de scroll
-        function setupScrollDetection() {
-            const pdfContainer = document.getElementById('pdf-container');
-            pdfContainer.addEventListener('scroll', handleScroll);
-        }
-
-        function handleScroll() {
-            const pdfContainer = document.getElementById('pdf-container');
-            const scrollTop = pdfContainer.scrollTop;
-            const scrollHeight = pdfContainer.scrollHeight;
-            const clientHeight = pdfContainer.clientHeight;
-
-            const scrollPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100;
-
-            console.log(`Scrolled: ${scrollPercentage.toFixed(2)}%`);
-
-            // Puedes hacer que los botones flotantes cambien de estilo o posición aquí
-            // por ejemplo:
-            if (scrollPercentage > 50) {
-                document.getElementById('btn-download').style.backgroundColor = '#4CAF50'; // Cambia color de fondo
-            } else {
-                document.getElementById('btn-download').style.backgroundColor = ''; // Restaura el color
-            }
-        }
-    </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" href="/assets/css/resume.css" />
 
-    <!-- Fonts -->
+    <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
 
     <!-- Icons -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
-    <!-- Add the CSS for centering the PDF -->
-    <style>
-        #pdf-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            height: 100vh; /* Ocupa toda la altura de la ventana */
-            overflow-y: scroll; /* Habilita el scroll vertical */
-            padding: 20px; /* Espaciado alrededor del contenido */
-            gap: 20px; /* Espacio entre las páginas */
-        }
+    <!-- Scripts -->
+    <script type="module">
+        import initFab from '/assets/js/helpers/resume_fab_buttons.js';
+        import { loadPdf } from '/assets/js/helpers/pdf_loader.js';
 
-        canvas {
-            display: block;
-            max-width: 100%; /* Asegura que el canvas no se desborde horizontalmente */
-            margin: 0 auto; /* Centra el canvas dentro del contenedor */
-        }
-    </style>
+        document.addEventListener('DOMContentLoaded', () => {
+            initFab();
+            loadPdf();
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 </head>
 
 <body>
@@ -87,64 +46,7 @@
             <span class="fab-text">Back</span>
         </a>
     </div>
-
     <div id="pdf-container"></div>
-
-    <script>
-        const url = '/assets/docs/resume.pdf';
-
-        // Cargar el PDF
-        pdfjsLib.getDocument(url).promise.then(function (pdf) {
-            const numPages = pdf.numPages;
-            for (let pageNum = 1; pageNum <= numPages; pageNum++) {
-                pdf.getPage(pageNum).then(function (page) {
-                    const scale = 1.5;
-                    const viewport = page.getViewport({ scale: scale });
-
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-
-                    page.render({
-                        canvasContext: context,
-                        viewport: viewport
-                    });
-
-                    document.getElementById('pdf-container').appendChild(canvas);
-                });
-            }
-        });
-    </script>
-
-    <footer class="footer section">
-        <div class="footer__container grid--container">
-            <div class="footer__info">
-                <h3 class="footer__title">Alan Quintana</h3>
-                <span class="footer__description">
-                    Made with ❤️. Thanks to my tutor Alejandra Olazagasti.
-                </span>
-                <span class="footer__copyright"></span>
-            </div>
-            <div class="footer__social">
-                <h3 class="footer__title">Social</h3>
-                <ul class="footer__social-list">
-                    <li class="footer__social-item">
-                        <a class="footer__social-link" href="https://github.com/AlanDkoXS" target="_blank" rel="noreferrer nofollow"><i class="bx bxl-github"></i></a>
-                    </li>
-                    <li class="footer__social-item">
-                        <a class="footer__social-link" href="https://www.instagram.com/anotherguyontheroad/" target="_blank" rel="noreferrer nofollow"><i class="bx bxl-instagram"></i></a>
-                    </li>
-                    <li class="footer__social-item">
-                        <a class="footer__social-link" href="https://x.com/AlanDKO" target="_blank" rel="noreferrer nofollow"><i class="bx bxl-twitter"></i></a>
-                    </li>
-                    <li class="footer__social-item">
-                        <a class="footer__social-link" href="https://www.linkedin.com/in/alanxs/" target="_blank" rel="noreferrer nofollow"><i class="bx bxl-linkedin"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </footer>
 </body>
 
 </html>
