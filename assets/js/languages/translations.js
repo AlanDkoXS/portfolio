@@ -139,8 +139,8 @@ designsTitle: {
     es: 'Wiki de Rick and Morty',
   },
   projectDescription3: {
-    en: 'An application that fetches data from an API to display information about characters, episodes, and locations from the Rick and Morty series, using useFetch for handling HTTP requests.',
-    es: 'Una aplicación que consulta una API para mostrar información sobre personajes, episodios y ubicaciones de la serie Rick and Morty, usando useFetch para manejar las solicitudes HTTP.',
+    en: 'An application that fetches data from an API to display information from the Rick and Morty series, using useFetch for handling HTTP requests.',
+    es: 'Una aplicación que consulta una API para mostrar información sobre la serie Rick and Morty, usando useFetch para manejar las solicitudes HTTP.',
   },
   projectTitle4: {
     en: 'Weather App',
