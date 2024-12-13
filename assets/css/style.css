@@ -81,6 +81,38 @@ html {
     color: var(--primary-color);
   }
 
+  dialog {
+    position: fixed; /* Asegura que el modal se posicione sobre la ventana */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo difuminado */
+    z-index: 1000; /* Asegura que el modal esté sobre otros elementos */
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px); /* Fondo difuminado */
+    text-align: center;
+    padding: 2rem;
+    border: none;
+    display: none; /* Modal oculto por defecto */
+  }
+
+  .modal-content {
+    color: var(--primary-color);
+    background-color: var(--bg-color-section);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+  }
+
+  #modal[open] {
+    display: flex; /* Mostrar el modal cuando el atributo 'open' está presente */
+  }
+
   /* Darkmode ====================================*/
   color-scheme: light dark;
   &:has([name='color-scheme']:checked) {
@@ -198,28 +230,29 @@ html {
   width: 90%;
   height: auto;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  color: var(--bg-color-section);
-  background-color: var(--primary-color);
+  transition: all 0.3s ease;
+  color: var(--primary-color);
+  background-color: var(--bg-color-buttons);
   box-shadow: var(--box-shadow);
+}
 
-  &:hover {
-    color: var(--bg-color-section);
-    background-color: var(--primary-color);
-    translate: 0px -4px;
-    box-shadow: 0px 3px 10px #0202023b;
-  }
-  .btn:active {
-    transform: scale(0.5);
-  }
+.btn:hover,
+.btn:active {
+  color: var(--bg-color-buttons);
+  background-color: var(--primary-color);
+  box-shadow: 0px 3px 10px #0202023b;
+  transform: scale(0.95);
+}
+
+.btn:focus {
+  color: var(--primary-color);
+  background-color: var(--bg-color-buttons);
 }
 
 .btn--primary {
   text-transform: uppercase;
   font-weight: 600;
-  color: var(--primary-color);
   backdrop-filter: blur(100px);
-  background: var(--bg-color-buttons);
   border: none;
   padding: 1rem;
   margin: 0.2rem;
