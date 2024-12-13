@@ -221,7 +221,7 @@
 }
 
 .skills__tags-container {
-  margin-top: var(--mr-4);
+  margin-top: 1rem;
 }
 
 .skills__tags {
