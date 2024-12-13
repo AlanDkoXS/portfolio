@@ -194,8 +194,24 @@ html {
 }
 
 /* ============= REUSABLE CLASSES ============= */
-.section {
+#home {
+    opacity: 1;
+  }
+
+section {
   padding: 3rem 0;
+  opacity: 0;
+  transition:
+    opacity 1s ease-in-out,
+    visibility 0s 1s; /* Transición suave */
+}
+
+.section.visible {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 1s ease-in-out,
+    visibility 0s;
 }
 
 .section__title {
@@ -339,7 +355,7 @@ html {
       fill: var(--primary-color);
     }
 
-     .navbar__menu {
+    .navbar__menu {
       position: fixed;
       top: -700%;
       left: 0;
@@ -534,12 +550,11 @@ html {
     height: 2.2rem;
   }
 
-
-  .navbar__logo--name{
+  .navbar__logo--name {
     font-weight: 300;
   }
 
-  .navbar__logo--lastname{
+  .navbar__logo--lastname {
     margin-left: -3.5px;
     font-weight: 600;
   }

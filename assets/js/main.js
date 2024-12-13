@@ -9,12 +9,18 @@ import sendEmail from './helpers/send_form.js';
 import switchLanguages from './helpers/switchLanguages.js';
 import { cardCarousel } from './helpers/cardCarousel.js';
 import { setAutoDarkMode } from './helpers/auto-dark-mode.js';
+import { loadGoogleTagManager } from './helpers/google-tag-manager.js';
+import { loadEmailJS } from './helpers/email-js.js';
+import initObserver from './helpers/observer.js';
 
-document.addEventListener("DOMContentLoaded", function () {
-    setAutoDarkMode(); 
+
+document.addEventListener('DOMContentLoaded', async function () {
+    await loadGoogleTagManager();
+    await loadEmailJS();
+    setAutoDarkMode();
 });
 
-
+initObserver();
 cardCarousel();
 loader();
 resetToHome();
