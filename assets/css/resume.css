@@ -1,4 +1,13 @@
 /* ============= RESUME ============= */
+.resume__logo--name {
+    font-weight: 300;
+  }
+
+  .resume__logo--lastname {
+    margin-left: -3.5px;
+    font-weight: 600;
+  }
+
 #pdf-container {
   display: flex;
   flex-direction: column;
