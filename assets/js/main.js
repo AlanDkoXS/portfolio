@@ -12,14 +12,11 @@ import { setAutoDarkMode } from './helpers/auto-dark-mode.js';
 import { loadGoogleTagManager } from './helpers/google-tag-manager.js';
 import { loadEmailJS } from './helpers/email-js.js';
 import initObserver from './helpers/observer.js';
-import scrollNavigation from './helpers/scroll-navigation.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
   await loadGoogleTagManager();
   await loadEmailJS();
   setAutoDarkMode();
-
-  scrollNavigation();
 });
 
 initObserver();

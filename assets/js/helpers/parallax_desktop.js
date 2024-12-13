@@ -6,25 +6,28 @@ function parallaxDesktop() {
       const bgFront = document.querySelector('.bgFront');
 
       let lastX = 0;
-      let autoMovementX = 0;
-      let autoMovementSpeed = 0.5;
+      let lastY = 0;
+      let lastMoveTime = Date.now();
+      const resetDelay = 300;
 
       const sensitivities = {
-        bgBack: 4,
-        bgMiddle: 2.5,
-        bgFront: 1.5,
+        bgBack: { x: 4, y: 1 },
+        bgMiddle: { x: 2.5, y: 1.5 },
+        bgFront: { x: 1.5, y: 2 },
       };
 
-      const updateLayers = (deltaX) => {
+      const updateLayers = (deltaX, deltaY) => {
         bgBack.style.transform = `translate(-50%, -50%) translate(${
-          -deltaX * sensitivities.bgBack - autoMovementX
-        }px, 0)`;
+          -deltaX * sensitivities.bgBack.x
+        }px, ${-deltaY * sensitivities.bgBack.y}px)`;
+
         bgMiddle.style.transform = `translate(-50%, -50%) translate(${
-          deltaX * sensitivities.bgMiddle + autoMovementX
-        }px, 0)`;
+          deltaX * sensitivities.bgMiddle.x
+        }px, ${deltaY * sensitivities.bgMiddle.y}px)`;
+
         bgFront.style.transform = `translate(-50%, -50%) translate(${
-          -deltaX * sensitivities.bgFront + autoMovementX
-        }px, 0)`;
+          -deltaX * sensitivities.bgFront.x
+        }px, ${deltaY * sensitivities.bgFront.y}px)`;
       };
 
       const resetPositions = () => {
@@ -36,21 +39,28 @@ function parallaxDesktop() {
 
       const mouseMoveHandler = (event) => {
         const deltaX = event.clientX - lastX;
+        const deltaY = event.clientY - lastY;
         lastX = event.clientX;
+        lastY = event.clientY;
 
-        updateLayers(deltaX);
+        updateLayers(deltaX, deltaY);
+        lastMoveTime = Date.now();
+      };
+
+      const mouseLeaveHandler = () => {
+        resetPositions();
+      };
+
+      const checkIfMouseStopped = () => {
+        if (Date.now() - lastMoveTime > resetDelay) {
+          resetPositions();
+        }
       };
 
       document.addEventListener('mousemove', mouseMoveHandler);
-      document.addEventListener('mouseleave', resetPositions);
+      document.addEventListener('mouseleave', mouseLeaveHandler);
 
-      setInterval(() => {
-        autoMovementX += autoMovementSpeed;
-        if (autoMovementX > 10 || autoMovementX < -10) {
-          autoMovementSpeed *= -1;
-        }
-        updateLayers(0);
-      }, 30);
+      setInterval(checkIfMouseStopped, 100);
     });
   }
 }

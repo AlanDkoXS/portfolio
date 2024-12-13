@@ -1,5 +1,5 @@
 function resetToHome() {
-	window.location.hash = '#home';
+  window.location.hash = '#home';
 }
 
 export default resetToHome;
