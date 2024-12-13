@@ -8,6 +8,12 @@ import resetToHome from './helpers/reload_page.js';
 import sendEmail from './helpers/send_form.js';
 import switchLanguages from './helpers/switchLanguages.js';
 import { cardCarousel } from './helpers/cardCarousel.js';
+import { setAutoDarkMode } from './helpers/auto-dark-mode.js';
+
+document.addEventListener("DOMContentLoaded", function () {
+    setAutoDarkMode(); 
+});
+
 
 cardCarousel();
 loader();
