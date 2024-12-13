@@ -1,29 +1,29 @@
-/* ============= Resume ============= */
+/* ============= RESUME ============= */
 #pdf-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 100vh; /* Ocupa toda la altura de la ventana */
-    overflow-y: scroll; /* Habilita el scroll vertical */
-    padding: 20px; /* Espaciado alrededor del contenido */
-    gap: 20px; /* Espacio entre las páginas */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  overflow-y: scroll;
+  padding: 20px;
+  gap: 20px;
 }
 
 canvas {
-    display: block;
-    max-width: 100%; /* Asegura que el canvas no se desborde horizontalmente */
-    margin: 0 auto; /* Centra el canvas dentro del contenedor */
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .fab-container {
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: 4rem;
+  right: 2rem;
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  transition: transform 0.5s ease;
 }
 
 .fab {
@@ -35,7 +35,7 @@ canvas {
   border-radius: 0.5rem;
   background-color: var(--bg-color-buttons);
   color: var(--primary-color);
-  font-size: 24px;
+  font-size: 1.5rem;
   transition:
     width 0.3s,
     height 0.3s,
@@ -52,17 +52,15 @@ canvas {
 .fab .fab-text {
   display: none;
   white-space: nowrap;
-  margin-left: .2rem;
+  margin-left: 0.2rem;
 }
 
 .fab.expanded {
   width: 10rem;
   height: 4rem;
-  font-size: 18px;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  font-size: 1rem;
+  padding: 20px;
 }
-
 
 .fab.expanded .fab-text {
   display: inline-block;
