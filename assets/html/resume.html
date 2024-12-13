@@ -25,7 +25,7 @@
     <!-- Scripts -->
     <script type="module" src="assets/js/main.js" defer></script>
     <script type="module">
-        import initFab from '/assets/js/helpers/resume_fab_buttons.js';
+        import { initFab, openModal, closeModal, downloadCV } from '/assets/js/helpers/resume_fab_buttons.js';
         import { loadPdf } from '/assets/js/helpers/pdf_loader.js';
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -78,10 +78,21 @@
     </header>
     <!-- Buttons -->
     <div class="fab-container">
-        <a href="/assets/docs/resume.pdf" download class="fab btn btn--primary" id="btn-download">
+        <a href="#" class="fab btn btn--primary" id="btn-download" onclick="openModal()">
             <i class='bx bxs-download'></i>
             <span class="fab-text">Download</span>
         </a>
+
+        <dialog id="modal">
+            <div class="modal-content">
+                <h2>Download</h2>
+                <p>Select language</p>
+                <div>
+                    <button class="btn btn--primary" onclick="downloadCV('ENG')">English</button>
+                    <button class="btn btn--primary" onclick="downloadCV('ESP')">Español</button>
+                </div>
+            </div>
+        </dialog>
     </div>
     <div id="pdf-container"></div>
 
