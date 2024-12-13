@@ -6,22 +6,27 @@ function parallaxMobile() {
         const bgFront = document.querySelector('.bgFront');
 
         let autoMovementX = 0;
-        let autoMovementSpeed = 0.5;
+        let autoMovementY = 0;
+        let autoMovementSpeedX = 0.5;
+        let autoMovementSpeedY = 0.3;
 
         const updateLayers = (gamma, beta) => {
-          const bgBackSensitivity = 4;
-          const bgMiddleSensitivity = 2.5;
-          const bgFrontSensitivity = 1.5;
+          const bgBackSensitivityX = 4;
+          const bgMiddleSensitivityX = 2.5;
+          const bgFrontSensitivityX = 1.5;
+          const bgBackSensitivityY = 3;
+          const bgMiddleSensitivityY = 2;
+          const bgFrontSensitivityY = 1;
 
           bgBack.style.transform = `translate(-50%, -50%) translate(${
-            -gamma * bgBackSensitivity - autoMovementX
-          }px, 0)`;
+            -gamma * bgBackSensitivityX - autoMovementX
+          }px, ${-beta * bgBackSensitivityY - autoMovementY}px)`;
           bgMiddle.style.transform = `translate(-50%, -50%) translate(${
-            gamma * bgMiddleSensitivity + autoMovementX
-          }px, 0)`;
+            gamma * bgMiddleSensitivityX + autoMovementX
+          }px, ${beta * bgMiddleSensitivityY + autoMovementY}px)`;
           bgFront.style.transform = `translate(-50%, -50%) translate(${
-            -gamma * bgFrontSensitivity + autoMovementX
-          }px, 0)`;
+            -gamma * bgFrontSensitivityX + autoMovementX
+          }px, ${-beta * bgFrontSensitivityY + autoMovementY}px)`;
         };
 
         window.addEventListener('deviceorientation', function (event) {
@@ -31,18 +36,21 @@ function parallaxMobile() {
           updateLayers(gamma, beta);
         });
 
-        // Auto movement logic for mobile
         setInterval(() => {
-          autoMovementX += autoMovementSpeed;
+          autoMovementX += autoMovementSpeedX;
+          autoMovementY += autoMovementSpeedY;
           if (autoMovementX > 10 || autoMovementX < -10) {
-            autoMovementSpeed *= -1;
+            autoMovementSpeedX *= -1;
+          }
+          if (autoMovementY > 10 || autoMovementY < -10) {
+            autoMovementSpeedY *= -1;
           }
           updateLayers(0, 0);
         }, 30);
 
-        document.addEventListener('touchend');
+        document.addEventListener('touchend', () => {}); 
       });
     }
   }
 
-  export default parallaxMobile();
+  export default parallaxMobile;

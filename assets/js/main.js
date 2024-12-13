@@ -9,7 +9,6 @@ import sendEmail from './helpers/send_form.js';
 import switchLanguages from './helpers/switchLanguages.js';
 import { cardCarousel } from './helpers/cardCarousel.js';
 
-// Llamar a la función que inicializa los FABs
 cardCarousel();
 loader();
 resetToHome();

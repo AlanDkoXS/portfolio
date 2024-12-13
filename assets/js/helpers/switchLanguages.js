@@ -146,7 +146,7 @@ const translations = {
   const updateSectionText = (selector, key, lang) => {
     const element = document.querySelector(selector);
     if (element && translations[key]) {
-      element.textContent = translations[key][lang] || translations[key]['en']; // Fallback a inglés
+      element.textContent = translations[key][lang] || translations[key]['en']; 
     }
   };
 
