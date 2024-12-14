@@ -96,6 +96,7 @@ const switchLanguages = () => {
     updateSectionText('.designs__title', 'designsTitle', lang); */
 
     // Project Section
+    updateSectionText('#projects .section__title', 'projectsTitle', lang);
     updateProjectText(lang);
 
 

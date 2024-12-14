@@ -66,9 +66,9 @@ html {
     padding: 0;
   }
 
-p {
+  p {
     font-size: 1rem;
-}
+  }
 
   a {
     color: inherit;
@@ -86,10 +86,10 @@ p {
   }
 
   dialog {
-    box-sizing: initial;
     position: fixed;
     top: 0;
     left: 0;
+    box-sizing: initial;
     width: initial;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
@@ -101,22 +101,27 @@ p {
     padding: 2rem;
     border: none;
     display: none;
-  }
+    display: flex;
+}
 
-  .modal-content {
+.modal-content {
     color: var(--primary-color);
     background-color: var(--bg-color-section);
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    max-width: 500px;
     width: 100%;
     margin: auto;
-  }
+}
 
-  #modal[open] {
+#btn_close-modal {
+    display: block; 
+    margin: 1rem auto 0;
+}
+
+#modal[open] {
     display: flex;
-  }
+}
 
   /* Darkmode ====================================*/
   color-scheme: light dark;
@@ -200,8 +205,8 @@ p {
 
 /* ============= REUSABLE CLASSES ============= */
 #home {
-    opacity: 1;
-  }
+  opacity: 1;
+}
 
 section {
   padding: 3rem 0;
@@ -276,7 +281,7 @@ section {
   backdrop-filter: blur(100px);
   border: none;
   padding: 1rem;
-  margin: .5rem;
+  margin: 0.5rem;
   border-radius: 0.5rem;
 }
 

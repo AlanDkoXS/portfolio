@@ -34,6 +34,24 @@
         });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script>
+        function downloadCV(language) {
+          const fileMap = {
+            ENG: '[ENG] Alan Quintana.pdf',
+            ESP: '[ESP] Alan Quintana.pdf'
+          };
+
+          const fileName = fileMap[language];
+          if (fileName) {
+            const link = document.createElement('a');
+            link.href = `/assets/docs/${fileName}`; // Cambia "path/to/" por la ruta real donde están los archivos.
+            link.download = fileName;
+            link.click();
+          } else {
+            alert('Invalid language selected.');
+          }
+        }
+      </script>
 
 </head>
 
