@@ -403,15 +403,16 @@ section {
 
       .btn__close {
         position: absolute;
-        top: var(--mr-2);
-        right: var(--mr-2);
+        top: 1.5rem;
+        right: 1.5rem;
         background-color: var(--bg-color-section);
         width: 38px;
         height: 38px;
         border-radius: 50%;
 
         &:hover {
-          background-color: #dfdfdf;
+          background-color: var(--primary-color);
+          color: var(--bg-color-section);
         }
       }
     }
