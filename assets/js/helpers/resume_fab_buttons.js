@@ -9,14 +9,12 @@ function handleScroll() {
   const clientHeight = pdfContainer.clientHeight;
   const scrollPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100;
 
-  // Cambio de color del botón de descarga basado en el scroll
-  if (scrollPercentage > 70) {
-    btnDownload.style.backgroundColor = 'green';
+  if (scrollPercentage > 90) {
+    btnDownload.style.backgroundColor = '#993737';
   } else {
     btnDownload.style.backgroundColor = '';
   }
 
-  // Expansión de los botones FAB
   if (scrollTop > 20) {
     fabButtons.forEach((button) => {
       button.classList.add('expanded');

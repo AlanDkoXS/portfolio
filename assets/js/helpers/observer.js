@@ -19,7 +19,6 @@ const createObserver = () => {
   return observer;
 };
 
-// Observar todas las secciones
 const observeSections = (observer) => {
   const sections = document.querySelectorAll('.section');
   sections.forEach((section) => {
@@ -27,11 +26,9 @@ const observeSections = (observer) => {
   });
 };
 
-// Función que inicializa el observer
 const initObserver = () => {
   const observer = createObserver();
   observeSections(observer);
 };
 
-// Exportar la función initObserver
 export default initObserver;

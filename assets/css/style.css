@@ -87,20 +87,20 @@ p {
 
   dialog {
     box-sizing: initial;
-    position: fixed; /* Asegura que el modal se posicione sobre la ventana */
+    position: fixed;
     top: 0;
     left: 0;
     width: initial;
-    height: auto;
-    background: rgba(0, 0, 0, 0.5); /* Fondo difuminado */
-    z-index: 1000; /* Asegura que el modal esté sobre otros elementos */
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(5px); /* Fondo difuminado */
+    backdrop-filter: blur(5px);
     text-align: center;
     padding: 2rem;
     border: none;
-    display: none; /* Modal oculto por defecto */
+    display: none;
   }
 
   .modal-content {
@@ -115,7 +115,7 @@ p {
   }
 
   #modal[open] {
-    display: flex; /* Mostrar el modal cuando el atributo 'open' está presente */
+    display: flex;
   }
 
   /* Darkmode ====================================*/
