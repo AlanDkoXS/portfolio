@@ -12,6 +12,7 @@ import { setAutoDarkMode } from './helpers/auto-dark-mode.js';
 import { loadGoogleTagManager } from './helpers/google-tag-manager.js';
 import { loadEmailJS } from './helpers/email-js.js';
 import initObserver from './helpers/observer.js';
+import { closeModal } from './helpers/close-modal.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
   await loadGoogleTagManager();
@@ -30,3 +31,4 @@ profileParallax();
 updateDateYear();
 sendEmail();
 switchLanguages();
+closeModal();
