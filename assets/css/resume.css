@@ -75,9 +75,3 @@ canvas {
 .fab.expanded .fab-text {
   display: inline-block;
 }
-
-.resume__modal-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}

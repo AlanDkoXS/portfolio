@@ -36,22 +36,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
     <script>
         function downloadCV(language) {
-          const fileMap = {
-            ENG: '[ENG] Alan Quintana.pdf',
-            ESP: '[ESP] Alan Quintana.pdf'
-          };
+            const fileMap = {
+                ENG: '[ENG] Alan Quintana.pdf',
+                ESP: '[ESP] Alan Quintana.pdf'
+            };
 
-          const fileName = fileMap[language];
-          if (fileName) {
-            const link = document.createElement('a');
-            link.href = `/assets/docs/${fileName}`; // Cambia "path/to/" por la ruta real donde están los archivos.
-            link.download = fileName;
-            link.click();
-          } else {
-            alert('Invalid language selected.');
-          }
+            const fileName = fileMap[language];
+            if (fileName) {
+                const link = document.createElement('a');
+                link.href = `/assets/docs/${fileName}`; // Cambia "path/to/" por la ruta real donde están los archivos.
+                link.download = fileName;
+                link.click();
+            } else {
+                alert('Invalid language selected.');
+            }
         }
-      </script>
+    </script>
 
 </head>
 
@@ -106,8 +106,8 @@
                 <h2>Download</h2>
                 <p>Select language</p>
                 <div class="resume__modal-content">
-                    <button class="btn btn--primary" onclick="downloadCV('ENG')">English</button>
-                    <button class="btn btn--primary" onclick="downloadCV('ESP')">Español</button>
+                    <button class="btn btn--primary" onclick="downloadCV('ENG')"><strong>English</strong></button>
+                    <button class="btn btn--primary" onclick="downloadCV('ESP')"><strong>Español</strong></button>
                 </div>
             </div>
         </dialog>

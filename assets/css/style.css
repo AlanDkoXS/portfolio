@@ -110,12 +110,18 @@ html {
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     width: 100%;
+    max-width: 300px;
     margin: auto;
   }
 
   #modal[open] {
     display: flex;
-    margin: 1rem auto 0;
+  }
+
+  .resume__modal-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   /* Darkmode ====================================*/
