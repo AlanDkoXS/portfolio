@@ -189,7 +189,7 @@
       .skills__icons {
         grid-template-columns: repeat(6, 1fr);
       }
-      .skills__icons--container {
+      .skills__icon {
         width: 100px;
         height: 100px;
       }
