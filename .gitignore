@@ -19,3 +19,7 @@ eslint.config.mjs
 
 # Public Key
 config.js
+
+# Node Modules
+package-lock.json
+package.json

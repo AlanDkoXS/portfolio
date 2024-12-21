@@ -249,11 +249,11 @@ section {
   align-items: center;
   text-align: center;
   white-space: nowrap;
-  margin: 5px;
-  padding: 1rem 5rem;
+  padding: 1rem;
+  margin: 0.5rem;
   border: none;
-  outline: none;
   border-radius: 0.5rem;
+  outline: none;
   width: 90%;
   height: auto;
   cursor: pointer;
@@ -261,6 +261,8 @@ section {
   color: var(--primary-color);
   background-color: var(--bg-color-buttons);
   box-shadow: var(--box-shadow);
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .btn:hover,
@@ -276,15 +278,6 @@ section {
   background-color: var(--bg-color-buttons);
 }
 
-.btn--primary {
-  text-transform: uppercase;
-  font-weight: 600;
-  backdrop-filter: blur(100px);
-  border: none;
-  padding: 1rem;
-  margin: 0.5rem;
-  border-radius: 0.5rem;
-}
 
 /* ============== LOADER ================= */
 .loader {

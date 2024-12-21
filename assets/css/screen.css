@@ -39,8 +39,7 @@
   }
 
   .btn {
-    width: 300px;
-    margin: 0.5rem;
+    max-width: 300px;
   }
 
   .header {
