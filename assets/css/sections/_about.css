@@ -8,10 +8,6 @@
   padding: 1rem;
 }
 
-.about__description {
-  padding: 0.5rem;
-  text-align: center;
-}
 
 .about__img--container {
   display: flex;
