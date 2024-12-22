@@ -1,5 +1,5 @@
 // snow-effect.js
-function createSnowEffect() {
+const createSnowEffect = () => {
   // Verificar si estamos en el período navideño (12 dic - 6 ene)
   function isChristmasPeriod() {
     const today = new Date();
@@ -7,82 +7,98 @@ function createSnowEffect() {
     const day = today.getDate();
 
     // Período del 12 de diciembre al 6 de enero
-    if (month === 11 && day >= 12) return true; // Diciembre desde el 12
-    if (month === 0 && day <= 6) return true; // Enero hasta el 6
-    return false;
+    return (month === 11 && day >= 12) || (month === 0 && day <= 6);
+  }
+
+  function createSnowflake() {
+    const flake = document.createElement('div');
+    flake.classList.add('snow');
+
+    // Posición inicial aleatoria
+    const startPosition = Math.random() * window.innerWidth;
+    const delay = Math.random() * 10; // Retraso aleatorio
+    const duration = 5 + Math.random() * 10; // Duración aleatoria entre 5-15s
+
+    Object.assign(flake.style, {
+      left: `${startPosition}px`,
+      animationDelay: `${delay}s`,
+      animationDuration: `${duration}s`,
+      opacity: 0.1 + Math.random() * 0.9,
+    });
+
+    return flake;
   }
 
   function initSnow() {
     if (!isChristmasPeriod()) return;
 
-    // Crear el contenedor de nieve
-    const snowContainer = document.createElement('div');
-    snowContainer.className = 'snow-container';
-
-    // Crear los copos de nieve
-    for (let i = 0; i < 100; i++) {
-      const snow = document.createElement('div');
-      snow.className = 'snow';
-      snowContainer.appendChild(snow);
+    // Crear el contenedor de nieve si no existe
+    let snowContainer = document.querySelector('.snow-container');
+    if (!snowContainer) {
+      snowContainer = document.createElement('div');
+      snowContainer.className = 'snow-container';
+      document.body.insertBefore(snowContainer, document.body.firstChild);
     }
 
-    // Añadir al body
-    document.body.insertBefore(snowContainer, document.body.firstChild);
-
-    // Añadir estilos dinámicamente
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = `
-      .snow-container {
-        position: fixed;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        overflow: hidden;
-        pointer-events: none;
-        z-index: 9999;
-      }
-
-      .snow {
-        position: absolute;
-        width: 5px;
-        height: 5px;
-        background: white;
-        border-radius: 50%;
-        filter: drop-shadow(0 0 2px white);
-      }
-    `;
-
-    // Generar animaciones únicas para cada copo
-    for (let i = 0; i < 100; i++) {
-      const randomX = Math.random() * 100;
-      const randomOffset = (Math.random() - 0.5) * 10;
-      const randomXEnd = randomX + randomOffset;
-      const fallDuration = 10 + Math.random() * 20;
-      const fallDelay = -Math.random() * 30;
-
-      styleSheet.textContent += `
-        .snow:nth-child(${i + 1}) {
-          opacity: ${0.2 + Math.random() * 0.3};
-          transform: translate(${randomX}vw, -10px);
-          animation: fall-${i} ${fallDuration}s ${fallDelay}s linear infinite;
+    // Añadir estilos si no existen
+    if (!document.querySelector('#snow-styles')) {
+      const styleSheet = document.createElement('style');
+      styleSheet.id = 'snow-styles';
+      styleSheet.textContent = `
+        .snow-container {
+          position: fixed;
+          width: 100%;
+          height: 100vh;
+          top: 0;
+          left: 0;
+          overflow: hidden;
+          pointer-events: none;
+          z-index: 9999;
         }
 
-        @keyframes fall-${i} {
+        .snow {
+          position: absolute;
+          top: -10px;
+          width: 5px;
+          height: 5px;
+          background: white;
+          border-radius: 50%;
+          filter: drop-shadow(0 0 10px white);
+          animation: fall linear infinite;
+        }
+
+        @keyframes fall {
           to {
-            transform: translate(${randomXEnd}vw, 100vh);
+            transform: translateY(100vh) rotate(360deg);
           }
         }
       `;
+      document.head.appendChild(styleSheet);
     }
 
-    document.head.appendChild(styleSheet);
+    // Crear copos de nieve iniciales
+    const numberOfFlakes = 50;
+    for (let i = 0; i < numberOfFlakes; i++) {
+      snowContainer.appendChild(createSnowflake());
+    }
+
+    // Reemplazar copos que han caído
+    setInterval(() => {
+      const flakes = snowContainer.children;
+      for (let flake of flakes) {
+        const rect = flake.getBoundingClientRect();
+        if (rect.top > window.innerHeight) {
+          snowContainer.removeChild(flake);
+          snowContainer.appendChild(createSnowflake());
+        }
+      }
+    }, 1000);
   }
 
   return {
     init: initSnow,
   };
-}
+};
 
-export const snowEffect = createSnowEffect();
+const snowEffect = createSnowEffect();
 export default snowEffect;
