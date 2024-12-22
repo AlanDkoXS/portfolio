@@ -1,0 +1,142 @@
+/* Background ====================================*/
+.background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.bgGrain {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url('/assets/img/bgGrain.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 300%;
+  height: 100%;
+}
+
+.bgBack,
+.bgMiddle,
+.bgFront {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bgBack {
+  width: 160%;
+  filter: blur(2px) brightness(0.5);
+}
+
+.bgMiddle {
+  width: 155%;
+  filter: blur(1px) brightness(0.9) drop-shadow(2px 2px 5px rgba(1, 1, 1, 1));
+}
+
+.bgFront {
+  width: 150%;
+  filter: blur(0.5px) brightness(1) drop-shadow(2px 2px 5px rgba(1, 1, 1, 1));
+}
+
+/* Hover effects */
+.background-container:hover .bgBack {
+  transform: translate(-50%, -50%) translate(-40px, 20px);
+}
+
+.background-container:hover .bgMiddle {
+  transform: translate(-50%, -50%) translate(-30px, -15px);
+}
+
+.background-container:hover .bgFront {
+  transform: translate(-50%, -50%) translate(40px, -10px);
+}
+
+.bgBack,
+.bgMiddle,
+.bgFront {
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Background MIN WIDTH 768px====================================*/
+@media (min-width: 768px) {
+.background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 180vh;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    opacity: 0.3;
+  }
+
+  .bgGrain {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url('/assets/img/bgGrain.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    opacity: 0.8;
+    height: 100%;
+  }
+
+  .bgBack,
+  .bgMiddle,
+  .bgFront {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .bgBack {
+    filter: blur(5px) brightness(0.5);
+    opacity: 0.5;
+  }
+
+  .bgMiddle {
+    filter: blur(3px) brightness(0.9) drop-shadow(2px 2px 5px rgba(1, 1, 1, 1));
+    opacity: 0.6;
+  }
+
+  .bgFront {
+    filter: blur(1px) brightness(1) drop-shadow(2px 2px 5px rgba(1, 1, 1, 1));
+    opacity: 0.7;
+  }
+
+  .background-container:hover .bgBack {
+    transform: translate(-50%, -50%) translate(-40px, 20px);
+  }
+
+  .background-container:hover .bgMiddle {
+    transform: translate(-50%, -50%) translate(-30px, -15px);
+  }
+
+  .background-container:hover .bgFront {
+    transform: translate(-50%, -50%) translate(40px, -10px);
+  }
+
+  .bgBack,
+  .bgMiddle,
+  .bgFront {
+    transition: transform 0.5s ease-in-out;
+  }
+}

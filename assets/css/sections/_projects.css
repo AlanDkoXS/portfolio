@@ -1,0 +1,206 @@
+/* ============= PROJECTS ============= */
+
+.visuallyhidden {
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  opacity: 0;
+}
+
+.project__container {
+  position: relative;
+  height: 26rem;
+  padding: 20px;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.project__nav {
+  visibility: visible;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--bg-color-buttons);
+  color: var(--primary-color);
+  border: none;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: var(--z-fixed);
+}
+
+.project__nav:hover {
+  background-color: var(--primary-color);
+  color: var(--bg-color-buttons);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.project__nav i {
+  font-size: 1.5rem;
+}
+
+.project__nav--prev {
+  left: 1rem;
+}
+
+.project__nav--next {
+  right: 1rem;
+}
+
+.project__card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.project__card--carousel {
+  --card-width: 80%;
+  --card-max-width: 280px;
+  --card-height: 350px;
+  --carousel-min-width: 600px;
+  z-index: 1;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  height: var(--card-height);
+  min-width: var(--carousel-min-width);
+  transition: filter 0.3s ease;
+}
+
+@media screen and (max-width: 640px) {
+  .project__nav {
+    visibility: hidden;
+  }
+
+  .project__card--carousel {
+    margin-left: calc((100vw - var(--carousel-min-width) - 40px) / 2);
+  }
+}
+
+.project__card--carousel.smooth-return {
+  transition: all 0.2s ease;
+}
+
+.project__card--carousel .project__card {
+  background: whitesmoke;
+  width: var(--card-width);
+  max-width: var(--card-max-width);
+  text-align: center;
+  padding: 1em;
+  min-width: 250px;
+  height: var(--card-height);
+  position: absolute;
+  margin: 0 auto;
+  color: rgba(0, 0, 0, 0.5);
+  transition: inherit;
+  -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 1em;
+  filter: brightness(0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.project__card.highlight {
+  filter: brightness(1);
+}
+
+.project__card:nth-of-type(1) .project__image--container {
+  background-image: url('../../img/project_img/marvel.webp');
+}
+
+.project__card:nth-of-type(2) .project__image--container {
+  background-image: url('../../img/project_img/CRUD.webp');
+}
+
+.project__card:nth-of-type(3) .project__image--container {
+  background-image: url('../../img/project_img/rick.webp');
+}
+.project__card:nth-of-type(4) .project__image--container {
+  background-image: url('../../img/project_img/weather.webp');
+}
+.project__card:nth-of-type(5) .project__image--container {
+  background-image: url('../../img/project_img/cookie.webp');
+}
+
+.project__image--container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.project__image--container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(2px);
+  z-index: 2;
+}
+
+.project__image--container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1));
+  z-index: 3;
+}
+
+.project__card h3.project__title,
+.project__card p.project__description {
+  position: relative;
+  z-index: 4;
+  color: var(--primary-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  margin: 1em;
+}
+
+/* PROJECTS MIN WIDTH 768px ========================== */
+@media (min-width: 768px) {
+  .projects {
+    .projects__container {
+      padding: 3rem 0;
+      gap: 5rem;
+
+      .projects__project {
+        .projects__inner {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        &:nth-child(even) {
+          .projects__image {
+            order: 2;
+          }
+
+          .projects__info {
+            order: 1;
+            text-align: right;
+          }
+
+          .projects__buttons {
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+}

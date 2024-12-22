@@ -11,7 +11,9 @@
   z-index: var(--z-modal);
   animation: animation-nav linear both;
   animation-timeline: scroll(root block);
+  -webkit-animation-timeline: scroll(root block);
   animation-range: 0 100px;
+  -webkit-animation-range: 0 100px;
   opacity: 0;
 
   .navbar {
@@ -243,5 +245,48 @@
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-shadow: var(--box-shadow);
+  }
+}
+
+/* ============= Media Queries MIN WIDTH (768px)============= */
+@media (min-width: 768px) {
+  .header {
+    .navbar {
+      .navbar__menu {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        position: static;
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+        .navbar__list {
+          flex-direction: row;
+        }
+        .btn__close {
+          display: none;
+        }
+      }
+    }
+    .btn__open {
+      display: none;
+    }
+  }
+
+  .btn {
+    max-width: 300px;
+  }
+
+  .header {
+    & .navbar {
+      & .navbar__toggles {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .navbar__logo--name,
+  .navbar__logo--lastname {
+    display: visible;
   }
 }

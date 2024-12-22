@@ -6,10 +6,7 @@
     <title>Resume - Alan Quintana Pacheco</title>
     <link rel="shortcut icon" href="/assets/img/logo.svg" type="image/x-icon" />
     <!-- Styles -->
-    <link rel="stylesheet" href="/assets/css/style.css" />
-    <link rel="stylesheet" href="/assets/css/mobile.css" />
-    <link rel="stylesheet" href="/assets/css/screen.css" />
-    <link rel="stylesheet" href="/assets/css/resume.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -68,9 +65,9 @@
           <span class="resume__logo--name">alan</span>
           <span class="resume__logo--lastname">quintana</span>
         </a>
-        <!-- Menu Nav ------------------------------------------------------------->
+        <!-- Toggles -->
         <div id="nav" class="navbar__menu">
-          <a href="#close" title="Close"
+          <a href="#close" title="Close Navigation"
             ><i class="bx bx-x btn__close navbar__icon flex--container"></i
           ></a>
           <ul class="navbar__list flex--container">
@@ -79,16 +76,16 @@
             </li>
           </ul>
           <div class="navbar__toggles flex--container">
-            <div class="navbar__toggle-darkmode flex--container">
+            <div class="navbar__toggle--darkmode flex--container">
               <input
                 type="checkbox"
                 name="color-scheme"
                 id="darkmode-toggle"
-                class="navbar__toggle-darkmode-input"
+                class="navbar__toggle--darkmode-input"
                 title="Dark Mode" />
-              <label for="darkmode-toggle" class=".navbar__toggle-darkmode__label">
-                <i class="bx bx-sun navbar__toggle-darkmode-sun"></i>
-                <i class="bx bx-moon navbar__toggle-darkmode-moon"></i>
+              <label for="darkmode-toggle" class="navbar__toggle--darkmode-label">
+                <i class="bx bx-sun navbar__toggle--darkmode-sun" aria-hidden="true"></i>
+                <i class="bx bx-moon navbar__toggle--darkmode-moon" aria-hidden="true"></i>
               </label>
             </div>
             <div class="navbar__toggle--language flex--container">
@@ -102,7 +99,7 @@
             </div>
           </div>
         </div>
-        <!-- Toggles -------------------------------------------------------------->
+        <!-- Nav Bar -->
         <a href="#nav" title="Menu Navigation"><i class="bx bx-menu btn__open navbar__icon"></i></a>
       </nav>
     </header>

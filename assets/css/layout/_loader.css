@@ -1,0 +1,52 @@
+/* ============== LOADER ================= */
+.loader {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color-section);
+  z-index: 3;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.4s,
+    visibility 0.4s;
+
+  .loader__logo {
+    fill: var(--primary-color);
+    width: 3rem;
+    height: 3rem;
+    animation: jump 1.1s infinite linear;
+  }
+  .loader__name {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .loader__name--light {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+    font-size: 1rem;
+  }
+  .loader__name--semibold {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+}
+
+.loader--hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@keyframes jump {
+  50% {
+    transform: translateY(-20%) scaleY(1.05);
+  }
+}

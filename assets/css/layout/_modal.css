@@ -1,0 +1,20 @@
+  .modal-content {
+    color: var(--primary-color);
+    background-color: var(--bg-color-section);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+  }
+
+  #modal[open] {
+    display: flex;
+  }
+
+  .resume__modal-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }

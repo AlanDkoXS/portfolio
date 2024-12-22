@@ -1,0 +1,95 @@
+/* ============= PORTFOLIO ============= */
+.portfolio {
+  max-width: 300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.designs__wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel {
+  position: relative;
+}
+
+.carousel input {
+  display: none;
+}
+
+.carousel__inner {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.designs__card {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.designs__card-img {
+  max-width: 100%;
+  justify-content: center;
+  height: auto;
+}
+
+.carousel__inner {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.carousel input:checked:nth-of-type(1) ~ .carousel__inner {
+  transform: translateX(0%);
+}
+
+.carousel input:checked:nth-of-type(2) ~ .carousel__inner {
+  transform: translateX(-100%);
+}
+
+.carousel input:checked:nth-of-type(3) ~ .carousel__inner {
+  transform: translateX(-200%);
+}
+
+.carousel input:checked:nth-of-type(4) ~ .carousel__inner {
+  transform: translateX(-300%);
+}
+
+.carousel input:checked:nth-of-type(5) ~ .carousel__inner {
+  transform: translateX(-400%);
+}
+
+.carousel input:checked:nth-of-type(6) ~ .carousel__inner {
+  transform: translateX(-500%);
+}
+
+.carousel__controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+
+.carousel__button {
+  cursor: pointer;
+  background-color: var(--bg-color-buttons);
+  border: none;
+  padding: 10px;
+  width: 2rem;
+  font-size: var(--small-font-size);
+  margin: 0;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.carousel__button:hover {
+  background-color: var(--primary-color);
+  color: var(--bg-color-section);
+}
+
+.carousel__button:checked {
+  background-color: var(--primary-color);
+  color: var(--bg-color-section);
+}

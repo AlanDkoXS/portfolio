@@ -1,0 +1,48 @@
+/* ============= Footer ============= */
+.footer {
+  background-color: #111;
+  color: #efefef;
+  padding-bottom: 2rem;
+  bottom: 0;
+}
+
+.footer__container {
+  display: grid;
+  gap: 1rem;
+}
+
+.footer__info .footer__title {
+  font-size: 1.5rem;
+}
+
+.footer__social .footer__social-list {
+  display: flex;
+  gap: var(--mr-2);
+  font-size: 1.5rem;
+}
+
+.footer__social-link {
+  color: var(--primary-color);
+  transition: text-shadow 0.3s;
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+}
+
+.footer__social-link:hover {
+  transform: scale(1.2);
+}
+
+.footer__copyrightright {
+  text-align: center;
+  padding-top: 2rem;
+}
+/* ============= Media Queries MIN WIDTH (768px)============= */
+
+@media (min-width: 768px) {
+      .footer {
+    .footer__container {
+      grid-template-columns: repeat(2, 2fr);
+    }
+  }
+}

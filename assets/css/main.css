@@ -2,11 +2,6 @@
    MAIN CSS
    ========================================================================== */
 
-@import url('./styles.css');
-@import url('./mobile.css');
-@import url('./screen.css');
-@import url('./resume.css');
-
 /* BASE */
 @import url('./base/_base.css');
 @import url('./base/_reset.css');
@@ -15,8 +10,9 @@
 /* LAYOUT */
 @import url('./layout/_background.css');
 @import url('./layout/_buttons.css');
-@import url('./layout/_header.css');
 @import url('./layout/_footer.css');
+@import url('./layout/_header.css');
+@import url('./layout/_loader.css');
 @import url('./layout/_modal.css');
 @import url('./layout/_section.css');
 
