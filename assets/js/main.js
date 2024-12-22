@@ -13,22 +13,34 @@ import { loadGoogleTagManager } from './helpers/google-tag-manager.js';
 import { loadEmailJS } from './helpers/email-js.js';
 import initObserver from './helpers/observer.js';
 import { closeModal } from './helpers/close-modal.js';
+import snowEffect from './helpers/snow-effect.js';
 
+// Función para inicializar todos los componentes
+const initializeComponents = () => {
+  initObserver();
+  cardCarousel();
+  loader();
+  resetToHome();
+  activeMenu();
+  parallaxMobile();
+  parallaxDesktop();
+  profileParallax();
+  updateDateYear();
+  sendEmail();
+  switchLanguages();
+  closeModal();
+  snowEffect.init(); // Inicializamos el efecto de nieve
+};
+
+// Event listener para cuando el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', async function () {
+  // Primero cargamos las dependencias externas
   await loadGoogleTagManager();
   await loadEmailJS();
-  setAutoDarkMode();
-});
 
-initObserver();
-cardCarousel();
-loader();
-resetToHome();
-activeMenu();
-parallaxMobile();
-parallaxDesktop();
-profileParallax();
-updateDateYear();
-sendEmail();
-switchLanguages();
-closeModal();
+  // Configuramos el modo oscuro
+  setAutoDarkMode();
+
+  // Inicializamos todos los componentes
+  initializeComponents();
+});
