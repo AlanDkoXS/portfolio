@@ -1,9 +1,26 @@
 import translations from '/assets/js/languages/translations.js';
 
-// Agregamos una variable global para trackear el idioma actual
-let currentLanguage = 'en';
+// Función para detectar el idioma preferido del usuario
+const detectUserLanguage = () => {
+  const languages = navigator.languages || [navigator.language || navigator.userLanguage];
 
-// Función para obtener las traducciones de validación
+  // Convertir a array si no lo es
+  const languageList = Array.isArray(languages) ? languages : [languages];
+
+  // Buscar el primer idioma que coincida con español
+  const isSpanishPreferred = languageList.some((lang) => {
+    const langCode = lang.toLowerCase();
+    return (
+      langCode.startsWith('es') ||
+      langCode.includes('419') || // América Latina
+      langCode.includes('034')
+    ); // España
+  });
+
+  return isSpanishPreferred ? 'es' : 'en';
+};
+
+// Exportar función para obtener mensajes de validación
 export const getValidationMessages = () => translations.validation[currentLanguage];
 
 const updateSectionText = (selector, key, lang) => {
@@ -41,6 +58,14 @@ function updateProjectText(lang) {
 const switchLanguages = () => {
   const languageToggle = document.getElementById('language-toggle');
 
+  // Establecer el idioma inicial basado en la preferencia del usuario
+  const initialLang = detectUserLanguage();
+  languageToggle.checked = initialLang === 'es';
+
+  // Disparar el evento inicial para aplicar el idioma detectado
+  const event = new Event('change');
+  languageToggle.dispatchEvent(event);
+
   languageToggle.addEventListener('change', function () {
     const lang = this.checked ? 'es' : 'en';
 
@@ -48,12 +73,13 @@ const switchLanguages = () => {
       { selector: '.navbar__link[href="#home"]', key: 'navHome' },
       { selector: '.navbar__link[href="#about"]', key: 'navAbout' },
       { selector: '.navbar__link[href="#skills"]', key: 'navSkills' },
-      /* { selector: '.navbar__link[href="#portfolio"]', key: 'navPortfolio' }, */
       { selector: '.navbar__link[href="#projects"]', key: 'navProjects' },
       { selector: '.navbar__link[href="#contact"]', key: 'navContact' },
     ];
+
     navLinks.forEach((link) => updateSectionText(link.selector, link.key, lang));
 
+    // Home Section
     updateSectionText('.home__title', 'homeTitle', lang);
     updateSectionText('.home__description', 'homeDescription', lang);
     updateSectionText('.btn.btn--primary[href="#about"]', 'aboutButton', lang);
@@ -61,11 +87,11 @@ const switchLanguages = () => {
     updateSectionText('.btn.btn--primary[href="#skills"]', 'skillsButton', lang);
     updateSectionText('.btn.btn--primary[href="#projects"]', 'projectButton', lang);
 
-    /* <-- About Section --> */
+    // About Section
     updateSectionText('#about .section__title', 'aboutTitle', lang);
     updateSectionText('.about__description', 'aboutDescription', lang);
 
-    /* <-- Skills Section --> */
+    // Skills Section
     updateSectionText('#skills .section__title', 'skillsTitle', lang);
     updateSectionText('.skills__description', 'skillsDescription', lang);
     updateSectionText('.skills__tags-title', 'skillsTagsTitle', lang);
@@ -74,10 +100,6 @@ const switchLanguages = () => {
     updateSectionText('.skills__frontend-tools-title', 'skillsFrontendTools', lang);
     updateSectionText('.skills__frontend-tools-title', 'skillsBackendTools', lang);
     updateSectionText('.skills__development-tools-title', 'skillsDevelopmentTools', lang);
-
-    // Portfolio Section
-    /*     updateSectionText('.portfolio__title', 'portfolioTitle', lang);
-    updateSectionText('.designs__title', 'designsTitle', lang); */
 
     // Project Section
     updateSectionText('#projects .section__title', 'projectsTitle', lang);
@@ -89,7 +111,7 @@ const switchLanguages = () => {
     updateSectionText('.contact__info-description', 'contactInfoDescription', lang);
     updateSectionText('.contact__form-title', 'contactFormTitle', lang);
 
-    // Actualizar las etiquetas del formulario usando contactForm
+    // Form Labels
     const formElements = {
       name: document.querySelector('.contact__form-label[for="name"]'),
       email: document.querySelector('.contact__form-label[for="email"]'),
@@ -103,12 +125,13 @@ const switchLanguages = () => {
       }
     });
 
-    // Actualizar el botón de envío
+    // Submit Button
     const submitButton = document.querySelector('.contact__form-button');
     if (submitButton) {
       submitButton.innerHTML = `<strong>${translations.contactForm[lang].send}</strong>`;
     }
 
+    // Language Change Event
     window.dispatchEvent(
       new CustomEvent('languageChange', {
         detail: {
@@ -117,7 +140,8 @@ const switchLanguages = () => {
         },
       }),
     );
-    // Actualizar el modal
+
+    // Modal Updates
     const modalText = document.querySelector('#modal .modal-content p');
     if (modalText) {
       modalText.textContent = translations.contactForm[lang].formSuccess;
