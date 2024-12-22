@@ -1,15 +1,11 @@
 .btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
   text-align: center;
   white-space: nowrap;
-  padding: 1rem;
-  margin: 0.5rem;
+  padding: .8rem;
   border: none;
   border-radius: 0.5rem;
   outline: none;
-  width: 90%;
+  width: 100%;
   height: auto;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -17,7 +13,7 @@
   background-color: var(--bg-color-buttons);
   box-shadow: var(--box-shadow);
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
 }
 
 .btn:hover,
