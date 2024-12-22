@@ -1,0 +1,145 @@
+/* ==========================================================================
+   VARIABLES CSS
+   ========================================================================== */
+
+:root {
+  /* Layout
+     ========================================================================== */
+  --header-height: 60px;
+  --container-width: 1024px;
+
+  /* Colors
+     ========================================================================== */
+  /* Theme Colors */
+  --primary-color: light-dark(#f3ce3a, #ffffffcc);
+  --accent-color: #947d24;
+
+  /* Background Colors */
+  --bg-color-section: light-dark(#001219, #111);
+  --bg-color-buttons: light-dark(#030b0d, #6a6a6a);
+  --bg-color-buttons2: light-dark(#001219, transparent);
+
+  /* Overlay Colors */
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+  --gradient-overlay: linear-gradient(to bottom, rgba(0, 0, 0, .5), rgba(0, 0, 0, 1));
+
+  /* Typography
+     ========================================================================== */
+  /* Font Sizes */
+  --normal-font-size: 1rem;
+  --small-font-size: 0.8rem;
+  --title-font-size: 1.5rem;
+  --icon-font-size: 2.2rem;
+  --social-icon-size: 1.8rem;
+
+  /* Font Weights */
+  --font-light: 200;
+  --font-regular: 300;
+  --font-medium: 500;
+  --font-semibold: 600;
+
+  /* Font Family */
+  --primary-font: 'Poppins', sans-serif;
+
+  /* Layers
+     ========================================================================== */
+  --z-negative: -1;
+  --z-fixed: 1;
+  --z-modal: 2;
+  --z-loader: 3;
+
+  /* Shadows
+     ========================================================================== */
+  --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  --box-shadow-light: 0px 3px 10px #0202023b;
+  --box-shadow-modal: 0 4px 10px rgba(0, 0, 0, 0.3);
+  --box-shadow-header: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
+  --drop-shadow: drop-shadow(2px 2px 5px rgba(1, 1, 1, 1));
+  --drop-shadow-sprite: drop-shadow(5px -5px 5px rgba(0, 18, 25, 0.5));
+
+  /* Animations
+     ========================================================================== */
+  --transition-default: all 0.3s ease;
+  --transition-background: background 0.3s;
+  --transition-transform: transform 0.3s ease-in-out;
+  --transition-color: color 0.3s;
+  --animation-timing: 0.5s ease-in-out;
+
+  /* Filters */
+  --blur-default: blur(5px);
+  --blur-bg-back: blur(2px) brightness(0.5);
+  --blur-bg-middle: blur(1px) brightness(0.9);
+  --blur-bg-front: blur(0.5px) brightness(1);
+
+  /* Spacing
+     ========================================================================== */
+  --section-padding: 3rem 0;
+  --modal-padding: 2rem;
+  --container-padding: 0 1rem;
+  --nav-padding: 10px;
+  --button-padding: 1rem;
+  --card-padding: 0.75rem 1.5rem;
+  --form-padding: 3rem 1.5rem 2rem;
+
+  /* Margins */
+  --margin-small: 0.5rem;
+  --margin-medium: 1rem;
+  --margin-large: 2rem;
+
+  /* Gaps */
+  --gap-small: 0.5rem;
+  --gap-medium: 1rem;
+  --gap-large: 2rem;
+
+  /* Sizes
+     ========================================================================== */
+  /* Widths */
+  --card-width: 80%;
+  --card-max-width: 280px;
+  --card-height: 350px;
+  --carousel-min-width: 600px;
+  --toggle-width: 42px;
+  --toggle-height: 20px;
+  --toggle-button-size: 16px;
+
+  /* Borders
+     ========================================================================== */
+  --border-radius-small: 0.25rem;
+  --border-radius-default: 0.5rem;
+  --border-radius-large: 1rem;
+  --border-radius-full: 50%;
+  --border-width: 2px;
+
+  /* Background Sizes
+     ========================================================================== */
+  --bg-size-mobile: 300%;
+  --bg-size-desktop: 100%;
+  --bg-back-width: 160%;
+  --bg-middle-width: 155%;
+  --bg-front-width: 150%;
+}
+
+/* Media Queries Adjustments
+   ========================================================================== */
+@media (min-width: 768px) {
+  :root {
+    --header-height: 4rem;
+    --normal-font-size: 1.2rem;
+    --small-font-size: 1rem;
+    --bg-size: var(--bg-size-desktop);
+  }
+}
+
+/* Dark Mode Support
+   ========================================================================== */
+:root {
+  color-scheme: light dark;
+
+  &:has([name='color-scheme']:checked) {
+    color-scheme: dark;
+  }
+
+  &:has([name='color-scheme']) {
+    color-scheme: light;
+  }
+}

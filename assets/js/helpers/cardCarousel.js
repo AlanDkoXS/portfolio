@@ -1,6 +1,6 @@
 const cardsContainer = document.querySelector('.project__card--carousel');
 const cardsController = document.querySelector(
-  '.project__card--carousel + .project__card--controller'
+  '.project__card--carousel + .project__card--controller',
 );
 
 export function cardCarousel() {
@@ -88,28 +88,74 @@ export function cardCarousel() {
       this.cards = container.querySelectorAll('.project__card');
 
       this.centerIndex = (this.cards.length - 1) / 2;
-      this.cardWidth =
-        (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
+      this.cardWidth = (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
       this.xScale = {};
 
       window.addEventListener('resize', this.updateCardWidth.bind(this));
 
       if (this.controllerElement) {
-        this.controllerElement.addEventListener(
-          'keydown',
-          this.controller.bind(this)
-        );
+        this.controllerElement.addEventListener('keydown', this.controller.bind(this));
       }
 
       this.build();
 
       super.getDistance(this.moveCards.bind(this));
+
+      // Inicializar los botones de navegación
+      this.setupNavigationButtons();
+    }
+
+    setupNavigationButtons() {
+      const prevButton = document.querySelector('.project__nav--prev');
+      const nextButton = document.querySelector('.project__nav--next');
+
+      if (prevButton && nextButton) {
+        prevButton.addEventListener('click', () => {
+          this.navigate('prev');
+        });
+
+        nextButton.addEventListener('click', () => {
+          this.navigate('next');
+        });
+      }
+    }
+
+    navigate(direction) {
+      const temp = { ...this.xScale };
+
+      if (direction === 'next') {
+        for (let x in this.xScale) {
+          const newX = parseInt(x) - 1 < -this.centerIndex ? this.centerIndex : parseInt(x) - 1;
+
+          temp[newX] = this.xScale[x];
+        }
+      } else if (direction === 'prev') {
+        for (let x in this.xScale) {
+          const newX = parseInt(x) + 1 > this.centerIndex ? -this.centerIndex : parseInt(x) + 1;
+
+          temp[newX] = this.xScale[x];
+        }
+      }
+
+      this.xScale = temp;
+
+      for (let x in temp) {
+        const scale = this.calcScale(x),
+          scale2 = this.calcScale2(x),
+          leftPos = this.calcPos(x, scale2),
+          zIndex = -Math.abs(x);
+
+        this.updateCards(this.xScale[x], {
+          x: x,
+          scale: scale,
+          leftPos: leftPos,
+          zIndex: zIndex,
+        });
+      }
     }
 
     updateCardWidth() {
-      this.cardWidth =
-        (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
-
+      this.cardWidth = (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
       this.build();
     }
 
@@ -138,22 +184,14 @@ export function cardCarousel() {
 
       if (e.keyCode === 39) {
         for (let x in this.xScale) {
-          const newX =
-            parseInt(x) - 1 < -this.centerIndex
-              ? this.centerIndex
-              : parseInt(x) - 1;
-
+          const newX = parseInt(x) - 1 < -this.centerIndex ? this.centerIndex : parseInt(x) - 1;
           temp[newX] = this.xScale[x];
         }
       }
 
       if (e.keyCode == 37) {
         for (let x in this.xScale) {
-          const newX =
-            parseInt(x) + 1 > this.centerIndex
-              ? -this.centerIndex
-              : parseInt(x) + 1;
-
+          const newX = parseInt(x) + 1 > this.centerIndex ? -this.centerIndex : parseInt(x) + 1;
           temp[newX] = this.xScale[x];
         }
       }
@@ -250,13 +288,11 @@ export function cardCarousel() {
       if (x !== x + rounded) {
         if (x + rounded > original) {
           if (x + rounded > this.centerIndex) {
-            newX =
-              x + rounded - 1 - this.centerIndex - rounded + -this.centerIndex;
+            newX = x + rounded - 1 - this.centerIndex - rounded + -this.centerIndex;
           }
         } else if (x + rounded < original) {
           if (x + rounded < -this.centerIndex) {
-            newX =
-              x + rounded + 1 + this.centerIndex - rounded + this.centerIndex;
+            newX = x + rounded + 1 + this.centerIndex - rounded + this.centerIndex;
           }
         }
 
@@ -264,7 +300,6 @@ export function cardCarousel() {
       }
 
       const temp = -Math.abs(newX + rounded);
-
       this.updateCards(card, { zIndex: temp });
 
       return newX;
@@ -289,11 +324,7 @@ export function cardCarousel() {
       }
 
       for (let i = 0; i < this.cards.length; i++) {
-        const x = this.checkOrdering(
-            this.cards[i],
-            parseInt(this.cards[i].dataset.x),
-            xDist
-          ),
+        const x = this.checkOrdering(this.cards[i], parseInt(this.cards[i].dataset.x), xDist),
           scale = this.calcScale(x + xDist),
           scale2 = this.calcScale2(x + xDist),
           leftPos = this.calcPos(x + xDist, scale2);
@@ -308,7 +339,5 @@ export function cardCarousel() {
 
   const carousel = new CardCarousel(cardsContainer, cardsController);
 }
-
-cardCarousel();
 
 export default cardCarousel;

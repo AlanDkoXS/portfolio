@@ -13,127 +13,9 @@
 */
 
 /* ============= VARIABLES CSS ============= */
-:root {
-  --header-height: 60px;
-
-  /* Colors ====================================*/
-  --primary-color: light-dark(#f3ce3a, #ffffffcc);
-  --bg-color-section: light-dark(#001219, #111);
-  --bg-color-buttons: light-dark(#030b0d, #6a6a6a);
-  --bg-color-buttons2: light-dark(#001219, transparent);
-
-  /* Typografy ====================================*/
-  --normal-font-size: 1rem;
-  --small-font-size: 0.8rem;
-  /* z-index ====================================*/
-  --z-fixed: 1;
-  --z-modal: 2;
-
-  /* Shadows ====================================*/
-  --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-}
-
+@import url('./_variables.css');
 /* ============= BASE ============= */
-html {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-  *,
-  *::before,
-  *::after {
-    box-sizing: inherit;
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    font-size: var(--normal-font-size);
-    color: var(--primary-color);
-    background-color: var(--bg-color-section);
-    overflow-x: hidden;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  p {
-    font-size: 1rem;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  svg {
-    color: var(--primary-color);
-  }
-
-  dialog {
-    position: fixed;
-    top: 0;
-    left: 0;
-    box-sizing: initial;
-    width: initial;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(5px);
-    text-align: center;
-    padding: 2rem;
-    border: none;
-    display: none;
-  }
-
-  .modal-content {
-    color: var(--primary-color);
-    background-color: var(--bg-color-section);
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 300px;
-    margin: auto;
-  }
-
-  #modal[open] {
-    display: flex;
-  }
-
-  .resume__modal-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  /* Darkmode ====================================*/
-  color-scheme: light dark;
-  &:has([name='color-scheme']:checked) {
-    color-scheme: dark;
-  }
-  &:has([name='color-scheme']) {
-    color-scheme: light;
-  }
-}
-
+@import url('./_base.css');
 /* Background ====================================*/
 .background-container {
   position: absolute;
@@ -278,7 +160,6 @@ section {
   background-color: var(--bg-color-buttons);
 }
 
-
 /* ============== LOADER ================= */
 .loader {
   position: fixed;
@@ -342,7 +223,7 @@ section {
   align-content: center;
   background-color: transparent;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
-  z-index: var(--z-modal);
+  z-index: 9999;
   animation: animation-nav linear both;
   animation-timeline: scroll(root block);
   animation-range: 0 100px;
@@ -574,6 +455,7 @@ section {
 @keyframes animation-nav {
   to {
     opacity: 1;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-shadow: var(--box-shadow);
   }

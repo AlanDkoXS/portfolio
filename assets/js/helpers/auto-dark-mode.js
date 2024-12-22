@@ -1,7 +1,5 @@
 export function setAutoDarkMode() {
-  const darkModeToggle = document.querySelector(
-    '.navbar__toggle--darkmode-input'
-  );
+  const darkModeToggle = document.querySelector('.navbar__toggle-darkmode-input');
   const hour = new Date().getHours();
 
   if (hour >= 18 || hour < 6) {

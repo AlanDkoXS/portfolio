@@ -39,8 +39,8 @@
     </div>
 
     <!-- Background -->
+    <div class="background-container bgGrain"></div>
     <div class="background-container">
-      <div class="background-container bgGrain"></div>
       <svg class="background-container bgBack">
         <use href="/assets/img/bgBack.svg#bgBack"></use>
       </svg>
@@ -443,6 +443,9 @@
       <section id="projects" class="projects section">
         <h2 class="section__title">Projects</h2>
         <div class="project__container">
+          <button class="project__nav project__nav--prev" aria-label="Anterior proyecto">
+            <i class="bx bx-chevron-left"></i>
+          </button>
           <div class="project__card--carousel">
             <div class="project__card" id="1">
               <a
@@ -512,6 +515,9 @@
               </a>
             </div>
           </div>
+          <button class="project__nav project__nav--next" aria-label="Siguiente proyecto">
+            <i class="bx bx-chevron-right"></i>
+          </button>
           <a href="#" class="visuallyhidden project__card--controller">Carousel controller</a>
         </div>
       </section>

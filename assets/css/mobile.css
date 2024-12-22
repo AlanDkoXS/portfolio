@@ -26,7 +26,7 @@
     transform: translateY(-90px);
 
     .home__social {
-      .home__social-link {
+      .home__social__link {
         color: var(--primary-color);
         font-size: 1.8rem;
         padding-left: 0.5rem;
@@ -85,7 +85,6 @@
     .home__description {
       padding: 0.5rem;
       text-align: center;
-      text-wrap: wrap;
     }
 
     .home__title {
@@ -348,9 +347,46 @@
 }
 
 .project__container {
-  overflow: hidden;
+  position: relative;
+  overflow: visible;
   padding: 20px;
   margin-top: 2em;
+}
+
+.project__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--bg-color-buttons);
+  color: var(--primary-color);
+  border: none;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.project__nav:hover {
+  background-color: var(--primary-color);
+  color: var(--bg-color-buttons);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.project__nav i {
+  font-size: 1.5rem;
+}
+
+.project__nav--prev {
+  left: 1rem;
+}
+
+.project__nav--next {
+  right: 1rem;
 }
 
 .project__card {
@@ -446,8 +482,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(2px);
   z-index: 2;
 }
 
