@@ -106,13 +106,6 @@
   }
 }
 
-.home__buttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--gap-small);
-}
-
 @keyframes animateSprite {
   from {
     background-position: 0 0;
