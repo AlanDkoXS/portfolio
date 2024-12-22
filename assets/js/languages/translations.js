@@ -168,30 +168,48 @@ designsTitle: {
     en: 'Send Message',
     es: 'Enviar Mensaje',
   },
-  contactFormName: {
-    en: 'Name',
-    es: 'Nombre',
+  contactForm: {
+    en: {
+      name: 'Name',
+      email: 'Email',
+      subject: 'Subject',
+      message: 'Message',
+      send: 'Send',
+      formSuccess: 'Form submitted successfully!',
+      close: 'Close',
+    },
+    es: {
+      name: 'Nombre',
+      email: 'Correo',
+      subject: 'Asunto',
+      message: 'Mensaje',
+      send: 'Enviar',
+      formSuccess: '¡Formulario enviado exitosamente!',
+      close: 'Cerrar',
+    },
   },
-  contactFormMail: {
-    en: 'Email',
-    es: 'Correo',
+  validation: {
+    en: {
+      required: 'This field is required',
+      invalidEmail: 'Please enter a valid email',
+      invalidName: 'Name must be between 2 and 50 characters, letters only',
+      invalidSubject: 'Subject must be between 5 and 100 characters',
+      invalidMessage: 'Message must be between 10 and 500 characters',
+    },
+    es: {
+      required: 'Este campo es requerido',
+      invalidEmail: 'Por favor ingresa un email válido',
+      invalidName: 'El nombre debe tener entre 2 y 50 caracteres, solo letras',
+      invalidSubject: 'El asunto debe tener entre 5 y 100 caracteres',
+      invalidMessage: 'El mensaje debe tener entre 10 y 500 caracteres',
+    },
   },
-  contactFormSubject: {
-    en: 'Subject',
-    es: 'Asunto',
-  },
-  contactFormMessage: {
-    en: 'Message',
-    es: 'Mensaje',
-  },
+
   footerDescription: {
     en: 'Made with ❤️. Thanks to my tutor Alejandra Olazagasti',
     es: 'Hecho con ❤️. Gracias a mi tutora Alejandra Olazagasti',
   },
-  contactFormButton: {
-    en: 'Send',
-    es: 'Enviar',
-  },
+
   footerCopyright: {
     en: 'All rights reserved',
     es: 'Todos los derechos reservados',

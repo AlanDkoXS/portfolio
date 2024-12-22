@@ -75,6 +75,13 @@ section.visible {
     font-size: var(--normal-font-size);
   }
 
+  label {
+    display: block;
+    font-size: var(--normal-font-size);
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+
   a {
     color: inherit;
     text-decoration: none;
