@@ -20,6 +20,8 @@ const detectUserLanguage = () => {
   return isSpanishPreferred ? 'es' : 'en';
 };
 
+let currentLanguage = detectUserLanguage();
+
 // Exportar función para obtener mensajes de validación
 export const getValidationMessages = () => translations.validation[currentLanguage];
 
