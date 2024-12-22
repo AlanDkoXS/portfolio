@@ -20,7 +20,7 @@ const AppState = {
   isLoading: true,
   isDarkMode: false,
   currentLanguage: 'en',
-  isMenuOpen: false,
+  isMenuOpen: false
 };
 
 // Función para manejar errores
@@ -85,7 +85,10 @@ const initializeFunctionalities = () => {
 // Función para cargar recursos externos
 const loadExternalResources = async () => {
   try {
-    await Promise.all([loadGoogleTagManager(), loadEmailJS()]);
+    await Promise.all([
+      loadGoogleTagManager(),
+      loadEmailJS()
+    ]);
   } catch (error) {
     handleError(error, 'loadExternalResources');
   }
