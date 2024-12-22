@@ -1,0 +1,30 @@
+/* ==========================================================================
+   MAIN CSS
+   ========================================================================== */
+
+@import url('./styles.css');
+@import url('./mobile.css');
+@import url('./screen.css');
+@import url('./resume.css');
+
+/* BASE */
+@import url('./base/_base.css');
+@import url('./base/_reset.css');
+@import url('./base/_variables.css');
+
+/* LAYOUT */
+@import url('./layout/_background.css');
+@import url('./layout/_buttons.css');
+@import url('./layout/_header.css');
+@import url('./layout/_footer.css');
+@import url('./layout/_modal.css');
+@import url('./layout/_section.css');
+
+/* SECTION */
+@import url('./sections/_about.css');
+@import url('./sections/_contact.css');
+@import url('./sections/_projects.css');
+@import url('./sections/_portfolio.css');
+@import url('./sections/_skills.css');
+@import url('./sections/_home.css');
+@import url('./sections/_resume.css');
