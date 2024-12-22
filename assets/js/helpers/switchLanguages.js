@@ -86,6 +86,11 @@ const switchLanguages = () => {
       lang
     );
     updateSectionText(
+      '.skills__frontend-tools-title',
+      'skillsBackendTools',
+      lang
+    );
+    updateSectionText(
       '.skills__development-tools-title',
       'skillsDevelopmentTools',
       lang

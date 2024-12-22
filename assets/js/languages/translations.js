@@ -39,7 +39,7 @@ const translations = {
     es: 'Acerca de mí',
   },
   resumeButton: {
-    en: 'See my Resume',
+    en: 'Resume',
     es: 'Mira mi CV',
   },
   skillsButton: {
@@ -73,20 +73,8 @@ const translations = {
     es: 'Habilidades Blandas',
   },
   skillsTags: {
-    en: [
-      'Responsible',
-      'Teamwork',
-      'Creative',
-      'Sense of urgency',
-      'Proactive',
-    ],
-    es: [
-      'Responsable',
-      'Trabajo en Equipo',
-      'Creativo',
-      'Sentido de Urgencia',
-      'Proactivo',
-    ],
+    en: ['Responsible', 'Teamwork', 'Creative', 'Sense of urgency', 'Proactive'],
+    es: ['Responsable', 'Trabajo en Equipo', 'Creativo', 'Sentido de Urgencia', 'Proactivo'],
   },
   skillsToolsTitle: {
     en: 'Tools',
@@ -99,6 +87,10 @@ const translations = {
   skillsFrontendTools: {
     en: 'Frontend Tools',
     es: 'Herramientas para Frontend',
+  },
+  skillsBackendTools: {
+    en: 'Backend Tools',
+    es: 'Herramientas para Backend',
   },
   skillsDevelopmentTools: {
     en: 'Development Tools',
