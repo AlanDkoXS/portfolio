@@ -223,7 +223,7 @@ section {
   align-content: center;
   background-color: transparent;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  z-index: var(--z-modal);
   animation: animation-nav linear both;
   animation-timeline: scroll(root block);
   animation-range: 0 100px;

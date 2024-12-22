@@ -348,7 +348,6 @@
 
 .project__container {
   position: relative;
-  overflow: visible;
   padding: 20px;
   margin-top: 2em;
 }
@@ -368,7 +367,7 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 2;
+  z-index: 1;
 }
 
 .project__nav:hover {
