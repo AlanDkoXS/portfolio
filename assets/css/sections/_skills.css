@@ -52,6 +52,7 @@
 
 .skills__icon-title {
     margin: var(--margin-small);
+    white-space: nowrap;
 }
 
 .skills__tags-container {
