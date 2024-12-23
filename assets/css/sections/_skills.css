@@ -6,8 +6,8 @@
   justify-content: center;
   text-align: center;
   font-size: smaller;
-  gap: 0.5rem;
-  margin: 1rem;
+  gap: var(--gap-small);
+  margin: var(--margin-small);
 }
 
 .skills__wrapper .skills__icons {

@@ -38,7 +38,7 @@
     text-align: center;
   }
   .home__social-item {
-    margin: var(--margin-small);
+    margin: var(--margin-medium);
     font-size: var(--icon-font-size);
     font-weight: var(--font-semibold);
     transition: transform 0.3s ease-in-out;
