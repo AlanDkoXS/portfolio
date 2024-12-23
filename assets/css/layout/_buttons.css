@@ -17,7 +17,11 @@
   box-shadow: var(--box-shadow);
 
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   outline-offset: 2px;
 }
@@ -30,7 +34,8 @@
 }
 
 .btn:active {
-  transform: translateY(1px);
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(2, 2, 2, 0.23);
 }
 
 .btn:disabled {
