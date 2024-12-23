@@ -4,7 +4,7 @@
   justify-content: center;
   width: 100%;
   padding: var(--button-padding);
-  margin: var(--margin-small);
+  margin: var(--margin-small) 0;
 
   font-weight: var(--font-semibold);
   text-transform: uppercase;
