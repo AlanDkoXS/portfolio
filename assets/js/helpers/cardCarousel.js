@@ -1,7 +1,5 @@
 const cardsContainer = document.querySelector('.project__card--carousel');
-const cardsController = document.querySelector(
-  '.project__card--carousel + .project__card--controller',
-);
+const cardsController = document.querySelector('.project__card--controller');
 
 export function cardCarousel() {
   class DraggingEvent {
@@ -14,9 +12,7 @@ export function cardCarousel() {
 
       this.target.addEventListener('mousedown', (e) => {
         e.preventDefault();
-
         handler = callback(e);
-
         window.addEventListener('mousemove', handler);
         document.addEventListener('mouseleave', clearDraggingEvent);
         window.addEventListener('mouseup', clearDraggingEvent);
@@ -31,7 +27,6 @@ export function cardCarousel() {
 
       this.target.addEventListener('touchstart', (e) => {
         handler = callback(e);
-
         window.addEventListener('touchmove', handler);
         window.addEventListener('touchend', clearDraggingEvent);
         document.body.addEventListener('mouseleave', clearDraggingEvent);
@@ -86,7 +81,6 @@ export function cardCarousel() {
       this.container = container;
       this.controllerElement = controller;
       this.cards = container.querySelectorAll('.project__card');
-
       this.centerIndex = (this.cards.length - 1) / 2;
       this.cardWidth = (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
       this.xScale = {};
@@ -101,7 +95,6 @@ export function cardCarousel() {
 
       super.getDistance(this.moveCards.bind(this));
 
-      // Inicializar los botones de navegación
       this.setupNavigationButtons();
     }
 
@@ -120,53 +113,18 @@ export function cardCarousel() {
       }
     }
 
-    navigate(direction) {
-      const temp = { ...this.xScale };
-
-      if (direction === 'next') {
-        for (let x in this.xScale) {
-          const newX = parseInt(x) - 1 < -this.centerIndex ? this.centerIndex : parseInt(x) - 1;
-
-          temp[newX] = this.xScale[x];
-        }
-      } else if (direction === 'prev') {
-        for (let x in this.xScale) {
-          const newX = parseInt(x) + 1 > this.centerIndex ? -this.centerIndex : parseInt(x) + 1;
-
-          temp[newX] = this.xScale[x];
-        }
-      }
-
-      this.xScale = temp;
-
-      for (let x in temp) {
-        const scale = this.calcScale(x),
-          scale2 = this.calcScale2(x),
-          leftPos = this.calcPos(x, scale2),
-          zIndex = -Math.abs(x);
-
-        this.updateCards(this.xScale[x], {
-          x: x,
-          scale: scale,
-          leftPos: leftPos,
-          zIndex: zIndex,
-        });
-      }
-    }
-
     updateCardWidth() {
       this.cardWidth = (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
       this.build();
     }
 
-    build(fix = 0) {
+    build() {
       for (let i = 0; i < this.cards.length; i++) {
         const x = i - this.centerIndex;
         const scale = this.calcScale(x);
         const scale2 = this.calcScale2(x);
-        const zIndex = -Math.abs(i - this.centerIndex);
-
         const leftPos = this.calcPos(x, scale2);
+        const zIndex = -Math.abs(i - this.centerIndex);
 
         this.xScale[x] = this.cards[i];
 
@@ -179,10 +137,45 @@ export function cardCarousel() {
       }
     }
 
+    updateCards(card, data) {
+      if (!card) return;
+
+      if (data.x !== undefined) {
+        card.setAttribute('data-x', data.x);
+      }
+
+      // Mantener la transformación base para el centrado
+      let transformValue = 'translateX(-50%)';
+
+      // Añadir escala si está definida
+      if (data.scale !== undefined) {
+        transformValue += ` scale(${data.scale})`;
+        // Ajustar opacidad
+        card.style.opacity = data.scale === 0 ? 0 : 1;
+      }
+
+      // Aplicar transformación
+      card.style.transform = transformValue;
+
+      if (data.leftPos !== undefined) {
+        card.style.left = `${data.leftPos}%`;
+      }
+
+      if (data.zIndex !== undefined) {
+        if (data.zIndex === 0) {
+          card.classList.add('highlight');
+        } else {
+          card.classList.remove('highlight');
+        }
+        card.style.zIndex = data.zIndex;
+      }
+    }
+
     controller(e) {
       const temp = { ...this.xScale };
 
       if (e.keyCode === 39) {
+        // Flecha derecha
         for (let x in this.xScale) {
           const newX = parseInt(x) - 1 < -this.centerIndex ? this.centerIndex : parseInt(x) - 1;
           temp[newX] = this.xScale[x];
@@ -190,6 +183,7 @@ export function cardCarousel() {
       }
 
       if (e.keyCode == 37) {
+        // Flecha izquierda
         for (let x in this.xScale) {
           const newX = parseInt(x) + 1 > this.centerIndex ? -this.centerIndex : parseInt(x) + 1;
           temp[newX] = this.xScale[x];
@@ -199,10 +193,10 @@ export function cardCarousel() {
       this.xScale = temp;
 
       for (let x in temp) {
-        const scale = this.calcScale(x),
-          scale2 = this.calcScale2(x),
-          leftPos = this.calcPos(x, scale2),
-          zIndex = -Math.abs(x);
+        const scale = this.calcScale(x);
+        const scale2 = this.calcScale2(x);
+        const leftPos = this.calcPos(x, scale2);
+        const zIndex = -Math.abs(x);
 
         this.updateCards(this.xScale[x], {
           x: x,
@@ -213,70 +207,93 @@ export function cardCarousel() {
       }
     }
 
-    calcPos(x, scale) {
-      let formula;
-
-      if (x < 0) {
-        formula = (scale * 100 - this.cardWidth) / 2;
-        return formula;
-      } else if (x > 0) {
-        formula = 100 - (scale * 100 + this.cardWidth) / 2;
-        return formula;
-      } else {
-        formula = 100 - (scale * 100 + this.cardWidth) / 2;
-        return formula;
-      }
-    }
-
-    updateCards(card, data) {
-      if (data.x || data.x == 0) {
-        card.setAttribute('data-x', data.x);
-      }
-
-      if (data.scale || data.scale == 0) {
-        card.style.transform = `scale(${data.scale})`;
-
-        if (data.scale == 0) {
-          card.style.opacity = data.scale;
-        } else {
-          card.style.opacity = 1;
-        }
-      }
-
-      if (data.leftPos) {
-        card.style.left = `${data.leftPos}%`;
-      }
-
-      if (data.zIndex || data.zIndex == 0) {
-        if (data.zIndex == 0) {
-          card.classList.add('highlight');
-        } else {
-          card.classList.remove('highlight');
-        }
-
-        card.style.zIndex = data.zIndex;
-      }
+    calcScale(x) {
+      const formula = 1 - (1 / 5) * Math.pow(x, 2);
+      return formula <= 0 ? 0 : formula;
     }
 
     calcScale2(x) {
       let formula;
-
       if (x <= 0) {
         formula = 1 - (-1 / 5) * x;
-        return formula;
-      } else if (x > 0) {
+      } else {
         formula = 1 - (1 / 5) * x;
-        return formula;
+      }
+      return formula;
+    }
+
+    calcPos(x, scale) {
+      let formula;
+      if (x < 0) {
+        formula = (scale * 100 - this.cardWidth) / 2;
+      } else if (x > 0) {
+        formula = 100 - (scale * 100 + this.cardWidth) / 2;
+      } else {
+        formula = 100 - (scale * 100 + this.cardWidth) / 2;
+      }
+      return formula;
+    }
+
+    navigate(direction) {
+      const temp = { ...this.xScale };
+
+      if (direction === 'next') {
+        for (let x in this.xScale) {
+          const newX = parseInt(x) - 1 < -this.centerIndex ? this.centerIndex : parseInt(x) - 1;
+          temp[newX] = this.xScale[x];
+        }
+      } else if (direction === 'prev') {
+        for (let x in this.xScale) {
+          const newX = parseInt(x) + 1 > this.centerIndex ? -this.centerIndex : parseInt(x) + 1;
+          temp[newX] = this.xScale[x];
+        }
+      }
+
+      this.xScale = temp;
+
+      for (let x in temp) {
+        const scale = this.calcScale(x);
+        const scale2 = this.calcScale2(x);
+        const leftPos = this.calcPos(x, scale2);
+        const zIndex = -Math.abs(x);
+
+        this.updateCards(this.xScale[x], {
+          x: x,
+          scale: scale,
+          leftPos: leftPos,
+          zIndex: zIndex,
+        });
       }
     }
 
-    calcScale(x) {
-      const formula = 1 - (1 / 5) * Math.pow(x, 2);
+    moveCards(data) {
+      let xDist;
 
-      if (formula <= 0) {
-        return 0;
+      if (data != null) {
+        this.container.classList.remove('smooth-return');
+        xDist = data.x / 250;
       } else {
-        return formula;
+        this.container.classList.add('smooth-return');
+        xDist = 0;
+
+        for (let x in this.xScale) {
+          this.updateCards(this.xScale[x], {
+            x: x,
+            zIndex: Math.abs(Math.abs(x) - this.centerIndex),
+          });
+        }
+      }
+
+      for (let i = 0; i < this.cards.length; i++) {
+        const x = this.checkOrdering(this.cards[i], parseInt(this.cards[i].dataset.x), xDist);
+        const scale = this.calcScale(x + xDist);
+        const scale2 = this.calcScale2(x + xDist);
+        const leftPos = this.calcPos(x + xDist, scale2);
+
+        this.updateCards(this.cards[i], {
+          scale: scale,
+          leftPos: leftPos,
+        });
       }
     }
 
@@ -304,40 +321,12 @@ export function cardCarousel() {
 
       return newX;
     }
-
-    moveCards(data) {
-      let xDist;
-
-      if (data != null) {
-        this.container.classList.remove('smooth-return');
-        xDist = data.x / 250;
-      } else {
-        this.container.classList.add('smooth-return');
-        xDist = 0;
-
-        for (let x in this.xScale) {
-          this.updateCards(this.xScale[x], {
-            x: x,
-            zIndex: Math.abs(Math.abs(x) - this.centerIndex),
-          });
-        }
-      }
-
-      for (let i = 0; i < this.cards.length; i++) {
-        const x = this.checkOrdering(this.cards[i], parseInt(this.cards[i].dataset.x), xDist),
-          scale = this.calcScale(x + xDist),
-          scale2 = this.calcScale2(x + xDist),
-          leftPos = this.calcPos(x + xDist, scale2);
-
-        this.updateCards(this.cards[i], {
-          scale: scale,
-          leftPos: leftPos,
-        });
-      }
-    }
   }
 
-  const carousel = new CardCarousel(cardsContainer, cardsController);
+  // Inicializar el carrusel
+  if (cardsContainer) {
+    new CardCarousel(cardsContainer, cardsController);
+  }
 }
 
 export default cardCarousel;

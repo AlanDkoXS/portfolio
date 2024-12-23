@@ -73,6 +73,7 @@ section.visible {
 
   p {
     font-size: var(--normal-font-size);
+    text-align: justify;
   }
 
   label {

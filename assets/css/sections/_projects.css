@@ -1,20 +1,187 @@
 /* ============= PROJECTS ============= */
-
-.visuallyhidden {
-  position: absolute;
-  z-index: -1;
-  right: 0;
-  opacity: 0;
-}
-
 .project__container {
   position: relative;
   height: 26rem;
   padding: 20px;
   margin-top: 2em;
+  overflow: visible;
+}
+
+.project__card--carousel {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.project__card {
+  position: absolute;
+  width: 280px;
+  height: 350px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Estructura interna de la tarjeta */
+.project__card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  border-radius: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.project__card:hover .project__card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Caras de la tarjeta */
+.project__card-front,
+.project__card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 1rem;
   overflow: hidden;
 }
 
+.project__card-front {
+  transform: rotateY(0);
+  background-color: var(--bg-color-section);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.project__card-back {
+  background-color: var(--bg-color-section);
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+
+/* Imágenes de proyectos específicos */
+.project__image--container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.project__card:nth-of-type(1) .project__image--container {
+  background-image: url('/assets/img/project_img/marvel.webp');
+}
+
+.project__card:nth-of-type(2) .project__image--container {
+  background-image: url('/assets/img/project_img/CRUD.webp');
+}
+
+.project__card:nth-of-type(3) .project__image--container {
+  background-image: url('/assets/img/project_img/rick.webp');
+}
+
+.project__card:nth-of-type(4) .project__image--container {
+  background-image: url('/assets/img/project_img/weather.webp');
+}
+
+.project__card:nth-of-type(5) .project__image--container {
+  background-image: url('/assets/img/project_img/cookie.webp');
+}
+
+.project__image--container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(1px);
+  z-index: 1;
+}
+
+.project__image--container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1));
+  z-index: 2;
+}
+
+.project__title,
+.project__description {
+  position: relative;
+  color: var(--primary-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  padding: 0.5rem;
+  z-index: 3;
+  text-align: center;
+}
+
+/* Tech stack icons */
+.project__tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.project__tech-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  fill: var(--primary-color);
+  transition: transform 0.3s ease;
+}
+
+.project__tech-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Buttons */
+.project__buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.project__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--bg-color-buttons);
+  color: var(--primary-color);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.project__button:hover {
+  background-color: var(--primary-color);
+  color: var(--bg-color-buttons);
+  transform: translateY(-2px);
+}
+
+.project__button i {
+  font-size: 1.25rem;
+}
+
+/* Navigation buttons */
 .project__nav {
   visibility: visible;
   position: absolute;
@@ -52,155 +219,32 @@
   right: 1rem;
 }
 
-.project__card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-.project__card--carousel {
-  --card-width: 80%;
-  --card-max-width: 280px;
-  --card-height: 350px;
-  --carousel-min-width: 600px;
-  z-index: 1;
-  position: relative;
-  margin: 0 auto;
-  width: 100%;
-  height: var(--card-height);
-  min-width: var(--carousel-min-width);
-  transition: filter 0.3s ease;
-}
-
-@media screen and (max-width: 640px) {
-  .project__nav {
-    visibility: hidden;
-  }
-
-  .project__card--carousel {
-    margin-left: calc((100vw - var(--carousel-min-width) - 40px) / 2);
-  }
-}
-
+/* Transitions */
 .project__card--carousel.smooth-return {
   transition: all 0.2s ease;
 }
 
-.project__card--carousel .project__card {
-  background: whitesmoke;
-  width: var(--card-width);
-  max-width: var(--card-max-width);
-  text-align: center;
-  padding: 1em;
-  min-width: 250px;
-  height: var(--card-height);
-  position: absolute;
-  margin: 0 auto;
-  color: rgba(0, 0, 0, 0.5);
-  transition: inherit;
-  -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);
-  border-radius: 1em;
-  filter: brightness(0.9);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .project__card.highlight {
   filter: brightness(1);
-}
-
-.project__card:nth-of-type(1) .project__image--container {
-  background-image: url('../../img/project_img/marvel.webp');
-}
-
-.project__card:nth-of-type(2) .project__image--container {
-  background-image: url('../../img/project_img/CRUD.webp');
-}
-
-.project__card:nth-of-type(3) .project__image--container {
-  background-image: url('../../img/project_img/rick.webp');
-}
-.project__card:nth-of-type(4) .project__image--container {
-  background-image: url('../../img/project_img/weather.webp');
-}
-.project__card:nth-of-type(5) .project__image--container {
-  background-image: url('../../img/project_img/cookie.webp');
-}
-
-.project__image--container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  z-index: -1;
-}
-
-.project__image--container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-backdrop-filter: blur(1px);
-  backdrop-filter: blur(1px);
   z-index: 2;
 }
 
-.project__image--container::after {
-  content: '';
+/* Utils */
+.visuallyhidden {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1));
-  z-index: 3;
+  z-index: -1;
+  right: 0;
+  opacity: 0;
 }
 
-.project__card h3.project__title,
-.project__card p.project__description {
-  position: relative;
-  z-index: 4;
-  color: var(--primary-color);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-  margin: 1em;
-}
+/* Mobile styles */
+@media screen and (max-width: 640px) {
+  .project__nav {
+    display: none;
+  }
 
-/* PROJECTS MIN WIDTH 768px ========================== */
-@media (min-width: 768px) {
-  .projects {
-    .projects__container {
-      padding: 3rem 0;
-      gap: 5rem;
-
-      .projects__project {
-        .projects__inner {
-          grid-template-columns: repeat(2, 1fr);
-        }
-
-        &:nth-child(even) {
-          .projects__image {
-            order: 2;
-          }
-
-          .projects__info {
-            order: 1;
-            text-align: right;
-          }
-
-          .projects__buttons {
-            justify-content: flex-end;
-          }
-        }
-      }
-    }
+  .project__card {
+    width: 85%;
+    max-width: 280px;
   }
 }
