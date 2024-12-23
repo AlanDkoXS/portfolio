@@ -27,7 +27,7 @@
      ========================================================================== */
   /* Font Sizes */
   --normal-font-size: calc(.8rem + 0.5vw);
-  --small-font-size: calc(0.5em + 0.2vw);
+  --small-font-size: calc(.9em + 0.2vw);
   --title-font-size: calc(1rem + 0.5vw);
   --icon-font-size: calc(2rem + 0.5vw);
 
