@@ -111,8 +111,8 @@ designsTitle: {
     es: 'Proyectos',
   },
   projectTitle1: {
-    en: 'Marvel',
-    es: 'Marvel',
+    en: 'Marvel Wiki',
+    es: 'Wiki de Marvel',
   },
   projectDescription1: {
     en: 'An application that displays information about Marvel characters, using useReducer for state management and useRef for referencing DOM elements.',
@@ -120,7 +120,7 @@ designsTitle: {
   },
   projectTitle2: {
     en: 'CRUD Users',
-    es: 'CRUD Users',
+    es: 'CRUD de Usuarios',
   },
   projectDescription2: {
     en: 'An application for user registration, with create, read, update, and delete (CRUD) functions, allowing full user management.',

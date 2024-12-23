@@ -4,7 +4,7 @@
   height: 26rem;
   padding: 20px;
   margin-top: 2em;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .project__card--carousel {
@@ -130,6 +130,28 @@
   text-align: center;
 }
 
+.project__title,
+.project__subtitle,
+.project__tech-stack,
+.project__tech-icon {
+  position: relative;
+  top: -25%;
+  margin: var(--margin-small) 0;
+  filter: drop-shadow(var(--drop-shadow));
+}
+
+.project__title {
+  text-transform: uppercase;
+}
+
+.project__subtitle {
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-semibold);
+  color: var(--primary-color);
+  text-align: center;
+  z-index: 3;
+}
+
 /* Tech stack icons */
 .project__tech-stack {
   display: flex;
@@ -141,10 +163,11 @@
 }
 
 .project__tech-icon {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: var(--icon-font-size);
+  height: var(--icon-font-size);
   fill: var(--primary-color);
   transition: transform 0.3s ease;
+  z-index: 3;
 }
 
 .project__tech-icon:hover {
@@ -164,7 +187,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  padding: var(--button-padding);
   background-color: var(--bg-color-buttons);
   color: var(--primary-color);
   border-radius: 0.5rem;
