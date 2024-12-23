@@ -117,6 +117,7 @@ const applyLanguageChanges = (lang) => {
 
   // Project Section
   updateSectionText('#projects .section__title', 'projectsTitle', lang);
+  updateSectionText('.project__subtitle', 'projectSubtitle', lang);
   updateProjectText(lang);
 
   // Contact Section

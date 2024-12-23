@@ -110,6 +110,10 @@ designsTitle: {
     en: 'Projects',
     es: 'Proyectos',
   },
+  projectSubtitle: {
+    en: 'Tech Stack',
+    es: 'Tecnologías',
+  },
   projectTitle1: {
     en: 'Marvel Wiki',
     es: 'Wiki de Marvel',
