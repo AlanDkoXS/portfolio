@@ -20,7 +20,6 @@
 .skills__wrapper .skills__icons .skills__title {
   grid-column: 1 / -1;
   text-align: center;
-  margin: 1.5rem 0 1rem;
   position: relative;
 }
 
@@ -34,16 +33,15 @@
   height: 3px;
 }
 
-.skills__wrapper .skills__icons .skills__icon {
-  width: 70px;
-  height: 70px;
+.skills__icon {
+  width: 64px;
+  height: 64px;
   object-fit: contain;
-  margin: 0.5rem;
   transition: transform 0.3s ease;
   fill: var(--primary-color);
 }
 
-.skills__wrapper .skills__icons .skills__icon:hover {
+.skills__icon:hover {
   transform: scale(1.1);
 }
 
