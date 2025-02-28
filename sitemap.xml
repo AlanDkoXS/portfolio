@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <!-- Home section -->
     <url>
-        <loc>https://www.alanquintana.pro/#home</loc>
-        <lastmod>2024-12-09</lastmod>
-        <changefreq>daily</changefreq>
+        <loc>https://www.alanquintana.pro/</loc>
+        <lastmod>2025-02-28</lastmod>
+        <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
 
     <!-- About section -->
     <url>
         <loc>https://www.alanquintana.pro/#about</loc>
-        <lastmod>2024-12-09</lastmod>
+        <lastmod>2025-02-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -19,15 +22,7 @@
     <!-- Skills section -->
     <url>
         <loc>https://www.alanquintana.pro/#skills</loc>
-        <lastmod>2024-12-09</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- Portfolio section -->
-    <url>
-        <loc>https://www.alanquintana.pro/#portfolio</loc>
-        <lastmod>2024-12-09</lastmod>
+        <lastmod>2025-02-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -35,7 +30,7 @@
     <!-- Projects section -->
     <url>
         <loc>https://www.alanquintana.pro/#projects</loc>
-        <lastmod>2024-12-09</lastmod>
+        <lastmod>2025-02-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -43,18 +38,52 @@
     <!-- Contact section -->
     <url>
         <loc>https://www.alanquintana.pro/#contact</loc>
-        <lastmod>2024-12-09</lastmod>
+        <lastmod>2025-02-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
 
-    <!-- Resume section -->
+    <!-- Resume page -->
     <url>
         <loc>https://www.alanquintana.pro/assets/html/resume.html</loc>
-        <lastmod>2024-12-09</lastmod>
-        <changefreq>yearly</changefreq>
+        <lastmod>2025-02-28</lastmod>
+        <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
 
+    <!-- Project URLs -->
+    <url>
+        <loc>https://marvelwiki.alanquintana.pro/</loc>
+        <lastmod>2025-02-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
 
+    <url>
+        <loc>https://crudusers.alanquintana.pro/</loc>
+        <lastmod>2025-02-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <url>
+        <loc>https://rickandmorty.alanquintana.pro/</loc>
+        <lastmod>2025-02-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <url>
+        <loc>https://weatherapp.alanquintana.pro/</loc>
+        <lastmod>2025-02-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <url>
+        <loc>https://fortunecookie.alanquintana.pro/</loc>
+        <lastmod>2025-02-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
 </urlset>
