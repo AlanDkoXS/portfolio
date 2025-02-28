@@ -153,7 +153,7 @@ button {
   padding: 0;
   font: inherit;
   cursor: pointer;
-  outline: inherit;
+  outline: none;
 }
 
 /* Reset tables */
@@ -216,6 +216,5 @@ h6 {
 
 /* Improve accessibility */
 :focus {
-  outline: 2px solid var(--primary-color, #f3ce3a);
-  outline-offset: 3px;
+  outline: none;
 }
