@@ -34,7 +34,7 @@
       width: 100%;
       border-radius: 0 0 12px 12px;
       background-color: var(--bg-color-section);
-      box-shadow: 0px 1px 9px 2px #00000024;
+      box-shadow: 0px 1px 9px 2px rgba(0, 0, 0, 0.14);
       padding: 2rem 0;
       transition: all 0.6s;
       z-index: var(--z-modal);
@@ -86,89 +86,115 @@
 
     /* Toggles ====================================*/
     .navbar__toggles {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       gap: 1rem;
       margin-top: 2rem;
+    }
 
-      /* Darkmode Toggle ====================================*/
-      .navbar__toggle--darkmode {
+    /* Dark mode and language toggles - Base styles */
+    .navbar__toggle--darkmode,
+    .navbar__toggle--language {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+      cursor: pointer;
+    }
+
+    /* Dark Mode Toggle ====================================*/
+    .navbar__toggle--darkmode {
+      .navbar__toggle--darkmode-input {
+        visibility: hidden;
+        position: absolute;
+      }
+
+      .navbar__toggle--darkmode-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .icon-wrapper {
         position: relative;
-        display: block;
-        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-        .navbar__toggle--darkmode-input {
-          visibility: hidden;
-        }
+      i {
+        font-size: 2rem;
+        color: var(--primary-color);
+        position: absolute;
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
 
-        i {
-          font-size: 2rem;
-          color: var(--primary-color);
-          position: absolute;
-          transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-            opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      .navbar__toggle--darkmode-moon {
+        opacity: 0;
+        transform: rotate(-180deg) scale(0);
+      }
+
+      .navbar__toggle--darkmode-sun {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+      }
+
+      .navbar__toggle--darkmode-input:checked ~ .navbar__toggle--darkmode-label {
+        .navbar__toggle--darkmode-sun {
+          opacity: 0;
+          transform: rotate(180deg) scale(0);
         }
 
         .navbar__toggle--darkmode-moon {
-          opacity: 0;
-          transform: rotate(-180deg) scale(0);
-        }
-
-        .navbar__toggle--darkmode-sun {
           opacity: 1;
           transform: rotate(0) scale(1);
         }
+      }
+    }
 
-        .navbar__toggle--darkmode-input:checked ~ .navbar__toggle--darkmode-label {
-          .navbar__toggle--darkmode-sun {
-            opacity: 0;
-            transform: rotate(180deg) scale(0);
-          }
+    /* Language Toggle ====================================*/
+    .navbar__toggle--language {
+      .navbar__toggle--language-input {
+        visibility: hidden;
+        position: absolute;
+      }
 
-          .navbar__toggle--darkmode-moon {
-            opacity: 1;
-            transform: rotate(0) scale(1);
-          }
+      .navbar__toggle--language-label {
+        width: 42px;
+        height: 20px;
+        position: relative;
+        display: block;
+        background: #ebebeb;
+        border-radius: 20px;
+        box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.4),
+          inset 0px -2px 5px rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        transition: 0.3s;
+
+        &::after {
+          content: '';
+          width: 16px;
+          height: 16px;
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          background-image: url(../../img/reino-unido.png);
+          background-size: cover;
+          background-repeat: no-repeat;
+          border-radius: 50%;
+          box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+          transition: 0.3s;
         }
       }
 
-      /* Language toggle ====================================*/
-      .navbar__toggle--language {
-        .navbar__toggle--language-label {
-          width: 42px;
-          height: 20px;
-          position: relative;
-          display: block;
-          background: #ebebeb;
-          border-radius: 20px;
-          box-shadow: inset 0px 2px 5px #00000066, inset 0px -2px 5px #ffffff66;
-          cursor: pointer;
-          transition: 0.3s;
-
-          &::after {
-            content: '';
-            width: 16px;
-            height: 16px;
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            background-image: url(../../img/reino-unido.png);
-            background-size: cover;
-            background-repeat: no-repeat;
-            border-radius: 50%;
-            box-shadow: 0px 5px 10px #00000033;
-            transition: 0.3s;
-          }
-        }
-
-        .navbar__toggle--language-input {
-          visibility: hidden;
-
-          &:checked + label {
-            &::after {
-              left: 40px;
-              transform: translateX(-100%);
-              background-image: url(../../img/español.png);
-            }
-          }
+      .navbar__toggle--language-input:checked + .navbar__toggle--language-label {
+        &::after {
+          left: 40px;
+          transform: translateX(-100%);
+          background-image: url(../../img/español.png);
         }
       }
     }
@@ -224,14 +250,21 @@
         border-radius: 0;
         background-color: transparent;
         box-shadow: none;
+
         .navbar__list {
           flex-direction: row;
         }
+
         .btn__close {
           display: none;
         }
       }
+
+      .navbar__toggles {
+        margin-top: 0;
+      }
     }
+
     .btn__open {
       display: none;
     }
@@ -241,21 +274,12 @@
     max-width: 300px;
   }
 
-  .header {
-    & .navbar {
-      & .navbar__toggles {
-        margin-top: 0;
-      }
-    }
+  .logo {
+    width: 4rem !important;
+    height: 4rem !important;
   }
-
   .navbar__logo--name,
   .navbar__logo--lastname {
     display: visible;
-  }
-
-  .logo {
-    width: 9rem;
-    height: 9rem;
   }
 }
