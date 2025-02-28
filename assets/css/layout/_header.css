@@ -90,45 +90,45 @@
       margin-top: 2rem;
 
       /* Darkmode Toggle ====================================*/
-.navbar__toggle--darkmode {
-  position: relative;
-  display: block;
-  cursor: pointer;
+      .navbar__toggle--darkmode {
+        position: relative;
+        display: block;
+        cursor: pointer;
 
-  .navbar__toggle--darkmode-input {
-    visibility: hidden;
-  }
+        .navbar__toggle--darkmode-input {
+          visibility: hidden;
+        }
 
-  i {
-    font-size: 2rem;
-    color: var(--primary-color);
-    position: absolute;
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
+        i {
+          font-size: 2rem;
+          color: var(--primary-color);
+          position: absolute;
+          transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+            opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
 
-  .navbar__toggle--darkmode-moon {
-    opacity: 0;
-    transform: rotate(-180deg) scale(0);
-  }
+        .navbar__toggle--darkmode-moon {
+          opacity: 0;
+          transform: rotate(-180deg) scale(0);
+        }
 
-  .navbar__toggle--darkmode-sun {
-    opacity: 1;
-    transform: rotate(0) scale(1);
-  }
+        .navbar__toggle--darkmode-sun {
+          opacity: 1;
+          transform: rotate(0) scale(1);
+        }
 
-  .navbar__toggle--darkmode-input:checked ~ .navbar__toggle--darkmode-label {
-    .navbar__toggle--darkmode-sun {
-      opacity: 0;
-      transform: rotate(180deg) scale(0);
-    }
+        .navbar__toggle--darkmode-input:checked ~ .navbar__toggle--darkmode-label {
+          .navbar__toggle--darkmode-sun {
+            opacity: 0;
+            transform: rotate(180deg) scale(0);
+          }
 
-    .navbar__toggle--darkmode-moon {
-      opacity: 1;
-      transform: rotate(0) scale(1);
-    }
-  }
-}
+          .navbar__toggle--darkmode-moon {
+            opacity: 1;
+            transform: rotate(0) scale(1);
+          }
+        }
+      }
 
       /* Language toggle ====================================*/
       .navbar__toggle--language {
@@ -139,9 +139,7 @@
           display: block;
           background: #ebebeb;
           border-radius: 20px;
-          box-shadow:
-            inset 0px 2px 5px #00000066,
-            inset 0px -2px 5px #ffffff66;
+          box-shadow: inset 0px 2px 5px #00000066, inset 0px -2px 5px #ffffff66;
           cursor: pointer;
           transition: 0.3s;
 
@@ -254,5 +252,10 @@
   .navbar__logo--name,
   .navbar__logo--lastname {
     display: visible;
+  }
+
+  .logo {
+    width: 9rem;
+    height: 9rem;
   }
 }

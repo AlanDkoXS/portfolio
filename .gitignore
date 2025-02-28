@@ -23,3 +23,7 @@ config.js
 # Node Modules
 package-lock.json
 package.json
+
+# Git Ignore
+.gitignore
+.commits_list
