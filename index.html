@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Alan Quintana" />
@@ -11,8 +12,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet" />
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
     <!-- Icons -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
@@ -25,350 +26,306 @@
 
     <!-- Scripts -->
     <script type="module" src="assets/js/main.js"></script>
-  </head>
+</head>
 
-  <body>
+<body>
     <!-- Loader -->
     <div class="loader flex--container">
-      <svg class="loader__logo">
-        <use xlink:href="assets/img/logo.svg#logo"></use>
-      </svg>
-      <span class="loader__name--light">alan</span>
-      <span class="loader__name--semibold">quintana</span>
+        <svg class="loader__logo">
+            <use xlink:href="assets/img/logo.svg#logo"></use>
+        </svg>
+        <span class="loader__name--light">alan</span>
+        <span class="loader__name--semibold">quintana</span>
     </div>
 
     <!-- Background -->
     <div class="background-container bgGrain"></div>
     <div class="background-container">
-      <svg class="background-container bgBack">
-        <use href="/assets/img/bgBack.svg#bgBack"></use>
-      </svg>
-      <svg class="background-container bgMiddle">
-        <use href="/assets/img/bgMiddle.svg#bgMiddle"></use>
-      </svg>
-      <svg class="background-container bgFront">
-        <use href="/assets/img/bgFront.svg#bgFront"></use>
-      </svg>
+        <svg class="background-container bgBack">
+            <use href="/assets/img/bgBack.svg#bgBack"></use>
+        </svg>
+        <svg class="background-container bgMiddle">
+            <use href="/assets/img/bgMiddle.svg#bgMiddle"></use>
+        </svg>
+        <svg class="background-container bgFront">
+            <use href="/assets/img/bgFront.svg#bgFront"></use>
+        </svg>
     </div>
 
     <header class="header">
-      <nav class="navbar grid--container flex--container">
-        <a class="navbar__logo flex--container" href="#">
-          <svg class="logo">
-            <use xlink:href="assets/img/logo.svg#logo"></use>
-          </svg>
-          <span class="navbar__logo--name">alan</span>
-          <span class="navbar__logo--lastname">quintana</span>
-        </a>
-        <!-- Menu Nav -->
-        <div id="nav" class="navbar__menu">
-          <a href="#close" title="Close Navigation"
-            ><i class="bx bx-x btn__close navbar__icon flex--container"></i
-          ></a>
-          <ul class="navbar__list flex--container">
-            <li class="navbar__item">
-              <a class="navbar__link active" href="#home">Home</a>
-            </li>
-            <li class="navbar__item">
-              <a class="navbar__link" href="#about">About</a>
-            </li>
-            <li class="navbar__item">
-              <a class="navbar__link" href="#skills">Skills</a>
-            </li>
-            <!--                     <li class="navbar__item">
+        <nav class="navbar grid--container flex--container">
+            <a class="navbar__logo flex--container" href="#">
+                <svg class="logo">
+                    <use xlink:href="assets/img/logo.svg#logo"></use>
+                </svg>
+                <span class="navbar__logo--name">alan</span>
+                <span class="navbar__logo--lastname">quintana</span>
+            </a>
+            <!-- Menu Nav -->
+            <div id="nav" class="navbar__menu">
+                <a href="#close" title="Close Navigation"><i
+                        class="bx bx-x btn__close navbar__icon flex--container"></i></a>
+                <ul class="navbar__list flex--container">
+                    <li class="navbar__item">
+                        <a class="navbar__link active" href="#home">Home</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="#about">About</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="#skills">Skills</a>
+                    </li>
+                    <!--                     <li class="navbar__item">
                         <a class="navbar__link" href="#portfolio">Portfolio</a>
                     </li> -->
-            <li class="navbar__item">
-              <a class="navbar__link" href="#projects">Projects</a>
-            </li>
-            <li class="navbar__item">
-              <a class="navbar__link" href="#contact">Contact</a>
-            </li>
-          </ul>
-          <div class="navbar__toggles flex--container">
-            <div class="navbar__toggle--darkmode flex--container">
-              <input
-                type="checkbox"
-                name="color-scheme"
-                id="darkmode-toggle"
-                class="navbar__toggle--darkmode-input"
-                title="Dark Mode"
-                aria-label="Dark Mode" />
-              <label for="darkmode-toggle" class="navbar__toggle--darkmode-label">
-                <div class="icon-wrapper">
-                  <i class="bx bx-sun navbar__toggle--darkmode-sun" aria-hidden="true"></i>
-                  <i class="bx bx-moon navbar__toggle--darkmode-moon" aria-hidden="true"></i>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="#projects">Projects</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <div class="navbar__toggles flex--container">
+                    <div class="navbar__toggle--darkmode flex--container">
+                        <input type="checkbox" name="color-scheme" id="darkmode-toggle"
+                            class="navbar__toggle--darkmode-input" title="Dark Mode" aria-label="Dark Mode" />
+                        <label for="darkmode-toggle" class="navbar__toggle--darkmode-label">
+                            <div class="icon-wrapper">
+                                <i class="bx bx-sun navbar__toggle--darkmode-sun" aria-hidden="true"></i>
+                                <i class="bx bx-moon navbar__toggle--darkmode-moon" aria-hidden="true"></i>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="navbar__toggle--language flex--container">
+                        <input type="checkbox" name="language-toggle" id="language-toggle"
+                            class="navbar__toggle--language-input" title="Select Language"
+                            aria-label="Select Language" />
+                        <label for="language-toggle" class="navbar__toggle--language-label">
+                            <div class="flag-wrapper">
+                                <img src="assets/img/reino-unido.png" class="navbar__toggle--language-uk" alt="English"
+                                    aria-hidden="true">
+                                <img src="assets/img/español.png" class="navbar__toggle--language-es" alt="Español"
+                                    aria-hidden="true">
+                            </div>
+                        </label>
+                    </div>
                 </div>
-              </label>
             </div>
-            <div class="navbar__toggle--language flex--container">
-              <input
-                type="checkbox"
-                name="language-toggle"
-                id="language-toggle"
-                class="navbar__toggle--language-input"
-                title="Select Language"
-                aria-label="Select Language" />
-              <label for="language-toggle" class="navbar__toggle--language-label"></label>
-            </div>
-          </div>
-        </div>
-        <!-- Toggles -->
-        <a href="#nav" title="Menu Nav"><i class="bx bx-menu btn__open navbar__icon"></i></a>
-      </nav>
+            <!-- Toggles -->
+            <a href="#nav" title="Menu Nav"><i class="bx bx-menu btn__open navbar__icon"></i></a>
+        </nav>
     </header>
 
     <main>
-      <!-- Home -->
-      <section id="home" class="home">
-        <div class="home__container grid--container">
-          <div class="home__image">
-            <div class="home__image--background"></div>
-            <div class="home__image--sprite"></div>
-          </div>
-          <div class="home__info">
-            <h1 class="home__title">Hi there!</h1>
-            <p class="home__description">
-              I'm Alan, a full stack <strong>designer</strong>, passionate about design, technology
-              and development.
-            </p>
-          </div>
-          <ul class="home__social flex--container">
-            <li class="home__social-item">
-              <a
-                class="home__social-link"
-                href="https://www.linkedin.com/in/alanxs/"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="LinkedIn"
-                ><i class="bx bxl-linkedin"></i
-              ></a>
-            </li>
-            <li class="home__social-item">
-              <a
-                class="home__social-link"
-                href="https://github.com/AlanDkoXS"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="GitHub"
-                ><i class="bx bxl-github"></i
-              ></a>
-            </li>
-            <li class="home__social-item">
-              <a
-                class="home__social-link"
-                href="https://dribbble.com/Alan3XS"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Dribbble"
-                ><i class="bx bxl-dribbble"></i
-              ></a>
-            </li>
-            <li class="home__social-item">
-              <a
-                class="home__social-link"
-                href="https://www.instagram.com/anotherguyontheroad/"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Instagram"
-                ><i class="bx bxl-instagram"></i
-              ></a>
-            </li>
-          </ul>
-          <div class="home__buttons">
-            <a
-              class="btn btn--primary"
-              href="#about"
-              title="About Button"
-              rel="noreferrer nofollow">
-              About Me
-            </a>
-            <a
-              class="btn btn--primary"
-              href="/assets/html/resume.html"
-              title="Resume"
-              rel="noreferrer nofollow">
-              Resume
-            </a>
-            <a
-              class="btn btn--primary"
-              href="#skills"
-              title="Skills Button"
-              rel="noreferrer nofollow">
-              Skills
-            </a>
-            <a
-              class="btn btn--primary"
-              href="#projects"
-              title="Projects Button"
-              rel="noreferrer nofollow">
-              Projects
-            </a>
-          </div>
-        </div>
-      </section>
+        <!-- Home -->
+        <section id="home" class="home">
+            <div class="home__container grid--container">
+                <div class="home__image">
+                    <div class="home__image--background"></div>
+                    <div class="home__image--sprite"></div>
+                </div>
+                <div class="home__info">
+                    <h1 class="home__title">Hi there!</h1>
+                    <p class="home__description">
+                        I'm Alan, a full stack <strong>designer</strong>, passionate about design, technology
+                        and development.
+                    </p>
+                </div>
+                <ul class="home__social flex--container">
+                    <li class="home__social-item">
+                        <a class="home__social-link" href="https://www.linkedin.com/in/alanxs/" target="_blank"
+                            rel="noopener noreferrer" title="LinkedIn"><i class="bx bxl-linkedin"></i></a>
+                    </li>
+                    <li class="home__social-item">
+                        <a class="home__social-link" href="https://github.com/AlanDkoXS" target="_blank"
+                            rel="noopener noreferrer" title="GitHub"><i class="bx bxl-github"></i></a>
+                    </li>
+                    <li class="home__social-item">
+                        <a class="home__social-link" href="https://dribbble.com/Alan3XS" target="_blank"
+                            rel="noopener noreferrer" title="Dribbble"><i class="bx bxl-dribbble"></i></a>
+                    </li>
+                    <li class="home__social-item">
+                        <a class="home__social-link" href="https://www.instagram.com/anotherguyontheroad/"
+                            target="_blank" rel="noopener noreferrer" title="Instagram"><i
+                                class="bx bxl-instagram"></i></a>
+                    </li>
+                </ul>
+                <div class="home__buttons">
+                    <a class="btn btn--primary" href="#about" title="About Button" rel="noreferrer nofollow">
+                        About Me
+                    </a>
+                    <a class="btn btn--primary" href="/assets/html/resume.html" title="Resume"
+                        rel="noreferrer nofollow">
+                        Resume
+                    </a>
+                    <a class="btn btn--primary" href="#skills" title="Skills Button" rel="noreferrer nofollow">
+                        Skills
+                    </a>
+                    <a class="btn btn--primary" href="#projects" title="Projects Button" rel="noreferrer nofollow">
+                        Projects
+                    </a>
+                </div>
+            </div>
+        </section>
 
-      <!-- About -->
-      <section id="about" class="about section">
-        <a href="#skills" class="section-link">
-          <h2 class="section__title">About me</h2>
-          <div class="about__container grid--container">
-            <div class="about__img--container">
-              <div class="about__img">
-                <img
-                  src="assets/img/aboutme.png"
-                  alt="About me image"
-                  title="About me image"
-                  loading="lazy" />
-              </div>
+        <!-- About -->
+        <section id="about" class="about section">
+            <a href="#skills" class="section-link">
+                <h2 class="section__title">About me</h2>
+                <div class="about__container grid--container">
+                    <div class="about__img--container">
+                        <div class="about__img">
+                            <img src="assets/img/aboutme.png" alt="About me image" title="About me image"
+                                loading="lazy" />
+                        </div>
+                    </div>
+                    <p class="about__description">
+                        I can help you develop modern, responsive, and functional web applications tailored to
+                        your business needs. My approach combines visually appealing design with a seamless
+                        user experience, ensuring that the applications are not only aesthetically pleasing
+                        but also intuitive and easy to use.
+                    </p>
+                </div>
+            </a>
+        </section>
+        <!-- Skills -->
+        <section id="skills" class="skills section">
+            <h2 class="section__title">Skills</h2>
+            <div class="skills__container grid--container">
+                <p class="skills__description">
+                    Leveraging technologies like HTML, CSS, JavaScript, React, and Node.js, I build scalable
+                    and efficient solutions, from interactive interfaces to complete backend systems. My
+                    goal is to create digital tools that streamline processes, enhance user engagement, and
+                    add value to your business.
+                </p>
+                <div class="skills__wrapper">
+                    <div class="skills__icons">
+                        <!--Design Tools -->
+                        <h3 class="skills__title">Design Tools</h3>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/photoshop.svg#iconPhotoshop"></use>
+                            </svg>
+                            <span class="skills__icon-title">Photoshop</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/illustrator.svg#iconIllustrator"></use>
+                            </svg>
+                            <span class="skills__icon-title">Illustrator</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/after-effects.svg#iconAFX"></use>
+                            </svg>
+                            <span class="skills__icon-title">After Effects</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/creative-cloud.svg#iconCreativeCloud"></use>
+                            </svg>
+                            <span class="skills__icon-title">Creative Cloud</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/figma.svg#iconFigma"></use>
+                            </svg>
+                            <span class="skills__icon-title">Figma</span>
+                        </div>
+                        <!--Frontend Tools -->
+                        <h3 class="skills__title skills__frontend-tools-title">Frontend Tools</h3>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
+                            </svg>
+                            <span class="skills__icon-title">HTML 5</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
+                            </svg>
+                            <span class="skills__icon-title">CSS 3</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
+                            </svg>
+                            <span class="skills__icon-title">JavaScript</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
+                            </svg>
+                            <span class="skills__icon-title">React</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
+                            </svg>
+                            <span class="skills__icon-title">ViteJS</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/tailwind-CSS.svg#iconTailwindCSS"></use>
+                            </svg>
+                            <span class="skills__icon-title">Tailwind CSS</span>
+                        </div>
+                        <!--Backend Tools -->
+                        <h3 class="skills__title">Backend Tools</h3>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/nodejs.svg#iconNodeJS"></use>
+                            </svg>
+                            <span class="skills__icon-title">NodeJS</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/nextjs.svg#iconNextJS"></use>
+                            </svg>
+                            <span class="skills__icon-title">NextJS</span>
+                        </div>
+                        <!--Development Tools -->
+                        <h3 class="skills__title skills__development-tools-title">Development Tools</h3>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/code.svg#iconVSCode"></use>
+                            </svg>
+                            <span class="skills__icon-title">VS Code</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/git.svg#iconGit"></use>
+                            </svg>
+                            <span class="skills__icon-title">Git</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/npm.svg#iconNPM"></use>
+                            </svg>
+                            <span class="skills__icon-title">NPM</span>
+                        </div>
+                        <div class="skills__icon-container">
+                            <svg class="skills__icon icon_skills">
+                                <use xlink:href="./assets/img/skills/bash.svg#iconBash"></use>
+                            </svg>
+                            <span class="skills__icon-title">Bash</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills__tags flex--container">
+                    <h3 class="skills__tags-title">Soft Skills</h3>
+                    <div class="skills__tags-container flex--container">
+                        <span class="skills__tag">Responsible</span>
+                        <span class="skills__tag">Teamwork</span>
+                        <span class="skills__tag">Creative</span>
+                        <span class="skills__tag">Sense of urgency</span>
+                        <span class="skills__tag">Proactive</span>
+                    </div>
+                </div>
             </div>
-            <p class="about__description">
-              I can help you develop modern, responsive, and functional web applications tailored to
-              your business needs. My approach combines visually appealing design with a seamless
-              user experience, ensuring that the applications are not only aesthetically pleasing
-              but also intuitive and easy to use.
-            </p>
-          </div>
-        </a>
-      </section>
-      <!-- Skills -->
-      <section id="skills" class="skills section">
-        <h2 class="section__title">Skills</h2>
-        <div class="skills__container grid--container">
-          <p class="skills__description">
-            Leveraging technologies like HTML, CSS, JavaScript, React, and Node.js, I build scalable
-            and efficient solutions, from interactive interfaces to complete backend systems. My
-            goal is to create digital tools that streamline processes, enhance user engagement, and
-            add value to your business.
-          </p>
-          <div class="skills__wrapper">
-            <div class="skills__icons">
-              <!--Design Tools -->
-              <h3 class="skills__title">Design Tools</h3>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/photoshop.svg#iconPhotoshop"></use>
-                </svg>
-                <span class="skills__icon-title">Photoshop</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/illustrator.svg#iconIllustrator"></use>
-                </svg>
-                <span class="skills__icon-title">Illustrator</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/after-effects.svg#iconAFX"></use>
-                </svg>
-                <span class="skills__icon-title">After Effects</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/creative-cloud.svg#iconCreativeCloud"></use>
-                </svg>
-                <span class="skills__icon-title">Creative Cloud</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/figma.svg#iconFigma"></use>
-                </svg>
-                <span class="skills__icon-title">Figma</span>
-              </div>
-              <!--Frontend Tools -->
-              <h3 class="skills__title skills__frontend-tools-title">Frontend Tools</h3>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
-                </svg>
-                <span class="skills__icon-title">HTML 5</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
-                </svg>
-                <span class="skills__icon-title">CSS 3</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
-                </svg>
-                <span class="skills__icon-title">JavaScript</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
-                </svg>
-                <span class="skills__icon-title">React</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
-                </svg>
-                <span class="skills__icon-title">ViteJS</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/tailwind-CSS.svg#iconTailwindCSS"></use>
-                </svg>
-                <span class="skills__icon-title">Tailwind CSS</span>
-              </div>
-              <!--Backend Tools -->
-              <h3 class="skills__title">Backend Tools</h3>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/nodejs.svg#iconNodeJS"></use>
-                </svg>
-                <span class="skills__icon-title">NodeJS</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/nextjs.svg#iconNextJS"></use>
-                </svg>
-                <span class="skills__icon-title">NextJS</span>
-              </div>
-              <!--Development Tools -->
-              <h3 class="skills__title skills__development-tools-title">Development Tools</h3>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/code.svg#iconVSCode"></use>
-                </svg>
-                <span class="skills__icon-title">VS Code</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/git.svg#iconGit"></use>
-                </svg>
-                <span class="skills__icon-title">Git</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/npm.svg#iconNPM"></use>
-                </svg>
-                <span class="skills__icon-title">NPM</span>
-              </div>
-              <div class="skills__icon-container">
-                <svg class="skills__icon icon_skills">
-                  <use xlink:href="./assets/img/skills/bash.svg#iconBash"></use>
-                </svg>
-                <span class="skills__icon-title">Bash</span>
-              </div>
-            </div>
-          </div>
-          <div class="skills__tags flex--container">
-            <h3 class="skills__tags-title">Soft Skills</h3>
-            <div class="skills__tags-container flex--container">
-              <span class="skills__tag">Responsible</span>
-              <span class="skills__tag">Teamwork</span>
-              <span class="skills__tag">Creative</span>
-              <span class="skills__tag">Sense of urgency</span>
-              <span class="skills__tag">Proactive</span>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Portfolio -->
-      <!--         <section id="portfolio" class="portfolio section">
+        </section>
+        <!-- Portfolio -->
+        <!--         <section id="portfolio" class="portfolio section">
             <h2 class="portfolio__title">Portfolio</h2>
 
             <div class="designs">
@@ -446,440 +403,366 @@
             </div>
         </section> -->
 
-      <!-- Projects -->
-      <section id="projects" class="projects section">
-        <h2 class="section__title">Projects</h2>
-        <div class="project__container">
-          <button class="project__nav project__nav--prev" aria-label="Proyecto anterior">
-            <i class="bx bx-chevron-left"></i>
-          </button>
+        <!-- Projects -->
+        <section id="projects" class="projects section">
+            <h2 class="section__title">Projects</h2>
+            <div class="project__container">
+                <button class="project__nav project__nav--prev" aria-label="Proyecto anterior">
+                    <i class="bx bx-chevron-left"></i>
+                </button>
 
-          <div class="project__card--carousel">
-            <!-- Marvel Project Card -->
-            <div class="project__card" id="1">
-              <div class="project__card-inner">
-                <!-- Front -->
-                <div class="project__card-front">
-                  <div class="project__image--container"></div>
-                  <h3 class="project__title">Marvel</h3>
-                  <p class="project__subtitle">Tech Stack</p>
-                  <div class="project__tech-stack">
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
-                    </svg>
-                  </div>
+                <div class="project__card--carousel">
+                    <!-- Marvel Project Card -->
+                    <div class="project__card" id="1">
+                        <div class="project__card-inner">
+                            <!-- Front -->
+                            <div class="project__card-front">
+                                <div class="project__image--container"></div>
+                                <h3 class="project__title">Marvel</h3>
+                                <p class="project__subtitle">Tech Stack</p>
+                                <div class="project__tech-stack">
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Back -->
+                            <div class="project__card-back">
+                                <p class="project__description">
+                                    An application that displays information about Marvel characters, using
+                                    useReducer for state management and useRef for referencing DOM elements.
+                                </p>
+                                <div class="project__buttons">
+                                    <a href="https://marvelwiki.alanquintana.pro/" class="project__button"
+                                        target="_blank" rel="noreferrer noopener" title="See">
+                                        <i class="bx bx-link-external"></i>
+                                    </a>
+                                    <a href="https://github.com/AlanDkoXS/marvel-app" class="project__button"
+                                        target="_blank" rel="noreferrer noopener" title="Code">
+                                        <i class="bx bx-code-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CRUD Users Project Card -->
+                    <div class="project__card" id="2">
+                        <div class="project__card-inner">
+                            <!-- Front -->
+                            <div class="project__card-front">
+                                <div class="project__image--container"></div>
+                                <h3 class="project__title">CRUD Users</h3>
+                                <p class="project__subtitle">Tech Stack</p>
+                                <div class="project__tech-stack">
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Back -->
+                            <div class="project__card-back">
+                                <p class="project__description">
+                                    An application for user registration, with create, read, update, and delete
+                                    (CRUD) functions, allowing full user management.
+                                </p>
+                                <div class="project__buttons">
+                                    <a href="https://crudusers.alanquintana.pro/" class="project__button"
+                                        target="_blank" rel="noreferrer noopener" title="See">
+                                        <i class="bx bx-link-external"></i>
+                                    </a>
+                                    <a href="https://github.com/AlanDkoXS/CRUD" class="project__button" target="_blank"
+                                        rel="noreferrer noopener" title="Code">
+                                        <i class="bx bx-code-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rick and Morty Project Card -->
+                    <div class="project__card" id="3">
+                        <div class="project__card-inner">
+                            <!-- Front -->
+                            <div class="project__card-front">
+                                <div class="project__image--container"></div>
+                                <h3 class="project__title">Rick and Morty Wiki</h3>
+                                <p class="project__subtitle">Tech Stack</p>
+                                <div class="project__tech-stack">
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Back -->
+                            <div class="project__card-back">
+                                <p class="project__description">
+                                    An application that fetches data from an API to display information from the
+                                    Rick and Morty series, using useFetch for handling HTTP requests.
+                                </p>
+                                <div class="project__buttons">
+                                    <a href="https://rickandmorty.alanquintana.pro/" class="project__button"
+                                        target="_blank" rel="noreferrer noopener" title="See">
+                                        <i class="bx bx-link-external"></i>
+                                    </a>
+                                    <a href="https://github.com/AlanDkoXS/rick-morty" class="project__button"
+                                        target="_blank" rel="noreferrer noopener" title="Code">
+                                        <i class="bx bx-code-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Weather App Project Card -->
+                    <div class="project__card" id="4">
+                        <div class="project__card-inner">
+                            <!-- Front -->
+                            <div class="project__card-front">
+                                <div class="project__image--container"></div>
+                                <h3 class="project__title">Weather App</h3>
+                                <p class="project__subtitle">Tech Stack</p>
+                                <div class="project__tech-stack">
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Back -->
+                            <div class="project__card-back">
+                                <p class="project__description">
+                                    An application that shows current weather information using an external API,
+                                    with various hooks to manage state and application logic.
+                                </p>
+                                <div class="project__buttons">
+                                    <a href="https://weatherapp.alanquintana.pro/" class="project__button"
+                                        target="_blank" rel="noreferrer noopener" title="See">
+                                        <i class="bx bx-link-external"></i>
+                                    </a>
+                                    <a href="https://github.com/AlanDkoXS/weather-app" class="project__button"
+                                        target="_blank" rel="noreferrer noopener" title="Code">
+                                        <i class="bx bx-code-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fortune Cookie Project Card -->
+                    <div class="project__card" id="5">
+                        <div class="project__card-inner">
+                            <!-- Front -->
+                            <div class="project__card-front">
+                                <div class="project__image--container"></div>
+                                <h3 class="project__title">Fortune Cookie App</h3>
+                                <p class="project__subtitle">Tech Stack</p>
+                                <div class="project__tech-stack">
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
+                                    </svg>
+                                    <svg class="project__tech-icon">
+                                        <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Back -->
+                            <div class="project__card-back">
+                                <p class="project__description">
+                                    An application that generates random quotes, displaying a list of phrases with
+                                    basic interaction features.
+                                </p>
+                                <div class="project__buttons">
+                                    <a href="https://fortunecookie.alanquintana.pro" class="project__button"
+                                        target="_blank" rel="noreferrer noopener" title="See">
+                                        <i class="bx bx-link-external"></i>
+                                    </a>
+                                    <a href="https://github.com/AlanDkoXS/Fortune-Cookie" class="project__button"
+                                        target="_blank" rel="noreferrer noopener" title="Code">
+                                        <i class="bx bx-code-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Back -->
-                <div class="project__card-back">
-                  <p class="project__description">
-                    An application that displays information about Marvel characters, using
-                    useReducer for state management and useRef for referencing DOM elements.
-                  </p>
-                  <div class="project__buttons">
-                    <a
-                      href="https://marvelwiki.alanquintana.pro/"
-                      class="project__button"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="See">
-                      <i class="bx bx-link-external"></i>
-                    </a>
-                    <a
-                      href="https://github.com/AlanDkoXS/marvel-app"
-                      class="project__button"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="Code">
-                      <i class="bx bx-code-alt"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
+
+                <button class="project__nav project__nav--next" aria-label="Siguiente proyecto">
+                    <i class="bx bx-chevron-right"></i>
+                </button>
+                <a href="#" class="visuallyhidden project__card--controller">Carousel controller</a>
             </div>
+        </section>
 
-            <!-- CRUD Users Project Card -->
-            <div class="project__card" id="2">
-              <div class="project__card-inner">
-                <!-- Front -->
-                <div class="project__card-front">
-                  <div class="project__image--container"></div>
-                  <h3 class="project__title">CRUD Users</h3>
-                  <p class="project__subtitle">Tech Stack</p>
-                  <div class="project__tech-stack">
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
-                    </svg>
-                  </div>
+        <!-- Contact -->
+        <section id="contact" class="contact section">
+            <h2 class="section__title">Contact</h2>
+
+            <div class="contact__container grid--container">
+                <div class="contact__info">
+                    <h3 class="contact__info-title">Contact Info</h3>
+                    <p class="contact__info-description">Say <strong>'Hello'</strong></p>
+
+                    <address class="contact__info-data">
+                        <div class="contact__info-item">
+                            <i class="bx bxl-whatsapp"></i>
+
+                            <span class="contact__info-number">
+                                <a href="https://wa.me/526141105668
+                    " target="_blank" rel="noreferrer noopener">+526141105668</a>
+                            </span>
+                        </div>
+
+                        <div class="contact__info-item">
+                            <i class="bx bxs-envelope"></i>
+
+                            <span class="contact__info-mail">
+                                <a id="mail" href="mailto:hello@alanquintana.pro" target="_blank"
+                                    rel="noreferrer nofollow">
+                                    hello@alanquintana.pro
+                                </a>
+                            </span>
+                        </div>
+
+                        <div class="contact__info-item">
+                            <i class="bx bx-map"></i>
+
+                            <span class="contact__info-map"> Chihuahua, Mexico. </span>
+                        </div>
+                    </address>
                 </div>
-                <!-- Back -->
-                <div class="project__card-back">
-                  <p class="project__description">
-                    An application for user registration, with create, read, update, and delete
-                    (CRUD) functions, allowing full user management.
-                  </p>
-                  <div class="project__buttons">
-                    <a
-                      href="https://crudusers.alanquintana.pro/"
-                      class="project__button"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="See">
-                      <i class="bx bx-link-external"></i>
-                    </a>
-                    <a
-                      href="https://github.com/AlanDkoXS/CRUD"
-                      class="project__button"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="Code">
-                      <i class="bx bx-code-alt"></i>
-                    </a>
-                  </div>
+
+                <div class="contact__form">
+                    <h3 class="contact__form-title">Send Message</h3>
+                    <form id="form" class="contact__form-container">
+                        <div class="contact__form-group">
+                            <label for="name" class="contact__form-label">Name</label>
+                            <input type="text" id="name" name="name" class="contact__form-input" />
+                        </div>
+
+                        <div class="contact__form-group">
+                            <label for="email" class="contact__form-label">Email</label>
+                            <input type="email" id="email" name="email" class="contact__form-input" />
+                        </div>
+
+                        <div class="contact__form-group">
+                            <label for="subject" class="contact__form-label">Subject</label>
+                            <input type="text" id="subject" name="subject" class="contact__form-input" />
+                        </div>
+
+                        <div class="contact__form-group">
+                            <label for="message" class="contact__form-label">Message</label>
+                            <textarea id="message" name="message" cols="30" rows="10"
+                                class="contact__form-input"></textarea>
+                        </div>
+                        <dialog id="modal">
+                            <div class="modal-content">
+                                <p>Form submitted successfully!</p>
+                                <div class="resume__modal-content">
+                                    <button type="reset" id="btn_close-modal" class="btn btn--primary">
+                                        <strong>Close</strong>
+                                    </button>
+                                </div>
+                            </div>
+                        </dialog>
+
+                        <button type="submit" class="btn contact__form-button">
+                            <strong>Send</strong>
+                        </button>
+                    </form>
                 </div>
-              </div>
             </div>
-
-            <!-- Rick and Morty Project Card -->
-            <div class="project__card" id="3">
-              <div class="project__card-inner">
-                <!-- Front -->
-                <div class="project__card-front">
-                  <div class="project__image--container"></div>
-                  <h3 class="project__title">Rick and Morty Wiki</h3>
-                  <p class="project__subtitle">Tech Stack</p>
-                  <div class="project__tech-stack">
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
-                    </svg>
-                  </div>
-                </div>
-                <!-- Back -->
-                <div class="project__card-back">
-                  <p class="project__description">
-                    An application that fetches data from an API to display information from the
-                    Rick and Morty series, using useFetch for handling HTTP requests.
-                  </p>
-                  <div class="project__buttons">
-                    <a
-                      href="https://rickandmorty.alanquintana.pro/"
-                      class="project__button"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="See">
-                      <i class="bx bx-link-external"></i>
-                    </a>
-                    <a
-                      href="https://github.com/AlanDkoXS/rick-morty"
-                      class="project__button"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="Code">
-                      <i class="bx bx-code-alt"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Weather App Project Card -->
-            <div class="project__card" id="4">
-              <div class="project__card-inner">
-                <!-- Front -->
-                <div class="project__card-front">
-                  <div class="project__image--container"></div>
-                  <h3 class="project__title">Weather App</h3>
-                  <p class="project__subtitle">Tech Stack</p>
-                  <div class="project__tech-stack">
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
-                    </svg>
-                  </div>
-                </div>
-                <!-- Back -->
-                <div class="project__card-back">
-                  <p class="project__description">
-                    An application that shows current weather information using an external API,
-                    with various hooks to manage state and application logic.
-                  </p>
-                  <div class="project__buttons">
-                    <a
-                      href="https://weatherapp.alanquintana.pro/"
-                      class="project__button"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="See">
-                      <i class="bx bx-link-external"></i>
-                    </a>
-                    <a
-                      href="https://github.com/AlanDkoXS/weather-app"
-                      class="project__button"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="Code">
-                      <i class="bx bx-code-alt"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Fortune Cookie Project Card -->
-            <div class="project__card" id="5">
-              <div class="project__card-inner">
-                <!-- Front -->
-                <div class="project__card-front">
-                  <div class="project__image--container"></div>
-                  <h3 class="project__title">Fortune Cookie App</h3>
-                  <p class="project__subtitle">Tech Stack</p>
-                  <div class="project__tech-stack">
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/react.svg#iconReact"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/javascript.svg#iconJavascript"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/html.svg#iconHTML"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/css.svg#iconCSS"></use>
-                    </svg>
-                    <svg class="project__tech-icon">
-                      <use xlink:href="./assets/img/skills/vitejs.svg#iconViteJS"></use>
-                    </svg>
-                  </div>
-                </div>
-                <!-- Back -->
-                <div class="project__card-back">
-                  <p class="project__description">
-                    An application that generates random quotes, displaying a list of phrases with
-                    basic interaction features.
-                  </p>
-                  <div class="project__buttons">
-                    <a
-                      href="https://fortunecookie.alanquintana.pro"
-                      class="project__button"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="See">
-                      <i class="bx bx-link-external"></i>
-                    </a>
-                    <a
-                      href="https://github.com/AlanDkoXS/Fortune-Cookie"
-                      class="project__button"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="Code">
-                      <i class="bx bx-code-alt"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <button class="project__nav project__nav--next" aria-label="Siguiente proyecto">
-            <i class="bx bx-chevron-right"></i>
-          </button>
-          <a href="#" class="visuallyhidden project__card--controller">Carousel controller</a>
-        </div>
-      </section>
-
-      <!-- Contact -->
-      <section id="contact" class="contact section">
-        <h2 class="section__title">Contact</h2>
-
-        <div class="contact__container grid--container">
-          <div class="contact__info">
-            <h3 class="contact__info-title">Contact Info</h3>
-            <p class="contact__info-description">Say <strong>'Hello'</strong></p>
-
-            <address class="contact__info-data">
-              <div class="contact__info-item">
-                <i class="bx bxl-whatsapp"></i>
-
-                <span class="contact__info-number">
-                  <a
-                    href="https://wa.me/526141105668
-                    "
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    >+526141105668</a
-                  >
-                </span>
-              </div>
-
-              <div class="contact__info-item">
-                <i class="bx bxs-envelope"></i>
-
-                <span class="contact__info-mail">
-                  <a
-                    id="mail"
-                    href="mailto:hello@alanquintana.pro"
-                    target="_blank"
-                    rel="noreferrer nofollow">
-                    hello@alanquintana.pro
-                  </a>
-                </span>
-              </div>
-
-              <div class="contact__info-item">
-                <i class="bx bx-map"></i>
-
-                <span class="contact__info-map"> Chihuahua, Mexico. </span>
-              </div>
-            </address>
-          </div>
-
-          <div class="contact__form">
-            <h3 class="contact__form-title">Send Message</h3>
-            <form id="form" class="contact__form-container">
-              <div class="contact__form-group">
-                <label for="name" class="contact__form-label">Name</label>
-                <input type="text" id="name" name="name" class="contact__form-input" />
-              </div>
-
-              <div class="contact__form-group">
-                <label for="email" class="contact__form-label">Email</label>
-                <input type="email" id="email" name="email" class="contact__form-input" />
-              </div>
-
-              <div class="contact__form-group">
-                <label for="subject" class="contact__form-label">Subject</label>
-                <input type="text" id="subject" name="subject" class="contact__form-input" />
-              </div>
-
-              <div class="contact__form-group">
-                <label for="message" class="contact__form-label">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  cols="30"
-                  rows="10"
-                  class="contact__form-input"></textarea>
-              </div>
-              <dialog id="modal">
-                <div class="modal-content">
-                  <p>Form submitted successfully!</p>
-                  <div class="resume__modal-content">
-                    <button type="reset" id="btn_close-modal" class="btn btn--primary">
-                      <strong>Close</strong>
-                    </button>
-                  </div>
-                </div>
-              </dialog>
-
-              <button type="submit" class="btn contact__form-button">
-                <strong>Send</strong>
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
+        </section>
     </main>
 
     <footer class="footer section">
-      <div class="footer__container grid--container">
-        <div class="footer__info">
-          <h3 class="footer__title">Alan Quintana</h3>
-          <span class="footer__description">
-            Made with ❤️. Thanks to my tutor Alejandra Olazagasti.
-          </span>
-          <span class="footer__year"></span>
-          <span class="footer__copyright">All rights reserved</span>
-          <div class="footer__social">
-            <h3 class="footer__title">Social</h3>
-            <ul class="footer__social-list">
-              <li class="footer__social-item">
-                <a
-                  class="footer__social-link"
-                  href="https://github.com/AlanDkoXS"
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="GitHub"
-                  ><i class="bx bxl-github"></i
-                ></a>
-              </li>
-              <li class="footer__social-item">
-                <a
-                  class="footer__social-link"
-                  href="https://www.instagram.com/anotherguyontheroad/"
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="Instagram"
-                  ><i class="bx bxl-instagram"></i
-                ></a>
-              </li>
-              <li class="footer__social-item">
-                <a
-                  class="footer__social-link"
-                  href="https://x.com/AlanDKO"
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="Twitter"
-                  ><i class="bx bxl-twitter"></i
-                ></a>
-              </li>
-              <li class="footer__social-item">
-                <a
-                  class="footer__social-link"
-                  href="https://www.linkedin.com/in/alanxs/"
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="LinkedIn"
-                  ><i class="bx bxl-linkedin"></i
-                ></a>
-              </li>
-            </ul>
-          </div>
+        <div class="footer__container grid--container">
+            <div class="footer__info">
+                <h3 class="footer__title">Alan Quintana</h3>
+                <span class="footer__description">
+                    Made with ❤️. Thanks to my tutor Alejandra Olazagasti.
+                </span>
+                <span class="footer__year"></span>
+                <span class="footer__copyright">All rights reserved</span>
+                <div class="footer__social">
+                    <h3 class="footer__title">Social</h3>
+                    <ul class="footer__social-list">
+                        <li class="footer__social-item">
+                            <a class="footer__social-link" href="https://github.com/AlanDkoXS" target="_blank"
+                                rel="noreferrer nofollow noopener" title="GitHub"><i class="bx bxl-github"></i></a>
+                        </li>
+                        <li class="footer__social-item">
+                            <a class="footer__social-link" href="https://www.instagram.com/anotherguyontheroad/"
+                                target="_blank" rel="noreferrer nofollow noopener" title="Instagram"><i
+                                    class="bx bxl-instagram"></i></a>
+                        </li>
+                        <li class="footer__social-item">
+                            <a class="footer__social-link" href="https://x.com/AlanDKO" target="_blank"
+                                rel="noreferrer nofollow noopener" title="Twitter"><i class="bx bxl-twitter"></i></a>
+                        </li>
+                        <li class="footer__social-item">
+                            <a class="footer__social-link" href="https://www.linkedin.com/in/alanxs/" target="_blank"
+                                rel="noreferrer nofollow noopener" title="LinkedIn"><i class="bx bxl-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
     </footer>
-  </body>
+</body>
+
 </html>
