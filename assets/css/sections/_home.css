@@ -163,3 +163,76 @@
     }
   }
 }
+
+/* HOME MIN WIDTH 992px ========================== */
+
+@media (min-width: 992px) {
+  /* Estructura modificada del home */
+  .home .home__container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      'image title'
+      'image description'
+      'image resume-button';
+    gap: 1rem;
+    align-items: start;
+    justify-content: center;
+    margin-top: 120px;
+    padding: 2rem;
+  }
+
+  /* Ajustes de la imagen */
+  .home .home__image {
+    grid-area: image;
+    width: clamp(300px, 90%, 500px);
+    transform: translateX(0) translateY(0) scale(1);
+    justify-self: center;
+  }
+
+  /* Ajustes del título */
+  .home .home__info {
+    grid-area: title;
+    text-align: left;
+  }
+
+  .home .home__info .home__title {
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: calc(var(--title-font-size) * 1.5);
+  }
+
+  /* Descripción integrada (incluye contenido de about) */
+  .home .home__info .home__description {
+    text-align: left;
+    max-width: 600px;
+    margin-bottom: 2rem;
+  }
+
+  /* Ocultar botones excepto resume */
+  .home .home__buttons {
+    grid-area: resume-button;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .home .home__buttons a:not([href='/assets/html/resume.html']) {
+    display: none;
+  }
+
+  /* Ocultar sección about */
+  #about.about.section {
+    display: none;
+  }
+
+  /* Ajuste del menú de navegación */
+  .navbar__list .navbar__item a[href='#about'] {
+    display: none;
+  }
+
+  /* Mostrar solo el botón de resume */
+  .home .home__buttons .btn {
+    max-width: 200px;
+  }
+}

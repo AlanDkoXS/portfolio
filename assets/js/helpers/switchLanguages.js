@@ -61,22 +61,27 @@ const updateProjectText = (lang) => {
   });
 };
 
-// Función principal para alternar idiomas
-const switchLanguages = () => {
-  const languageToggle = document.getElementById('language-toggle');
+// Función para gestionar el contenido responsivo
+const handleResponsiveContent = (lang) => {
+  const homeDescription = document.querySelector('.home__description');
+  const isDesktop = window.innerWidth >= 992;
 
-  // Establecer el idioma inicial basado en la preferencia del usuario
-  const initialLang = detectUserLanguage();
-  languageToggle.checked = initialLang === 'es';
+  if (isDesktop && homeDescription) {
+    // Obtener los textos según el idioma
+    const homeText = translations.homeDescription[lang] || translations.homeDescription['en'];
+    const aboutText = translations.aboutDescription[lang] || translations.aboutDescription['en'];
 
-  // Aplicar el idioma detectado al cargar la página
-  applyLanguageChanges(initialLang);
-
-  // Escuchar el evento de cambio del toggle
-  languageToggle.addEventListener('change', function () {
-    const lang = this.checked ? 'es' : 'en';
-    applyLanguageChanges(lang);
-  });
+    // Combinar las descripciones
+    homeDescription.innerHTML = `
+      ${homeText}
+      <br><br>
+      ${aboutText}
+    `;
+  } else if (homeDescription) {
+    // En móvil, solo mostrar el texto del home
+    homeDescription.textContent =
+      translations.homeDescription[lang] || translations.homeDescription['en'];
+  }
 };
 
 // Función para aplicar los cambios de idioma
@@ -95,7 +100,7 @@ const applyLanguageChanges = (lang) => {
 
   // Home Section
   updateSectionText('.home__title', 'homeTitle', lang);
-  updateSectionText('.home__description', 'homeDescription', lang);
+  // La descripción del home se maneja a través de handleResponsiveContent
   updateSectionText('.btn.btn--primary[href="#about"]', 'aboutButton', lang);
   updateSectionText('.btn.btn--primary[href="/assets/html/resume.html"]', 'resumeButton', lang);
   updateSectionText('.btn.btn--primary[href="#skills"]', 'skillsButton', lang);
@@ -146,6 +151,9 @@ const applyLanguageChanges = (lang) => {
     submitButton.innerHTML = `<strong>${translations.contactForm[lang].send}</strong>`;
   }
 
+  // Manejar el contenido responsivo
+  handleResponsiveContent(lang);
+
   // Language Change Event
   window.dispatchEvent(
     new CustomEvent('languageChange', {
@@ -170,6 +178,30 @@ const applyLanguageChanges = (lang) => {
   // Footer Section
   updateSectionText('.footer__description', 'footerDescription', lang);
   updateSectionText('.footer__copyright', 'footerCopyright', lang);
+};
+
+// Función principal para alternar idiomas
+const switchLanguages = () => {
+  const languageToggle = document.getElementById('language-toggle');
+  if (!languageToggle) return; // Evitar errores si el toggle no existe
+
+  // Establecer el idioma inicial basado en la preferencia del usuario
+  const initialLang = detectUserLanguage();
+  languageToggle.checked = initialLang === 'es';
+
+  // Aplicar el idioma detectado al cargar la página
+  applyLanguageChanges(initialLang);
+
+  // Escuchar el evento de cambio del toggle
+  languageToggle.addEventListener('change', function () {
+    const lang = this.checked ? 'es' : 'en';
+    applyLanguageChanges(lang);
+  });
+
+  // Añadir listener para cambios de tamaño de ventana
+  window.addEventListener('resize', () => {
+    handleResponsiveContent(currentLanguage);
+  });
 };
 
 export default switchLanguages;

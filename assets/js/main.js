@@ -20,7 +20,7 @@ const AppState = {
   isLoading: true,
   isDarkMode: false,
   currentLanguage: 'en',
-  isMenuOpen: false
+  isMenuOpen: false,
 };
 
 // Función para manejar errores
@@ -85,10 +85,7 @@ const initializeFunctionalities = () => {
 // Función para cargar recursos externos
 const loadExternalResources = async () => {
   try {
-    await Promise.all([
-      loadGoogleTagManager(),
-      loadEmailJS()
-    ]);
+    await Promise.all([loadGoogleTagManager(), loadEmailJS()]);
   } catch (error) {
     handleError(error, 'loadExternalResources');
   }
@@ -169,3 +166,35 @@ window.addEventListener('error', (event) => {
 window.addEventListener('unhandledrejection', (event) => {
   handleError(event.reason, 'unhandledrejection');
 });
+
+// Este script debe añadirse al final del archivo main.js o como un nuevo archivo
+
+function handleResponsiveContent() {
+  const homeDescription = document.querySelector('.home__description');
+  const aboutDescription = document.querySelector('.about__description');
+  const isDesktop = window.innerWidth >= 992;
+
+  // Guardar el texto original de la descripción del home si no se ha guardado
+  if (!homeDescription.dataset.originalText) {
+    homeDescription.dataset.originalText = homeDescription.innerHTML;
+  }
+
+  // En pantallas anchas, combinar el contenido
+  if (isDesktop && aboutDescription) {
+    // Combinar descripciones para escritorio
+    homeDescription.innerHTML = `
+        ${homeDescription.dataset.originalText}
+        <br><br>
+        ${aboutDescription.textContent}
+      `;
+  } else {
+    // Restaurar el texto original en móvil
+    if (homeDescription.dataset.originalText) {
+      homeDescription.innerHTML = homeDescription.dataset.originalText;
+    }
+  }
+}
+
+// Ejecutar en carga y redimensionamiento
+document.addEventListener('DOMContentLoaded', handleResponsiveContent);
+window.addEventListener('resize', handleResponsiveContent);
