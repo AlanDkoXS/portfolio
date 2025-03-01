@@ -102,7 +102,7 @@ const applyLanguageChanges = (lang) => {
   updateSectionText('.home__title', 'homeTitle', lang);
   // La descripción del home se maneja a través de handleResponsiveContent
   updateSectionText('.btn.btn--primary[href="#about"]', 'aboutButton', lang);
-  updateSectionText('.btn.btn--primary[href="/assets/html/resume.html"]', 'resumeButton', lang);
+  updateSectionText('a.btn.btn--primary[href*="resume.html"]', 'resumeButton', lang);
   updateSectionText('.btn.btn--primary[href="#skills"]', 'skillsButton', lang);
   updateSectionText('.btn.btn--primary[href="#projects"]', 'projectButton', lang);
 
