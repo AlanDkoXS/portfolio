@@ -29,23 +29,6 @@ html {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
-  section {
-    padding: 3rem 0;
-    opacity: 0;
-    transition: opacity 1s ease-in-out, visibility 0s 1s; /* Transición suave */
-  }
-
-  section.visible {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 1s ease-in-out, visibility 0s;
-  }
-
-  .section__title {
-    text-align: center;
-    margin: 0.8rem 0;
-  }
-
   .grid--container {
     max-width: 1024px;
     display: grid;

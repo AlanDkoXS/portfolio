@@ -1,4 +1,5 @@
-/* Background ====================================*/
+/* ============= Background ============= */
+
 .background-container {
   position: absolute;
   top: 0;
@@ -21,8 +22,8 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 300%;
-  height: 100%;
+  width: 300% !important;
+  height: 100% !important;
 }
 
 .bgBack,
@@ -70,7 +71,7 @@
 
 /* Background MIN WIDTH 768px====================================*/
 @media (min-width: 768px) {
-.background-container {
+  .background-container {
     position: absolute;
     top: 0;
     left: 0;

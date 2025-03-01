@@ -1,3 +1,5 @@
+/* ============= Buttons ============= */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -17,7 +19,7 @@
   box-shadow: var(--box-shadow);
 
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, .1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 0.1);
 
   outline-offset: 2px;
 }

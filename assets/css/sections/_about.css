@@ -1,4 +1,4 @@
-/* ============= ABOUT ============= */
+/* ============= About Section ============= */
 
 .about__container {
   display: flex;
@@ -7,7 +7,6 @@
   gap: 2rem;
   padding: 1rem;
 }
-
 
 .about__img--container {
   display: flex;

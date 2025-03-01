@@ -1,12 +1,13 @@
-/* ============= RESUME ============= */
-.resume__logo--name {
-    font-weight: 300;
-  }
+/* ============= Resume  ============= */
 
-  .resume__logo--lastname {
-    margin-left: -3.5px;
-    font-weight: 600;
-  }
+.resume__logo--name {
+  font-weight: 300;
+}
+
+.resume__logo--lastname {
+  margin-left: -3.5px;
+  font-weight: 600;
+}
 
 #pdf-container {
   display: flex;
@@ -46,11 +47,7 @@ canvas {
   background-color: var(--bg-color-buttons);
   color: var(--primary-color);
   font-size: 1.5rem;
-  transition:
-    width 0.3s,
-    height 0.3s,
-    font-size 0.3s,
-    padding 0.3s;
+  transition: width 0.3s, height 0.3s, font-size 0.3s, padding 0.3s;
   text-decoration: none;
   overflow: hidden;
 }

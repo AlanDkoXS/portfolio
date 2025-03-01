@@ -1,4 +1,5 @@
-/* ============= SKILLS ============= */
+/* ============= Skills Section ============= */
+
 .skills__wrapper .skills__icon-container {
   display: flex;
   flex-direction: column;
@@ -51,8 +52,8 @@
 }
 
 .skills__icon-title {
-    margin: var(--margin-small);
-    white-space: nowrap;
+  margin: var(--margin-small);
+  white-space: nowrap;
 }
 
 .skills__tags-container {
