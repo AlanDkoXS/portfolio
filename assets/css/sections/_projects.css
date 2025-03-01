@@ -273,3 +273,10 @@
     max-width: 280px;
   }
 }
+
+/*Media Queries*/
+@media screen and (min-width: 768px) {
+  .project__card--carousel {
+    transform: translateX(10%);
+  }
+}
