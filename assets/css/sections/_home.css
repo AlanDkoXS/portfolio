@@ -15,9 +15,7 @@
   height: 100%;
   color: var(--primary-color);
   transform: translate(-50%, -50%);
-  transition:
-    transform 1s ease,
-    filter 1s ease;
+  transition: transform 1s ease, filter 1s ease;
 }
 
 .home__container {
@@ -99,9 +97,7 @@
     border-right: 4px solid;
     white-space: nowrap;
     width: 8ch;
-    animation:
-      typing 2s infinite steps(8) alternate,
-      blink 0.3s infinite step-end alternate;
+    animation: typing 2s infinite steps(8) alternate, blink 0.3s infinite step-end alternate;
     overflow: hidden;
   }
 }
@@ -140,10 +136,9 @@
 @media (min-width: 768px) {
   .home__social {
     position: fixed;
-    top: 30%;
-    left: -15%;
+    top: 15%;
+    left: -16%;
     flex-direction: column;
-    row-gap: var(--margin-small);
   }
 
   .home {
