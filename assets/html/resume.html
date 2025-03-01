@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resume - Alan Quintana Pacheco</title>
@@ -12,8 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet" />
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
 
     <!-- Icons -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
@@ -21,7 +22,7 @@
     <!-- Scripts -->
     <script type="module" src="assets/js/main.js" defer></script>
     <script type="module">
-      import {
+        import {
         initFab,
         openModal,
         closeModal,
@@ -36,153 +37,122 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
     <script>
-      function downloadCV(language) {
-        const fileMap = {
-          ENG: '[ENG] Alan Quintana.pdf',
-          ESP: '[ESP] Alan Quintana.pdf',
-        };
+        function downloadCV(language) {
+            const fileMap = {
+                ENG: '[ENG] Alan Quintana.pdf',
+                ESP: '[ESP] Alan Quintana.pdf',
+            };
 
-        const fileName = fileMap[language];
-        if (fileName) {
-          const link = document.createElement('a');
-          link.href = `/assets/docs/${fileName}`; // Cambia "path/to/" por la ruta real donde están los archivos.
-          link.download = fileName;
-          link.click();
-        } else {
-          alert('Invalid language selected.');
+            const fileName = fileMap[language];
+            if (fileName) {
+                const link = document.createElement('a');
+                link.href = `/assets/docs/${fileName}`; // Cambia "path/to/" por la ruta real donde están los archivos.
+                link.download = fileName;
+                link.click();
+            } else {
+                alert('Invalid language selected.');
+            }
         }
-      }
     </script>
-  </head>
+</head>
 
-  <body>
+<body>
     <header class="header">
-      <nav class="navbar grid--container flex--container">
-        <a class="navbar__logo flex--container" href="/index.html">
-          <svg class="logo">
-            <use xlink:href="/assets/img/logo.svg#logo"></use>
-          </svg>
-          <span class="resume__logo--name">alan</span>
-          <span class="resume__logo--lastname">quintana</span>
-        </a>
-        <!-- Toggles -->
-        <div id="nav" class="navbar__menu">
-          <a href="#close" title="Close Navigation"
-            ><i class="bx bx-x btn__close navbar__icon flex--container"></i
-          ></a>
-          <ul class="navbar__list flex--container">
-            <li class="navbar__item">
-              <a class="navbar__link active" href="/index.html">Home</a>
-            </li>
-          </ul>
-          <div class="navbar__toggles flex--container">
-            <div class="navbar__toggle--darkmode flex--container">
-              <input
-                type="checkbox"
-                name="color-scheme"
-                id="darkmode-toggle"
-                class="navbar__toggle--darkmode-input"
-                title="Dark Mode" />
-              <label for="darkmode-toggle" class="navbar__toggle--darkmode-label">
-                <i class="bx bx-sun navbar__toggle--darkmode-sun" aria-hidden="true"></i>
-                <i class="bx bx-moon navbar__toggle--darkmode-moon" aria-hidden="true"></i>
-              </label>
+        <nav class="navbar grid--container flex--container">
+            <a class="navbar__logo flex--container" href="/index.html">
+                <svg class="logo">
+                    <use xlink:href="/assets/img/logo.svg#logo"></use>
+                </svg>
+                <span class="resume__logo--name">alan</span>
+                <span class="resume__logo--lastname">quintana</span>
+            </a>
+            <!-- Toggles -->
+            <div id="nav" class="navbar__menu">
+                <a href="#close" title="Close Navigation"><i
+                        class="bx bx-x btn__close navbar__icon flex--container"></i></a>
+                <ul class="navbar__list flex--container">
+                    <li class="navbar__item">
+                        <a class="navbar__link active" href="/index.html">Home</a>
+                    </li>
+                </ul>
+                <div class="navbar__toggles flex--container">
+                    <div class="navbar__toggle--darkmode flex--container">
+                        <input type="checkbox" name="color-scheme" id="darkmode-toggle"
+                            class="navbar__toggle--darkmode-input" title="Dark Mode" />
+                        <label for="darkmode-toggle" class="navbar__toggle--darkmode-label">
+                            <i class="bx bx-sun navbar__toggle--darkmode-sun" aria-hidden="true"></i>
+                            <i class="bx bx-moon navbar__toggle--darkmode-moon" aria-hidden="true"></i>
+                        </label>
+                    </div>
+                    <div class="navbar__toggle--language flex--container">
+                        <input type="checkbox" name="language-toggle" id="language-toggle"
+                            class="navbar__toggle--language-input" title="Language" />
+                        <label for="language-toggle" class="navbar__toggle--language-label"></label>
+                    </div>
+                </div>
             </div>
-            <div class="navbar__toggle--language flex--container">
-              <input
-                type="checkbox"
-                name="language-toggle"
-                id="language-toggle"
-                class="navbar__toggle--language-input"
-                title="Language" />
-              <label for="language-toggle" class="navbar__toggle--language-label"></label>
-            </div>
-          </div>
-        </div>
-        <!-- Nav Bar -->
-        <a href="#nav" title="Menu Navigation"><i class="bx bx-menu btn__open navbar__icon"></i></a>
-      </nav>
+            <!-- Nav Bar -->
+            <a href="#nav" title="Menu Navigation"><i class="bx bx-menu btn__open navbar__icon"></i></a>
+        </nav>
     </header>
     <!-- Buttons -->
     <div class="fab-container">
-      <a href="#" class="fab btn btn--primary" id="btn-download" onclick="openModal()">
-        <i class="bx bxs-download"></i>
-        <span class="fab-text">Download</span>
-      </a>
+        <a href="#" class="fab btn btn--primary" id="btn-download" onclick="openModal()">
+            <i class="bx bxs-download"></i>
+            <span class="fab-text">Download</span>
+        </a>
 
-      <dialog id="modal">
-        <div class="modal-content">
-          <h2>Download</h2>
-          <p>Select language</p>
-          <div class="resume__modal-content">
-            <button class="btn btn--primary" onclick="downloadCV('ENG')">
-              <strong>English</strong>
-            </button>
-            <button class="btn btn--primary" onclick="downloadCV('ESP')">
-              <strong>Español</strong>
-            </button>
-          </div>
-        </div>
-      </dialog>
+        <dialog id="modal">
+            <div class="modal-content">
+                <h2>Download</h2>
+                <p>Select language</p>
+                <div class="resume__modal-content">
+                    <button class="btn btn--primary" onclick="downloadCV('ENG')">
+                        <strong>English</strong>
+                    </button>
+                    <button class="btn btn--primary" onclick="downloadCV('ESP')">
+                        <strong>Español</strong>
+                    </button>
+                </div>
+            </div>
+        </dialog>
     </div>
     <div id="pdf-container"></div>
 
     <footer class="footer section">
-      <div class="footer__container grid--container">
-        <div class="footer__info">
-          <h3 class="footer__title">Alan Quintana</h3>
-          <span class="footer__description">
-            Made with ❤️. Thanks to my tutor Alejandra Olazagasti.
-          </span>
-          <span class="footer__year"></span>
-          <span class="footer__copyright">All rights reserved</span>
+        <div class="footer__container grid--container">
+            <div class="footer__info">
+                <h3 class="footer__title">Alan Quintana</h3>
+                <span class="footer__description">
+                    Made with ❤️. Thanks to my tutor Alejandra Olazagasti.
+                </span>
+                <span class="footer__year"></span>
+                <span class="footer__copyright">All rights reserved</span>
+            </div>
+            <div class="footer__social">
+                <h3 class="footer__title">Social</h3>
+                <ul class="footer__social-list">
+                    <li class="footer__social-item">
+                        <a class="footer__social-link" href="https://github.com/AlanDkoXS" target="_blank"
+                            rel="noreferrer nofollow noopener" title="GitHub"><i class="bx bxl-github"></i></a>
+                    </li>
+                    <li class="footer__social-item">
+                        <a class="footer__social-link" href="https://www.instagram.com/anotherguyontheroad/"
+                            target="_blank" rel="noreferrer nofollow noopener" title="Instagram"><i
+                                class="bx bxl-instagram"></i></a>
+                    </li>
+                    <li class="footer__social-item">
+                        <a class="footer__social-link" href="https://x.com/AlanDKO" target="_blank"
+                            rel="noreferrer nofollow noopener" title="Twitter"><i class="bx bxl-twitter"></i></a>
+                    </li>
+                    <li class="footer__social-item">
+                        <a class="footer__social-link" href="https://www.linkedin.com/in/alanxs/" target="_blank"
+                            rel="noreferrer nofollow noopener" title="LinkedIn"><i class="bx bxl-linkedin"></i></a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="footer__social">
-          <h3 class="footer__title">Social</h3>
-          <ul class="footer__social-list">
-            <li class="footer__social-item">
-              <a
-                class="footer__social-link"
-                href="https://github.com/AlanDkoXS"
-                target="_blank"
-                rel="noreferrer nofollow noopener"
-                title="GitHub"
-                ><i class="bx bxl-github"></i
-              ></a>
-            </li>
-            <li class="footer__social-item">
-              <a
-                class="footer__social-link"
-                href="https://www.instagram.com/anotherguyontheroad/"
-                target="_blank"
-                rel="noreferrer nofollow noopener"
-                title="Instagram"
-                ><i class="bx bxl-instagram"></i
-              ></a>
-            </li>
-            <li class="footer__social-item">
-              <a
-                class="footer__social-link"
-                href="https://x.com/AlanDKO"
-                target="_blank"
-                rel="noreferrer nofollow noopener"
-                title="Twitter"
-                ><i class="bx bxl-twitter"></i
-              ></a>
-            </li>
-            <li class="footer__social-item">
-              <a
-                class="footer__social-link"
-                href="https://www.linkedin.com/in/alanxs/"
-                target="_blank"
-                rel="noreferrer nofollow noopener"
-                title="LinkedIn"
-                ><i class="bx bxl-linkedin"></i
-              ></a>
-            </li>
-          </ul>
-        </div>
-      </div>
     </footer>
-  </body>
+</body>
+
 </html>

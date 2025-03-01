@@ -1,21 +1,37 @@
-// Importación de módulos
+/**
+ * Main Application File
+ * Orchestrates the initialization and management of the portfolio website
+ */
+
+// ---------------------------
+// MODULE IMPORTS
+// ---------------------------
+// UI Components
 import loader from './helpers/loader.js';
+import activeMenu from './helpers/activeMenu.js';
+import { cardCarousel } from './helpers/cardCarousel.js';
+import { closeModal } from './helpers/close-modal.js';
+import initObserver from './helpers/observer.js';
+
+// Visual Effects
 import ParallaxEffect from './helpers/parallax.js';
 import profileParallax from './helpers/profile_parallax.js';
-import activeMenu from './helpers/activeMenu.js';
+import SnowEffect from './helpers/snow-effect.js';
+import { setAutoDarkMode } from './helpers/auto-dark-mode.js';
+
+// Functionality
 import updateDateYear from './helpers/date_updater.js';
 import resetToHome from './helpers/reload_page.js';
 import sendEmail from './helpers/send_form.js';
 import switchLanguages from './helpers/switchLanguages.js';
-import { cardCarousel } from './helpers/cardCarousel.js';
-import { setAutoDarkMode } from './helpers/auto-dark-mode.js';
+
+// External Services
 import { loadGoogleTagManager } from './helpers/google-tag-manager.js';
 import { loadEmailJS } from './helpers/email-js.js';
-import initObserver from './helpers/observer.js';
-import { closeModal } from './helpers/close-modal.js';
-import SnowEffect from './helpers/snow-effect.js';
 
-// Estado global de la aplicación
+// ---------------------------
+// APPLICATION STATE
+// ---------------------------
 const AppState = {
   isLoading: true,
   isDarkMode: false,
@@ -23,66 +39,81 @@ const AppState = {
   isMenuOpen: false,
 };
 
-// Función para manejar errores
+// ---------------------------
+// ERROR HANDLING
+// ---------------------------
+/**
+ * Centralized error handler
+ * @param {Error} error - The error that occurred
+ * @param {string} context - The context where the error occurred
+ */
 const handleError = (error, context) => {
-  console.error(`Error en ${context}:`, error);
-  // Aquí podrías implementar un sistema de reporting de errores
+  console.error(`Error in ${context}:`, error);
+  // Future implementation: error reporting system
 };
 
-// Función para inicializar componentes de la UI
+// ---------------------------
+// INITIALIZATION FUNCTIONS
+// ---------------------------
+
+/**
+ * Initialize UI components
+ */
 const initializeUIComponents = async () => {
   try {
-    // Inicializar loader
+    // Loading screen
     loader();
 
-    // Inicializar menú y navegación
+    // Navigation and menu
     activeMenu();
     resetToHome();
 
-    // Inicializar carrusel
+    // UI Components
     cardCarousel();
-
-    // Inicializar observador de intersección
     initObserver();
-
-    // Inicializar manejador de modales
     closeModal();
   } catch (error) {
     handleError(error, 'initializeUIComponents');
   }
 };
 
-// Función para inicializar efectos visuales
+/**
+ * Initialize visual effects
+ */
 const initializeVisualEffects = () => {
   try {
-    // Inicializar efectos de parallax
+    // Parallax effects
     ParallaxEffect.init();
     profileParallax();
 
-    // Inicializar efecto de nieve si es temporada
+    // Seasonal effects
     SnowEffect.init();
   } catch (error) {
     handleError(error, 'initializeVisualEffects');
   }
 };
 
-// Función para inicializar funcionalidades
+/**
+ * Initialize core functionalities
+ */
 const initializeFunctionalities = () => {
   try {
-    // Inicializar actualizador de año
+    // Date updater
     updateDateYear();
 
-    // Inicializar manejador de emails
+    // Email handling
     sendEmail();
 
-    // Inicializar cambio de idiomas
+    // Language switching
     switchLanguages();
   } catch (error) {
     handleError(error, 'initializeFunctionalities');
   }
 };
 
-// Función para cargar recursos externos
+/**
+ * Load external resources asynchronously
+ */
 const loadExternalResources = async () => {
   try {
     await Promise.all([loadGoogleTagManager(), loadEmailJS()]);
@@ -91,12 +122,15 @@ const loadExternalResources = async () => {
   }
 };
 
-// Función para manejar el modo oscuro
+/**
+ * Configure dark mode functionality
+ */
 const setupDarkMode = () => {
   try {
+    // Set initial dark mode state
     setAutoDarkMode();
 
-    // Observer para cambios en preferencias del sistema
+    // Observer for system preferences changes
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     darkModeMediaQuery.addListener((e) => {
       AppState.isDarkMode = e.matches;
@@ -107,7 +141,9 @@ const setupDarkMode = () => {
   }
 };
 
-// Función para manejar la visibilidad de la página
+/**
+ * Set up page visibility handling
+ */
 const setupVisibilityHandler = () => {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
@@ -118,47 +154,94 @@ const setupVisibilityHandler = () => {
   });
 };
 
-// Función para manejar la limpieza de recursos
+/**
+ * Set up resource cleanup on page unload
+ */
 const setupCleanup = () => {
   window.addEventListener('beforeunload', () => {
     SnowEffect.destroy();
-    // Aquí puedes agregar más limpieza de recursos si es necesario
+    // Additional resource cleanup can be added here
   });
 };
 
-// Función principal de inicialización
+/**
+ * Handle responsive content adjustments
+ */
+const handleResponsiveContent = () => {
+  const homeDescription = document.querySelector('.home__description');
+  const aboutDescription = document.querySelector('.about__description');
+  const isDesktop = window.innerWidth >= 992;
+
+  // Save original home description text if not already saved
+  if (!homeDescription.dataset.originalText) {
+    homeDescription.dataset.originalText = homeDescription.innerHTML;
+  }
+
+  // On wide screens, combine content
+  if (isDesktop && aboutDescription) {
+    // Combine descriptions for desktop
+    homeDescription.innerHTML = `
+        ${homeDescription.dataset.originalText}
+        <br><br>
+        ${aboutDescription.textContent}
+      `;
+  } else {
+    // Restore original text on mobile
+    if (homeDescription.dataset.originalText) {
+      homeDescription.innerHTML = homeDescription.dataset.originalText;
+    }
+  }
+};
+
+// ---------------------------
+// MAIN INITIALIZATION
+// ---------------------------
+
+/**
+ * Main initialization function
+ */
 const initialize = async () => {
   try {
-    // Cargar recursos externos primero
+    // Load external resources first
     await loadExternalResources();
 
-    // Configurar modo oscuro
+    // Set up dark mode
     setupDarkMode();
 
-    // Inicializar componentes principales
+    // Initialize main components
     await initializeUIComponents();
 
-    // Inicializar efectos visuales
+    // Initialize visual effects
     initializeVisualEffects();
 
-    // Inicializar funcionalidades
+    // Initialize functionalities
     initializeFunctionalities();
 
-    // Configurar manejadores de eventos del sistema
+    // Set up system event handlers
     setupVisibilityHandler();
     setupCleanup();
 
-    // Marcar como cargado
+    // Mark as loaded
     AppState.isLoading = false;
   } catch (error) {
     handleError(error, 'initialize');
   }
 };
 
-// Event listener para el DOMContentLoaded
-document.addEventListener('DOMContentLoaded', initialize);
+// ---------------------------
+// EVENT LISTENERS
+// ---------------------------
 
-// Manejar errores no capturados
+// Initialize on DOM content loaded
+document.addEventListener('DOMContentLoaded', () => {
+  initialize();
+  handleResponsiveContent();
+});
+
+// Handle responsive content on resize
+window.addEventListener('resize', handleResponsiveContent);
+
+// Global error handlers
 window.addEventListener('error', (event) => {
   handleError(event.error, 'window.error');
 });
@@ -166,35 +249,3 @@ window.addEventListener('error', (event) => {
 window.addEventListener('unhandledrejection', (event) => {
   handleError(event.reason, 'unhandledrejection');
 });
-
-// Este script debe añadirse al final del archivo main.js o como un nuevo archivo
-
-function handleResponsiveContent() {
-  const homeDescription = document.querySelector('.home__description');
-  const aboutDescription = document.querySelector('.about__description');
-  const isDesktop = window.innerWidth >= 992;
-
-  // Guardar el texto original de la descripción del home si no se ha guardado
-  if (!homeDescription.dataset.originalText) {
-    homeDescription.dataset.originalText = homeDescription.innerHTML;
-  }
-
-  // En pantallas anchas, combinar el contenido
-  if (isDesktop && aboutDescription) {
-    // Combinar descripciones para escritorio
-    homeDescription.innerHTML = `
-        ${homeDescription.dataset.originalText}
-        <br><br>
-        ${aboutDescription.textContent}
-      `;
-  } else {
-    // Restaurar el texto original en móvil
-    if (homeDescription.dataset.originalText) {
-      homeDescription.innerHTML = homeDescription.dataset.originalText;
-    }
-  }
-}
-
-// Ejecutar en carga y redimensionamiento
-document.addEventListener('DOMContentLoaded', handleResponsiveContent);
-window.addEventListener('resize', handleResponsiveContent);
