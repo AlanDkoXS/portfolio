@@ -97,8 +97,8 @@
     text-transform: capitalize;
     border-right: 4px solid;
     white-space: nowrap;
-    width: 8ch;
-    animation: typing 2s infinite steps(8) alternate, blink 0.3s infinite step-end alternate;
+    width: 9ch;
+    animation: typing 2s infinite steps(9) alternate, blink 0.3s infinite step-end alternate;
     overflow: hidden;
   }
 }
