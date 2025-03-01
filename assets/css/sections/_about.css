@@ -28,8 +28,8 @@
   object-fit: cover;
 }
 
-/* ABOUT MIN WIDTH 768px ========================== */
-@media (min-width: 768px) {
+/* ABOUT MIN WIDTH 600px ========================== */
+@media (min-width: 600px) {
   .about {
     animation: animation-section 1s ease both;
     -webkit-animation-timeline: scroll(root block);

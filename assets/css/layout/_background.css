@@ -69,8 +69,8 @@
   transition: transform 0.5s ease-in-out;
 }
 
-/* Background MIN WIDTH 768px====================================*/
-@media (min-width: 768px) {
+/* Background MIN WIDTH 600px====================================*/
+@media (min-width: 600px) {
   .background-container {
     position: absolute;
     top: 0;

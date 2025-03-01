@@ -251,8 +251,8 @@
   }
 }
 
-/* ============= Media Queries MIN WIDTH (768px)============= */
-@media (min-width: 768px) {
+/* ============= Media Queries MIN WIDTH (600px)============= */
+@media (min-width: 600px) {
   .header {
     .navbar {
       .navbar__menu {

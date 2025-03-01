@@ -60,7 +60,7 @@ function updateActiveNavLink() {
  * Handles mobile-specific menu behavior
  */
 function handleMobileMenu() {
-  if (window.innerWidth <= 768) {
+  if (window.innerWidth <= 600) {
     // Add a scroll event listener to toggle the menu visibility on mobile
     window.addEventListener(
       'scroll',

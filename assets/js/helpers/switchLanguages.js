@@ -88,7 +88,7 @@ const updateProjectText = (lang) => {
 // Función para gestionar el contenido responsivo
 const handleResponsiveContent = (lang) => {
   const homeDescription = document.querySelector('.home__description');
-  const isDesktop = window.innerWidth >= 992;
+  const isDesktop = window.innerWidth >= 600;
 
   if (isDesktop && homeDescription) {
     // Obtener los textos según el idioma

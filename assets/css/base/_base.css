@@ -116,9 +116,9 @@ html {
   }
 }
 
-/* ============= Media Queries MIN WIDTH (768px)============= */
+/* ============= Media Queries MIN WIDTH (600px)============= */
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
   section {
     padding: 2.5em 2em;
   }

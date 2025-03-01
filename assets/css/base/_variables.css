@@ -120,7 +120,7 @@
 
 /* Media Queries Adjustments
    ========================================================================== */
-@media (min-width: 768px) {
+@media (min-width: 600px) {
   :root {
     --header-height: 4rem;
     --normal-font-size: 1.2rem;

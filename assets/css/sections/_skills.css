@@ -82,8 +82,8 @@
   border-radius: 5px;
 }
 
-/* SKILLS MIN WIDTH 768px ========================== */
-@media (min-width: 768px) {
+/* SKILLS MIN WIDTH 600px ========================== */
+@media (min-width: 600px) {
   .skills .skills__wrapper .skills__icons {
     grid-template-columns: repeat(6, 1fr);
   }

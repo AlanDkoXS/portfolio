@@ -49,7 +49,7 @@ const ParallaxEffect = {
       return;
     }
 
-    this.state.isMobile = window.matchMedia('(max-width: 768px)').matches;
+    this.state.isMobile = window.matchMedia('(max-width: 600px)').matches;
     this.setupEventListeners();
   },
 
@@ -63,7 +63,7 @@ const ParallaxEffect = {
     // Manejar cambios de tamaño de pantalla
     window.addEventListener('resize', () => {
       const wasMobile = this.state.isMobile;
-      this.state.isMobile = window.matchMedia('(max-width: 768px)').matches;
+      this.state.isMobile = window.matchMedia('(max-width: 600px)').matches;
 
       if (wasMobile !== this.state.isMobile) {
         this.resetPositions();

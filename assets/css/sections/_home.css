@@ -133,8 +133,8 @@
   }
 }
 
-/* HOME MIN WIDTH 768px ========================== */
-@media (min-width: 768px) {
+/* HOME MIN WIDTH 600px ========================== */
+@media (min-width: 600px) {
   .home__social {
     position: fixed;
     top: 15%;
@@ -165,9 +165,9 @@
   }
 }
 
-/* HOME MIN WIDTH 992px ========================== */
+/* HOME MIN WIDTH 600px ========================== */
 
-@media (min-width: 992px) {
+@media (min-width: 600px) {
   /* Estructura modificada del home */
   .home .home__container {
     grid-template-columns: 1fr 1fr;

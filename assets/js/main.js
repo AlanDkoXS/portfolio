@@ -170,7 +170,7 @@ const setupCleanup = () => {
 const handleResponsiveContent = () => {
   const homeDescription = document.querySelector('.home__description');
   const aboutDescription = document.querySelector('.about__description');
-  const isDesktop = window.innerWidth >= 992;
+  const isDesktop = window.innerWidth >= 600;
 
   // Save original home description text if not already saved
   if (!homeDescription.dataset.originalText) {
