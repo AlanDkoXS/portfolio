@@ -21,19 +21,25 @@
 
     <!-- Scripts -->
     <script type="module" src="assets/js/main.js" defer></script>
+    <!-- Módulos específicos para esta página -->
     <script type="module">
-        import {
-        initFab,
-        openModal,
-        closeModal,
-        downloadCV,
-      } from '/assets/js/helpers/resume_fab_buttons.js';
-      import { loadPdf } from '/assets/js/helpers/pdf_loader.js';
+        import { initFab, openModal, closeModal, downloadCV } from '/assets/js/helpers/resume_fab_buttons.js';
+        import { loadPdf } from '/assets/js/helpers/pdf_loader.js';
+        import switchLanguages from '/assets/js/helpers/switchLanguages.js';
+        import { setAutoDarkMode } from '/assets/js/helpers/auto-dark-mode.js';
+        import updateDateYear from '/assets/js/helpers/date_updater.js';
 
-      document.addEventListener('DOMContentLoaded', () => {
-        initFab();
-        loadPdf();
-      });
+        document.addEventListener('DOMContentLoaded', () => {
+            initFab();
+            loadPdf();
+            switchLanguages();
+            setAutoDarkMode();
+            updateDateYear();
+        });
+
+        window.openModal = () => {
+            document.getElementById('modal').showModal();
+        };
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
     <script>
@@ -46,7 +52,7 @@
             const fileName = fileMap[language];
             if (fileName) {
                 const link = document.createElement('a');
-                link.href = `/assets/docs/${fileName}`; // Cambia "path/to/" por la ruta real donde están los archivos.
+                link.href = `/assets/docs/${fileName}`;
                 link.download = fileName;
                 link.click();
             } else {
@@ -80,14 +86,24 @@
                         <input type="checkbox" name="color-scheme" id="darkmode-toggle"
                             class="navbar__toggle--darkmode-input" title="Dark Mode" />
                         <label for="darkmode-toggle" class="navbar__toggle--darkmode-label">
-                            <i class="bx bx-sun navbar__toggle--darkmode-sun" aria-hidden="true"></i>
-                            <i class="bx bx-moon navbar__toggle--darkmode-moon" aria-hidden="true"></i>
+                            <div class="icon-wrapper">
+                                <i class="bx bx-sun navbar__toggle--darkmode-sun" aria-hidden="true"></i>
+                                <i class="bx bx-moon navbar__toggle--darkmode-moon" aria-hidden="true"></i>
+                            </div>
                         </label>
                     </div>
                     <div class="navbar__toggle--language flex--container">
                         <input type="checkbox" name="language-toggle" id="language-toggle"
-                            class="navbar__toggle--language-input" title="Language" />
-                        <label for="language-toggle" class="navbar__toggle--language-label"></label>
+                            class="navbar__toggle--language-input" title="Select Language"
+                            aria-label="Select Language" />
+                        <label for="language-toggle" class="navbar__toggle--language-label">
+                            <div class="flag-wrapper">
+                                <img src="/assets/img/english.webp" class="navbar__toggle--language-en" alt="English"
+                                    loading="lazy" aria-hidden="true">
+                                <img src="/assets/img/español.webp" class="navbar__toggle--language-es" alt="Español"
+                                    loading="lazy" aria-hidden="true">
+                            </div>
+                        </label>
                     </div>
                 </div>
             </div>

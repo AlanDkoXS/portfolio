@@ -218,6 +218,28 @@ designsTitle: {
     en: 'All rights reserved',
     es: 'Todos los derechos reservados',
   },
+
+  // Resume Page
+  resumePage: {
+    en: {
+      homeLink: 'Home',
+      downloadButton: 'Download',
+      selectLanguage: 'Select language',
+      english: 'English',
+      spanish: 'Español',
+      footerDescription: 'Made with ❤️. Thanks to my tutor Alejandra Olazagasti.',
+      footerCopyright: 'All rights reserved',
+    },
+    es: {
+      homeLink: 'Inicio',
+      downloadButton: 'Descargar',
+      selectLanguage: 'Seleccionar idioma',
+      english: 'English',
+      spanish: 'Español',
+      footerDescription: 'Hecho con ❤️. Gracias a mi tutora Alejandra Olazagasti.',
+      footerCopyright: 'Todos los derechos reservados',
+    },
+  },
 };
 
 export default translations;

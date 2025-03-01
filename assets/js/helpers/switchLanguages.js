@@ -26,11 +26,35 @@ let currentLanguage = detectUserLanguage();
 // Exportar función para obtener mensajes de validación
 export const getValidationMessages = () => translations.validation[currentLanguage];
 
-// Función para actualizar textos en una sección específica
+// Función mejorada para actualizar textos en una sección específica
 const updateSectionText = (selector, key, lang) => {
   const element = document.querySelector(selector);
-  if (element && translations[key]) {
-    element.textContent = translations[key][lang] || translations[key]['en'];
+  if (!element) return; // Si no existe el elemento, salimos
+
+  // Manejar claves anidadas (como 'resumePage.homeLink')
+  if (key.includes('.')) {
+    const keyParts = key.split('.');
+    let translation = translations;
+
+    // Navegar por las partes de la clave
+    for (const part of keyParts) {
+      if (translation && translation[part]) {
+        translation = translation[part];
+      } else {
+        // Si no encontramos la clave, salimos
+        return;
+      }
+    }
+
+    // Asignar la traducción según el idioma
+    if (typeof translation === 'object') {
+      element.textContent = translation[lang] || translation['en'];
+    }
+  } else {
+    // Comportamiento original para claves simples
+    if (element && translations[key]) {
+      element.textContent = translations[key][lang] || translations[key]['en'];
+    }
   }
 };
 
@@ -84,10 +108,93 @@ const handleResponsiveContent = (lang) => {
   }
 };
 
+// Función para actualizar la página de resume
+const updateResumePage = (lang) => {
+  // Menú de navegación - enlace Home
+  const homeLink = document.querySelector('.navbar__link[href="/index.html"]');
+  if (homeLink && translations.resumePage && translations.resumePage[lang]) {
+    homeLink.textContent = translations.resumePage[lang].homeLink;
+  }
+
+  // Botón FAB (Floating Action Button) - probar diferentes selectores
+  const fabTextSelectors = [
+    '.fab .fab-text',
+    '#btn-download .fab-text',
+    '.fab-container .fab-text',
+    '.fab span',
+  ];
+
+  let fabText = null;
+  for (const selector of fabTextSelectors) {
+    fabText = document.querySelector(selector);
+    if (fabText) break;
+  }
+
+  if (fabText && translations.resumePage && translations.resumePage[lang]) {
+    fabText.textContent = translations.resumePage[lang].downloadButton;
+  }
+
+  // Modal de descarga
+  const modalTitle = document.querySelector('#modal h2');
+  if (modalTitle && translations.resumePage && translations.resumePage[lang]) {
+    modalTitle.textContent = translations.resumePage[lang].downloadButton;
+  }
+
+  const modalText = document.querySelector('#modal p');
+  if (modalText && translations.resumePage && translations.resumePage[lang]) {
+    modalText.textContent = translations.resumePage[lang].selectLanguage;
+  }
+
+  const engButton = document.querySelector('button[onclick="downloadCV(\'ENG\')"] strong');
+  if (engButton && translations.resumePage && translations.resumePage[lang]) {
+    engButton.textContent = translations.resumePage[lang].english;
+  }
+
+  const espButton = document.querySelector('button[onclick="downloadCV(\'ESP\')"] strong');
+  if (espButton && translations.resumePage && translations.resumePage[lang]) {
+    espButton.textContent = translations.resumePage[lang].spanish;
+  }
+
+  // Footer
+  const footerDesc = document.querySelector('.footer__description');
+  if (footerDesc && translations.resumePage && translations.resumePage[lang]) {
+    footerDesc.textContent = translations.resumePage[lang].footerDescription;
+  }
+
+  const footerCopy = document.querySelector('.footer__copyright');
+  if (footerCopy && translations.resumePage && translations.resumePage[lang]) {
+    footerCopy.textContent = translations.resumePage[lang].footerCopyright;
+  }
+};
+
 // Función para aplicar los cambios de idioma
 const applyLanguageChanges = (lang) => {
   currentLanguage = lang; // Actualizar el estado global del idioma
 
+  // Detectar si estamos en la página de resume
+  const isResumePage =
+    window.location.pathname.includes('resume.html') ||
+    window.location.pathname.includes('/resume') ||
+    window.location.pathname.endsWith('resume');
+
+  if (isResumePage) {
+    // Aplicar traducciones específicas para la página de resume
+    updateResumePage(lang);
+
+    // Lanzar evento de cambio de idioma
+    window.dispatchEvent(
+      new CustomEvent('languageChange', {
+        detail: {
+          language: lang,
+          validationMessages: translations.validation ? translations.validation[lang] : null,
+        },
+      }),
+    );
+
+    return; // Terminar la función para la página de resume
+  }
+
+  // A partir de aquí, código para la página principal
   const navLinks = [
     { selector: '.navbar__link[href="#home"]', key: 'navHome' },
     { selector: '.navbar__link[href="#about"]', key: 'navAbout' },
@@ -141,14 +248,19 @@ const applyLanguageChanges = (lang) => {
   };
 
   Object.entries(formElements).forEach(([key, element]) => {
-    if (element && translations.contactForm[lang][key]) {
+    if (
+      element &&
+      translations.contactForm &&
+      translations.contactForm[lang] &&
+      translations.contactForm[lang][key]
+    ) {
       element.textContent = translations.contactForm[lang][key];
     }
   });
 
   // Submit Button
   const submitButton = document.querySelector('.contact__form-button');
-  if (submitButton) {
+  if (submitButton && translations.contactForm && translations.contactForm[lang]) {
     submitButton.innerHTML = `<strong>${translations.contactForm[lang].send}</strong>`;
   }
 
@@ -160,19 +272,19 @@ const applyLanguageChanges = (lang) => {
     new CustomEvent('languageChange', {
       detail: {
         language: lang,
-        validationMessages: translations.validation[lang],
+        validationMessages: translations.validation ? translations.validation[lang] : null,
       },
     }),
   );
 
   // Modal Updates
   const modalText = document.querySelector('#modal .modal-content p');
-  if (modalText) {
+  if (modalText && translations.contactForm && translations.contactForm[lang]) {
     modalText.textContent = translations.contactForm[lang].formSuccess;
   }
 
   const closeButton = document.querySelector('#btn_close-modal strong');
-  if (closeButton) {
+  if (closeButton && translations.contactForm && translations.contactForm[lang]) {
     closeButton.textContent = translations.contactForm[lang].close;
   }
 
