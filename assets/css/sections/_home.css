@@ -201,8 +201,8 @@
   }
 
   /* Mostrar solo el botón de resume */
-  .home .home__buttons .btn {
-    max-width: 300px;
+  #resume-btn {
+    max-width: 300px !important;
   }
 
   .home__social {
