@@ -170,7 +170,7 @@
 @media (min-width: 600px) {
   /* Estructura modificada del home */
   .home .home__container {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     grid-template-rows: auto auto auto;
     grid-template-areas:
       'image title'
@@ -179,7 +179,7 @@
     gap: 1rem;
     align-items: start;
     justify-content: center;
-    margin-top: 120px;
+    margin-top: 4rem;
     padding: 2rem;
   }
 
@@ -187,7 +187,7 @@
   .home .home__image {
     grid-area: image;
     width: clamp(300px, 90%, 500px);
-    transform: translateX(0) translateY(0) scale(1);
+    transform: translateX(0) translateY(25%) scale(1);
     justify-self: center;
   }
 
