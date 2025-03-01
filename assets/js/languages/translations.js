@@ -27,7 +27,7 @@ const translations = {
   /* <-- Home Section --> */
   homeTitle: {
     en: 'Hi there!',
-    es: '¡Hola!',
+    es: '¡Hola 👨🏻‍💻!',
   },
   homeDescription: {
     en: "I'm Alan, a full stack designer, passionate about design, technology, and development.",
@@ -166,7 +166,7 @@ designsTitle: {
   },
   contactInfoDescription: {
     en: 'Say Hello',
-    es: 'Dí Hola',
+    es: 'Dí Hola 👨🏻‍💻',
   },
   contactFormTitle: {
     en: 'Send Message',

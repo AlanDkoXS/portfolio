@@ -194,13 +194,13 @@
         transform: rotate(-180deg) scale(0);
       }
 
-      .navbar__toggle--language-uk {
+      .navbar__toggle--language-en {
         opacity: 1;
         transform: rotate(0) scale(1);
       }
 
       .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label {
-        .navbar__toggle--language-uk {
+        .navbar__toggle--language-en {
           opacity: 0;
           transform: rotate(180deg) scale(0);
         }
