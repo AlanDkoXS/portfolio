@@ -30,42 +30,48 @@ html {
   }
 
   section {
-  padding: 3rem 0;
-  opacity: 0;
-  transition:
-    opacity 1s ease-in-out,
-    visibility 0s 1s; /* Transición suave */
-}
+    padding: 3rem 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out, visibility 0s 1s; /* Transición suave */
+  }
 
-section.visible {
-  opacity: 1;
-  visibility: visible;
-  transition:
-    opacity 1s ease-in-out,
-    visibility 0s;
-}
+  section.visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1s ease-in-out, visibility 0s;
+  }
 
-.section__title {
-  text-align: center;
-  margin: 0.8rem 0;
-}
+  .section__title {
+    text-align: center;
+    margin: 0.8rem 0;
+  }
 
-.grid--container {
-  max-width: 1024px;
-  display: grid;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
+  .grid--container {
+    max-width: 1024px;
+    display: grid;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
 
-.flex--container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .flex--container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: var(--title-font-size);
+    font-weight: var(--font-semibold);
+    color: var(--primary-color);
+  }
 
-
-  ul, li {
+  ul,
+  li {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -116,7 +122,6 @@ section.visible {
     border: none;
     display: none;
   }
-
 
   /* Darkmode ====================================*/
   color-scheme: light dark;
