@@ -186,7 +186,7 @@
     justify-content: flex-start;
   }
 
-  .home .home__buttons a:not([href='/assets/html/resume.html']) {
+  .home .home__buttons a:not([href*='resume.html']) {
     display: none;
   }
 
@@ -201,8 +201,8 @@
   }
 
   /* Mostrar solo el botón de resume */
-  #resume-btn {
-    max-width: 300px !important;
+  .home .home__buttons .btn {
+    max-width: 300px;
   }
 
   .home__social {
