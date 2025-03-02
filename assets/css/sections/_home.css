@@ -186,8 +186,12 @@
     justify-content: flex-start;
   }
 
-  .home .home__buttons a:not([id='resume-btn']) {
+  .home .home__buttons a {
     display: none;
+  }
+
+  .home .home__buttons a#resume-btn {
+    display: flex;
   }
 
   /* Ocultar sección about */
