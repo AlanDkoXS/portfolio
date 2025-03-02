@@ -12,14 +12,12 @@
 <a href="https://www.coursera.org/"/><img src="https://img.shields.io/badge/Coursera-0056D2?style=for-the-badge&logo=Coursera&logoColor=white" />
 </div>
 
-# Personal Webpage
-
-Welcome to my personal webpage repository! This project showcases my portfolio as a self-taught graphic designer and web developer, highlighting my skills, projects, and experience. The site is built with a mobile-first approach using HTML, CSS, and JavaScript.
-
----
 🇲🇽 Click <a href="https://github.com/AlanDkoXS/portfolio/blob/main/README.es.md">here</a> to view the Spanish version
 ---
 
+# Personal Webpage
+
+Welcome to my personal webpage repository! This project showcases my portfolio as a self-taught graphic designer and web developer, highlighting my skills, projects, and experience. The site is built with a mobile-first approach using HTML, CSS, and JavaScript.
 
 ## Features
 

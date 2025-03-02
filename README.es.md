@@ -12,13 +12,12 @@
 <a href="https://www.coursera.org/"/><img src="https://img.shields.io/badge/Coursera-0056D2?style=for-the-badge&logo=Coursera&logoColor=white" />
 </div>
 
+ 🇺🇸 Haz click <a href="https://github.com/AlanDkoXS/portfolio/blob/main/README.md">aquí</a> para ver la versión en inglés.
+---
+
 # Página Web Personal
 
 Bienvenido al repositorio de mi página web personal. Este proyecto muestra mi portafolio como diseñador gráfico y desarrollador web autodidacta, destacando mis habilidades, proyectos y experiencia. El sitio está construido con un enfoque mobile-first usando HTML, CSS y JavaScript.
-
----
- 🇺🇸 Haz click <a href="https://github.com/AlanDkoXS/portfolio/blob/main/README.md">aquí</a> para ver la versión en inglés.
----
 
 ## Características
 
