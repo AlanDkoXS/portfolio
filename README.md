@@ -16,6 +16,11 @@
 
 Welcome to my personal webpage repository! This project showcases my portfolio as a self-taught graphic designer and web developer, highlighting my skills, projects, and experience. The site is built with a mobile-first approach using HTML, CSS, and JavaScript.
 
+---
+ 🇲🇽 You can see this file in Spanish <a href="https://github.com/AlanDkoXS/portfolio/blob/main/README.es.md">here</a>
+---
+
+
 ## Features
 
 - **Responsive Design**: Fully responsive layout, optimized for both desktop and mobile devices.
