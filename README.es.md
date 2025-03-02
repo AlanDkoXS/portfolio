@@ -16,6 +16,10 @@
 
 Bienvenido al repositorio de mi página web personal. Este proyecto muestra mi portafolio como diseñador gráfico y desarrollador web autodidacta, destacando mis habilidades, proyectos y experiencia. El sitio está construido con un enfoque mobile-first usando HTML, CSS y JavaScript.
 
+---
+ Haz click <a href="https://github.com/AlanDkoXS/portfolio/blob/main/README.md">aquí</a> para ver la versión en inglés.
+---
+
 ## Características
 
 - **Diseño Responsivo**: Diseño completamente adaptable, optimizado para dispositivos de escritorio y móviles.
