@@ -54,7 +54,7 @@
   position: relative;
   aspect-ratio: 1/1;
   overflow: hidden;
-  transform: translateX(30px) translateY(30px) scale(0.95);
+  transform: translateX(30px) translateY(30px) scale(0.8);
 }
 
 .home__image--background {
