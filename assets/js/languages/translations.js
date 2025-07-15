@@ -218,8 +218,8 @@ designsTitle: {
   },
 
   footerDescription: {
-    en: 'Made with ❤️. Thanks to my tutor Alejandra Olazagasti',
-    es: 'Hecho con ❤️. Gracias a mi tutora Alejandra Olazagasti',
+    en: 'Made with ❤️ and ☕. Thanks to my tutor Alejandra Olazagasti',
+    es: 'Hecho con ❤️ y ☕. Gracias a mi tutora Alejandra Olazagasti',
   },
 
   footerCopyright: {
@@ -235,7 +235,7 @@ designsTitle: {
       selectLanguage: 'Select language',
       english: 'English',
       spanish: 'Español',
-      footerDescription: 'Made with ❤️. Thanks to my tutor Alejandra Olazagasti.',
+      footerDescription: 'Made with ❤️ and ☕. Thanks to my tutor Alejandra Olazagasti.',
       footerCopyright: 'All rights reserved',
     },
     es: {
@@ -244,7 +244,7 @@ designsTitle: {
       selectLanguage: 'Seleccionar idioma',
       english: 'English',
       spanish: 'Español',
-      footerDescription: 'Hecho con ❤️. Gracias a mi tutora Alejandra Olazagasti.',
+      footerDescription: 'Hecho con ❤️ y ☕. Gracias a mi tutora Alejandra Olazagasti.',
       footerCopyright: 'Todos los derechos reservados',
     },
   },
