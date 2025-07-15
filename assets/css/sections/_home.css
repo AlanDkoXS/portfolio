@@ -58,7 +58,7 @@
 }
 
 .home__image--background {
-  background-image: url('/assets/img/profile_bg.svg');
+  background-image: url("/assets/img/profile_bg.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -71,7 +71,7 @@
 }
 
 .home__image--sprite {
-  background-image: url('/assets/img/profile_sprite.webp');
+  background-image: url("/assets/img/profile_sprite.webp");
   background-size: cover;
   background-position: left top;
   max-width: none;
@@ -98,7 +98,8 @@
     border-right: 4px solid;
     white-space: nowrap;
     width: 9ch;
-    animation: typing 2s infinite steps(9) alternate, blink 0.3s infinite step-end alternate;
+    animation: typing 2s infinite steps(9) alternate,
+      blink 0.3s infinite step-end alternate;
     overflow: hidden;
   }
 }
@@ -141,9 +142,9 @@
     grid-template-columns: 1fr 2fr;
     grid-template-rows: auto auto auto;
     grid-template-areas:
-      'image title'
-      'image description'
-      'image resume-button';
+      "image title"
+      "image description"
+      "image resume-button";
     gap: 1rem;
     align-items: start;
     justify-content: center;
@@ -192,7 +193,6 @@
 
   .home .home__buttons a#resume-btn {
     display: flex;
-    width: 100% !important;
   }
 
   /* Ocultar sección about */
@@ -201,7 +201,7 @@
   }
 
   /* Ajuste del menú de navegación */
-  .navbar__list .navbar__item a[href='#about'] {
+  .navbar__list .navbar__item a[href="#about"] {
     display: none;
   }
 
