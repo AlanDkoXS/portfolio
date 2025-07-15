@@ -37,12 +37,6 @@ function openModal() {
   const modal = document.getElementById('modal');
   modal.showModal();
 
-  modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      closeModal();
-    }
-  });
-
   document.addEventListener(
     'keydown',
     (event) => {
@@ -73,7 +67,16 @@ function downloadCV(language) {
 
 function initFab() {
   const pdfContainer = document.getElementById('pdf-container');
+  const modal = document.getElementById('modal');
+  
   pdfContainer.addEventListener('scroll', handleScroll);
+  
+  // Cerrar modal al hacer clic fuera de él
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
 }
 
 export { initFab, openModal, closeModal, downloadCV };
