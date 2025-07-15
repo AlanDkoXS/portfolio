@@ -124,7 +124,14 @@ export function cardCarousel() {
         const scale = this.calcScale(x);
         const scale2 = this.calcScale2(x);
         const leftPos = this.calcPos(x, scale2);
-        const zIndex = -Math.abs(i - this.centerIndex);
+        
+        // Las tarjetas ocultas van muy atrás en z-index
+        let zIndex;
+        if (Math.abs(x) > 2.5) {
+          zIndex = -100; // Muy atrás para tarjetas ocultas
+        } else {
+          zIndex = -Math.abs(i - this.centerIndex);
+        }
 
         this.xScale[x] = this.cards[i];
 
@@ -197,7 +204,14 @@ export function cardCarousel() {
         const scale = this.calcScale(x);
         const scale2 = this.calcScale2(x);
         const leftPos = this.calcPos(x, scale2);
-        const zIndex = -Math.abs(x);
+        
+        // Usar la misma lógica de z-index que en build()
+        let zIndex;
+        if (Math.abs(x) > 2.5) {
+          zIndex = -100; // Muy atrás para tarjetas ocultas
+        } else {
+          zIndex = -Math.abs(x);
+        }
 
         this.updateCards(this.xScale[x], {
           x: x,
@@ -209,9 +223,13 @@ export function cardCarousel() {
     }
 
     calcScale(x) {
-      // Ajustar la fórmula para mostrar todas las 6 tarjetas
-      const formula = 1 - (1 / 8) * Math.pow(x, 2);
-      return formula <= 0.1 ? 0.1 : formula; // Mínimo de 0.1 para mantener visibilidad
+      // Solo mostrar las tarjetas que están cerca del centro
+      if (Math.abs(x) > 2.5) {
+        return 0; // Ocultar completamente las tarjetas lejanas
+      }
+      
+      const formula = 1 - (1 / 5) * Math.pow(x, 2);
+      return formula <= 0 ? 0 : formula;
     }
 
     calcScale2(x) {
@@ -263,7 +281,14 @@ export function cardCarousel() {
         const scale = this.calcScale(x);
         const scale2 = this.calcScale2(x);
         const leftPos = this.calcPos(x, scale2);
-        const zIndex = -Math.abs(x);
+        
+        // Usar la misma lógica de z-index que en build()
+        let zIndex;
+        if (Math.abs(x) > 2.5) {
+          zIndex = -100; // Muy atrás para tarjetas ocultas
+        } else {
+          zIndex = -Math.abs(x);
+        }
 
         this.updateCards(this.xScale[x], {
           x: x,
