@@ -7,27 +7,27 @@
 // MODULE IMPORTS
 // ---------------------------
 // UI Components
-import loader from './helpers/loader.js';
-import activeMenu from './helpers/activeMenu.js';
-import { cardCarousel } from './helpers/cardCarousel.js';
-import { closeModal } from './helpers/close-modal.js';
-import initObserver from './helpers/observer.js';
+import loader from "./helpers/loader.js";
+import activeMenu from "./helpers/activeMenu.js";
+import { cardCarousel } from "./helpers/cardCarousel.js";
+import { closeModal } from "./helpers/close-modal.js";
+import initObserver from "./helpers/observer.js";
 
 // Visual Effects
-import ParallaxEffect from './helpers/parallax.js';
-import profileParallax from './helpers/profile_parallax.js';
-import SnowEffect from './helpers/snow-effect.js';
-import { setAutoDarkMode } from './helpers/auto-dark-mode.js';
+import ParallaxEffect from "./helpers/parallax.js";
+import profileParallax from "./helpers/profile_parallax.js";
+import SnowEffect from "./helpers/snow-effect.js";
+import { setAutoDarkMode } from "./helpers/auto-dark-mode.js";
 
 // Functionality
-import updateDateYear from './helpers/date_updater.js';
-import resetToHome from './helpers/reload_page.js';
-import sendEmail from './helpers/send_form.js';
-import switchLanguages from './helpers/switchLanguages.js';
+import updateDateYear from "./helpers/date_updater.js";
+import resetToHome from "./helpers/reload_page.js";
+import sendEmail from "./helpers/send_form.js";
+import switchLanguages from "./helpers/switchLanguages.js";
 
 // External Services
-import { loadGoogleTagManager } from './helpers/google-tag-manager.js';
-import { loadEmailJS } from './helpers/email-js.js';
+import { loadGoogleTagManager } from "./helpers/google-tag-manager.js";
+import { loadEmailJS } from "./helpers/email-js.js";
 
 // ---------------------------
 // APPLICATION STATE
@@ -35,7 +35,7 @@ import { loadEmailJS } from './helpers/email-js.js';
 const AppState = {
   isLoading: true,
   isDarkMode: false,
-  currentLanguage: 'en',
+  currentLanguage: "en",
   isMenuOpen: false,
 };
 
@@ -50,6 +50,47 @@ const AppState = {
 const handleError = (error, context) => {
   console.error(`Error in ${context}:`, error);
   // Future implementation: error reporting system
+};
+
+// ---------------------------
+// CONSOLE LOGO
+// ---------------------------
+
+/**
+ * Display ASCII logo in console
+ */
+const displayConsoleLogo = () => {
+  const logo = `
+%c    ___    __                ____        _       __                   
+%c   /   |  / /___ _____      / __ \\__  __(_)___  / /_____ _____  ____ _
+%c  / /| | / / __ \`/ __ \\    / / / / / / / / __ \\/ __/ __ \`/ __ \\/ __ \`/
+%c / ___ |/ / /_/ / / / /   / /_/ / /_/ / / / / / /_/ /_/ / / / / /_/ / 
+%c/_/  |_/_/\\__,_/_/ /_/    \\___\\_\\__,_/_/_/ /_/\\__/\\__,_/_/ /_/\\__,_/  
+%c
+%c🚀 Hello! Welcome to my portfolio
+%c💻 Full Stack Designer & Developer
+%c🌐 https://www.alanquintana.pro
+%c📧 Contact: https://www.linkedin.com/in/alanxs/
+%c
+%c💡 Interested in collaborating? Let's talk!
+  `;
+
+  const styles = [
+    "color: #6366f1; font-weight: bold;", // Line 1
+    "color: #8b5cf6; font-weight: bold;", // Line 2
+    "color: #a855f7; font-weight: bold;", // Line 3
+    "color: #c084fc; font-weight: bold;", // Line 4
+    "color: #d8b4fe; font-weight: bold;", // Line 5
+    "color: #e9d5ff;", // Empty line
+    "color: #10b981; font-size: 16px; font-weight: bold;", // Welcome
+    "color: #059669; font-size: 14px;", // Description
+    "color: #0891b2; font-size: 14px;", // URL
+    "color: #0e7490; font-size: 14px;", // Contact
+    "color: #64748b;", // Empty line
+    "color: #f59e0b; font-size: 16px; font-weight: bold;", // Call to action
+  ];
+
+  console.log(logo, ...styles);
 };
 
 // ---------------------------
@@ -73,7 +114,7 @@ const initializeUIComponents = async () => {
     initObserver();
     closeModal();
   } catch (error) {
-    handleError(error, 'initializeUIComponents');
+    handleError(error, "initializeUIComponents");
   }
 };
 
@@ -89,7 +130,7 @@ const initializeVisualEffects = () => {
     // Seasonal effects
     SnowEffect.init();
   } catch (error) {
-    handleError(error, 'initializeVisualEffects');
+    handleError(error, "initializeVisualEffects");
   }
 };
 
@@ -107,7 +148,7 @@ const initializeFunctionalities = () => {
     // Language switching
     switchLanguages();
   } catch (error) {
-    handleError(error, 'initializeFunctionalities');
+    handleError(error, "initializeFunctionalities");
   }
 };
 
@@ -118,7 +159,7 @@ const loadExternalResources = async () => {
   try {
     await Promise.all([loadGoogleTagManager(), loadEmailJS()]);
   } catch (error) {
-    handleError(error, 'loadExternalResources');
+    handleError(error, "loadExternalResources");
   }
 };
 
@@ -131,13 +172,15 @@ const setupDarkMode = () => {
     setAutoDarkMode();
 
     // Observer for system preferences changes
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeMediaQuery = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    );
     darkModeMediaQuery.addListener((e) => {
       AppState.isDarkMode = e.matches;
       setAutoDarkMode();
     });
   } catch (error) {
-    handleError(error, 'setupDarkMode');
+    handleError(error, "setupDarkMode");
   }
 };
 
@@ -145,11 +188,11 @@ const setupDarkMode = () => {
  * Set up page visibility handling
  */
 const setupVisibilityHandler = () => {
-  document.addEventListener('visibilitychange', () => {
+  document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
-      document.body.classList.add('reduce-motion');
+      document.body.classList.add("reduce-motion");
     } else {
-      document.body.classList.remove('reduce-motion');
+      document.body.classList.remove("reduce-motion");
     }
   });
 };
@@ -158,7 +201,7 @@ const setupVisibilityHandler = () => {
  * Set up resource cleanup on page unload
  */
 const setupCleanup = () => {
-  window.addEventListener('beforeunload', () => {
+  window.addEventListener("beforeunload", () => {
     SnowEffect.destroy();
     // Additional resource cleanup can be added here
   });
@@ -168,8 +211,8 @@ const setupCleanup = () => {
  * Handle responsive content adjustments
  */
 const handleResponsiveContent = () => {
-  const homeDescription = document.querySelector('.home__description');
-  const aboutDescription = document.querySelector('.about__description');
+  const homeDescription = document.querySelector(".home__description");
+  const aboutDescription = document.querySelector(".about__description");
   const isDesktop = window.innerWidth >= 600;
 
   // Save original home description text if not already saved
@@ -202,6 +245,9 @@ const handleResponsiveContent = () => {
  */
 const initialize = async () => {
   try {
+    // Display console logo
+    displayConsoleLogo();
+
     // Load external resources first
     await loadExternalResources();
 
@@ -224,7 +270,7 @@ const initialize = async () => {
     // Mark as loaded
     AppState.isLoading = false;
   } catch (error) {
-    handleError(error, 'initialize');
+    handleError(error, "initialize");
   }
 };
 
@@ -233,19 +279,19 @@ const initialize = async () => {
 // ---------------------------
 
 // Initialize on DOM content loaded
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   initialize();
   handleResponsiveContent();
 });
 
 // Handle responsive content on resize
-window.addEventListener('resize', handleResponsiveContent);
+window.addEventListener("resize", handleResponsiveContent);
 
 // Global error handlers
-window.addEventListener('error', (event) => {
-  handleError(event.error, 'window.error');
+window.addEventListener("error", (event) => {
+  handleError(event.error, "window.error");
 });
 
-window.addEventListener('unhandledrejection', (event) => {
-  handleError(event.reason, 'unhandledrejection');
+window.addEventListener("unhandledrejection", (event) => {
+  handleError(event.reason, "unhandledrejection");
 });
