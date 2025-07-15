@@ -84,7 +84,7 @@ const initProjectImagesLazyLoad = () => {
 
 // Función helper para determinar el nombre de la imagen según el índice
 function getProjectImageName(index) {
-  const imageNames = ['marvel', 'CRUD', 'rick', 'weather', 'cookie'];
+  const imageNames = ['marvel', 'CRUD', 'rick', 'weather', 'cookie', 'traktl'];
   return imageNames[index - 1] || 'default';
 }
 

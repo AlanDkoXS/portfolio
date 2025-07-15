@@ -104,6 +104,10 @@
   background-image: url('/assets/img/project_img/cookie.webp');
 }
 
+.project__card:nth-of-type(6) .project__image--container {
+  background-image: url('/assets/img/project_img/traktl.webp');
+}
+
 .project__image--container::before {
   content: '';
   position: absolute;

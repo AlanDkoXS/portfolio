@@ -154,6 +154,14 @@ designsTitle: {
     en: 'An application that generates random quotes, displaying a list of phrases with basic interaction features.',
     es: 'Una aplicación que genera frases aleatorias, mostrando un listado de frases con funcionalidades básicas de interacción.',
   },
+  projectTitle6: {
+    en: 'Traktl',
+    es: 'Traktl',
+  },
+  projectDescription6: {
+    en: 'Time tracker with temporizer. Full stack project built with Node.js, Express and React, with MongoDB database for efficient time management.',
+    es: 'Rastreador de tiempo con temporizador. Proyecto full stack construido con Node.js, Express y React, con base de datos MongoDB para una gestión eficiente del tiempo.',
+  },
   /* <-- Contact Section --> */
 
   contactTitle: {

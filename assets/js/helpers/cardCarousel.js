@@ -81,7 +81,7 @@ export function cardCarousel() {
       this.container = container;
       this.controllerElement = controller;
       this.cards = container.querySelectorAll('.project__card');
-      this.centerIndex = (this.cards.length - 1) / 2;
+      this.centerIndex = Math.floor((this.cards.length - 1) / 2);
       this.cardWidth = (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
       this.xScale = {};
 
@@ -173,11 +173,12 @@ export function cardCarousel() {
 
     controller(e) {
       const temp = { ...this.xScale };
+      const maxIndex = this.cards.length - 1 - this.centerIndex;
 
       if (e.keyCode === 39) {
         // Flecha derecha
         for (let x in this.xScale) {
-          const newX = parseInt(x) - 1 < -this.centerIndex ? this.centerIndex : parseInt(x) - 1;
+          const newX = parseInt(x) - 1 < -this.centerIndex ? maxIndex : parseInt(x) - 1;
           temp[newX] = this.xScale[x];
         }
       }
@@ -185,7 +186,7 @@ export function cardCarousel() {
       if (e.keyCode == 37) {
         // Flecha izquierda
         for (let x in this.xScale) {
-          const newX = parseInt(x) + 1 > this.centerIndex ? -this.centerIndex : parseInt(x) + 1;
+          const newX = parseInt(x) + 1 > maxIndex ? -this.centerIndex : parseInt(x) + 1;
           temp[newX] = this.xScale[x];
         }
       }
@@ -208,16 +209,17 @@ export function cardCarousel() {
     }
 
     calcScale(x) {
-      const formula = 1 - (1 / 5) * Math.pow(x, 2);
-      return formula <= 0 ? 0 : formula;
+      // Ajustar la fórmula para mostrar todas las 6 tarjetas
+      const formula = 1 - (1 / 8) * Math.pow(x, 2);
+      return formula <= 0.1 ? 0.1 : formula; // Mínimo de 0.1 para mantener visibilidad
     }
 
     calcScale2(x) {
       let formula;
       if (x <= 0) {
-        formula = 1 - (-1 / 5) * x;
+        formula = 1 - (-1 / 6) * x;
       } else {
-        formula = 1 - (1 / 5) * x;
+        formula = 1 - (1 / 6) * x;
       }
       return formula;
     }
@@ -236,15 +238,16 @@ export function cardCarousel() {
 
     navigate(direction) {
       const temp = { ...this.xScale };
+      const maxIndex = this.cards.length - 1 - this.centerIndex;
 
       if (direction === 'next') {
         for (let x in this.xScale) {
-          const newX = parseInt(x) - 1 < -this.centerIndex ? this.centerIndex : parseInt(x) - 1;
+          const newX = parseInt(x) - 1 < -this.centerIndex ? maxIndex : parseInt(x) - 1;
           temp[newX] = this.xScale[x];
         }
       } else if (direction === 'prev') {
         for (let x in this.xScale) {
-          const newX = parseInt(x) + 1 > this.centerIndex ? -this.centerIndex : parseInt(x) + 1;
+          const newX = parseInt(x) + 1 > maxIndex ? -this.centerIndex : parseInt(x) + 1;
           temp[newX] = this.xScale[x];
         }
       }
@@ -300,16 +303,17 @@ export function cardCarousel() {
     checkOrdering(card, x, xDist) {
       const original = parseInt(card.dataset.x);
       const rounded = Math.round(xDist);
+      const maxIndex = this.cards.length - 1 - this.centerIndex;
       let newX = x;
 
       if (x !== x + rounded) {
         if (x + rounded > original) {
-          if (x + rounded > this.centerIndex) {
-            newX = x + rounded - 1 - this.centerIndex - rounded + -this.centerIndex;
+          if (x + rounded > maxIndex) {
+            newX = x + rounded - 1 - maxIndex - rounded + -this.centerIndex;
           }
         } else if (x + rounded < original) {
           if (x + rounded < -this.centerIndex) {
-            newX = x + rounded + 1 + this.centerIndex - rounded + this.centerIndex;
+            newX = x + rounded + 1 + this.centerIndex - rounded + maxIndex;
           }
         }
 
