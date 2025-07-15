@@ -225,6 +225,11 @@ export function cardCarousel() {
     }
 
     calcPos(x, scale) {
+      // Si la tarjeta está muy lejos del centro (no visible), la posicionamos en el centro
+      if (Math.abs(x) > 2.5) {
+        return 50; // Posición central
+      }
+      
       let formula;
       if (x < 0) {
         formula = (scale * 100 - this.cardWidth) / 2;
