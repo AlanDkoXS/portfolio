@@ -3,10 +3,14 @@ const spriteImage = document.querySelector('.home__image');
 
 function loader() {
   window.addEventListener('load', () => {
-    loaderContainer.classList.add('loader--hidden');
+    if (loaderContainer) {
+      loaderContainer.classList.add('loader--hidden');
+    }
 
     setTimeout(() => {
-      spriteImage.classList.add('animate');
+      if (spriteImage) {
+        spriteImage.classList.add('animate');
+      }
     }, 500);
   });
 }

@@ -213,6 +213,12 @@ const setupCleanup = () => {
 const handleResponsiveContent = () => {
   const homeDescription = document.querySelector(".home__description");
   const aboutDescription = document.querySelector(".about__description");
+  
+  if (!homeDescription) {
+    console.warn('Home description element not found');
+    return;
+  }
+  
   const isDesktop = window.innerWidth >= 600;
 
   // Save original home description text if not already saved

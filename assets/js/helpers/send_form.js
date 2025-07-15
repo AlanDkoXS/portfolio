@@ -99,6 +99,8 @@ function validateField(value, type, language = currentLanguage) {
 
 function showFieldError(fieldId, error) {
   const field = document.getElementById(fieldId);
+  if (!field) return;
+  
   const errorDiv = field.nextElementSibling || document.createElement('div');
 
   if (!field.nextElementSibling) {
@@ -129,21 +131,30 @@ function validateForm(formData) {
 }
 
 function openModal() {
-  modalDOM.setAttribute('open', '');
-  modalDOM.querySelector('button').focus();
+  if (modalDOM) {
+    modalDOM.setAttribute('open', '');
+    const button = modalDOM.querySelector('button');
+    if (button) {
+      button.focus();
+    }
+  }
 }
 
 function closeModal() {
-  modalDOM.removeAttribute('open');
+  if (modalDOM) {
+    modalDOM.removeAttribute('open');
+  }
 }
 
 function addFieldValidationListeners() {
   ['name', 'email', 'subject', 'message'].forEach((fieldId) => {
     const field = document.getElementById(fieldId);
-    field.addEventListener('blur', () => {
-      const error = validateField(field.value, fieldId);
-      showFieldError(fieldId, error);
-    });
+    if (field) {
+      field.addEventListener('blur', () => {
+        const error = validateField(field.value, fieldId);
+        showFieldError(fieldId, error);
+      });
+    }
   });
 }
 
@@ -189,19 +200,23 @@ function sendEmail() {
 }
 
 // Event listeners for modal
-closeButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  closeModal();
-});
-
-modalDOM.addEventListener('click', (e) => {
-  if (e.target === modalDOM) {
+if (closeButton) {
+  closeButton.addEventListener('click', (e) => {
+    e.preventDefault();
     closeModal();
-  }
-});
+  });
+}
+
+if (modalDOM) {
+  modalDOM.addEventListener('click', (e) => {
+    if (e.target === modalDOM) {
+      closeModal();
+    }
+  });
+}
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && modalDOM.hasAttribute('open')) {
+  if (e.key === 'Escape' && modalDOM && modalDOM.hasAttribute('open')) {
     closeModal();
   }
 });
