@@ -183,7 +183,7 @@
   .home .home__buttons {
     grid-area: resume-button;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .home .home__buttons a {
@@ -192,6 +192,7 @@
 
   .home .home__buttons a#resume-btn {
     display: flex;
+    width: 100% !important;
   }
 
   /* Ocultar sección about */
