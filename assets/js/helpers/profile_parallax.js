@@ -4,7 +4,7 @@ function profileParallax() {
   const sprite = document.querySelector('.home__image--sprite');
 
   if (!container || !background || !sprite) {
-    console.warn('Elementos de parallax no encontrados - funcionalidad deshabilitada');
+    console.warn('Parallax elements not found - functionality disabled');
     return;
   }
 

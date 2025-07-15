@@ -45,7 +45,7 @@ const ParallaxEffect = {
     };
 
     if (!this.elements.back || !this.elements.middle || !this.elements.front) {
-      console.warn('No se encontraron todos los elementos necesarios para el parallax');
+      console.warn('Not all the necessary elements for the parallax were found.');
       return;
     }
 
