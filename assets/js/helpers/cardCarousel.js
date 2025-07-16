@@ -1,5 +1,5 @@
-const cardsContainer = document.querySelector('.project__card--carousel');
-const cardsController = document.querySelector('.project__card--controller');
+const cardsContainer = document.querySelector(".project__card--carousel");
+const cardsController = document.querySelector(".project__card--controller");
 
 export function cardCarousel() {
   class DraggingEvent {
@@ -10,30 +10,30 @@ export function cardCarousel() {
     event(callback) {
       let handler;
 
-      this.target.addEventListener('mousedown', (e) => {
+      this.target.addEventListener("mousedown", (e) => {
         e.preventDefault();
         handler = callback(e);
-        window.addEventListener('mousemove', handler);
-        document.addEventListener('mouseleave', clearDraggingEvent);
-        window.addEventListener('mouseup', clearDraggingEvent);
+        window.addEventListener("mousemove", handler);
+        document.addEventListener("mouseleave", clearDraggingEvent);
+        window.addEventListener("mouseup", clearDraggingEvent);
 
         function clearDraggingEvent() {
-          window.removeEventListener('mousemove', handler);
-          window.removeEventListener('mouseup', clearDraggingEvent);
-          document.removeEventListener('mouseleave', clearDraggingEvent);
+          window.removeEventListener("mousemove", handler);
+          window.removeEventListener("mouseup", clearDraggingEvent);
+          document.removeEventListener("mouseleave", clearDraggingEvent);
           handler(null);
         }
       });
 
-      this.target.addEventListener('touchstart', (e) => {
+      this.target.addEventListener("touchstart", (e) => {
         handler = callback(e);
-        window.addEventListener('touchmove', handler);
-        window.addEventListener('touchend', clearDraggingEvent);
-        document.body.addEventListener('mouseleave', clearDraggingEvent);
+        window.addEventListener("touchmove", handler);
+        window.addEventListener("touchend", clearDraggingEvent);
+        document.body.addEventListener("mouseleave", clearDraggingEvent);
 
         function clearDraggingEvent() {
-          window.removeEventListener('touchmove', handler);
-          window.removeEventListener('touchend', clearDraggingEvent);
+          window.removeEventListener("touchmove", handler);
+          window.removeEventListener("touchend", clearDraggingEvent);
           handler(null);
         }
       });
@@ -43,7 +43,7 @@ export function cardCarousel() {
       function distanceInit(e1) {
         let startingX, startingY;
 
-        if ('touches' in e1) {
+        if ("touches" in e1) {
           startingX = e1.touches[0].clientX;
           startingY = e1.touches[0].clientY;
         } else {
@@ -55,7 +55,7 @@ export function cardCarousel() {
           if (e2 === null) {
             return callback(null);
           } else {
-            if ('touches' in e2) {
+            if ("touches" in e2) {
               return callback({
                 x: e2.touches[0].clientX - startingX,
                 y: e2.touches[0].clientY - startingY,
@@ -80,15 +80,19 @@ export function cardCarousel() {
 
       this.container = container;
       this.controllerElement = controller;
-      this.cards = container.querySelectorAll('.project__card');
+      this.cards = container.querySelectorAll(".project__card");
       this.centerIndex = Math.floor((this.cards.length - 1) / 2);
-      this.cardWidth = (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
+      this.cardWidth =
+        (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
       this.xScale = {};
 
-      window.addEventListener('resize', this.updateCardWidth.bind(this));
+      window.addEventListener("resize", this.updateCardWidth.bind(this));
 
       if (this.controllerElement) {
-        this.controllerElement.addEventListener('keydown', this.controller.bind(this));
+        this.controllerElement.addEventListener(
+          "keydown",
+          this.controller.bind(this)
+        );
       }
 
       this.build();
@@ -99,22 +103,23 @@ export function cardCarousel() {
     }
 
     setupNavigationButtons() {
-      const prevButton = document.querySelector('.project__nav--prev');
-      const nextButton = document.querySelector('.project__nav--next');
+      const prevButton = document.querySelector(".project__nav--prev");
+      const nextButton = document.querySelector(".project__nav--next");
 
       if (prevButton && nextButton) {
-        prevButton.addEventListener('click', () => {
-          this.navigate('prev');
+        prevButton.addEventListener("click", () => {
+          this.navigate("prev");
         });
 
-        nextButton.addEventListener('click', () => {
-          this.navigate('next');
+        nextButton.addEventListener("click", () => {
+          this.navigate("next");
         });
       }
     }
 
     updateCardWidth() {
-      this.cardWidth = (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
+      this.cardWidth =
+        (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
       this.build();
     }
 
@@ -124,11 +129,11 @@ export function cardCarousel() {
         const scale = this.calcScale(x);
         const scale2 = this.calcScale2(x);
         const leftPos = this.calcPos(x, scale2);
-        
-        // Las tarjetas ocultas van muy atrás en z-index
+
+        // Hidden cards go far back in z-index
         let zIndex;
         if (Math.abs(x) > 2.5) {
-          zIndex = -100; // Muy atrás para tarjetas ocultas
+          zIndex = -100;
         } else {
           zIndex = -Math.abs(i - this.centerIndex);
         }
@@ -148,20 +153,20 @@ export function cardCarousel() {
       if (!card) return;
 
       if (data.x !== undefined) {
-        card.setAttribute('data-x', data.x);
+        card.setAttribute("data-x", data.x);
       }
 
-      // Mantener la transformación base para el centrado
-      let transformValue = 'translateX(-50%)';
+      // Keep base transformation for centering
+      let transformValue = "translateX(-50%)";
 
-      // Añadir escala si está definida
+      // Add scale if defined
       if (data.scale !== undefined) {
         transformValue += ` scale(${data.scale})`;
-        // Ajustar opacidad
+        // Adjust opacity
         card.style.opacity = data.scale === 0 ? 0 : 1;
       }
 
-      // Aplicar transformación
+      // Apply transformation
       card.style.transform = transformValue;
 
       if (data.leftPos !== undefined) {
@@ -170,9 +175,9 @@ export function cardCarousel() {
 
       if (data.zIndex !== undefined) {
         if (data.zIndex === 0) {
-          card.classList.add('highlight');
+          card.classList.add("highlight");
         } else {
-          card.classList.remove('highlight');
+          card.classList.remove("highlight");
         }
         card.style.zIndex = data.zIndex;
       }
@@ -183,17 +188,19 @@ export function cardCarousel() {
       const maxIndex = this.cards.length - 1 - this.centerIndex;
 
       if (e.keyCode === 39) {
-        // Flecha derecha
+        // Right arrow
         for (let x in this.xScale) {
-          const newX = parseInt(x) - 1 < -this.centerIndex ? maxIndex : parseInt(x) - 1;
+          const newX =
+            parseInt(x) - 1 < -this.centerIndex ? maxIndex : parseInt(x) - 1;
           temp[newX] = this.xScale[x];
         }
       }
 
       if (e.keyCode == 37) {
-        // Flecha izquierda
+        // Left arrow
         for (let x in this.xScale) {
-          const newX = parseInt(x) + 1 > maxIndex ? -this.centerIndex : parseInt(x) + 1;
+          const newX =
+            parseInt(x) + 1 > maxIndex ? -this.centerIndex : parseInt(x) + 1;
           temp[newX] = this.xScale[x];
         }
       }
@@ -204,11 +211,11 @@ export function cardCarousel() {
         const scale = this.calcScale(x);
         const scale2 = this.calcScale2(x);
         const leftPos = this.calcPos(x, scale2);
-        
-        // Usar la misma lógica de z-index que en build()
+
+        // Use the same z-index logic as in build()
         let zIndex;
         if (Math.abs(x) > 2.5) {
-          zIndex = -100; // Muy atrás para tarjetas ocultas
+          zIndex = -100; 
         } else {
           zIndex = -Math.abs(x);
         }
@@ -223,11 +230,11 @@ export function cardCarousel() {
     }
 
     calcScale(x) {
-      // Solo mostrar las tarjetas que están cerca del centro
+      // Only show cards that are close to the center
       if (Math.abs(x) > 2.5) {
-        return 0; // Ocultar completamente las tarjetas lejanas
+        return 0; 
       }
-      
+
       const formula = 1 - (1 / 5) * Math.pow(x, 2);
       return formula <= 0 ? 0 : formula;
     }
@@ -243,11 +250,11 @@ export function cardCarousel() {
     }
 
     calcPos(x, scale) {
-      // Si la tarjeta está muy lejos del centro (no visible), la posicionamos en el centro
+      // If the card is too far from center (not visible), position it at center
       if (Math.abs(x) > 2.5) {
-        return 50; // Posición central
+        return 50; // Central position
       }
-      
+
       let formula;
       if (x < 0) {
         formula = (scale * 100 - this.cardWidth) / 2;
@@ -263,14 +270,16 @@ export function cardCarousel() {
       const temp = { ...this.xScale };
       const maxIndex = this.cards.length - 1 - this.centerIndex;
 
-      if (direction === 'next') {
+      if (direction === "next") {
         for (let x in this.xScale) {
-          const newX = parseInt(x) - 1 < -this.centerIndex ? maxIndex : parseInt(x) - 1;
+          const newX =
+            parseInt(x) - 1 < -this.centerIndex ? maxIndex : parseInt(x) - 1;
           temp[newX] = this.xScale[x];
         }
-      } else if (direction === 'prev') {
+      } else if (direction === "prev") {
         for (let x in this.xScale) {
-          const newX = parseInt(x) + 1 > maxIndex ? -this.centerIndex : parseInt(x) + 1;
+          const newX =
+            parseInt(x) + 1 > maxIndex ? -this.centerIndex : parseInt(x) + 1;
           temp[newX] = this.xScale[x];
         }
       }
@@ -281,11 +290,11 @@ export function cardCarousel() {
         const scale = this.calcScale(x);
         const scale2 = this.calcScale2(x);
         const leftPos = this.calcPos(x, scale2);
-        
-        // Usar la misma lógica de z-index que en build()
+
+        // Use the same z-index logic as in build()
         let zIndex;
         if (Math.abs(x) > 2.5) {
-          zIndex = -100; // Muy atrás para tarjetas ocultas
+          zIndex = -100; // Far back for hidden cards
         } else {
           zIndex = -Math.abs(x);
         }
@@ -303,10 +312,10 @@ export function cardCarousel() {
       let xDist;
 
       if (data != null) {
-        this.container.classList.remove('smooth-return');
+        this.container.classList.remove("smooth-return");
         xDist = data.x / 250;
       } else {
-        this.container.classList.add('smooth-return');
+        this.container.classList.add("smooth-return");
         xDist = 0;
 
         for (let x in this.xScale) {
@@ -318,7 +327,11 @@ export function cardCarousel() {
       }
 
       for (let i = 0; i < this.cards.length; i++) {
-        const x = this.checkOrdering(this.cards[i], parseInt(this.cards[i].dataset.x), xDist);
+        const x = this.checkOrdering(
+          this.cards[i],
+          parseInt(this.cards[i].dataset.x),
+          xDist
+        );
         const scale = this.calcScale(x + xDist);
         const scale2 = this.calcScale2(x + xDist);
         const leftPos = this.calcPos(x + xDist, scale2);
@@ -357,7 +370,7 @@ export function cardCarousel() {
     }
   }
 
-  // Inicializar el carrusel
+  // Initialize the card carousel
   if (cardsContainer) {
     new CardCarousel(cardsContainer, cardsController);
   }

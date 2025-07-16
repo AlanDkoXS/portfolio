@@ -29,7 +29,6 @@
   cursor: pointer;
 }
 
-/* Estructura interna de la tarjeta */
 .project__card-inner {
   position: relative;
   width: 100%;
@@ -44,7 +43,7 @@
   transform: rotateY(180deg);
 }
 
-/* Caras de la tarjeta */
+/* Front Cards */
 .project__card-front,
 .project__card-back {
   position: absolute;
@@ -71,9 +70,22 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 1.5rem;
+  position: relative;
 }
 
-/* Imágenes de proyectos específicos */
+.project__card-back::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* BAckground Card Images*/
 .project__image--container {
   position: absolute;
   top: 0;
@@ -85,31 +97,31 @@
 }
 
 .project__card:nth-of-type(1) .project__image--container {
-  background-image: url('/assets/img/project_img/marvel.webp');
+  background-image: url("/assets/img/project_img/marvel.webp");
 }
 
 .project__card:nth-of-type(2) .project__image--container {
-  background-image: url('/assets/img/project_img/CRUD.webp');
+  background-image: url("/assets/img/project_img/CRUD.webp");
 }
 
 .project__card:nth-of-type(3) .project__image--container {
-  background-image: url('/assets/img/project_img/rick.webp');
+  background-image: url("/assets/img/project_img/rick.webp");
 }
 
 .project__card:nth-of-type(4) .project__image--container {
-  background-image: url('/assets/img/project_img/weather.webp');
+  background-image: url("/assets/img/project_img/weather.webp");
 }
 
 .project__card:nth-of-type(5) .project__image--container {
-  background-image: url('/assets/img/project_img/cookie.webp');
+  background-image: url("/assets/img/project_img/cookie.webp");
 }
 
 .project__card:nth-of-type(6) .project__image--container {
-  background-image: url('/assets/img/project_img/traktl.webp');
+  background-image: url("/assets/img/project_img/traktl.webp");
 }
 
 .project__image--container::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   -webkit-backdrop-filter: blur(1px);
@@ -118,7 +130,7 @@
 }
 
 .project__image--container::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1));
