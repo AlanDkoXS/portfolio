@@ -1,20 +1,29 @@
 function handleScroll() {
   const fabButtons = document.querySelectorAll('.fab');
-  const pdfContainer = document.getElementById('pdf-container');
   const btnDownload = document.getElementById('btn-download');
-  const modal = document.getElementById('modal');
 
-  const scrollTop = pdfContainer.scrollTop;
-  const scrollHeight = pdfContainer.scrollHeight;
-  const clientHeight = pdfContainer.clientHeight;
-  const scrollPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100;
+  // Validar que los elementos existen
+  if (!btnDownload || fabButtons.length === 0) {
+    return;
+  }
 
+  // Usar window.scrollY en lugar del scroll del contenedor
+  const scrollTop = window.scrollY || 0;
+  const scrollHeight = document.documentElement?.scrollHeight || document.body?.scrollHeight || 0;
+  const clientHeight = window.innerHeight || 0;
+  
+  // Evitar división por cero
+  const scrollableHeight = scrollHeight - clientHeight;
+  const scrollPercentage = scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
+
+  // Cambiar color cuando se llega al 90% del scroll
   if (scrollPercentage > 90) {
     btnDownload.style.backgroundColor = '#993737';
   } else {
     btnDownload.style.backgroundColor = '';
   }
 
+  // Expandir el botón cuando se hace scroll hacia abajo
   if (scrollTop > 20) {
     fabButtons.forEach((button) => {
       button.classList.add('expanded');
@@ -66,10 +75,10 @@ function downloadCV(language) {
 }
 
 function initFab() {
-  const pdfContainer = document.getElementById('pdf-container');
   const modal = document.getElementById('modal');
   
-  pdfContainer.addEventListener('scroll', handleScroll);
+  // Escuchar el scroll del window en lugar del contenedor
+  window.addEventListener('scroll', handleScroll);
   
   // Cerrar modal al hacer clic fuera de él
   modal.addEventListener('click', (event) => {
