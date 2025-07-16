@@ -34,6 +34,8 @@
       margin: 0 auto;
 
       .contact__form-container {
+        width: 100%;
+        
         .contact__form-group {
           margin-bottom: var(--mr-4);
 
@@ -57,6 +59,19 @@
             resize: none;
           }
         }
+      }
+
+      .contact__form-button {
+        width: 100% !important;
+        max-width: none !important;
+        margin-top: var(--mr-4);
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        text-align: center;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
       }
     }
   }
