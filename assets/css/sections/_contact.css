@@ -37,11 +37,12 @@
         width: 100%;
         
         .contact__form-group {
-          margin-bottom: var(--mr-4);
+          margin-bottom: .5rem;
 
           .contact__form-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: .5rem;
+            margin-top: .5rem;
           }
 
           .contact__form-input {
