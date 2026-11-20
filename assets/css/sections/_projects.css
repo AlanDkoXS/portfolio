@@ -213,22 +213,25 @@
   padding: 0.6rem 1.1rem;
   background-color: var(--gold-400);
   color: var(--on-accent-color);
-  border: 1px solid var(--gold-300);
-  box-shadow: 0 6px 16px rgb(0 0 0 / 0.35);
+  /* mismo estilo cartoon que .btn: contorno de tinta y sombra dura */
+  border: 2px solid var(--teal-950);
   border-radius: var(--border-radius-small);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  box-shadow: 3px 3px 0 #000;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
   font-weight: 600;
 }
 
 .project__button:hover {
   background-color: var(--gold-300);
   color: var(--on-accent-color);
-  border-color: var(--gold-300);
-  box-shadow: 0 8px 20px rgb(243 206 58 / 0.35);
-  transform: translateY(-2px);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 #000;
+}
+
+.project__button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 #000;
 }
 
 .project__button i {

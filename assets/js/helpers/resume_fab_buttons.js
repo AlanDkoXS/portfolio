@@ -9,19 +9,6 @@ function handleScroll() {
 
   // Usar window.scrollY en lugar del scroll del contenedor
   const scrollTop = window.scrollY || 0;
-  const scrollHeight = document.documentElement?.scrollHeight || document.body?.scrollHeight || 0;
-  const clientHeight = window.innerHeight || 0;
-  
-  // Evitar división por cero
-  const scrollableHeight = scrollHeight - clientHeight;
-  const scrollPercentage = scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
-
-  // Cambiar color cuando se llega al 90% del scroll
-  if (scrollPercentage > 90) {
-    btnDownload.style.backgroundColor = '#993737';
-  } else {
-    btnDownload.style.backgroundColor = '';
-  }
 
   // Expandir el botón cuando se hace scroll hacia abajo
   if (scrollTop > 20) {

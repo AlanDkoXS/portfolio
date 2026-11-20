@@ -18,8 +18,9 @@ section.visible {
 }
 
 /* Al navegar desde el menú/botones, cada sección ocupa la pantalla visible
-   (debajo del header) y su contenido queda centrado verticalmente */
-.section {
+   (debajo del header) y su contenido queda centrado verticalmente.
+   Solo <section>: el footer también lleva la clase .section */
+section.section {
   min-height: calc(100svh - var(--header-height));
   display: grid;
   align-content: center;

@@ -20,10 +20,34 @@
   margin: 3rem 0;
 }
 
-canvas {
+.resume__page {
   display: block;
   max-width: 100%;
+  height: auto !important;
   margin: 0 auto;
+  border-radius: var(--border-radius-small);
+  box-shadow: 0 10px 30px var(--shadow-color);
+  outline: 1px solid var(--border-color);
+}
+
+/* En el resume el header siempre visible (en el home aparece con el scroll) */
+body:has(#pdf-container) .header {
+  opacity: 1;
+  animation: none;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--box-shadow);
+}
+
+/* Modal de descarga */
+.modal-content h2,
+.modal-content p {
+  text-align: center;
+}
+
+.modal-content p {
+  margin: 0.25rem 0 1rem;
+  color: var(--text-muted);
 }
 
 .fab-container {
