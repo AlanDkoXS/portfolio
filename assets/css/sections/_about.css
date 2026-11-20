@@ -30,16 +30,6 @@
 
 /* ABOUT MIN WIDTH 600px ========================== */
 @media (min-width: 600px) {
-  .about {
-    animation: animation-section 1s ease both;
-    -webkit-animation-timeline: scroll(root block);
-    -moz-animation-timeline: scroll(root block);
-    animation-timeline: scroll(root block);
-    -webkit-animation-range: 0 700px;
-    -moz-animation-range: 0 700px;
-    animation-range: 0 700px;
-    opacity: 0;
-  }
   .about__container {
     display: flex;
     flex-direction: row;

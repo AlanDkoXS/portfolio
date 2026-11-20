@@ -47,7 +47,6 @@ export const FORM_MESSAGES = {
 // send_form.js
 const formDOM = document.querySelector("#form");
 const modalDOM = document.querySelector("#modal");
-const closeButton = document.querySelector("#btn_close-modal");
 let currentLanguage = "en";
 
 function validateField(value, type, language = currentLanguage) {
@@ -107,11 +106,16 @@ function showFieldError(fieldId, error) {
 
   if (!field.nextElementSibling) {
     errorDiv.className = "field-error";
+    errorDiv.id = `${fieldId}-error`;
+    // Se anuncia al aparecer y queda ligado al campo para lectores de pantalla
+    errorDiv.setAttribute("aria-live", "polite");
+    field.setAttribute("aria-describedby", errorDiv.id);
     field.parentNode.insertBefore(errorDiv, field.nextSibling);
   }
 
   errorDiv.textContent = error;
   field.classList.toggle("invalid", Boolean(error));
+  field.setAttribute("aria-invalid", error ? "true" : "false");
 }
 
 function validateForm(formData) {
@@ -133,19 +137,9 @@ function validateForm(formData) {
 }
 
 function openModal() {
-  if (modalDOM) {
-    modalDOM.setAttribute("open", "");
-    const button = modalDOM.querySelector("button");
-    if (button) {
-      button.focus();
-    }
-  }
-}
-
-function closeModal() {
-  if (modalDOM) {
-    modalDOM.removeAttribute("open");
-  }
+  // showModal(): modal real (top layer, foco atrapado, Esc nativo).
+  // El botón Cerrar tiene autofocus.
+  if (modalDOM && !modalDOM.open) modalDOM.showModal();
 }
 
 function addFieldValidationListeners() {
@@ -238,28 +232,6 @@ function sendEmail() {
     }
   });
 }
-
-// Event listeners for modal
-if (closeButton) {
-  closeButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    closeModal();
-  });
-}
-
-if (modalDOM) {
-  modalDOM.addEventListener("click", (e) => {
-    if (e.target === modalDOM) {
-      closeModal();
-    }
-  });
-}
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && modalDOM && modalDOM.hasAttribute("open")) {
-    closeModal();
-  }
-});
 
 // Listen for language changes
 window.addEventListener("languageChange", (e) => {

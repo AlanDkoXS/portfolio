@@ -4,6 +4,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tema: sigue al sistema; el botón guarda una excepción en localStorage.theme.
+         Se aplica antes de pintar para evitar el parpadeo del tema equivocado. -->
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.querySelector('meta[name="color-scheme"]').content = t;
+      } catch {}
+    </script>
     <title>Resume - Alan Quintana Pacheco</title>
     <meta name="description"
         content="Resume of Alan Quintana, full stack designer and web developer. View online or download in English or Spanish." />
@@ -73,6 +82,7 @@
                 link.href = `/assets/docs/${fileName}`;
                 link.download = fileName;
                 link.click();
+                document.getElementById('modal')?.close();
             } else {
                 alert('Invalid language selected.');
             }
@@ -101,7 +111,7 @@
                 </ul>
                 <div class="navbar__toggles flex--container">
                     <div class="navbar__toggle--darkmode flex--container">
-                        <input type="checkbox" name="color-scheme" id="darkmode-toggle"
+                        <input type="checkbox" name="theme" id="darkmode-toggle"
                             class="navbar__toggle--darkmode-input" title="Dark Mode" />
                         <label for="darkmode-toggle" class="navbar__toggle--darkmode-label">
                             <div class="icon-wrapper">
@@ -136,12 +146,17 @@
             <span class="fab-text" data-i18n="resumePage.downloadButton">Download</span>
         </a>
 
-        <dialog id="modal">
+        <dialog id="modal" closedby="any" aria-labelledby="download-title">
             <div class="modal-content">
-                <h2 data-i18n="resumePage.downloadButton">Download</h2>
+                <form method="dialog">
+                    <button class="modal__close" aria-label="Close" data-i18n-attr="aria-label:resumePage.close">
+                        <i class="bx bx-x" aria-hidden="true"></i>
+                    </button>
+                </form>
+                <h2 id="download-title" data-i18n="resumePage.downloadButton">Download</h2>
                 <p data-i18n="resumePage.selectLanguage">Select language</p>
                 <div class="resume__modal-content">
-                    <button class="btn btn--primary" onclick="downloadCV('ENG')">
+                    <button class="btn btn--primary" onclick="downloadCV('ENG')" autofocus>
                         <strong data-i18n="resumePage.english">English</strong>
                     </button>
                     <button class="btn btn--primary" onclick="downloadCV('ESP')">

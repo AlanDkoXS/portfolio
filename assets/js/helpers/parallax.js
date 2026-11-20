@@ -1,5 +1,6 @@
 // parallax.js
 import { createTilt } from './tilt.js';
+import { prefersReducedMotion } from './motion.js';
 
 const ParallaxEffect = {
   config: {
@@ -55,6 +56,7 @@ const ParallaxEffect = {
 
   init() {
     if (this.state.initialized) return;
+    if (prefersReducedMotion()) return; // el fondo se queda quieto
 
     this.elements = {
       back: document.querySelector('.bgBack'),

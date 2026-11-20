@@ -1,3 +1,4 @@
+import { prefersReducedMotion } from './motion.js';
 // snow-effect.js
 const createSnowEffect = () => {
   // Check if we're in the Christmas period (Dec 12 - Jan 6)
@@ -30,6 +31,7 @@ const createSnowEffect = () => {
   }
 
   function initSnow() {
+    if (prefersReducedMotion()) return;
     if (!isChristmasPeriod()) return;
 
     // Create snow container if it doesn't exist

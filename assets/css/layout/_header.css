@@ -10,12 +10,19 @@
   background-color: transparent;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
   z-index: var(--z-modal);
-  animation: animation-nav linear both;
-  animation-timeline: scroll(root block);
-  -webkit-animation-timeline: scroll(root block);
-  animation-range: 0 100px;
-  -webkit-animation-range: 0 100px;
-  opacity: 0;
+  /* Sin soporte de animaciones ligadas al scroll, el header simplemente se ve */
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  /* Con soporte: aparece al empezar a hacer scroll (en el hero no estorba) */
+  @supports (animation-timeline: scroll()) {
+    opacity: 0;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    animation: animation-nav linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 100px;
+  }
 
   .navbar {
     justify-content: space-between;

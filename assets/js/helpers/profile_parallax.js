@@ -1,4 +1,5 @@
 import { createTilt } from './tilt.js';
+import { prefersReducedMotion } from './motion.js';
 
 function profileParallax() {
   const container = document.querySelector('.home__image');
@@ -6,6 +7,7 @@ function profileParallax() {
   const sprite = document.querySelector('.home__image--sprite');
 
   if (!container || !background || !sprite) return;
+  if (prefersReducedMotion()) return;
 
   function moveLayers(moveX, moveY) {
     background.style.transform = `translate(${moveX * 0.3}px, ${moveY * -0.3}px)`;

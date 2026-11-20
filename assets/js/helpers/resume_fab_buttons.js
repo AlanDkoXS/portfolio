@@ -1,3 +1,5 @@
+import { setupDialog } from './dialog.js';
+
 function handleScroll() {
   const fabButtons = document.querySelectorAll('.fab');
   const btnDownload = document.getElementById('btn-download');
@@ -22,57 +24,12 @@ function handleScroll() {
   }
 }
 
-document.getElementById('btn-download').addEventListener('click', () => {
-  const modal = document.getElementById('modal');
-  if (!modal.open) {
-    openModal();
-  }
-});
-
-function openModal() {
-  const modal = document.getElementById('modal');
-  modal.showModal();
-
-  document.addEventListener(
-    'keydown',
-    (event) => {
-      if (event.key === 'Escape') {
-        closeModal();
-      }
-    },
-    { once: true }
-  );
-}
-
-function closeModal() {
-  const modal = document.getElementById('modal');
-  modal.close();
-}
-
-function downloadCV(language) {
-  const fileName =
-    language === 'ENG' ? '[ENG] Alan Quintana.pdf' : '[ESP] Alan Quintana.pdf';
-  const link = document.createElement('a');
-  link.href = `/assets/docs/${fileName}`;
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  closeModal();
-}
-
+// El botón de descarga abre el modal con window.openModal() (inline en
+// resume.html → showModal()). Esc, clic fuera (closedby="any") y el botón X
+// (form method="dialog") los maneja el <dialog> nativo.
 function initFab() {
-  const modal = document.getElementById('modal');
-  
-  // Escuchar el scroll del window en lugar del contenedor
-  window.addEventListener('scroll', handleScroll);
-  
-  // Cerrar modal al hacer clic fuera de él
-  modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      closeModal();
-    }
-  });
+  setupDialog(document.getElementById('modal'));
+  window.addEventListener('scroll', handleScroll, { passive: true });
 }
 
-export { initFab, openModal, closeModal, downloadCV };
+export { initFab };

@@ -1,6 +1,10 @@
-// Tema: respeta la elección manual guardada en localStorage.theme;
-// si no hay, usa la hora local (oscuro 18:00–06:00).
+// Tema: por defecto sigue al sistema (prefers-color-scheme). El botón guarda
+// una excepción en localStorage.theme ('light' | 'dark') y la refleja en
+// <meta name="color-scheme">, que el CSS lee (ver _variables.css).
+// El script inline del <head> aplica la excepción antes de pintar; aquí solo
+// se mantiene sincronizado el botón y se maneja el cambio.
 const STORAGE_KEY = 'theme';
+const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
 
 const readStoredTheme = () => {
   try {
@@ -11,31 +15,54 @@ const readStoredTheme = () => {
   }
 };
 
-const themeFromHour = () => {
-  const hour = new Date().getHours();
-  return hour >= 18 || hour < 6 ? 'dark' : 'light';
+const writeStoredTheme = (value) => {
+  try {
+    if (value) localStorage.setItem(STORAGE_KEY, value);
+    else localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* almacenamiento no disponible: el tema se aplica igual, solo no se recuerda */
+  }
 };
 
-const applyTheme = (toggle, theme) => {
-  toggle.checked = theme === 'dark';
+const systemTheme = () => (systemDark.matches ? 'dark' : 'light');
+
+let override = null; // excepción vigente en esta página (aunque no se pueda guardar)
+
+const renderedTheme = () => override ?? systemTheme();
+
+const sync = (toggle) => {
+  const meta = document.querySelector('meta[name="color-scheme"]');
+  if (meta) meta.content = override ?? 'light dark';
+  const theme = renderedTheme();
+  if (toggle) toggle.checked = theme === 'dark';
   document.body.setAttribute('data-theme', theme);
 };
 
 export function setAutoDarkMode() {
-  const darkModeToggle = document.querySelector('.navbar__toggle--darkmode-input');
-  if (!darkModeToggle) return;
+  const toggle = document.querySelector('.navbar__toggle--darkmode-input');
+  override = readStoredTheme();
+  sync(toggle);
 
-  applyTheme(darkModeToggle, readStoredTheme() ?? themeFromHour());
+  if (!toggle || toggle.dataset.themeBound) return;
+  toggle.dataset.themeBound = 'true';
 
-  if (darkModeToggle.dataset.themeBound) return;
-  darkModeToggle.dataset.themeBound = 'true';
-  darkModeToggle.addEventListener('change', () => {
-    const theme = darkModeToggle.checked ? 'dark' : 'light';
-    document.body.setAttribute('data-theme', theme);
-    try {
-      localStorage.setItem(STORAGE_KEY, theme);
-    } catch {
-      /* almacenamiento no disponible: solo dura la sesión */
-    }
+  toggle.addEventListener('change', () => {
+    // El usuario pide "lo contrario de lo que ve ahora"
+    const target = renderedTheme() === 'dark' ? 'light' : 'dark';
+    // Si coincide con el sistema, está deshaciendo su ajuste: no se guarda nada
+    // (guardarlo fijaría el tema contra futuros cambios del sistema)
+    override = target === systemTheme() ? null : target;
+    writeStoredTheme(override);
+    sync(toggle);
+  });
+
+  // El sistema cambió (p. ej. modo oscuro automático al anochecer)
+  systemDark.addEventListener('change', () => sync(toggle));
+
+  // Cambio hecho desde otra pestaña
+  window.addEventListener('storage', (event) => {
+    if (event.key !== STORAGE_KEY) return;
+    override = readStoredTheme();
+    sync(toggle);
   });
 }

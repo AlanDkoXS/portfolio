@@ -1,27 +1,17 @@
-const modal = document.getElementById('modal');
-const btnClose = document.getElementById('btn_close-modal');
+// Modal de resultado del formulario de contacto (index.html)
+import { setupDialog } from './dialog.js';
 
 function closeModal() {
-  if (!modal) {
-    console.warn('Modal element not found');
-    return;
+  const modal = document.getElementById('modal');
+  if (!modal) return;
+
+  setupDialog(modal);
+
+  const btnClose = document.getElementById('btn_close-modal');
+  if (btnClose && !btnClose.dataset.bound) {
+    btnClose.dataset.bound = 'true';
+    btnClose.addEventListener('click', () => modal.close());
   }
-  
-  if (modal.hasAttribute('data-listeners-added')) return;
-
-  if (btnClose) {
-    btnClose.addEventListener('click', () => {
-      modal.close();
-    });
-  }
-
-  modal.addEventListener('click', (event) => {
-    if (!event.target.closest('.modal-content')) {
-      modal.close();
-    }
-  });
-
-  modal.setAttribute('data-listeners-added', 'true');
 }
 
 export { closeModal };

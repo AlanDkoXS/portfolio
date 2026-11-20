@@ -1,4 +1,9 @@
-// Mejora del observer.js para implementar lazy loading de secciones
+// Carga diferida (lazy loading) de imágenes marcadas con data-src /
+// data-background dentro de las secciones. Las carátulas de proyectos NO pasan
+// por aquí: las define el CSS para poder cambiar según el modo claro/oscuro.
+// La aparición visual de las secciones ya no depende de JS: es CSS
+// (scroll-driven animations en _section.css), así el contenido se ve aunque
+// este script no corra.
 
 const createObserver = () => {
   // Configuración mejorada del Intersection Observer
@@ -14,9 +19,6 @@ const createObserver = () => {
       const target = entry.target;
 
       if (entry.isIntersecting) {
-        // Añadir clase para mostrar la sección cuando está visible
-        target.classList.add('visible');
-
         // Cargar imágenes dentro de la sección si tienen data-src
         const lazyImages = target.querySelectorAll('img[data-src]');
         lazyImages.forEach((img) => {
@@ -38,16 +40,8 @@ const createObserver = () => {
           element.removeAttribute('data-background');
         });
 
-        // Dejar de observar elementos que ya han sido procesados si no necesitan animaciones constantes
-        if (target.dataset.observeOnce === 'true') {
-          observer.unobserve(target);
-        }
-      } else {
-        // Si la sección no está intersectando, quitamos la clase
-        // Esto es opcional y depende del diseño - puede ayudar a reducir carga de renderizado
-        if (!target.hasAttribute('data-keep-visible')) {
-          target.classList.remove('visible');
-        }
+        // Ya cargó lo que tenía pendiente
+        observer.unobserve(target);
       }
     });
   }, observerOptions);
@@ -63,36 +57,10 @@ const observeSections = (observer) => {
   });
 };
 
-// Optimización para el carrusel de proyectos - carga diferida de imágenes de proyecto
-const initProjectImagesLazyLoad = () => {
-  const projectCards = document.querySelectorAll('.project__card');
-
-  // Modificar el HTML para usar data-background en lugar de background-image directamente
-  projectCards.forEach((card, index) => {
-    const imageContainer = card.querySelector('.project__image--container');
-    if (imageContainer) {
-      // Eliminar el estilo inline si existe
-      imageContainer.style.backgroundImage = '';
-
-      // Añadir el data-attribute con la ruta correcta
-      const projectNumber = index + 1;
-      const imagePath = `/assets/img/project_img/${getProjectImageName(projectNumber)}.webp`;
-      imageContainer.setAttribute('data-background', imagePath);
-    }
-  });
-};
-
-// Función helper para determinar el nombre de la imagen según el índice
-function getProjectImageName(index) {
-  const imageNames = ['marvel', 'CRUD', 'rick', 'weather', 'cookie', 'traktl'];
-  return imageNames[index - 1] || 'default';
-}
-
 // Función mejorada para inicializar el observador
 const initObserver = () => {
   const observer = createObserver();
   observeSections(observer);
-  initProjectImagesLazyLoad();
 
   // Utilizar el mismo observador para elementos fuera de las secciones
   const standaloneElements = document.querySelectorAll('[data-lazy-load]');

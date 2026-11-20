@@ -4,7 +4,10 @@
 
 html {
   box-sizing: border-box;
-  scroll-behavior: smooth;
+
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
   *,
   *::before,
   *::after {
@@ -17,6 +20,9 @@ html {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
+    /* Mientras carga Poppins, la fuente de respaldo se escala a su misma
+       altura de minúsculas: el texto no "salta" al llegar la fuente */
+    font-size-adjust: from-font;
     font-size: var(--normal-font-size);
     color: var(--primary-color);
     background-color: var(--bg-color-section);
@@ -87,33 +93,31 @@ html {
     color: var(--primary-color);
   }
 
+  /* <dialog> modal nativo (showModal): la caja es la tarjeta; el oscurecido
+     va en ::backdrop, así el clic fuera (closedby="any") cae en el backdrop */
   dialog {
-    position: fixed;
-    top: 0;
-    left: 0;
-    box-sizing: initial;
-    width: initial;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    text-align: center;
-    padding: 2rem;
+    width: min(100% - 2rem, 340px);
+    padding: 0;
     border: none;
-    display: none;
+    background: transparent;
+    color: inherit;
+    text-align: center;
+    overflow: visible;
   }
 
-  /* Darkmode ====================================*/
-  color-scheme: light dark;
-  &:has([name='color-scheme']:checked) {
-    color-scheme: dark;
+  /* Que el scroll dentro del modal o sobre el fondo no mueva la página */
+  dialog:modal {
+    overscroll-behavior: contain;
   }
-  &:has([name='color-scheme']) {
-    color-scheme: light;
+
+  dialog::backdrop {
+    background: rgb(0 0 0 / 0.5);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+    overscroll-behavior: contain;
   }
+
 }
 
 /* ============= Media Queries MIN WIDTH (600px)============= */
@@ -121,5 +125,14 @@ html {
 @media (min-width: 600px) {
   section {
     padding: 2.5em 2em;
+  }
+}
+
+/* ============= Transición entre páginas (home ↔ resume, / ↔ /es/) =============
+   Fundido nativo entre documentos; los navegadores sin soporte cambian de
+   página como siempre. Sin animación con "reducir movimiento". */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
   }
 }

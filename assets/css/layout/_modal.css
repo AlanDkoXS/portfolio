@@ -8,12 +8,33 @@
   border-radius: var(--border-radius-large);
   box-shadow: 0 12px 32px var(--shadow-color);
   width: 100%;
-  max-width: 300px;
-  margin: auto;
+  position: relative;
 }
 
-#modal[open] {
-  display: flex;
+/* Botón X para cerrar (resume) */
+.modal__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  background: transparent;
+  border: none;
+  border-radius: var(--border-radius-small);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--bg-color-buttons);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--accent-ink);
+    outline-offset: 2px;
+  }
 }
 
 .resume__modal-content {
