@@ -4,7 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Personal portfolio site (alanquintana.pro), plain static HTML/CSS/vanilla JS. No build step, no bundler, no package manager, no tests, no linter config committed (`package.json`, `eslint.config.mjs`, `.prettierrc` are gitignored). Deployed on Netlify straight from the repo root.
+Personal portfolio site (alanquintana.pro), plain static HTML/CSS/vanilla JS. No bundler, no package manager, no tests, no linter config committed (`package.json`, `eslint.config.mjs`, `.prettierrc` are gitignored). Deployed on Netlify straight from the repo root. The only "build" is the zero-dependency i18n generator below, whose output is committed.
+
+## i18n generator
+
+```sh
+node scripts/build-i18n.mjs   # run after editing index.html or translations.js
+```
+
+Rewrites `index.html` in place with the English texts and generates `es/index.html` (Spanish, committed, never edit by hand). Idempotent; fails listing any missing translation keys.
 
 ## Running locally
 
@@ -22,7 +30,12 @@ python -m http.server 8000   # then open http://localhost:8000
 - `index.html` loads `assets/js/main.js`, which orchestrates everything: imports every helper from `assets/js/helpers/` and initializes them in a fixed order inside `initialize()` (external scripts → dark mode → UI components → visual effects → functionalities). New features are added as a helper module and wired in there.
 - `resume.html` does **not** load `main.js`; its inline `<script type="module">` imports only the helpers it needs (`resume_fab_buttons.js`, `pdf_loader.js`, `switchLanguages.js`, dark mode, date, snow, GTM). Shared helpers like `switchLanguages.js` run on both pages, so they must tolerate missing DOM elements (they early-return when selectors don't match). The resume page renders `/assets/docs/resume.pdf` with pdf.js (CDN global `pdfjsLib`) and offers downloads of `[ENG]`/`[ESP] Alan Quintana.pdf` via a global `downloadCV()` defined inline.
 
-**i18n (EN/ES).** Text in the HTML is the English default; `assets/js/helpers/switchLanguages.js` overwrites it at runtime using keys from `assets/js/languages/translations.js` (`{ key: { en, es } }`, with some nested objects like `resumePage`, `contactForm`, `validation`). Language is auto-detected from `navigator.languages` and toggled via `#language-toggle`. The mapping from DOM selector → translation key is hard-coded in `applyLanguageChanges()`; projects use indexed keys (`projectTitle1`, `projectDescription1`, …) matched to `.project__title` order. When adding or changing visible text, update both the HTML and `translations.js`, and add the selector mapping in `switchLanguages.js`. A `languageChange` CustomEvent is dispatched so other modules (e.g. form validation in `send_form.js`) can react.
+**i18n (EN/ES).** `assets/js/languages/translations.js` is the single source of text (`{ key: { en, es } }`; nested ones like `contactForm`, `resumePage`, `meta` hold an object per language). Markup marks translatable content with `data-i18n="key.path"` (element text) and `data-i18n-attr="attr:key;attr2:key2"` (attributes, e.g. meta tags, canonical, hrefs). Key paths put the language after the first segment (`contactForm.name` → `contactForm[lang].name`, `skillsTags.2` → `skillsTags[lang][2]`), resolved by `assets/js/languages/translate.js`, shared by the generator and the browser. Elements with `data-i18n` must contain only text — their content is replaced wholesale.
+- Home page = **URL mode**: `/` (en) and `/es/` (es) are separate static pages with `canonical`/`hreflang` links. `switchLanguages.js` takes the language from `<html lang>`; the `#language-toggle` stores the choice in `localStorage.lang` and navigates to the other URL (keeping the hash). An inline script in `<head>` sends first-time Spanish-browser visitors from `/` to `/es/` unless `localStorage.lang` says otherwise.
+- Resume page = **in-place mode** (no hreflang alternates): language from `localStorage.lang` or the browser, texts swapped in the DOM.
+- To add text: add the key to `translations.js`, put `data-i18n` on the element in `index.html` (or `resume.html`), run the generator.
+- A `languageChange` CustomEvent is dispatched so other modules (e.g. form validation in `send_form.js`) can react.
+- All asset URLs in `index.html` must be absolute (`/assets/...`) because the same markup is served from `/es/`.
 
 **Responsive home text.** On widths ≥600px the home description is merged with the about description (and the About section is hidden via CSS). This lives in `handleResponsiveContent` in `switchLanguages.js` so it uses the active language.
 
@@ -38,7 +51,7 @@ python -m http.server 8000   # then open http://localhost:8000
 
 ## SEO files
 
-`sitemap.xml`, `robots.txt`, and the JSON-LD block in `index.html`'s `<head>` should be kept in sync with page/URL changes.
+`sitemap.xml` (with `xhtml:link` hreflang alternates for `/` and `/es/`), `robots.txt`, and the JSON-LD block in `index.html`'s `<head>` should be kept in sync with page/URL changes.
 
 ## Conventions
 

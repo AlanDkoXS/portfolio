@@ -1,4 +1,25 @@
 const translations = {
+  /* <-- Page metadata (used by scripts/build-i18n.mjs for <head>) --> */
+  meta: {
+    en: {
+      title: 'Alan Quintana | Full Stack Designer & Developer',
+      description:
+        'Portfolio of Alan Quintana, graphic designer and full stack web developer. Specialized in React, JavaScript, Node.js and UI/UX design.',
+      ogDescription:
+        'Portfolio of Alan Quintana, specialized in graphic design and web development with React, JavaScript and Node.js',
+      url: 'https://www.alanquintana.pro/',
+      locale: 'en_US',
+    },
+    es: {
+      title: 'Alan Quintana | Diseñador y Desarrollador Full Stack',
+      description:
+        'Portafolio de Alan Quintana, diseñador gráfico y desarrollador web full stack. Especializado en React, JavaScript, Node.js y diseño UI/UX.',
+      ogDescription:
+        'Portafolio de Alan Quintana, especializado en diseño gráfico y desarrollo web con React, JavaScript y Node.js',
+      url: 'https://www.alanquintana.pro/es/',
+      locale: 'es_MX',
+    },
+  },
   /* <-- Nav Bar --> */
   navHome: {
     en: 'Home',
@@ -231,6 +252,7 @@ designsTitle: {
   resumePage: {
     en: {
       homeLink: 'Home',
+      homeHref: '/',
       downloadButton: 'Download',
       selectLanguage: 'Select language',
       english: 'English',
@@ -240,6 +262,7 @@ designsTitle: {
     },
     es: {
       homeLink: 'Inicio',
+      homeHref: '/es/',
       downloadButton: 'Descargar',
       selectLanguage: 'Seleccionar idioma',
       english: 'English',
