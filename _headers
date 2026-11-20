@@ -21,3 +21,12 @@
 
 /assets/js/*
   Cache-Control: public, max-age=0, must-revalidate
+
+# Perfil para IA: texto plano UTF-8 (acentos) y se puede leer desde otros orígenes
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *

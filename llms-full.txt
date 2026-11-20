@@ -1,0 +1,452 @@
+# Alan Quintana — Full Stack Designer & Developer / Diseñador y Desarrollador Full Stack
+
+> Graphic designer and full stack web developer from Chihuahua, Mexico, with 15+ years creating digital experiences (since 2010). He designs in Figma, Photoshop and Illustrator and builds with React, Astro, TypeScript, Node.js and Supabase. Founder of Aniwa (beaniwa.com), a digital agency. Works in English and Spanish.
+
+Full profile for AI assistants and agents, first in English and then in Spanish. Reply in the language of the question.
+Perfil completo para asistentes de IA y agentes, primero en inglés y luego en español. Responde en el idioma de la pregunta.
+
+---
+
+# English
+
+## About
+
+Graphic designer and full stack web developer from Chihuahua, Mexico, with 15+ years creating digital experiences (since 2010). He designs in Figma, Photoshop and Illustrator and builds with React, Astro, TypeScript, Node.js and Supabase. Founder of Aniwa (beaniwa.com), a digital agency. Works in English and Spanish.
+
+Alan comes from graphic design and now builds from start to finish: he designs the interface and develops it, so every project goes from idea to code without losing its visual care.
+
+He creates modern, responsive, fast and accessible websites and web applications tailored to each business, from marketing sites and catalogs to marketplaces and full stack apps.
+
+Through Aniwa he also offers branding, SEO and social media for local and international businesses.
+
+## Services
+
+- Web development: websites, landing pages, catalogs and marketplaces (Astro, React, TypeScript).
+- Full stack web applications (Node.js, Express, MongoDB, PostgreSQL / Supabase, real-time with Socket.IO).
+- UI/UX and graphic design: interfaces, prototypes, branding and illustration (Figma, Adobe Creative Cloud).
+- Performance, accessibility (WCAG) and SEO for existing sites.
+
+## Skills
+
+- Design: Photoshop, Illustrator, After Effects, Figma, SVG
+- Frontend: HTML, CSS, JavaScript, TypeScript, React, Astro, Tailwind CSS
+- Backend: Node.js, Express, MongoDB, PostgreSQL, Supabase
+- Expertise: Project management with Agile methodology, Digital marketing and SEO, Branding, Negotiation and communication
+- Tools: VS Code, Git, Vite, Bash, npm, Postman, Docker, Netlify, Material UI, Adobe Creative Cloud.
+
+## Experience
+
+### Aniwa · beaniwa.com — Founder · Developer & Digital Designer (2010 – Present)
+
+Digital agency: web development, branding, SEO and social media for local and international businesses.
+
+- Automercado (https://automercado.com.mx, 2026): Car marketplace for private buyers and sellers in Mexico. Astro + React, Supabase, Mercado Pago, Upstash Redis.
+- Cal’s Auto Credit (https://calsautocreditinc.com, 2026): Bilingual used-car catalog for a dealership in Dallas, Texas. Astro SSR, Supabase, Tailwind.
+- Mercado Regional (https://mercadoregional.com.mx, 2025): Website and blog for a regional products store in Cd. Cuauhtémoc. Astro, MDX, Tailwind.
+- Forja Norte (https://forjanorte.com.mx, 2025): Web presence for a metalwork and welding company in Chihuahua. Astro, React, TypeScript.
+
+## Projects
+
+### Marvel Wiki (React app, 2024)
+
+Search and explore Marvel characters in a React app with a comic-book look.
+
+Marvel Wiki lets you enter with your hero name and browse the Marvel universe: search characters, move through pages of results and open a detail view for each one.
+
+The interface is designed like a comic book, with a red sunburst background, speech bubbles and bold comic lettering, so exploring the data feels like flipping through an issue.
+
+Features:
+- Sign-in with a hero name, remembered in localStorage.
+- Instant search by name, real name or alias, ignoring case, accents and punctuation.
+- Pagination to move through the whole character list.
+- Detail page for every character, with its own route.
+- Background audio to set the mood.
+
+How it’s built:
+- Global state with useContext and useReducer, without an external state library.
+- Search normalizes text before comparing, so “spiderman” also finds “Spider-Man”.
+- When the official Marvel developer API was retired in late 2025, the app moved to the open SuperHero API dataset, so it no longer needs API keys.
+
+Stack: React, React Router, Context API + useReducer, Vite, CSS, SuperHero API
+Case study: https://www.alanquintana.pro/projects/marvel-wiki/ · Live demo: https://marvelwiki.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/marvel-app
+
+### CRUD Users (React app, 2024)
+
+User management with Material 3 Expressive design and a serverless API.
+
+CRUD Users is an app to create, read, update and delete users, built to feel like a native Android app: an alphabetical list with section letters, a search bar and a bottom sheet with each user’s details.
+
+It follows Material 3 Expressive, with the 2025 color spec, expressive shapes, spring motion and light, dark or system theme.
+
+Features:
+- Create, edit and delete users with validated forms.
+- Search by name or email, with users listed alphabetically.
+- Bottom sheet with the details of each user, such as email and birthday.
+- Profile photo cropped to a square and resized to 150×150 px in the browser before upload.
+- System, light and dark theme, switchable from the search bar.
+
+How it’s built:
+- Forms managed with React Hook Form and validated with Yup schemas.
+- The users API (/api/v1/users) is a Netlify Function backed by Netlify Blobs, so there is no separate backend to maintain.
+- Resizing photos on the client keeps uploads light and fast.
+
+Stack: React, Material UI (Material 3 Expressive), React Hook Form + Yup, Axios, Vite, Netlify Functions, Netlify Blobs
+Case study: https://www.alanquintana.pro/projects/crud-users/ · Live demo: https://crudusers.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/CRUD
+
+### Rick and Morty Wiki (React app, 2024)
+
+Explore Rick and Morty locations and the characters who live in them.
+
+Rick and Morty Wiki is a location explorer for the series. Each place shows its type, dimension and population, along with cards for every resident.
+
+The data comes live from the public Rick and Morty API, and the interface uses a custom hero with the show’s portal and CSS animations.
+
+Features:
+- Search locations by ID or name.
+- Location details: type, dimension and population.
+- Resident cards with name, picture and status (alive, dead or unknown).
+- Custom hero section with animations.
+
+How it’s built:
+- HTTP requests handled by a custom useFetch hook built on Axios, reused across the app.
+- Combines each location with the data of its residents to show who lives in every place.
+
+Stack: React, Axios, Custom hook useFetch, CSS animations, Vite, Rick and Morty API
+Case study: https://www.alanquintana.pro/projects/rick-and-morty-wiki/ · Live demo: https://rickandmorty.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/rick-morty
+
+### Weather App (React app, 2024)
+
+Check the current weather of any city in the world.
+
+Weather App shows the current conditions of any city: temperature, wind speed, cloudiness and pressure, with an icon that matches the weather.
+
+It uses Material components for a clean, consistent interface that adapts to mobile, tablet and desktop.
+
+Features:
+- Search the current weather of any city.
+- Temperature, wind speed, cloudiness and pressure.
+- Switch between Celsius and Fahrenheit.
+- Weather icon for each condition.
+- Responsive layout for every screen size.
+
+How it’s built:
+- Live data from the OpenWeatherMap API, requested with Axios.
+- Application state and logic split into several React hooks.
+
+Stack: React, Material Web components, Axios, Vite, CSS, OpenWeatherMap API
+Case study: https://www.alanquintana.pro/projects/weather-app/ · Live demo: https://weatherapp.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/weather-app
+
+### Fortune Cookie (React app, 2024)
+
+Open a virtual fortune cookie and get a new phrase every time.
+
+Fortune Cookie is a small, playful React app: press “Try” and a new message appears, just like breaking a real fortune cookie.
+
+Each visit gets a different color theme, so the illustrated cookie and its banner never look quite the same.
+
+Features:
+- Random fortune phrase on every try.
+- Illustrated cookie with a phrase banner.
+- Random color theme on each visit.
+- Light and fast, built with Vite.
+
+How it’s built:
+- The phrases live in a JSON file, so adding new ones needs no code changes.
+- Built with React and plain CSS, with no extra libraries.
+
+Stack: React, Vite, CSS, JSON
+Case study: https://www.alanquintana.pro/projects/fortune-cookie/ · Live demo: https://fortunecookie.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/Fortune-Cookie
+
+### Traktl (Full stack app, 2025)
+
+Full stack time tracker with projects, tasks, reports and real-time sync.
+
+Traktl is a time tracking app for freelancers, professionals and teams. It tracks time across projects, clients and tasks, and turns it into reports that show where the hours go.
+
+It is a full stack project: a React and TypeScript frontend, and a Node.js, Express and MongoDB backend with real-time communication.
+
+Features:
+- Sign-in with email and password or with Google.
+- Timer with start and stop, plus manual time entries.
+- Projects, clients and tasks, with customizable tags.
+- Timer presets for frequent configurations.
+- Reports and charts of how time is used.
+- Real-time sync across devices.
+- Light and dark theme, in English, Spanish and Turkish.
+
+How it’s built:
+- Backend in TypeScript with Express, organized with Domain-Driven Design.
+- Socket.IO keeps every open session in sync in real time.
+- Authentication with JWT and Google OAuth through Passport.
+- Frontend state with Zustand, charts with Recharts and translations with i18next.
+
+Stack: React, TypeScript, Vite, Tailwind CSS, Zustand, i18next, Recharts, Socket.IO, Node.js, Express, MongoDB, JWT, Google OAuth
+Case study: https://www.alanquintana.pro/projects/traktl/ · Live demo: https://traktl.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/Traktl
+
+## Education
+
+- Web Developer — Academlo School of Technology and Computer Science (2024 – 2025)
+
+## Languages
+
+- English B2
+- Spanish Native
+
+## Contact
+
+- Email: hello@alanquintana.pro
+- WhatsApp: +52 614 110 5668
+- Location: Chihuahua, Mexico
+- Website: https://www.alanquintana.pro/
+- GitHub: https://github.com/AlanDkoXS
+- LinkedIn: https://www.linkedin.com/in/alanxs/
+- Dribbble: https://dribbble.com/Alan3XS
+- Instagram: https://www.instagram.com/anotherguyontheroad/
+- X: https://x.com/AlanDKO
+- Aniwa: https://beaniwa.com
+
+## Frequently asked questions
+
+**Who is Alan Quintana?**
+A graphic designer and full stack web developer based in Chihuahua, Mexico, founder of the digital agency Aniwa.
+
+**Is he a designer or a developer?**
+Both: he designs interfaces and brands and also develops the frontend and backend.
+
+**Which technologies does he use?**
+React, Astro, TypeScript, JavaScript, Node.js, Express, MongoDB, PostgreSQL, Supabase and Tailwind CSS; for design, Figma, Photoshop, Illustrator and After Effects.
+
+**Can I hire him for a project?**
+Yes. You can write to hello@alanquintana.pro, message him on WhatsApp (+52 614 110 5668) or use the contact form at https://www.alanquintana.pro/#contact.
+
+**Does he work in English?**
+Yes. He works in Spanish (native) and English (B2), and this site exists in both languages.
+
+**Where can I see his work?**
+In the projects section of the site, with a case study for each project, and on GitHub (github.com/AlanDkoXS).
+
+**Where can I get his resume?**
+At https://www.alanquintana.pro/resume, with PDF downloads in English and Spanish.
+
+---
+
+# Español
+
+## Sobre Alan
+
+Diseñador gráfico y desarrollador web full stack de Chihuahua, México, con más de 15 años creando experiencias digitales (desde 2010). Diseña en Figma, Photoshop e Illustrator y desarrolla con React, Astro, TypeScript, Node.js y Supabase. Fundador de Aniwa (beaniwa.com), agencia digital. Trabaja en español e inglés.
+
+Alan viene del diseño gráfico y hoy desarrolla de principio a fin: diseña la interfaz y la programa, así cada proyecto pasa de la idea al código sin perder el cuidado visual.
+
+Crea sitios y aplicaciones web modernos, responsivos, rápidos y accesibles, adaptados a cada negocio: desde sitios de marketing y catálogos hasta marketplaces y apps full stack.
+
+A través de Aniwa también ofrece branding, SEO y redes sociales para negocios locales e internacionales.
+
+## Servicios
+
+- Desarrollo web: sitios, landing pages, catálogos y marketplaces (Astro, React, TypeScript).
+- Aplicaciones web full stack (Node.js, Express, MongoDB, PostgreSQL / Supabase, tiempo real con Socket.IO).
+- Diseño UI/UX y gráfico: interfaces, prototipos, branding e ilustración (Figma, Adobe Creative Cloud).
+- Rendimiento, accesibilidad (WCAG) y SEO para sitios existentes.
+
+## Habilidades
+
+- Diseño: Photoshop, Illustrator, After Effects, Figma, SVG
+- Frontend: HTML, CSS, JavaScript, TypeScript, React, Astro, Tailwind CSS
+- Backend: Node.js, Express, MongoDB, PostgreSQL, Supabase
+- Habilidades: Gestión de proyectos con metodología ágil, Marketing digital y SEO, Branding, Negociación y comunicación
+- Herramientas: VS Code, Git, Vite, Bash, npm, Postman, Docker, Netlify, Material UI, Adobe Creative Cloud.
+
+## Experiencia
+
+### Aniwa · beaniwa.com — Fundador · Desarrollador y Diseñador Digital (2010 – Actual)
+
+Agencia digital: desarrollo web, branding, SEO y redes sociales para negocios locales e internacionales.
+
+- Automercado (https://automercado.com.mx, 2026): Marketplace de autos entre particulares en México. Astro + React, Supabase, Mercado Pago, Upstash Redis.
+- Cal’s Auto Credit (https://calsautocreditinc.com, 2026): Catálogo bilingüe de autos usados para una agencia en Dallas, Texas. Astro SSR, Supabase, Tailwind.
+- Mercado Regional (https://mercadoregional.com.mx, 2025): Sitio web y blog para una tienda de productos regionales en Cd. Cuauhtémoc. Astro, MDX, Tailwind.
+- Forja Norte (https://forjanorte.com.mx, 2025): Presencia web para una empresa de herrería y soldadura en Chihuahua. Astro, React, TypeScript.
+
+## Proyectos
+
+### Wiki de Marvel (App en React, 2024)
+
+Busca y explora personajes de Marvel en una app de React con estilo de cómic.
+
+Wiki de Marvel te deja entrar con tu nombre de héroe y recorrer el universo Marvel: buscar personajes, avanzar por páginas de resultados y abrir el detalle de cada uno.
+
+La interfaz está diseñada como un cómic, con fondo rojo de rayos, globos de diálogo y rotulación de historieta, para que explorar los datos se sienta como hojear un número.
+
+Funcionalidades:
+- Acceso con nombre de héroe, recordado en localStorage.
+- Búsqueda instantánea por nombre, nombre real o alias, sin importar mayúsculas, acentos ni signos.
+- Paginación para recorrer toda la lista de personajes.
+- Página de detalle para cada personaje, con su propia ruta.
+- Audio de fondo para ambientar la experiencia.
+
+Cómo está hecho:
+- Estado global con useContext y useReducer, sin librerías externas de estado.
+- La búsqueda normaliza el texto antes de comparar, así “spiderman” también encuentra “Spider-Man”.
+- Cuando la API oficial de Marvel se retiró a finales de 2025, la app migró al dataset abierto SuperHero API, y ya no necesita claves de API.
+
+Tecnologías: React, React Router, Context API + useReducer, Vite, CSS, SuperHero API
+Caso de estudio: https://www.alanquintana.pro/es/proyectos/marvel-wiki/ · Demo: https://marvelwiki.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/marvel-app
+
+### CRUD de usuarios (App en React, 2024)
+
+Gestión de usuarios con diseño Material 3 Expressive y una API serverless.
+
+CRUD de usuarios es una app para crear, consultar, editar y eliminar usuarios, pensada para sentirse como una app nativa de Android: lista alfabética con letras de sección, barra de búsqueda y una hoja inferior con el detalle de cada usuario.
+
+Sigue Material 3 Expressive, con la especificación de color de 2025, formas expresivas, movimiento con resortes y tema claro, oscuro o del sistema.
+
+Funcionalidades:
+- Crear, editar y eliminar usuarios con formularios validados.
+- Búsqueda por nombre o correo, con los usuarios ordenados alfabéticamente.
+- Hoja inferior con el detalle de cada usuario, como correo y cumpleaños.
+- Foto de perfil recortada en cuadrado y redimensionada a 150×150 px en el navegador antes de subirla.
+- Tema del sistema, claro u oscuro, que se cambia desde la barra de búsqueda.
+
+Cómo está hecho:
+- Formularios con React Hook Form, validados con esquemas de Yup.
+- La API de usuarios (/api/v1/users) es una Netlify Function respaldada por Netlify Blobs, así que no hay un backend aparte que mantener.
+- Redimensionar las fotos en el navegador mantiene las subidas ligeras y rápidas.
+
+Tecnologías: React, Material UI (Material 3 Expressive), React Hook Form + Yup, Axios, Vite, Netlify Functions, Netlify Blobs
+Caso de estudio: https://www.alanquintana.pro/es/proyectos/crud-users/ · Demo: https://crudusers.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/CRUD
+
+### Wiki de Rick and Morty (App en React, 2024)
+
+Explora las ubicaciones de Rick and Morty y los personajes que viven en ellas.
+
+Wiki de Rick and Morty es un explorador de ubicaciones de la serie. Cada lugar muestra su tipo, dimensión y población, junto con tarjetas de todos sus residentes.
+
+Los datos llegan en vivo de la API pública de Rick and Morty, y la interfaz usa un encabezado propio con el portal de la serie y animaciones en CSS.
+
+Funcionalidades:
+- Búsqueda de ubicaciones por ID o nombre.
+- Detalle de cada ubicación: tipo, dimensión y población.
+- Tarjetas de residentes con nombre, imagen y estado (vivo, muerto o desconocido).
+- Sección principal propia con animaciones.
+
+Cómo está hecho:
+- Las peticiones HTTP pasan por un hook propio, useFetch, construido sobre Axios y reutilizado en toda la app.
+- Combina cada ubicación con los datos de sus residentes para mostrar quién vive en cada lugar.
+
+Tecnologías: React, Axios, Custom hook useFetch, CSS animations, Vite, Rick and Morty API
+Caso de estudio: https://www.alanquintana.pro/es/proyectos/rick-and-morty-wiki/ · Demo: https://rickandmorty.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/rick-morty
+
+### App del clima (App en React, 2024)
+
+Consulta el clima actual de cualquier ciudad del mundo.
+
+App del clima muestra las condiciones actuales de cualquier ciudad: temperatura, velocidad del viento, nubosidad y presión, con un ícono acorde al clima.
+
+Usa componentes de Material para una interfaz limpia y consistente que se adapta a móvil, tableta y escritorio.
+
+Funcionalidades:
+- Búsqueda del clima actual de cualquier ciudad.
+- Temperatura, velocidad del viento, nubosidad y presión.
+- Cambio entre grados Celsius y Fahrenheit.
+- Ícono del clima para cada condición.
+- Diseño adaptable a cualquier pantalla.
+
+Cómo está hecho:
+- Datos en vivo de la API de OpenWeatherMap, solicitados con Axios.
+- El estado y la lógica de la app se reparten en varios hooks de React.
+
+Tecnologías: React, Material Web components, Axios, Vite, CSS, OpenWeatherMap API
+Caso de estudio: https://www.alanquintana.pro/es/proyectos/weather-app/ · Demo: https://weatherapp.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/weather-app
+
+### Galleta de la fortuna (App en React, 2024)
+
+Abre una galleta de la fortuna virtual y recibe una frase nueva cada vez.
+
+Galleta de la fortuna es una app pequeña y divertida en React: presiona “Probar” y aparece un mensaje nuevo, como al romper una galleta de verdad.
+
+Cada visita usa una combinación de color distinta, así la galleta ilustrada y su listón nunca se ven igual.
+
+Funcionalidades:
+- Frase aleatoria en cada intento.
+- Galleta ilustrada con listón para la frase.
+- Combinación de color aleatoria en cada visita.
+- Ligera y rápida, construida con Vite.
+
+Cómo está hecho:
+- Las frases viven en un archivo JSON, así que agregar nuevas no requiere tocar el código.
+- Hecha con React y CSS, sin librerías adicionales.
+
+Tecnologías: React, Vite, CSS, JSON
+Caso de estudio: https://www.alanquintana.pro/es/proyectos/fortune-cookie/ · Demo: https://fortunecookie.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/Fortune-Cookie
+
+### Traktl (App full stack, 2025)
+
+Registro de tiempo full stack con proyectos, tareas, reportes y sincronización en tiempo real.
+
+Traktl es una app de registro de tiempo para freelancers, profesionales y equipos. Mide el tiempo por proyecto, cliente y tarea, y lo convierte en reportes que muestran en qué se van las horas.
+
+Es un proyecto full stack: frontend en React con TypeScript, y backend en Node.js, Express y MongoDB con comunicación en tiempo real.
+
+Funcionalidades:
+- Acceso con correo y contraseña o con Google.
+- Temporizador con inicio y paro, más registros de tiempo manuales.
+- Proyectos, clientes y tareas, con etiquetas personalizables.
+- Configuraciones guardadas del temporizador para usos frecuentes.
+- Reportes y gráficas del uso del tiempo.
+- Sincronización en tiempo real entre dispositivos.
+- Tema claro y oscuro, en inglés, español y turco.
+
+Cómo está hecho:
+- Backend en TypeScript con Express, organizado con Domain-Driven Design.
+- Socket.IO mantiene sincronizadas en tiempo real todas las sesiones abiertas.
+- Autenticación con JWT y Google OAuth mediante Passport.
+- Estado del frontend con Zustand, gráficas con Recharts y traducciones con i18next.
+
+Tecnologías: React, TypeScript, Vite, Tailwind CSS, Zustand, i18next, Recharts, Socket.IO, Node.js, Express, MongoDB, JWT, Google OAuth
+Caso de estudio: https://www.alanquintana.pro/es/proyectos/traktl/ · Demo: https://traktl.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/Traktl
+
+## Educación
+
+- Desarrollador Web — Academlo School of Technology and Computer Science (2024 – 2025)
+
+## Idiomas
+
+- Inglés B2
+- Español nativo
+
+## Contacto
+
+- Email: hello@alanquintana.pro
+- WhatsApp: +52 614 110 5668
+- Ubicación: Chihuahua, México
+- Sitio: https://www.alanquintana.pro/es/
+- GitHub: https://github.com/AlanDkoXS
+- LinkedIn: https://www.linkedin.com/in/alanxs/
+- Dribbble: https://dribbble.com/Alan3XS
+- Instagram: https://www.instagram.com/anotherguyontheroad/
+- X: https://x.com/AlanDKO
+- Aniwa: https://beaniwa.com
+
+## Preguntas frecuentes
+
+**¿Quién es Alan Quintana?**
+Un diseñador gráfico y desarrollador web full stack de Chihuahua, México, fundador de la agencia digital Aniwa.
+
+**¿Es diseñador o desarrollador?**
+Las dos cosas: diseña interfaces y marcas, y también desarrolla el frontend y el backend.
+
+**¿Qué tecnologías usa?**
+React, Astro, TypeScript, JavaScript, Node.js, Express, MongoDB, PostgreSQL, Supabase y Tailwind CSS; para diseño, Figma, Photoshop, Illustrator y After Effects.
+
+**¿Puedo contratarlo para un proyecto?**
+Sí. Puedes escribirle a hello@alanquintana.pro, mandarle mensaje por WhatsApp (+52 614 110 5668) o usar el formulario en https://www.alanquintana.pro/es/#contact.
+
+**¿Trabaja en inglés?**
+Sí. Trabaja en español (nativo) e inglés (B2), y este sitio está en ambos idiomas.
+
+**¿Dónde veo su trabajo?**
+En la sección de proyectos del sitio, con un caso de estudio por proyecto, y en GitHub (github.com/AlanDkoXS).
+
+**¿Dónde está su CV?**
+En https://www.alanquintana.pro/resume, con descargas en PDF en inglés y español.

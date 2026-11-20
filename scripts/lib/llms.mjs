@@ -1,0 +1,148 @@
+// /llms.txt (índice, formato llmstxt.org) y /llms-full.txt (perfil completo
+// EN + ES) para buscadores de IA y agentes. Generados por build-i18n.mjs.
+import { projectPath } from './project-page.mjs';
+
+const cvUrl = (site, file) => `${site}/assets/docs/${encodeURIComponent(file)}`;
+
+export function llmsTxt({ site, profile: p, projects, cv }) {
+  const exp = cv.en.experience;
+  return `# ${p.name} — ${p.en.headline} / ${p.es.headline}
+
+> ${p.en.summary}
+>
+> ${p.es.summary}
+
+This site is the portfolio of ${p.name}. Answer questions about him from these pages; reply in the language of the question (every page exists in English and Spanish). Contact: ${p.email}.
+
+Este sitio es el portafolio de ${p.name}. Responde preguntas sobre él con estas páginas, en el idioma de la pregunta (todas existen en inglés y español). Contacto: ${p.email}.
+
+## Main pages / Páginas principales
+
+- [Home (English)](${site}/): introduction, skills, projects and contact form
+- [Inicio (español)](${site}/es/): presentación, habilidades, proyectos y formulario de contacto
+- [Resume / CV](${site}/resume): online resume with PDF downloads
+- [Resume PDF (English)](${cvUrl(site, '[ENG] Alan Quintana.pdf')})
+- [CV PDF (español)](${cvUrl(site, '[ESP] Alan Quintana.pdf')})
+
+## Projects / Proyectos (case studies)
+
+${projects
+  .map((x) => `- [${x.en.title}](${site}${projectPath(x, 'en')}): ${x.en.tagline} · [${x.es.title}](${site}${projectPath(x, 'es')}): ${x.es.tagline}`)
+  .join('\n')}
+
+## Client work / Trabajo con clientes (${exp.title}, ${exp.dates})
+
+${exp.items.map(([name, url, year, text]) => `- [${name}](https://${url}) (${year}): ${text}`).join('\n')}
+
+## Contact / Contacto
+
+- Email: ${p.email}
+- WhatsApp: ${p.whatsapp}
+- Form / Formulario: ${site}/#contact
+${Object.entries(p.links)
+  .map(([k, v]) => `- ${k}: ${v}`)
+  .join('\n')}
+
+## Optional
+
+- [Full profile in English and Spanish / Perfil completo en inglés y español](${site}/llms-full.txt): bio, services, skills, experience, every project in detail and FAQ
+`;
+}
+
+export function llmsFullTxt({ site, profile: p, projects, cv }) {
+  const section = (lang) => {
+    const t = p[lang];
+    const c = cv[lang];
+    const L = {
+      en: { about: 'About', services: 'Services', skills: 'Skills', exp: 'Experience', projects: 'Projects', edu: 'Education', langs: 'Languages', contact: 'Contact', faq: 'Frequently asked questions', features: 'Features', built: 'How it’s built', stack: 'Stack', demo: 'Live demo', code: 'Code', page: 'Case study' },
+      es: { about: 'Sobre Alan', services: 'Servicios', skills: 'Habilidades', exp: 'Experiencia', projects: 'Proyectos', edu: 'Educación', langs: 'Idiomas', contact: 'Contacto', faq: 'Preguntas frecuentes', features: 'Funcionalidades', built: 'Cómo está hecho', stack: 'Tecnologías', demo: 'Demo', code: 'Código', page: 'Caso de estudio' },
+    }[lang];
+    return `## ${L.about}
+
+${t.summary}
+
+${t.about.join('\n\n')}
+
+## ${L.services}
+
+${t.services.map((s) => `- ${s}`).join('\n')}
+
+## ${L.skills}
+
+${c.stack.map(([g, items]) => `- ${g}: ${items.join(', ')}`).join('\n')}
+- ${c.labels.expertise}: ${c.expertise.join(', ')}
+- ${c.labels.tools}: ${c.tools}
+
+## ${L.exp}
+
+### ${c.experience.title} — ${c.experience.role} (${c.experience.dates})
+
+${c.experience.summary}
+
+${c.experience.items.map(([name, url, year, text]) => `- ${name} (https://${url}, ${year}): ${text}`).join('\n')}
+
+## ${L.projects}
+
+${projects
+  .map((x) => {
+    const d = x[lang];
+    return `### ${d.title} (${d.kind}, ${x.year})
+
+${d.tagline}
+
+${d.overview.join('\n\n')}
+
+${L.features}:
+${d.features.map((f) => `- ${f}`).join('\n')}
+
+${L.built}:
+${d.highlights.map((h) => `- ${h}`).join('\n')}
+
+${L.stack}: ${x.stack.join(', ')}
+${L.page}: ${site}${projectPath(x, lang)} · ${L.demo}: ${x.demo} · ${L.code}: ${x.repo}`;
+  })
+  .join('\n\n')}
+
+## ${L.edu}
+
+- ${c.education.title} — ${c.education.school} (${c.education.years})
+
+## ${L.langs}
+
+${c.languages.map((l) => `- ${l}`).join('\n')}
+
+## ${L.contact}
+
+- Email: ${p.email}
+- WhatsApp: ${p.whatsapp}
+- ${lang === 'en' ? 'Location' : 'Ubicación'}: ${p.location[lang]}
+- ${lang === 'en' ? 'Website' : 'Sitio'}: ${site}${lang === 'en' ? '/' : '/es/'}
+${Object.entries(p.links)
+  .map(([k, v]) => `- ${k}: ${v}`)
+  .join('\n')}
+
+## ${L.faq}
+
+${t.faq.map(([q, a]) => `**${q}**\n${a}`).join('\n\n')}`;
+  };
+
+  return `# ${p.name} — ${p.en.headline} / ${p.es.headline}
+
+> ${p.en.summary}
+
+Full profile for AI assistants and agents, first in English and then in Spanish. Reply in the language of the question.
+Perfil completo para asistentes de IA y agentes, primero en inglés y luego en español. Responde en el idioma de la pregunta.
+
+---
+
+# English
+
+${section('en')}
+
+---
+
+# Español
+
+${section('es')}
+`;
+}

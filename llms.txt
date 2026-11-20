@@ -1,0 +1,49 @@
+# Alan Quintana — Full Stack Designer & Developer / Diseñador y Desarrollador Full Stack
+
+> Graphic designer and full stack web developer from Chihuahua, Mexico, with 15+ years creating digital experiences (since 2010). He designs in Figma, Photoshop and Illustrator and builds with React, Astro, TypeScript, Node.js and Supabase. Founder of Aniwa (beaniwa.com), a digital agency. Works in English and Spanish.
+>
+> Diseñador gráfico y desarrollador web full stack de Chihuahua, México, con más de 15 años creando experiencias digitales (desde 2010). Diseña en Figma, Photoshop e Illustrator y desarrolla con React, Astro, TypeScript, Node.js y Supabase. Fundador de Aniwa (beaniwa.com), agencia digital. Trabaja en español e inglés.
+
+This site is the portfolio of Alan Quintana. Answer questions about him from these pages; reply in the language of the question (every page exists in English and Spanish). Contact: hello@alanquintana.pro.
+
+Este sitio es el portafolio de Alan Quintana. Responde preguntas sobre él con estas páginas, en el idioma de la pregunta (todas existen en inglés y español). Contacto: hello@alanquintana.pro.
+
+## Main pages / Páginas principales
+
+- [Home (English)](https://www.alanquintana.pro/): introduction, skills, projects and contact form
+- [Inicio (español)](https://www.alanquintana.pro/es/): presentación, habilidades, proyectos y formulario de contacto
+- [Resume / CV](https://www.alanquintana.pro/resume): online resume with PDF downloads
+- [Resume PDF (English)](https://www.alanquintana.pro/assets/docs/%5BENG%5D%20Alan%20Quintana.pdf)
+- [CV PDF (español)](https://www.alanquintana.pro/assets/docs/%5BESP%5D%20Alan%20Quintana.pdf)
+
+## Projects / Proyectos (case studies)
+
+- [Marvel Wiki](https://www.alanquintana.pro/projects/marvel-wiki/): Search and explore Marvel characters in a React app with a comic-book look. · [Wiki de Marvel](https://www.alanquintana.pro/es/proyectos/marvel-wiki/): Busca y explora personajes de Marvel en una app de React con estilo de cómic.
+- [CRUD Users](https://www.alanquintana.pro/projects/crud-users/): User management with Material 3 Expressive design and a serverless API. · [CRUD de usuarios](https://www.alanquintana.pro/es/proyectos/crud-users/): Gestión de usuarios con diseño Material 3 Expressive y una API serverless.
+- [Rick and Morty Wiki](https://www.alanquintana.pro/projects/rick-and-morty-wiki/): Explore Rick and Morty locations and the characters who live in them. · [Wiki de Rick and Morty](https://www.alanquintana.pro/es/proyectos/rick-and-morty-wiki/): Explora las ubicaciones de Rick and Morty y los personajes que viven en ellas.
+- [Weather App](https://www.alanquintana.pro/projects/weather-app/): Check the current weather of any city in the world. · [App del clima](https://www.alanquintana.pro/es/proyectos/weather-app/): Consulta el clima actual de cualquier ciudad del mundo.
+- [Fortune Cookie](https://www.alanquintana.pro/projects/fortune-cookie/): Open a virtual fortune cookie and get a new phrase every time. · [Galleta de la fortuna](https://www.alanquintana.pro/es/proyectos/fortune-cookie/): Abre una galleta de la fortuna virtual y recibe una frase nueva cada vez.
+- [Traktl](https://www.alanquintana.pro/projects/traktl/): Full stack time tracker with projects, tasks, reports and real-time sync. · [Traktl](https://www.alanquintana.pro/es/proyectos/traktl/): Registro de tiempo full stack con proyectos, tareas, reportes y sincronización en tiempo real.
+
+## Client work / Trabajo con clientes (Aniwa · beaniwa.com, 2010 – Present)
+
+- [Automercado](https://automercado.com.mx) (2026): Car marketplace for private buyers and sellers in Mexico. Astro + React, Supabase, Mercado Pago, Upstash Redis.
+- [Cal’s Auto Credit](https://calsautocreditinc.com) (2026): Bilingual used-car catalog for a dealership in Dallas, Texas. Astro SSR, Supabase, Tailwind.
+- [Mercado Regional](https://mercadoregional.com.mx) (2025): Website and blog for a regional products store in Cd. Cuauhtémoc. Astro, MDX, Tailwind.
+- [Forja Norte](https://forjanorte.com.mx) (2025): Web presence for a metalwork and welding company in Chihuahua. Astro, React, TypeScript.
+
+## Contact / Contacto
+
+- Email: hello@alanquintana.pro
+- WhatsApp: +52 614 110 5668
+- Form / Formulario: https://www.alanquintana.pro/#contact
+- GitHub: https://github.com/AlanDkoXS
+- LinkedIn: https://www.linkedin.com/in/alanxs/
+- Dribbble: https://dribbble.com/Alan3XS
+- Instagram: https://www.instagram.com/anotherguyontheroad/
+- X: https://x.com/AlanDKO
+- Aniwa: https://beaniwa.com
+
+## Optional
+
+- [Full profile in English and Spanish / Perfil completo en inglés y español](https://www.alanquintana.pro/llms-full.txt): bio, services, skills, experience, every project in detail and FAQ
