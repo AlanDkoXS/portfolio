@@ -28,7 +28,6 @@ Este sitio es el portafolio de Alan Quintana. Responde preguntas sobre él con e
 ## Client work / Trabajo con clientes (Aniwa · beaniwa.com, 2010 – Present)
 
 - [Automercado](https://automercado.com.mx) (2026): Car marketplace for private buyers and sellers in Mexico. Astro + React, Supabase, Mercado Pago, Upstash Redis.
-- [Cal’s Auto Credit](https://calsautocreditinc.com) (2026): Bilingual used-car catalog for a dealership in Dallas, Texas. Astro SSR, Supabase, Tailwind.
 - [Mercado Regional](https://mercadoregional.com.mx) (2025): Website and blog for a regional products store in Cd. Cuauhtémoc. Astro, MDX, Tailwind.
 - [Forja Norte](https://forjanorte.com.mx) (2025): Web presence for a metalwork and welding company in Chihuahua. Astro, React, TypeScript.
 

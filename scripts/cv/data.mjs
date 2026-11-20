@@ -41,7 +41,6 @@ export default {
       summary: 'Digital agency: web development, branding, SEO and social media for local and international businesses.',
       items: [
         ['Automercado', 'automercado.com.mx', '2026', 'Car marketplace for private buyers and sellers in Mexico. Astro + React, Supabase, Mercado Pago, Upstash Redis.'],
-        ['Cal’s Auto Credit', 'calsautocreditinc.com', '2026', 'Bilingual used-car catalog for a dealership in Dallas, Texas. Astro SSR, Supabase, Tailwind.'],
         ['Mercado Regional', 'mercadoregional.com.mx', '2025', 'Website and blog for a regional products store in Cd. Cuauhtémoc. Astro, MDX, Tailwind.'],
         ['Forja Norte', 'forjanorte.com.mx', '2025', 'Web presence for a metalwork and welding company in Chihuahua. Astro, React, TypeScript.'],
       ],
@@ -82,7 +81,6 @@ export default {
       summary: 'Agencia digital: desarrollo web, branding, SEO y redes sociales para negocios locales e internacionales.',
       items: [
         ['Automercado', 'automercado.com.mx', '2026', 'Marketplace de autos entre particulares en México. Astro + React, Supabase, Mercado Pago, Upstash Redis.'],
-        ['Cal’s Auto Credit', 'calsautocreditinc.com', '2026', 'Catálogo bilingüe de autos usados para una agencia en Dallas, Texas. Astro SSR, Supabase, Tailwind.'],
         ['Mercado Regional', 'mercadoregional.com.mx', '2025', 'Sitio web y blog para una tienda de productos regionales en Cd. Cuauhtémoc. Astro, MDX, Tailwind.'],
         ['Forja Norte', 'forjanorte.com.mx', '2025', 'Presencia web para una empresa de herrería y soldadura en Chihuahua. Astro, React, TypeScript.'],
       ],
