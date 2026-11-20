@@ -14,6 +14,10 @@
 }
 
 .bgGrain {
+  /* La imagen del grano se acaba a la mitad de la pantalla: un degradado
+     largo hace que se disuelva sin que se note dónde termina */
+  -webkit-mask: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.6) 25%, rgb(0 0 0 / 0.2) 45%, transparent 60%);
+  mask: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.6) 25%, rgb(0 0 0 / 0.2) 45%, transparent 60%);
   position: fixed;
   top: 50%;
   left: 50%;
@@ -24,6 +28,7 @@
   background-repeat: no-repeat;
   width: 100% !important;
   height: 100% !important;
+  opacity: 0.6;
 }
 
 .bgBack,
@@ -97,7 +102,7 @@
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
-    opacity: 0.8;
+    opacity: 0.6;
     height: 100%;
   }
 

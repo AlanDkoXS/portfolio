@@ -34,10 +34,6 @@
 body:has(#pdf-container) .header {
   opacity: 1;
   animation: none;
-  background-color: color-mix(in srgb, var(--bg-color-section) 92%, transparent);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--box-shadow);
 }
 
 /* Modal de descarga */

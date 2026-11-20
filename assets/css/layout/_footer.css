@@ -1,11 +1,35 @@
 /* ============= Footer ============= */
 .footer {
+  /* Fondo oscuro del footer (el mismo color que usa la barra del menú) */
+  position: relative;
+  isolation: isolate;
   background-color: var(--footer-bg);
   color: var(--footer-text);
-  --primary-color: var(--gold-400); /* footer siempre oscuro: acentos dorados en ambos temas */
-  border-top: 1px solid var(--border-color);
-  padding-bottom: 2rem;
+  --primary-color: var(--gold-400);
+  /* espacio entre el borde superior y el primer título */
+  padding: 2.5rem 0 2rem !important;
   bottom: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.footer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--grain-ink);
+  background-size: 140px;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* Modo oscuro: el footer queda exactamente del color de los campos del
+   formulario (sin grano encima que lo altere) */
+@container style(--color-scheme: dark) {
+  .footer::after {
+    display: none;
+  }
 }
 
 .footer__container {
@@ -13,15 +37,20 @@
   gap: 1rem;
 }
 
-.footer__info .footer__title {
-  font-size: 1.5rem;
+.footer .footer__title {
+  font-size: 1.1rem;
+  margin: 0 0 0.35rem;
+}
+
+.footer__social {
+  margin-top: 0.75rem;
 }
 
 .footer__social .footer__social-list {
   display: flex;
   gap: 1rem;
-  margin-top: 0.5rem;
-  font-size: 1.75rem;
+  margin-top: 0.4rem;
+  font-size: 1.4rem;
 }
 
 .footer__social-link {

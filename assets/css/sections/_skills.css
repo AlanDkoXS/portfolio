@@ -49,14 +49,9 @@
   width: 64px;
   height: 64px;
   object-fit: contain;
-  transition: transform 0.3s ease;
   fill: var(--primary-color);
   /* Sombra interna granulada, como los botones (filtro #grain-inset en index.html) */
   filter: url(#grain-inset);
-}
-
-.skills__icon:hover {
-  transform: scale(1.1);
 }
 
 .skills__icon-title {
@@ -71,6 +66,12 @@
 .skills__tags {
   display: flex;
   flex-direction: column;
+  /* Separada de las filas de tecnologías de arriba */
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+.skills__tags .skills__tags-title {
+  margin-bottom: 0.25rem;
 }
 
 .skills__tags .skills__tags-container {
@@ -89,7 +90,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  box-shadow: inset 0 0 10px rgb(184 144 26 / 0.55);
+  box-shadow: inset 0 0 14px rgb(176 136 20 / 0.62);
   filter: drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
   border-radius: 5px;
 }
@@ -100,10 +101,16 @@
    así el bucle no tiene saltos. Cada fila define --marquee-duration. */
 .skills__marquee {
   --marquee-gap: 1.25rem;
+  /* Decorativo: no se puede tocar, seleccionar ni arrastrar */
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  /* De orilla a orilla del navegador, aunque la sección tenga márgenes
+     (body ya tiene overflow-x: hidden, así que no aparece scroll lateral) */
+  --viewport-w: calc(100vw - var(--scrollbar-w, 0px));
+  width: var(--viewport-w);
+  margin-inline: calc(50% - var(--viewport-w) / 2);
   overflow: hidden;
-  /* Desvanecido en las orillas */
-  -webkit-mask: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  mask: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
 
 .skills__track {
@@ -130,9 +137,7 @@
     will-change: transform;
   }
 
-  /* Pausa al pasar el mouse, al enfocar o con el botón */
-  .skills__marquee:hover .skills__track,
-  .skills__marquee:focus-within .skills__track,
+  /* Solo se detiene con el botón de pausa (no con el mouse) */
   .skills__icons.is-paused .skills__track {
     animation-play-state: paused;
   }
@@ -154,11 +159,6 @@
 
 /* Con "reducir movimiento": sin bucle, una sola copia en filas centradas */
 @media (prefers-reduced-motion: reduce) {
-  .skills__marquee {
-    -webkit-mask: none;
-    mask: none;
-  }
-
   .skills__track {
     width: auto;
   }
@@ -174,7 +174,8 @@
   }
 }
 
-/* Botón pausar / reanudar */
+/* Botón pausar / reanudar: mismo estilo que los botones de contorno del
+   sitio (contorno y sombra dura dorados) */
 .skills__motion-toggle {
   justify-self: end;
   display: inline-grid;
@@ -182,22 +183,33 @@
   width: 2.25rem;
   height: 2.25rem;
   padding: 0;
-  font-size: 1.25rem;
   font: inherit;
-  font-size: var(--small-font-size);
-  color: var(--primary-color);
-  background: transparent;
-  border: 1px solid var(--border-color);
+  font-size: 1.25rem;
+  color: var(--accent-color);
+  background: var(--bg-color-section);
+  border: 2px solid var(--accent-color);
   border-radius: var(--border-radius-small);
+  box-shadow: 3px 3px 0 var(--accent-color);
   cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, translate 0.15s, box-shadow 0.15s;
 
-  &:hover {
-    border-color: var(--accent-color);
+  @media (hover: hover) {
+    &:hover {
+      color: var(--on-accent-color);
+      background: var(--accent-color);
+      translate: -2px -2px;
+      box-shadow: 5px 5px 0 var(--btn-ink-color);
+    }
+  }
+
+  &:active {
+    translate: 3px 3px;
+    box-shadow: 0 0 0 var(--accent-color);
   }
 
   &:focus-visible {
     outline: 3px solid var(--accent-ink);
-    outline-offset: 2px;
+    outline-offset: 3px;
   }
 
   &[hidden] {

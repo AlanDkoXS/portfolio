@@ -229,13 +229,20 @@ export function cardCarousel() {
       }
     }
 
+    // Escritorio: hay espacio para extender el carrusel hasta las flechas
+    isWide() {
+      return this.container.offsetWidth >= 700;
+    }
+
     calcScale(x) {
       // Only show cards that are close to the center
       if (Math.abs(x) > 2.5) {
         return 0; 
       }
 
-      const formula = 1 - (1 / 5) * Math.pow(x, 2);
+      // En escritorio las laterales se encogen menos (0.88 y 0.52)
+      const k = this.isWide() ? 0.12 : 1 / 5;
+      const formula = 1 - k * Math.pow(x, 2);
       return formula <= 0 ? 0 : formula;
     }
 
@@ -255,15 +262,24 @@ export function cardCarousel() {
         return 50; // Central position
       }
 
-      let formula;
-      if (x < 0) {
-        formula = (scale * 100 - this.cardWidth) / 2;
-      } else if (x > 0) {
-        formula = 100 - (scale * 100 + this.cardWidth) / 2;
-      } else {
-        formula = 100 - (scale * 100 + this.cardWidth) / 2;
+      // Posición del centro de la tarjeta (con translateX(-50%) en CSS):
+      // la central exactamente al 50% y las laterales simétricas a cada lado
+      if (this.isWide() && x != 0) {
+        // Escritorio: las de la orilla llegan cerca de las flechas, que están
+        // en las orillas del contenido (1024px). Las intermedias, a la mitad.
+        const W = this.container.offsetWidth;
+        const cardW = this.cards[0].offsetWidth;
+        // margen + flecha + 2rem de separación entre la flecha y la tarjeta
+        const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+        const arrowSpace = 16 + 48 + 2 * rem;
+        const half = Math.min(W, 1024) / 2 - arrowSpace;
+        const outer = half - (cardW * this.calcScale(2)) / 2;
+        const offset = Math.abs(x) >= 2 ? outer : outer * 0.52;
+        return 50 + (Math.sign(x) * offset * 100) / W;
       }
-      return formula;
+      if (x < 0) return scale * 50;
+      if (x > 0) return 100 - scale * 50;
+      return 50;
     }
 
     navigate(direction) {

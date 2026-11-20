@@ -7,18 +7,30 @@
   width: 100%;
   height: var(--header-height);
   align-content: center;
-  background-color: transparent;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
+  /* Vidrio con el color del footer al 90%, desenfoque detrás y textura de
+     grano encima */
+  isolation: isolate;
+  background-color: color-mix(in srgb, var(--footer-bg) 90%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.2);
   z-index: var(--z-modal);
-  /* Sin soporte de animaciones ligadas al scroll, el header simplemente se ve */
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
 
-  /* Con soporte: aparece al empezar a hacer scroll (en el hero no estorba) */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    /* grano uniforme (la imagen bgGrain solo tiene puntos arriba) */
+    background: var(--grain-ink);
+    background-size: 140px;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  /* Sin soporte de animaciones ligadas al scroll, el header simplemente se ve.
+     Con soporte: aparece al empezar a hacer scroll (en el hero no estorba) */
   @supports (animation-timeline: scroll()) {
     opacity: 0;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
     animation: animation-nav linear both;
     animation-timeline: scroll(root block);
     animation-range: 0 100px;
@@ -40,9 +52,7 @@
       top: -700%;
       left: 0;
       width: 100%;
-      border-radius: 0 0 12px 12px;
       background-color: var(--bg-color-section);
-      box-shadow: 0px 1px 9px 2px rgba(0, 0, 0, 0.14);
       padding: 2rem 0;
       transition: all 0.6s;
       z-index: var(--z-modal);
@@ -58,19 +68,43 @@
 
         .navbar__item {
           .navbar__link {
+            display: inline-block;
             color: var(--primary-color);
             font-size: 1.1rem;
             font-weight: 600;
-            transition: color 0.3s;
+            /* Mismo estilo que el botón de contorno ("Envía tu mensaje"):
+               contorno y sombra dura dorados */
+            padding: 0.2rem 0.65rem;
+            border: 2px solid var(--accent-color);
+            border-radius: var(--border-radius-small);
+            box-shadow: 3px 3px 0 var(--accent-color);
+            transition: color 0.15s, background-color 0.15s, transform 0.15s, box-shadow 0.15s;
 
-            &:hover {
-              color: var(--link-hover);
+            @media (hover: hover) {
+              &:hover {
+                color: var(--on-accent-color);
+                background-color: var(--accent-color);
+                box-shadow: 3px 3px 0 var(--btn-ink-color);
+              }
+            }
+
+            &:active {
+              transform: translate(3px, 3px);
+              box-shadow: 0 0 0 var(--accent-color);
+            }
+
+            &:focus-visible {
+              outline: 3px solid var(--accent-ink);
+              outline-offset: 3px;
             }
           }
 
+          /* Sección activa: rellena de dorado con texto en tinta, como el
+             botón de contorno cuando se activa */
           .active {
-            border-bottom: 3px solid var(--accent-color);
-            transform: translateY(0);
+            color: var(--on-accent-color);
+            background-color: var(--accent-color);
+            box-shadow: 3px 3px 0 var(--btn-ink-color);
             opacity: 1;
           }
         }
@@ -252,9 +286,6 @@
 @keyframes animation-nav {
   to {
     opacity: 1;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--box-shadow);
   }
 }
 
@@ -305,5 +336,312 @@
   .navbar__logo--name,
   .navbar__logo--lastname {
     display: visible;
+  }
+}
+
+/* ============= Escritorio: barra compacta, logo a la izquierda y opciones a la derecha ============= */
+@media (min-width: 600px) {
+  :root {
+    --header-height: 3.5rem;
+  }
+
+  .header .navbar {
+    max-width: none;
+    padding-inline: clamp(1rem, 3vw, 2.5rem);
+
+    .navbar__logo {
+      font-size: 1rem;
+    }
+
+    .navbar__menu {
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 0;
+
+      .navbar__list {
+        gap: clamp(0.6rem, 1.4vw, 1.25rem);
+
+        /* "Sobre mí" no se muestra en escritorio: que tampoco deje su hueco */
+        .navbar__item:has(> a[href$='#about']) {
+          display: none;
+        }
+
+        .navbar__item .navbar__link {
+          font-size: 0.95rem;
+        }
+      }
+    }
+
+    .navbar__toggles {
+      gap: 1rem;
+    }
+
+    .navbar__toggle--darkmode,
+    .navbar__toggle--language {
+      height: 32px;
+    }
+
+    .navbar__toggle--darkmode i {
+      font-size: 1.4rem;
+    }
+
+
+  }
+
+  .header .logo {
+    width: 2.1rem !important;
+    height: 2.1rem !important;
+  }
+}
+
+/* ============= Botón de idioma: hover = vista previa, clic = confirmación =============
+   Al pasar el mouse la bandera gira y muestra el idioma al que se cambiará.
+   Al hacer clic esa misma bandera da un "pop" (no vuelve a girar) mientras
+   carga la otra página. El estado .is-switching lo pone switchLanguages.js. */
+/* Mismo prefijo que las reglas base del botón (.header .navbar …) para
+   ganarles en especificidad */
+@media (hover: hover) {
+  .header .navbar .navbar__toggle--language {
+    .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label:hover {
+      .navbar__toggle--language-en {
+        opacity: 0;
+        transform: rotate(180deg) scale(0);
+      }
+
+      .navbar__toggle--language-es {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+      }
+    }
+
+    .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label:hover {
+      .navbar__toggle--language-es {
+        opacity: 0;
+        transform: rotate(-180deg) scale(0);
+      }
+
+      .navbar__toggle--language-en {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+      }
+    }
+  }
+}
+
+/* Al hacer clic se queda la bandera del hover (el idioma destino) y rebota */
+.header .navbar .navbar__toggle--language.is-switching {
+  img {
+    transition: none !important;
+  }
+
+  .is-target {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .is-current {
+    opacity: 0 !important;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .is-target {
+      animation: lang-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both !important;
+    }
+  }
+}
+
+@keyframes lang-pop {
+  0% {
+    scale: 1;
+  }
+  40% {
+    scale: 1.3;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+/* Botón de idioma con el mismo estilo y la misma altura que las opciones del
+   menú: caja con contorno y sombra dura dorados, bandera al centro */
+.header .navbar .navbar__toggle--language {
+  height: auto;
+
+  .navbar__toggle--language-label {
+    box-sizing: border-box;
+    height: calc(1.5em + 0.4rem + 4px);
+    aspect-ratio: 1;
+    font-size: 0.95rem;
+    border: 2px solid var(--accent-color);
+    border-radius: var(--border-radius-small);
+    box-shadow: 3px 3px 0 var(--accent-color);
+    transition: box-shadow 0.15s, transform 0.15s, background-color 0.15s;
+  }
+
+  /* La bandera llena todo el botón (cuadrada, no circular) */
+  .navbar__toggle--language-label {
+    overflow: hidden;
+  }
+
+  .flag-wrapper {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* (.flag-wrapper img para ganarle a las reglas anteriores del botón) */
+  .flag-wrapper img {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* Cambio de bandera con zoom (sin giro): la que sale crece y se desvanece,
+     la que entra llega desde grande a su tamaño. Ninguna baja de su tamaño
+     completo, así que el botón siempre queda cubierto (no se ve el fondo). */
+  .flag-wrapper img {
+    transform: none !important;
+    scale: 1.4;
+    transition:
+      opacity 0.3s ease,
+      scale 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  }
+
+  .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label .navbar__toggle--language-en,
+  .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label .navbar__toggle--language-es {
+    scale: 1;
+  }
+
+  .navbar__toggle--language-label:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--accent-color);
+  }
+}
+
+@media (hover: hover) {
+  .header .navbar .navbar__toggle--language .navbar__toggle--language-label:hover {
+    background-color: var(--accent-color);
+    box-shadow: 3px 3px 0 var(--btn-ink-color);
+  }
+}
+
+@media (max-width: 599px) {
+  .header .navbar .navbar__toggle--language .navbar__toggle--language-label {
+    font-size: 1.1rem;
+  }
+}
+
+/* Hover: la vista previa del otro idioma también entra con zoom */
+@media (hover: hover) {
+  .header .navbar .navbar__toggle--language {
+    .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label:hover {
+      .navbar__toggle--language-en {
+        scale: 1.4;
+      }
+
+      .navbar__toggle--language-es {
+        scale: 1;
+      }
+    }
+
+    .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label:hover {
+      .navbar__toggle--language-es {
+        scale: 1.4;
+      }
+
+      .navbar__toggle--language-en {
+        scale: 1;
+      }
+    }
+  }
+}
+
+/* ============= Escritorio: menú sutil =============
+   Opciones como texto claro atenuado; la activa a brillo completo con un
+   trazo dorado corto debajo (el único toque de color del menú). */
+@media (min-width: 600px) {
+  .header .navbar .navbar__menu .navbar__list {
+    gap: 0.25rem;
+
+    .navbar__item .navbar__link {
+      position: relative;
+      padding: 0.25rem 0.7rem;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: none;
+      color: var(--footer-text);
+      opacity: 0.6;
+      transition: opacity 0.15s;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -0.1rem;
+        width: 1.1rem;
+        height: 2px;
+        translate: -50% 0;
+        background: var(--gold-400);
+        border-radius: 2px;
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+
+      &:active {
+        transform: none;
+      }
+    }
+
+    .navbar__item .active {
+      color: var(--footer-text);
+      background: none;
+      box-shadow: none;
+      opacity: 1;
+
+      &::after {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  @media (hover: hover) {
+    .header .navbar .navbar__menu .navbar__list .navbar__item .navbar__link:hover {
+      color: var(--footer-text);
+      background: none;
+      box-shadow: none;
+      opacity: 1;
+    }
+  }
+
+  /* Botón de idioma a juego: sin contorno ni sombra, del alto de una letra
+     del menú, con la bandera siempre desaturada (también en hover) */
+  .header .navbar .navbar__toggle--language .navbar__toggle--language-label {
+    height: 1.15em;
+    font-size: 0.95rem;
+    aspect-ratio: 4 / 3;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: none;
+    background: none;
+    filter: saturate(0.35) brightness(0.92);
+    opacity: 0.85;
+    transition: filter 0.2s, opacity 0.2s;
+  }
+
+  @media (hover: hover) {
+    .header .navbar .navbar__toggle--language .navbar__toggle--language-label:hover {
+      background: none;
+      box-shadow: none;
+      /* sigue desaturada; solo se aclara un poco */
+      opacity: 1;
+    }
+  }
+
+  .header .navbar .navbar__toggle--language .navbar__toggle--language-label:active {
+    transform: none;
   }
 }

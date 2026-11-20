@@ -2,10 +2,13 @@
 
 .project__container {
   position: relative;
-  height: 26rem;
+  /* alto = tarjeta + relleno: las flechas (top: 50%) quedan al centro de las tarjetas */
   padding: 20px;
-  margin-top: 2em;
-  overflow: hidden;
+  margin-top: 1.5rem;
+  /* Recorta solo a los lados (tarjetas fuera de vista); arriba y abajo deja
+     ver la sombra de las tarjetas */
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .project__card--carousel {
@@ -16,7 +19,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translateX(40%);
 }
 
 .project__card {
@@ -42,7 +44,11 @@
     transition: transform 0.6s;
   }
   border-radius: 1rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  /* Sombra que cae hacia los lados sobre las tarjetas de atrás */
+  box-shadow:
+    0 6px 14px rgb(0 0 0 / 0.25),
+    0 0 28px 4px rgb(0 0 0 / 0.35);
+  transition: box-shadow 0.3s ease;
 }
 
 .project__card:hover .project__card-inner {
@@ -70,6 +76,22 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1.25rem 1rem;
+}
+
+/* Anverso: textura de grano en toda la tarjeta, de arriba abajo (sin cortes),
+   un poco más densa hacia la base. Encima de la captura y debajo del texto e
+   íconos (z-index 3) */
+.project__card-front::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--grain-ink);
+  background-size: 140px;
+  -webkit-mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
+  mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 .project__card-back {
@@ -156,8 +178,15 @@
   content: "";
   position: absolute;
   inset: 0;
-  /* Velo oscuro solo detrás del texto (centro): las orillas dejan ver el diseño */
-  background: radial-gradient(ellipse 90% 42% at 50% 52%, rgb(0 18 25 / 0.82), rgb(0 18 25 / 0.12));
+  /* Velo oscuro que sube desde abajo: denso en la base, se aclara hacia
+     arriba (deja ver el diseño) y sigue cubriendo el texto del centro */
+  background: linear-gradient(
+    to top,
+    rgb(0 18 25 / 0.92) 0%,
+    rgb(0 18 25 / 0.72) 40%,
+    rgb(0 18 25 / 0.3) 70%,
+    rgb(0 18 25 / 0.05) 100%
+  );
   z-index: 2;
 }
 
@@ -298,37 +327,54 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: var(--surface-color);
-  color: var(--accent-ink);
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 14px var(--shadow-color);
-  border-radius: 50%;
+  /* Mismo estilo que los botones de contorno del sitio: contorno y sombra
+     dura dorados, se rellena al pasar el mouse y se hunde al presionar */
+  background-color: var(--bg-color-section);
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
+  border-radius: var(--border-radius-small);
+  box-shadow: 4px 4px 0 var(--accent-color);
   width: 3rem;
   height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.15s, color 0.15s, translate 0.15s, box-shadow 0.15s;
   z-index: var(--z-fixed);
 }
 
-.project__nav:hover {
-  background-color: var(--accent-color);
-  color: var(--on-accent-color);
-  transform: translateY(-50%) scale(1.1);
+@media (hover: hover) {
+  .project__nav:hover {
+    background-color: var(--accent-color);
+    color: var(--on-accent-color);
+    translate: -2px -2px;
+    box-shadow: 6px 6px 0 var(--btn-ink-color);
+  }
+}
+
+.project__nav:active {
+  translate: 4px 4px;
+  box-shadow: 0 0 0 var(--accent-color);
+}
+
+.project__nav:focus-visible {
+  outline: 3px solid var(--accent-ink);
+  outline-offset: 3px;
 }
 
 .project__nav i {
   font-size: 1.5rem;
 }
 
+/* Flechas en las orillas del contenido de la sección (mismo ancho máximo
+   que las demás secciones, 1024px), no en las orillas del navegador */
 .project__nav--prev {
-  left: 1rem;
+  left: max(1rem, (100% - 1024px) / 2 + 1rem);
 }
 
 .project__nav--next {
-  right: 1rem;
+  right: max(1rem, (100% - 1024px) / 2 + 1rem);
 }
 
 /* Transitions */
@@ -339,6 +385,18 @@
 .project__card.highlight {
   filter: brightness(1);
   z-index: 2;
+}
+
+/* Profundidad: la de enfrente proyecta una sombra más amplia sobre las de
+   atrás, y las de atrás se ven un poco más apagadas */
+.project__card.highlight .project__card-inner {
+  box-shadow:
+    0 14px 26px rgb(0 0 0 / 0.35),
+    0 0 46px 10px rgb(0 0 0 / 0.45);
+}
+
+.project__card:not(.highlight) {
+  filter: brightness(0.85);
 }
 
 /* Utils */
@@ -361,25 +419,38 @@
   }
 }
 
-/*Media Queries*/
-@media screen and (min-width: 600px) {
-  .project__card--carousel {
-    transform: translateX(10%);
+/* Escritorio: la sección cabe en una pantalla y queda centrada a lo alto.
+   El alto de las tarjetas depende del alto de la pantalla (entre 280 y 390 px)
+   y el ancho mantiene la proporción 4:5. */
+@media (min-width: 600px) {
+  #projects.section {
+    --card-h: clamp(280px, 100svh - 12rem, 390px);
+    padding-block: 0.5rem;
   }
+
+  #projects .section__title {
+    margin-block: 0;
+  }
+
+  #projects .project__container {
+    margin-top: 0.75rem;
+  }
+
+  #projects .project__card--carousel,
+  #projects .project__card {
+    height: var(--card-h);
+  }
+
+  #projects .project__card {
+    width: calc(var(--card-h) * 0.795);
+  }
+
 }
 
-/* Escritorio: tarjetas un poco más grandes (hay espacio y el texto respira) */
-@media (min-width: 900px) {
-  .project__card--carousel,
-  .project__card {
-    height: 390px;
-  }
-
-  .project__card {
-    width: 310px;
-  }
-
-  .project__container {
-    height: 29rem;
+/* Pantallas bajas: tarjetas más chicas, la descripción completa sigue cabiendo */
+@media (min-width: 600px) and (max-height: 600px) {
+  #projects .project__description {
+    font-size: 0.8rem;
+    line-height: 1.35;
   }
 }

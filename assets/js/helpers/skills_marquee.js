@@ -3,7 +3,17 @@
 // pausarlo. Solo se muestra si hay animación (sin "reducir movimiento").
 import { prefersReducedMotion } from './motion.js';
 
+// 100vw incluye la barra de scroll: se mide para que las filas lleguen
+// exactamente de orilla a orilla (ver --scrollbar-w en _skills.css)
+const setScrollbarWidth = () => {
+  const width = window.innerWidth - document.documentElement.clientWidth;
+  document.documentElement.style.setProperty('--scrollbar-w', `${width}px`);
+};
+
 export default function skillsMarquee() {
+  setScrollbarWidth();
+  window.addEventListener('resize', setScrollbarWidth);
+
   const container = document.querySelector('.skills__icons');
   const toggle = container?.querySelector('.skills__motion-toggle');
   if (!container || !toggle || toggle.dataset.bound) return;
