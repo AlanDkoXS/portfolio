@@ -66,7 +66,9 @@
 }
 
 .project__card-back {
-  background-color: var(--bg-color-section);
+  /* Reverso: degradado turquesa propio (siempre oscuro, el texto es dorado) */
+  background: linear-gradient(160deg, var(--teal-600) 0%, var(--teal-800) 55%, var(--teal-950) 100%);
+  border: 1px solid rgb(243 206 58 / 0.25);
   transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
@@ -82,7 +84,7 @@
   left: 0;
   right: 0;
   height: 60%;
-  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
+  background: linear-gradient(to bottom, transparent, rgb(0 18 25 / 0.6));
   pointer-events: none;
   z-index: 1;
 }
@@ -195,6 +197,8 @@
 
 /* Buttons */
 .project__buttons {
+  position: relative;
+  z-index: 2; /* por encima del degradado ::after del reverso */
   display: flex;
   gap: 1rem;
   justify-content: center;
@@ -207,9 +211,10 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.6rem 1.1rem;
-  background-color: rgb(0 18 25 / 0.55);
-  color: var(--on-image-color);
-  border: 1px solid rgb(243 206 58 / 0.6);
+  background-color: var(--gold-400);
+  color: var(--on-accent-color);
+  border: 1px solid var(--gold-300);
+  box-shadow: 0 6px 16px rgb(0 0 0 / 0.35);
   border-radius: var(--border-radius-small);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -219,9 +224,9 @@
 }
 
 .project__button:hover {
-  background-color: var(--gold-400);
+  background-color: var(--gold-300);
   color: var(--on-accent-color);
-  border-color: var(--gold-400);
+  border-color: var(--gold-300);
   box-shadow: 0 8px 20px rgb(243 206 58 / 0.35);
   transform: translateY(-2px);
 }

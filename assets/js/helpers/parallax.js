@@ -4,13 +4,20 @@ import { createTilt } from './tilt.js';
 const ParallaxEffect = {
   config: {
     mobile: {
+      // px per degree of tilt (tilt is clamped to ±20°, see tilt.js)
       sensitivity: {
-        back: { x: 4, y: 1 },
-        middle: { x: 2.5, y: 0.5 },
-        front: { x: 1.5, y: 0.3 },
+        back: { x: 1.5, y: 0.5 },
+        middle: { x: 0.6, y: 0.2 },
+        front: { x: 0.25, y: 0.08 },
+      },
+      // fracción de la deriva automática por capa (antes iguales en middle/front)
+      autoFactor: {
+        back: 1,
+        middle: 0.45,
+        front: 0.2,
       },
       autoMovement: {
-        speed: { x: 0.5, y: 0.1 }, // px per frame (~60fps)
+        speed: { x: 0.25, y: 0.05 }, // px per frame (~60fps)
         range: 10,
       },
       tilt: {}, // overrides for tilt.js defaults (maxTilt, smoothing, recenter)
@@ -127,18 +134,18 @@ const ParallaxEffect = {
   },
 
   updateLayersMobile(gamma, beta) {
-    const { sensitivity } = this.config.mobile;
+    const { sensitivity, autoFactor: f } = this.config.mobile;
     const { autoX, autoY } = this.state;
 
     const transforms = {
-      back: `translate(-50%, -50%) translate(${-gamma * sensitivity.back.x - autoX}px, ${
-        -beta * sensitivity.back.y - autoY
+      back: `translate(-50%, -50%) translate(${-gamma * sensitivity.back.x - autoX * f.back}px, ${
+        -beta * sensitivity.back.y - autoY * f.back
       }px)`,
-      middle: `translate(-50%, -50%) translate(${gamma * sensitivity.middle.x + autoX}px, ${
-        beta * sensitivity.middle.y + autoY
+      middle: `translate(-50%, -50%) translate(${gamma * sensitivity.middle.x + autoX * f.middle}px, ${
+        beta * sensitivity.middle.y + autoY * f.middle
       }px)`,
-      front: `translate(-50%, -50%) translate(${-gamma * sensitivity.front.x + autoX}px, ${
-        -beta * sensitivity.front.y + autoY
+      front: `translate(-50%, -50%) translate(${-gamma * sensitivity.front.x + autoX * f.front}px, ${
+        -beta * sensitivity.front.y + autoY * f.front
       }px)`,
     };
 

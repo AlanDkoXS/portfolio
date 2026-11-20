@@ -6,8 +6,8 @@
 // - Values are clamped and smoothed; call `update()` once per animation frame.
 
 const DEFAULTS = {
-  maxTilt: 45, // degrees, clamps gamma/beta deltas
-  smoothing: 0.15, // 0..1, lerp factor per frame
+  maxTilt: 20, // degrees, clamps gamma/beta deltas
+  smoothing: 0.06, // 0..1, lerp factor per frame (lower = softer)
   recenter: {
     idleMs: 2000, // phone still this long → drift back to center
     motionThreshold: 1.5, // degrees of change that count as "moving"

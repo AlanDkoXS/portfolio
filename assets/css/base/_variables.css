@@ -10,38 +10,40 @@
 
   /* Colors
      ========================================================================== */
-  /* Paleta base (azul marino + dorado) */
-  --navy-900: #000b10;
-  --navy-800: #001219;
-  --navy-700: #0a1f28;
-  --navy-600: #12303c;
-  --cream-100: #faf7ef;
-  --cream-200: #f1ebdb;
+  /* Paleta base (azul turquesa profundo + dorado) */
+  --teal-950: #001219; /* el tono original, ahora solo para texto y footer */
+  --teal-900: #00222c;
+  --teal-800: #00303d; /* fondo del modo oscuro */
+  --teal-700: #013d4c; /* tarjetas / superficies */
+  --teal-600: #024b5c; /* inputs / controles */
+  --teal-50: #eaf4f6; /* fondo del modo claro: turquesa casi blanco */
+  --teal-25: #f6fbfc; /* superficies del modo claro */
+  --teal-100: #d7e9ed; /* inputs del modo claro */
   --gold-300: #ffd95c;
   --gold-400: #f3ce3a;
   --gold-600: #b8900f;
   --gold-700: #947d24;
 
   /* Theme Colors (light-dark() sigue a color-scheme, controlado por el toggle) */
-  --primary-color: light-dark(var(--navy-800), var(--gold-400)); /* texto, títulos, íconos */
-  --text-muted: light-dark(#4a5d66, #c9b25a);
+  --primary-color: light-dark(var(--teal-950), var(--gold-400)); /* texto, títulos, íconos */
+  --text-muted: light-dark(#3f5f68, #c9b25a);
   --accent-color: light-dark(var(--gold-600), var(--gold-400)); /* acentos, hover, activos */
   --accent-strong: light-dark(var(--gold-700), var(--gold-300));
   --accent-glow: light-dark(rgb(184 144 15 / 0.35), rgb(243 206 58 / 0.35));
-  --on-accent-color: var(--navy-800); /* texto sobre dorado, igual en ambos temas */
+  --on-accent-color: var(--teal-950); /* texto sobre dorado, igual en ambos temas */
   --on-image-color: var(--gold-400); /* texto sobre fotos/overlays oscuros */
 
   /* Background Colors */
-  --bg-color-section: light-dark(var(--cream-100), var(--navy-800));
-  --surface-color: light-dark(#ffffff, var(--navy-700));
-  --bg-color-buttons: light-dark(var(--cream-200), var(--navy-700)); /* inputs, controles secundarios */
-  --border-color: light-dark(rgb(0 18 25 / 0.12), rgb(243 206 58 / 0.18));
-  --footer-bg: light-dark(var(--navy-800), var(--navy-900));
-  --footer-text: #ece6d3;
+  --bg-color-section: light-dark(var(--teal-50), var(--teal-800));
+  --surface-color: light-dark(var(--teal-25), var(--teal-700));
+  --bg-color-buttons: light-dark(var(--teal-100), var(--teal-600)); /* inputs, controles secundarios */
+  --border-color: light-dark(rgb(0 48 61 / 0.15), rgb(243 206 58 / 0.18));
+  --footer-bg: light-dark(var(--teal-800), var(--teal-900));
+  --footer-text: #e6eef0;
 
   /* Sombras dependientes del tema */
-  --shadow-color: light-dark(rgb(0 18 25 / 0.18), rgb(0 0 0 / 0.5));
-  --bg-layer-shadow: light-dark(rgb(0 18 25 / 0.25), rgb(1 1 1 / 1));
+  --shadow-color: light-dark(rgb(0 48 61 / 0.18), rgb(0 0 0 / 0.45));
+  --bg-layer-shadow: light-dark(rgb(0 48 61 / 0.25), rgb(0 18 25 / 1));
 
   /* Overlay Colors */
   --modal-overlay: rgba(0, 0, 0, 0.5);
