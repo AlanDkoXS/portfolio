@@ -170,6 +170,7 @@ const updateResumePage = (lang) => {
 // Función para aplicar los cambios de idioma
 const applyLanguageChanges = (lang) => {
   currentLanguage = lang; // Actualizar el estado global del idioma
+  document.documentElement.lang = lang; // Lectores de pantalla y buscadores
 
   // Detectar si estamos en la página de resume
   const isResumePage =
