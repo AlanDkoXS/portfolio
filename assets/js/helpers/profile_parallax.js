@@ -23,10 +23,7 @@ function profileParallax() {
   });
 
   window.addEventListener('deviceorientation', (event) => {
-    if (event.gamma === null || event.beta === null) {
-      console.log('This device does not support tilt');
-      return;
-    }
+    if (event.gamma === null || event.beta === null) return;
     const moveX = event.gamma * 1;
     const moveY = -event.beta * 1;
     moveLayers(moveX, moveY);
@@ -37,9 +34,5 @@ function profileParallax() {
     sprite.style.transform = 'translate(0, 0)';
   });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  profileParallax();
-});
 
 export default profileParallax;
