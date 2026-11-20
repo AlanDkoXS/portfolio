@@ -31,3 +31,6 @@ package.json
 # Git Ignore
 .gitignore
 .commits_list
+
+# Claude Code (worktrees y configuración local)
+.claude/
