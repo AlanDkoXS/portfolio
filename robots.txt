@@ -3,8 +3,8 @@ Allow: /
 
 # AI search engines and assistants are welcome: the portfolio is public.
 # Profile for LLMs / perfil para modelos de IA (EN + ES):
-#   https://www.alanquintana.pro/llms.txt
-#   https://www.alanquintana.pro/llms-full.txt
+#   https://alanquintana.pro/llms.txt
+#   https://alanquintana.pro/llms-full.txt
 User-agent: GPTBot
 User-agent: OAI-SearchBot
 User-agent: ChatGPT-User
@@ -17,4 +17,4 @@ User-agent: Google-Extended
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://www.alanquintana.pro/sitemap.xml
+Sitemap: https://alanquintana.pro/sitemap.xml

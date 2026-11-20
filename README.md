@@ -28,7 +28,7 @@ Source of [alanquintana.pro](https://alanquintana.pro), the portfolio of a graph
 - **Visual identity**: teal and gold palette, cartoon-style buttons with a hard shadow and a grainy inner shadow, hero parallax driven by mouse or gyroscope, and tech stack icons in infinite rows.
 - **Resume**: `/resume` shows the PDF in the active language and offers EN/ES downloads. The PDFs are generated from code.
 - **Contact form** via EmailJS, with a honeypot against bots.
-- **Findable by AI**: [`llms.txt`](https://www.alanquintana.pro/llms.txt) and [`llms-full.txt`](https://www.alanquintana.pro/llms-full.txt) give AI search engines and agents a bilingual profile with an FAQ. They are generated from the same data as the site, along with JSON-LD and meta tags in both languages.
+- **Findable by AI**: [`llms.txt`](https://alanquintana.pro/llms.txt) and [`llms-full.txt`](https://alanquintana.pro/llms-full.txt) give AI search engines and agents a bilingual profile with an FAQ. They are generated from the same data as the site, along with JSON-LD and meta tags in both languages.
 
 ## Technologies Used
 

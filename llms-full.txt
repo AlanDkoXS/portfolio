@@ -68,7 +68,7 @@ How it’s built:
 - When the official Marvel developer API was retired in late 2025, the app moved to the open SuperHero API dataset, so it no longer needs API keys.
 
 Stack: React, React Router, Context API + useReducer, Vite, CSS, SuperHero API
-Case study: https://www.alanquintana.pro/projects/marvel-wiki/ · Live demo: https://marvelwiki.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/marvel-app
+Case study: https://alanquintana.pro/projects/marvel-wiki/ · Live demo: https://marvelwiki.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/marvel-app
 
 ### CRUD Users (React app, 2024)
 
@@ -91,7 +91,7 @@ How it’s built:
 - Resizing photos on the client keeps uploads light and fast.
 
 Stack: React, Material UI (Material 3 Expressive), React Hook Form + Yup, Axios, Vite, Netlify Functions, Netlify Blobs
-Case study: https://www.alanquintana.pro/projects/crud-users/ · Live demo: https://crudusers.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/CRUD
+Case study: https://alanquintana.pro/projects/crud-users/ · Live demo: https://crudusers.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/CRUD
 
 ### Rick and Morty Wiki (React app, 2024)
 
@@ -112,7 +112,7 @@ How it’s built:
 - Combines each location with the data of its residents to show who lives in every place.
 
 Stack: React, Axios, Custom hook useFetch, CSS animations, Vite, Rick and Morty API
-Case study: https://www.alanquintana.pro/projects/rick-and-morty-wiki/ · Live demo: https://rickandmorty.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/rick-morty
+Case study: https://alanquintana.pro/projects/rick-and-morty-wiki/ · Live demo: https://rickandmorty.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/rick-morty
 
 ### Weather App (React app, 2024)
 
@@ -134,7 +134,7 @@ How it’s built:
 - Application state and logic split into several React hooks.
 
 Stack: React, Material Web components, Axios, Vite, CSS, OpenWeatherMap API
-Case study: https://www.alanquintana.pro/projects/weather-app/ · Live demo: https://weatherapp.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/weather-app
+Case study: https://alanquintana.pro/projects/weather-app/ · Live demo: https://weatherapp.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/weather-app
 
 ### Fortune Cookie (React app, 2024)
 
@@ -155,7 +155,7 @@ How it’s built:
 - Built with React and plain CSS, with no extra libraries.
 
 Stack: React, Vite, CSS, JSON
-Case study: https://www.alanquintana.pro/projects/fortune-cookie/ · Live demo: https://fortunecookie.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/Fortune-Cookie
+Case study: https://alanquintana.pro/projects/fortune-cookie/ · Live demo: https://fortunecookie.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/Fortune-Cookie
 
 ### Traktl (Full stack app, 2025)
 
@@ -181,7 +181,7 @@ How it’s built:
 - Frontend state with Zustand, charts with Recharts and translations with i18next.
 
 Stack: React, TypeScript, Vite, Tailwind CSS, Zustand, i18next, Recharts, Socket.IO, Node.js, Express, MongoDB, JWT, Google OAuth
-Case study: https://www.alanquintana.pro/projects/traktl/ · Live demo: https://traktl.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/Traktl
+Case study: https://alanquintana.pro/projects/traktl/ · Live demo: https://traktl.alanquintana.pro/ · Code: https://github.com/AlanDkoXS/Traktl
 
 ## Education
 
@@ -197,7 +197,7 @@ Case study: https://www.alanquintana.pro/projects/traktl/ · Live demo: https://
 - Email: hello@alanquintana.pro
 - WhatsApp: +52 614 110 5668
 - Location: Chihuahua, Mexico
-- Website: https://www.alanquintana.pro/
+- Website: https://alanquintana.pro/
 - GitHub: https://github.com/AlanDkoXS
 - LinkedIn: https://www.linkedin.com/in/alanxs/
 - Dribbble: https://dribbble.com/Alan3XS
@@ -217,7 +217,7 @@ Both: he designs interfaces and brands and also develops the frontend and backen
 React, Astro, TypeScript, JavaScript, Node.js, Express, MongoDB, PostgreSQL, Supabase and Tailwind CSS; for design, Figma, Photoshop, Illustrator and After Effects.
 
 **Can I hire him for a project?**
-Yes. You can write to hello@alanquintana.pro, message him on WhatsApp (+52 614 110 5668) or use the contact form at https://www.alanquintana.pro/#contact.
+Yes. You can write to hello@alanquintana.pro, message him on WhatsApp (+52 614 110 5668) or use the contact form at https://alanquintana.pro/#contact.
 
 **Does he work in English?**
 Yes. He works in Spanish (native) and English (B2), and this site exists in both languages.
@@ -226,7 +226,7 @@ Yes. He works in Spanish (native) and English (B2), and this site exists in both
 In the projects section of the site, with a case study for each project, and on GitHub (github.com/AlanDkoXS).
 
 **Where can I get his resume?**
-At https://www.alanquintana.pro/resume, with PDF downloads in English and Spanish.
+At https://alanquintana.pro/resume, with PDF downloads in English and Spanish.
 
 ---
 
@@ -291,7 +291,7 @@ Cómo está hecho:
 - Cuando la API oficial de Marvel se retiró a finales de 2025, la app migró al dataset abierto SuperHero API, y ya no necesita claves de API.
 
 Tecnologías: React, React Router, Context API + useReducer, Vite, CSS, SuperHero API
-Caso de estudio: https://www.alanquintana.pro/es/proyectos/marvel-wiki/ · Demo: https://marvelwiki.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/marvel-app
+Caso de estudio: https://alanquintana.pro/es/proyectos/marvel-wiki/ · Demo: https://marvelwiki.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/marvel-app
 
 ### CRUD de usuarios (App en React, 2024)
 
@@ -314,7 +314,7 @@ Cómo está hecho:
 - Redimensionar las fotos en el navegador mantiene las subidas ligeras y rápidas.
 
 Tecnologías: React, Material UI (Material 3 Expressive), React Hook Form + Yup, Axios, Vite, Netlify Functions, Netlify Blobs
-Caso de estudio: https://www.alanquintana.pro/es/proyectos/crud-users/ · Demo: https://crudusers.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/CRUD
+Caso de estudio: https://alanquintana.pro/es/proyectos/crud-users/ · Demo: https://crudusers.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/CRUD
 
 ### Wiki de Rick and Morty (App en React, 2024)
 
@@ -335,7 +335,7 @@ Cómo está hecho:
 - Combina cada ubicación con los datos de sus residentes para mostrar quién vive en cada lugar.
 
 Tecnologías: React, Axios, Custom hook useFetch, CSS animations, Vite, Rick and Morty API
-Caso de estudio: https://www.alanquintana.pro/es/proyectos/rick-and-morty-wiki/ · Demo: https://rickandmorty.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/rick-morty
+Caso de estudio: https://alanquintana.pro/es/proyectos/rick-and-morty-wiki/ · Demo: https://rickandmorty.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/rick-morty
 
 ### App del clima (App en React, 2024)
 
@@ -357,7 +357,7 @@ Cómo está hecho:
 - El estado y la lógica de la app se reparten en varios hooks de React.
 
 Tecnologías: React, Material Web components, Axios, Vite, CSS, OpenWeatherMap API
-Caso de estudio: https://www.alanquintana.pro/es/proyectos/weather-app/ · Demo: https://weatherapp.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/weather-app
+Caso de estudio: https://alanquintana.pro/es/proyectos/weather-app/ · Demo: https://weatherapp.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/weather-app
 
 ### Galleta de la fortuna (App en React, 2024)
 
@@ -378,7 +378,7 @@ Cómo está hecho:
 - Hecha con React y CSS, sin librerías adicionales.
 
 Tecnologías: React, Vite, CSS, JSON
-Caso de estudio: https://www.alanquintana.pro/es/proyectos/fortune-cookie/ · Demo: https://fortunecookie.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/Fortune-Cookie
+Caso de estudio: https://alanquintana.pro/es/proyectos/fortune-cookie/ · Demo: https://fortunecookie.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/Fortune-Cookie
 
 ### Traktl (App full stack, 2025)
 
@@ -404,7 +404,7 @@ Cómo está hecho:
 - Estado del frontend con Zustand, gráficas con Recharts y traducciones con i18next.
 
 Tecnologías: React, TypeScript, Vite, Tailwind CSS, Zustand, i18next, Recharts, Socket.IO, Node.js, Express, MongoDB, JWT, Google OAuth
-Caso de estudio: https://www.alanquintana.pro/es/proyectos/traktl/ · Demo: https://traktl.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/Traktl
+Caso de estudio: https://alanquintana.pro/es/proyectos/traktl/ · Demo: https://traktl.alanquintana.pro/ · Código: https://github.com/AlanDkoXS/Traktl
 
 ## Educación
 
@@ -420,7 +420,7 @@ Caso de estudio: https://www.alanquintana.pro/es/proyectos/traktl/ · Demo: http
 - Email: hello@alanquintana.pro
 - WhatsApp: +52 614 110 5668
 - Ubicación: Chihuahua, México
-- Sitio: https://www.alanquintana.pro/es/
+- Sitio: https://alanquintana.pro/es/
 - GitHub: https://github.com/AlanDkoXS
 - LinkedIn: https://www.linkedin.com/in/alanxs/
 - Dribbble: https://dribbble.com/Alan3XS
@@ -440,7 +440,7 @@ Las dos cosas: diseña interfaces y marcas, y también desarrolla el frontend y 
 React, Astro, TypeScript, JavaScript, Node.js, Express, MongoDB, PostgreSQL, Supabase y Tailwind CSS; para diseño, Figma, Photoshop, Illustrator y After Effects.
 
 **¿Puedo contratarlo para un proyecto?**
-Sí. Puedes escribirle a hello@alanquintana.pro, mandarle mensaje por WhatsApp (+52 614 110 5668) o usar el formulario en https://www.alanquintana.pro/es/#contact.
+Sí. Puedes escribirle a hello@alanquintana.pro, mandarle mensaje por WhatsApp (+52 614 110 5668) o usar el formulario en https://alanquintana.pro/es/#contact.
 
 **¿Trabaja en inglés?**
 Sí. Trabaja en español (nativo) e inglés (B2), y este sitio está en ambos idiomas.
@@ -449,4 +449,4 @@ Sí. Trabaja en español (nativo) e inglés (B2), y este sitio está en ambos id
 En la sección de proyectos del sitio, con un caso de estudio por proyecto, y en GitHub (github.com/AlanDkoXS).
 
 **¿Dónde está su CV?**
-En https://www.alanquintana.pro/resume, con descargas en PDF en inglés y español.
+En https://alanquintana.pro/resume, con descargas en PDF en inglés y español.

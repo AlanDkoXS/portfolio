@@ -70,7 +70,7 @@ const displayConsoleLogo = () => {
 %c
 %c🚀 Hello! Welcome to my portfolio
 %c💻 Full Stack Designer & Developer
-%c🌐 https://www.alanquintana.pro
+%c🌐 https://alanquintana.pro
 %c📧 Contact: https://www.linkedin.com/in/alanxs/
 %c
 %c💡 Interested in collaborating? Let's talk!

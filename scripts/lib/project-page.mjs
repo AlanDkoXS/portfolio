@@ -4,7 +4,7 @@
 //   en → /projects/<slug>/index.html
 //   es → /es/proyectos/<slug>/index.html
 
-export const SITE = 'https://www.alanquintana.pro';
+export const SITE = 'https://alanquintana.pro';
 
 export const homePath = (lang) => (lang === 'en' ? '/' : '/es/');
 export const projectPath = (project, lang) =>

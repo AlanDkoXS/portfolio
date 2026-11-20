@@ -3,7 +3,7 @@
 // junto con scripts/data/projects.mjs y scripts/cv/data.mjs.
 // Solo hechos verificables (sitio, CV, beaniwa.com, repositorios).
 
-export const SITE = 'https://www.alanquintana.pro';
+export const SITE = 'https://alanquintana.pro';
 
 export default {
   name: 'Alan Quintana',
@@ -37,10 +37,10 @@ export default {
       ['Who is Alan Quintana?', 'A graphic designer and full stack web developer based in Chihuahua, Mexico, founder of the digital agency Aniwa.'],
       ['Is he a designer or a developer?', 'Both: he designs interfaces and brands and also develops the frontend and backend.'],
       ['Which technologies does he use?', 'React, Astro, TypeScript, JavaScript, Node.js, Express, MongoDB, PostgreSQL, Supabase and Tailwind CSS; for design, Figma, Photoshop, Illustrator and After Effects.'],
-      ['Can I hire him for a project?', 'Yes. You can write to hello@alanquintana.pro, message him on WhatsApp (+52 614 110 5668) or use the contact form at https://www.alanquintana.pro/#contact.'],
+      ['Can I hire him for a project?', 'Yes. You can write to hello@alanquintana.pro, message him on WhatsApp (+52 614 110 5668) or use the contact form at https://alanquintana.pro/#contact.'],
       ['Does he work in English?', 'Yes. He works in Spanish (native) and English (B2), and this site exists in both languages.'],
       ['Where can I see his work?', 'In the projects section of the site, with a case study for each project, and on GitHub (github.com/AlanDkoXS).'],
-      ['Where can I get his resume?', 'At https://www.alanquintana.pro/resume, with PDF downloads in English and Spanish.'],
+      ['Where can I get his resume?', 'At https://alanquintana.pro/resume, with PDF downloads in English and Spanish.'],
     ],
   },
   es: {
@@ -62,10 +62,10 @@ export default {
       ['¿Quién es Alan Quintana?', 'Un diseñador gráfico y desarrollador web full stack de Chihuahua, México, fundador de la agencia digital Aniwa.'],
       ['¿Es diseñador o desarrollador?', 'Las dos cosas: diseña interfaces y marcas, y también desarrolla el frontend y el backend.'],
       ['¿Qué tecnologías usa?', 'React, Astro, TypeScript, JavaScript, Node.js, Express, MongoDB, PostgreSQL, Supabase y Tailwind CSS; para diseño, Figma, Photoshop, Illustrator y After Effects.'],
-      ['¿Puedo contratarlo para un proyecto?', 'Sí. Puedes escribirle a hello@alanquintana.pro, mandarle mensaje por WhatsApp (+52 614 110 5668) o usar el formulario en https://www.alanquintana.pro/es/#contact.'],
+      ['¿Puedo contratarlo para un proyecto?', 'Sí. Puedes escribirle a hello@alanquintana.pro, mandarle mensaje por WhatsApp (+52 614 110 5668) o usar el formulario en https://alanquintana.pro/es/#contact.'],
       ['¿Trabaja en inglés?', 'Sí. Trabaja en español (nativo) e inglés (B2), y este sitio está en ambos idiomas.'],
       ['¿Dónde veo su trabajo?', 'En la sección de proyectos del sitio, con un caso de estudio por proyecto, y en GitHub (github.com/AlanDkoXS).'],
-      ['¿Dónde está su CV?', 'En https://www.alanquintana.pro/resume, con descargas en PDF en inglés y español.'],
+      ['¿Dónde está su CV?', 'En https://alanquintana.pro/resume, con descargas en PDF en inglés y español.'],
     ],
   },
 };

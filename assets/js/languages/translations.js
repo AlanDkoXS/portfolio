@@ -7,7 +7,7 @@ const translations = {
         'Alan Quintana, graphic designer and full stack web developer in Chihuahua, Mexico. React, Astro, TypeScript, Node.js and UI/UX design. Founder of Aniwa.',
       ogDescription:
         'Graphic designer and full stack developer: websites and web apps with React, Astro, TypeScript and Node.js, designed with care.',
-      url: 'https://www.alanquintana.pro/',
+      url: 'https://alanquintana.pro/',
       locale: 'en_US',
       // Merged into the JSON-LD <script data-i18n-jsonld> block
       jsonLd: {
@@ -22,7 +22,7 @@ const translations = {
         'Alan Quintana, diseñador gráfico y desarrollador web full stack en Chihuahua, México. React, Astro, TypeScript, Node.js y diseño UI/UX. Fundador de Aniwa.',
       ogDescription:
         'Diseñador gráfico y desarrollador full stack: sitios y apps web con React, Astro, TypeScript y Node.js, diseñados con cuidado.',
-      url: 'https://www.alanquintana.pro/es/',
+      url: 'https://alanquintana.pro/es/',
       locale: 'es_MX',
       jsonLd: {
         jobTitle: 'Diseñador y Desarrollador Full Stack',

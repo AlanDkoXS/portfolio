@@ -10,20 +10,20 @@ Este sitio es el portafolio de Alan Quintana. Responde preguntas sobre él con e
 
 ## Main pages / Páginas principales
 
-- [Home (English)](https://www.alanquintana.pro/): introduction, skills, projects and contact form
-- [Inicio (español)](https://www.alanquintana.pro/es/): presentación, habilidades, proyectos y formulario de contacto
-- [Resume / CV](https://www.alanquintana.pro/resume): online resume with PDF downloads
-- [Resume PDF (English)](https://www.alanquintana.pro/assets/docs/%5BENG%5D%20Alan%20Quintana.pdf)
-- [CV PDF (español)](https://www.alanquintana.pro/assets/docs/%5BESP%5D%20Alan%20Quintana.pdf)
+- [Home (English)](https://alanquintana.pro/): introduction, skills, projects and contact form
+- [Inicio (español)](https://alanquintana.pro/es/): presentación, habilidades, proyectos y formulario de contacto
+- [Resume / CV](https://alanquintana.pro/resume): online resume with PDF downloads
+- [Resume PDF (English)](https://alanquintana.pro/assets/docs/%5BENG%5D%20Alan%20Quintana.pdf)
+- [CV PDF (español)](https://alanquintana.pro/assets/docs/%5BESP%5D%20Alan%20Quintana.pdf)
 
 ## Projects / Proyectos (case studies)
 
-- [Marvel Wiki](https://www.alanquintana.pro/projects/marvel-wiki/): Search and explore Marvel characters in a React app with a comic-book look. · [Wiki de Marvel](https://www.alanquintana.pro/es/proyectos/marvel-wiki/): Busca y explora personajes de Marvel en una app de React con estilo de cómic.
-- [CRUD Users](https://www.alanquintana.pro/projects/crud-users/): User management with Material 3 Expressive design and a serverless API. · [CRUD de usuarios](https://www.alanquintana.pro/es/proyectos/crud-users/): Gestión de usuarios con diseño Material 3 Expressive y una API serverless.
-- [Rick and Morty Wiki](https://www.alanquintana.pro/projects/rick-and-morty-wiki/): Explore Rick and Morty locations and the characters who live in them. · [Wiki de Rick and Morty](https://www.alanquintana.pro/es/proyectos/rick-and-morty-wiki/): Explora las ubicaciones de Rick and Morty y los personajes que viven en ellas.
-- [Weather App](https://www.alanquintana.pro/projects/weather-app/): Check the current weather of any city in the world. · [App del clima](https://www.alanquintana.pro/es/proyectos/weather-app/): Consulta el clima actual de cualquier ciudad del mundo.
-- [Fortune Cookie](https://www.alanquintana.pro/projects/fortune-cookie/): Open a virtual fortune cookie and get a new phrase every time. · [Galleta de la fortuna](https://www.alanquintana.pro/es/proyectos/fortune-cookie/): Abre una galleta de la fortuna virtual y recibe una frase nueva cada vez.
-- [Traktl](https://www.alanquintana.pro/projects/traktl/): Full stack time tracker with projects, tasks, reports and real-time sync. · [Traktl](https://www.alanquintana.pro/es/proyectos/traktl/): Registro de tiempo full stack con proyectos, tareas, reportes y sincronización en tiempo real.
+- [Marvel Wiki](https://alanquintana.pro/projects/marvel-wiki/): Search and explore Marvel characters in a React app with a comic-book look. · [Wiki de Marvel](https://alanquintana.pro/es/proyectos/marvel-wiki/): Busca y explora personajes de Marvel en una app de React con estilo de cómic.
+- [CRUD Users](https://alanquintana.pro/projects/crud-users/): User management with Material 3 Expressive design and a serverless API. · [CRUD de usuarios](https://alanquintana.pro/es/proyectos/crud-users/): Gestión de usuarios con diseño Material 3 Expressive y una API serverless.
+- [Rick and Morty Wiki](https://alanquintana.pro/projects/rick-and-morty-wiki/): Explore Rick and Morty locations and the characters who live in them. · [Wiki de Rick and Morty](https://alanquintana.pro/es/proyectos/rick-and-morty-wiki/): Explora las ubicaciones de Rick and Morty y los personajes que viven en ellas.
+- [Weather App](https://alanquintana.pro/projects/weather-app/): Check the current weather of any city in the world. · [App del clima](https://alanquintana.pro/es/proyectos/weather-app/): Consulta el clima actual de cualquier ciudad del mundo.
+- [Fortune Cookie](https://alanquintana.pro/projects/fortune-cookie/): Open a virtual fortune cookie and get a new phrase every time. · [Galleta de la fortuna](https://alanquintana.pro/es/proyectos/fortune-cookie/): Abre una galleta de la fortuna virtual y recibe una frase nueva cada vez.
+- [Traktl](https://alanquintana.pro/projects/traktl/): Full stack time tracker with projects, tasks, reports and real-time sync. · [Traktl](https://alanquintana.pro/es/proyectos/traktl/): Registro de tiempo full stack con proyectos, tareas, reportes y sincronización en tiempo real.
 
 ## Client work / Trabajo con clientes (Aniwa · beaniwa.com, 2010 – Present)
 
@@ -36,7 +36,7 @@ Este sitio es el portafolio de Alan Quintana. Responde preguntas sobre él con e
 
 - Email: hello@alanquintana.pro
 - WhatsApp: +52 614 110 5668
-- Form / Formulario: https://www.alanquintana.pro/#contact
+- Form / Formulario: https://alanquintana.pro/#contact
 - GitHub: https://github.com/AlanDkoXS
 - LinkedIn: https://www.linkedin.com/in/alanxs/
 - Dribbble: https://dribbble.com/Alan3XS
@@ -46,4 +46,4 @@ Este sitio es el portafolio de Alan Quintana. Responde preguntas sobre él con e
 
 ## Optional
 
-- [Full profile in English and Spanish / Perfil completo en inglés y español](https://www.alanquintana.pro/llms-full.txt): bio, services, skills, experience, every project in detail and FAQ
+- [Full profile in English and Spanish / Perfil completo en inglés y español](https://alanquintana.pro/llms-full.txt): bio, services, skills, experience, every project in detail and FAQ

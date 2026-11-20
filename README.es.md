@@ -28,7 +28,7 @@ Código de [alanquintana.pro](https://alanquintana.pro), el portafolio de un dis
 - **Identidad visual**: paleta turquesa y dorado, botones estilo cartoon con sombra dura y sombra interna granulada, parallax en el hero con mouse o giroscopio, e íconos de tecnologías en filas infinitas.
 - **CV**: `/resume` muestra el PDF en el idioma activo y permite descargarlo en inglés o español. Los PDF se generan desde código.
 - **Formulario de contacto** con EmailJS y un honeypot contra bots.
-- **Encontrable por IA**: [`llms.txt`](https://www.alanquintana.pro/llms.txt) y [`llms-full.txt`](https://www.alanquintana.pro/llms-full.txt) dan a buscadores de IA y agentes un perfil bilingüe con preguntas frecuentes. Se generan con los mismos datos que el sitio, junto con el JSON-LD y las meta etiquetas en ambos idiomas.
+- **Encontrable por IA**: [`llms.txt`](https://alanquintana.pro/llms.txt) y [`llms-full.txt`](https://alanquintana.pro/llms-full.txt) dan a buscadores de IA y agentes un perfil bilingüe con preguntas frecuentes. Se generan con los mismos datos que el sitio, junto con el JSON-LD y las meta etiquetas en ambos idiomas.
 
 ## Tecnologías Utilizadas
 
