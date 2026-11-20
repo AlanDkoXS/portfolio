@@ -10,7 +10,9 @@
 
 .designs__description {
   max-width: 60ch;
-  margin: 0 auto 1.5rem;
+  justify-self: center;
+  margin: 0 0 1.5rem;
+  text-align: center;
 }
 
 .designs__grid {
@@ -18,7 +20,9 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  /* Columnas de ancho fijo y centradas: con pocos shots no quedan a la izquierda */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 280px));
+  justify-content: center;
   gap: 1.25rem;
 }
 
