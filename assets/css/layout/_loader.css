@@ -10,7 +10,7 @@
   width: 100%;
   height: 100%;
   background-color: var(--bg-color-section);
-  z-index: 3;
+  z-index: var(--z-loader);
   opacity: 1;
   visibility: visible;
   transition: opacity 0.4s, visibility 0.4s;
@@ -19,7 +19,9 @@
     fill: var(--primary-color);
     width: 3rem;
     height: 3rem;
-    animation: jump 1.1s infinite linear;
+    @media (prefers-reduced-motion: no-preference) {
+      animation: jump 1.1s infinite linear;
+    }
   }
   .loader__name {
     text-align: center;
@@ -44,8 +46,83 @@
   visibility: hidden;
 }
 
+/* ============= Loader animado (loader.js, primera carga de la sesión) =============
+   Símbolos de código caen y se acomodan como "alanquintana"; al ocultarse,
+   las letras se dispersan hacia el fondo. */
+.loader--animated {
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow: hidden;
+  /* el desvanecido espera a que las letras empiecen a dispersarse */
+  transition: opacity 0.5s 0.25s, visibility 0s 0.75s;
+
+  .loader__logo {
+    width: 3.5rem;
+    height: 3.5rem;
+    animation: loader-logo-in 0.6s ease-out both;
+  }
+
+  .loader__name {
+    display: flex;
+    flex-direction: row;
+    font-size: clamp(1.6rem, 1rem + 3vw, 2.8rem);
+    line-height: 1;
+  }
+}
+
+.loader__char {
+  display: inline-block;
+  min-width: 0.45em;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  color: var(--primary-color);
+  animation: loader-char-fall 0.75s cubic-bezier(0.3, 1.35, 0.5, 1) calc(var(--i) * 55ms) both;
+}
+
+.loader__char--light {
+  font-weight: 200;
+}
+
+.loader__char--semibold {
+  font-weight: 600;
+}
+
+.loader--animated.loader--hidden .loader__char {
+  animation: loader-char-scatter 0.7s cubic-bezier(0.55, 0, 0.75, 0.2) calc(var(--i) * 18ms) forwards;
+}
+
+@keyframes loader-char-fall {
+  from {
+    opacity: 0;
+    transform: translate(var(--fx), -60vh) rotate(var(--fr));
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+@keyframes loader-char-scatter {
+  to {
+    opacity: 0;
+    transform: translate(var(--sx), var(--sy)) rotate(var(--sr)) scale(1.6);
+    filter: blur(2px);
+  }
+}
+
+@keyframes loader-logo-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
 @keyframes jump {
   50% {
     transform: translateY(-20%) scaleY(1.05);
   }
+}
+
+/* Visitas siguientes de la sesión: sin loader (ver script en <head>) */
+.skip-loader .loader {
+  display: none;
 }

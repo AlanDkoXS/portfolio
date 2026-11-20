@@ -96,21 +96,34 @@
     text-align: center;
   }
 
+  /* Saludo "tecleado" (helpers/typing.js): aparece letra por letra cuando el
+     hero se muestra; el cursor (guion bajo) va detrás de la última letra y
+     sigue parpadeando al terminar */
   .home__title {
     margin: auto;
     text-transform: capitalize;
-    /* Sin cursor en reposo: solo aparece mientras se escribe */
-    border-right: 4px solid transparent;
     white-space: nowrap;
-    width: 9ch;
-    overflow: hidden;
+    width: max-content;
 
-    /* Se escribe una sola vez; el cursor parpadea un momento y desaparece.
-       Con "reducir movimiento" el saludo aparece directo, sin animación. */
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 0.6ch;
+      height: 0.12em;
+      margin-left: 0.12ch;
+      background: currentColor;
+      vertical-align: baseline;
+    }
+
     @media (prefers-reduced-motion: no-preference) {
-      animation:
-        typing 1.2s steps(9) 0.6s backwards,
-        caret 0.4s step-end 6;
+      &::after {
+        animation: caret 1s step-end infinite;
+      }
+
+      /* mientras escribe, el cursor queda fijo (como al teclear de verdad) */
+      &.is-typing::after {
+        animation: none;
+      }
     }
   }
 }
@@ -133,18 +146,15 @@
   }
 }
 
-@keyframes typing {
-  from {
-    width: 0;
-  }
+/* Con JS: el saludo se oculta hasta que se empieza a escribir (evita ver el
+   texto completo un instante) */
+html.js:not(.hero-ready) .home .home__title {
+  visibility: hidden;
 }
 
 @keyframes caret {
-  0% {
-    border-color: currentColor;
-  }
   50% {
-    border-color: transparent;
+    opacity: 0;
   }
 }
 
@@ -164,15 +174,27 @@
     align-content: center;
     justify-content: center;
     min-height: 100svh;
-    padding: calc(var(--header-height) + 1rem) 2rem 2rem 4.5rem;
+    /* El menú no se ve al cargar: el hero ocupa la primera pantalla completa,
+       centrado a lo alto, sin reservar espacio para el header */
+    padding: 1.5rem 2rem 1.5rem 4.5rem;
     transform: none;
+  }
+
+  .home.home {
+    padding: 0;
+  }
+
+  /* Las redes se posicionan respecto a la sección (ancho completo), no al
+     contenedor centrado: quedan pegadas a la orilla izquierda */
+  .home .home__container {
+    position: static;
   }
 
   /* Ajustes de la imagen */
   .home .home__image {
     grid-area: image;
-    width: clamp(220px, 32vw, 400px);
-    max-width: 55svh;
+    width: clamp(200px, 30vw, 400px);
+    max-width: 58svh;
     transform: none;
     justify-self: center;
     align-self: center;
@@ -191,7 +213,7 @@
   .home .home__info .home__title {
     text-align: left;
     margin: 0 0 0.75rem;
-    font-size: clamp(1.4rem, 1rem + 1.6vw, 2.2rem);
+    font-size: clamp(1.25rem, 0.5rem + 2.6svh + 0.4vw, 2.2rem);
   }
 
   /* Descripción integrada (incluye contenido de about). El tamaño depende del
@@ -200,8 +222,9 @@
     text-align: left;
     max-width: 62ch;
     margin-bottom: 0.5rem;
-    font-size: clamp(0.88rem, 0.35rem + 1.25svh + 0.35vw, 1.15rem);
-    line-height: 1.55;
+    /* Depende sobre todo del alto: todo el hero cabe en la primera pantalla */
+    font-size: clamp(0.8rem, 0.25rem + 1.6svh + 0.2vw, 1.15rem);
+    line-height: 1.5;
   }
 
   .home .home__buttons {
@@ -244,15 +267,15 @@
   .home .home__social {
     position: absolute;
     top: 50%;
-    left: 0.75rem;
+    left: 0.5rem;
     transform: translateY(-50%);
     flex-direction: column;
     z-index: var(--z-fixed);
   }
 
   .home .home__social-item {
-    margin: 0.6rem 0;
-    font-size: 1.6rem;
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
   }
 }
 
@@ -290,4 +313,25 @@
     margin: 0.3rem 0;
     padding-block: 0.7rem;
   }
+}
+
+/* Hero en escritorio: cada una de las 7 líneas en su propio renglón */
+.home .home__info .home__description--lines {
+  max-width: 62ch;
+}
+
+/* Las 7 frases de 7 palabras se leen como un párrafo normal (no un renglón
+   por frase), para que suene a conversación y no a poema */
+.home__description--lines .home__line {
+  display: inline;
+}
+
+.home__description--lines .home__line + .home__line::before {
+  content: ' ';
+}
+
+/* Presentación como párrafo normal, separada de las 7 líneas por un renglón */
+.home__description--lines .home__intro {
+  display: block;
+  margin-bottom: 1lh;
 }

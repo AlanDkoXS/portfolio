@@ -67,15 +67,26 @@ const handleResponsiveContent = (lang) => {
   if (!homeDescription) return;
 
   const homeText = t('homeDescription', lang);
-  if (window.innerWidth >= 600) {
+  const lines = translate(translations, 'heroLines', lang);
+  if (window.innerWidth >= 600 && Array.isArray(lines)) {
+    // Escritorio: la presentación, una línea de espacio y luego 7 líneas
+    // de 7 palabras, una por renglón
     homeDescription.textContent = '';
+    homeDescription.classList.add('home__description--lines');
+    const intro = document.createElement('span');
+    intro.className = 'home__intro';
+    intro.textContent = homeText;
     homeDescription.append(
-      homeText,
-      document.createElement('br'),
-      document.createElement('br'),
-      t('aboutDescription', lang),
+      intro,
+      ...lines.map((line) => {
+        const span = document.createElement('span');
+        span.className = 'home__line';
+        span.textContent = line;
+        return span;
+      }),
     );
   } else {
+    homeDescription.classList.remove('home__description--lines');
     homeDescription.textContent = homeText;
   }
 };
@@ -94,7 +105,30 @@ const setLanguage = (lang) => {
   );
 };
 
+// Tras un cambio de idioma, vuelve a la sección en la que estaba el visitante.
+// En una página prerenderizada se espera a que se active (se muestre).
+const restorePendingHash = () => {
+  const run = () => {
+    let hash = null;
+    try {
+      hash = sessionStorage.getItem('aq-hash');
+      sessionStorage.removeItem('aq-hash');
+    } catch {
+      return;
+    }
+    if (!hash) return;
+    history.replaceState(null, '', hash);
+    document.querySelector(hash)?.scrollIntoView({ behavior: 'instant' });
+  };
+  if (document.prerendering) {
+    document.addEventListener('prerenderingchange', run, { once: true });
+  } else {
+    run();
+  }
+};
+
 const switchLanguages = () => {
+  restorePendingHash();
   const languageToggle = document.getElementById('language-toggle');
   const alternates = document.querySelectorAll('link[rel="alternate"][hreflang]');
   const urlMode = alternates.length > 0;
@@ -112,17 +146,42 @@ const switchLanguages = () => {
 
     languageToggle.addEventListener('change', () => {
       const lang = languageToggle.checked ? 'es' : 'en';
+
+      // Animación de clic: se fija la bandera del idioma destino (la misma que
+      // mostró el hover) y rebota, sin volver a girar
+      const wrapper = languageToggle.closest('.navbar__toggle--language');
+      if (wrapper) {
+        wrapper.querySelectorAll('img').forEach((img) => {
+          const isTarget = img.classList.contains(`navbar__toggle--language-${lang}`);
+          img.classList.toggle('is-target', isTarget);
+          img.classList.toggle('is-current', !isTarget);
+        });
+        wrapper.classList.add('is-switching');
+      }
       storeLanguage(lang);
 
       if (urlMode) {
         const target = [...alternates].find((l) => l.hreflang === lang);
         if (target) {
           const url = new URL(target.href, location.href);
-          location.assign(url.pathname + location.hash);
+          // Se navega a la URL exacta que está prerenderizada (sin #sección),
+          // y la sección se restaura al activarse (restorePendingHash)
+          try {
+            if (location.hash) sessionStorage.setItem('aq-hash', location.hash);
+          } catch {
+            /* sin almacenamiento: solo se pierde la sección */
+          }
+          // Deja ver el rebote de la bandera antes de cambiar de página
+          setTimeout(() => location.assign(url.pathname), 220);
           return;
         }
       }
       setLanguage(lang);
+      // Cambio en la misma página (resume): termina la animación y limpia
+      setTimeout(() => {
+        wrapper?.classList.remove('is-switching');
+        wrapper?.querySelectorAll('img').forEach((img) => img.classList.remove('is-target', 'is-current'));
+      }, 500);
     });
   }
 
