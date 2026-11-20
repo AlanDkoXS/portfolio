@@ -16,9 +16,9 @@
   --teal-800: #00303d; /* fondo del modo oscuro */
   --teal-700: #013d4c; /* tarjetas / superficies */
   --teal-600: #024b5c; /* inputs / controles */
-  --teal-50: #eaf4f6; /* fondo del modo claro: turquesa casi blanco */
-  --teal-25: #f6fbfc; /* superficies del modo claro */
-  --teal-100: #d7e9ed; /* inputs del modo claro */
+  --teal-50: #d6ebf0; /* fondo del modo claro: turquesa claro */
+  --teal-25: #edf7f9; /* superficies del modo claro */
+  --teal-100: #c2e0e7; /* inputs del modo claro */
   --gold-300: #ffd95c;
   --gold-400: #f3ce3a;
   --gold-600: #b8900f;
@@ -43,7 +43,8 @@
 
   /* Sombras dependientes del tema */
   --shadow-color: light-dark(rgb(0 48 61 / 0.18), rgb(0 0 0 / 0.45));
-  --bg-layer-shadow: light-dark(rgb(0 48 61 / 0.25), rgb(0 18 25 / 1));
+  --bg-layer-shadow: light-dark(transparent, rgb(0 18 25 / 1)); /* capas del hero: sin sombra en claro */
+  --profile-shadow: light-dark(rgb(0 48 61 / 0.25), rgb(0 18 25 / 1));
 
   /* Overlay Colors */
   --modal-overlay: rgba(0, 0, 0, 0.5);

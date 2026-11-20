@@ -14,8 +14,10 @@
 /assets/docs/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
+# CSS/JS change with every deploy and have no hash in the name: always
+# revalidate (cheap 304 via ETag) so visitors never get a stale theme/script.
 /assets/css/*
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=0, must-revalidate
 
 /assets/js/*
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=0, must-revalidate

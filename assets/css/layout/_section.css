@@ -16,3 +16,12 @@ section.visible {
   text-align: center;
   margin: 0.8rem 0;
 }
+
+/* Al navegar desde el menú/botones, cada sección ocupa la pantalla visible
+   (debajo del header) y su contenido queda centrado verticalmente */
+.section {
+  min-height: calc(100svh - var(--header-height));
+  display: grid;
+  align-content: center;
+  scroll-margin-top: var(--header-height);
+}
