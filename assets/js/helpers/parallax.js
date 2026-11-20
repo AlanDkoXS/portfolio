@@ -1,4 +1,6 @@
 // parallax.js
+import { createTilt } from './tilt.js';
+
 const ParallaxEffect = {
   config: {
     mobile: {
@@ -11,13 +13,7 @@ const ParallaxEffect = {
         speed: { x: 0.5, y: 0.1 }, // px per frame (~60fps)
         range: 10,
       },
-      maxTilt: 45, // degrees, clamps gamma/beta deltas
-      smoothing: 0.15, // 0..1, lerp factor per frame
-      recenter: {
-        idleMs: 2000, // phone still this long → drift back to center
-        motionThreshold: 1.5, // degrees of change that count as "moving"
-        speed: 0.03, // 0..1, how fast the baseline catches up per frame
-      },
+      tilt: {}, // overrides for tilt.js defaults (maxTilt, smoothing, recenter)
     },
     desktop: {
       sensitivity: {
@@ -41,14 +37,6 @@ const ParallaxEffect = {
     autoY: 0,
     autoSpeedX: 0,
     autoSpeedY: 0,
-    // tilt: raw sensor reading, baseline ("center") and smoothed value
-    rawGamma: 0,
-    rawBeta: 0,
-    baseGamma: null, // calibrated from the first reading, then recentered
-    baseBeta: null,
-    gamma: 0,
-    beta: 0,
-    lastMotionTime: 0,
     // desktop
     lastX: 0,
     lastY: 0,
@@ -81,14 +69,13 @@ const ParallaxEffect = {
     this.state.isMobile = this.mobileQuery.matches;
 
     // Listeners are registered once; handlers check the current mode.
-    window.addEventListener('deviceorientation', (e) => this.onOrientation(e));
+    this.tilt = createTilt(this.config.mobile.tilt);
     document.addEventListener('mousemove', (e) => this.onMouseMove(e));
     document.addEventListener('mouseleave', () => {
       if (!this.state.isMobile) this.resetPositions();
     });
     this.mobileQuery.addEventListener('change', (e) => this.setMode(e.matches));
 
-    this.requestIOSPermission();
     this.setMode(this.state.isMobile);
   },
 
@@ -106,84 +93,15 @@ const ParallaxEffect = {
     }
   },
 
-  // iOS 13+ only fires deviceorientation after permission granted in a user gesture.
-  requestIOSPermission() {
-    if (
-      typeof DeviceOrientationEvent === 'undefined' ||
-      typeof DeviceOrientationEvent.requestPermission !== 'function'
-    ) {
-      return;
-    }
-
-    const ask = () => {
-      DeviceOrientationEvent.requestPermission()
-        .catch(() => 'denied')
-        .finally(() => {
-          document.removeEventListener('click', ask);
-          document.removeEventListener('touchend', ask);
-        });
-    };
-
-    document.addEventListener('click', ask);
-    document.addEventListener('touchend', ask);
-  },
-
-  onOrientation(event) {
-    if (!this.state.isMobile) return;
-    if (event.gamma === null || event.beta === null) return;
-
-    const s = this.state;
-    const { motionThreshold } = this.config.mobile.recenter;
-
-    // Tilt is relative to how the user holds the phone, not absolute.
-    if (s.baseBeta === null) {
-      s.baseGamma = event.gamma;
-      s.baseBeta = event.beta;
-      s.lastMotionTime = performance.now();
-    }
-
-    if (
-      Math.abs(event.gamma - s.rawGamma) > motionThreshold ||
-      Math.abs(event.beta - s.rawBeta) > motionThreshold
-    ) {
-      s.lastMotionTime = performance.now();
-    }
-
-    s.rawGamma = event.gamma;
-    s.rawBeta = event.beta;
-  },
-
-  // After the phone has been still for idleMs, slide the baseline toward the
-  // current reading so the layers return to center instead of staying offset.
-  stepRecenter(now) {
-    const s = this.state;
-    if (s.baseBeta === null) return;
-
-    const { idleMs, speed } = this.config.mobile.recenter;
-    if (now - s.lastMotionTime < idleMs) return;
-
-    s.baseGamma += (s.rawGamma - s.baseGamma) * speed;
-    s.baseBeta += (s.rawBeta - s.baseBeta) * speed;
-  },
-
   startLoop() {
     if (this.state.rafId !== null) return;
 
+    const s = this.state;
     const tick = (now) => {
       this.stepAutoMovement();
-      this.stepRecenter(now);
 
-      const s = this.state;
-      const { smoothing: k, maxTilt } = this.config.mobile;
-      const clamp = (v) => Math.max(-maxTilt, Math.min(maxTilt, v));
-
-      const targetGamma = s.baseGamma === null ? 0 : clamp(s.rawGamma - s.baseGamma);
-      const targetBeta = s.baseBeta === null ? 0 : clamp(s.rawBeta - s.baseBeta);
-
-      s.gamma += (targetGamma - s.gamma) * k;
-      s.beta += (targetBeta - s.beta) * k;
-
-      this.updateLayersMobile(s.gamma, s.beta);
+      const { gamma, beta } = this.tilt.update(now);
+      this.updateLayersMobile(gamma, beta);
       s.rafId = requestAnimationFrame(tick);
     };
 

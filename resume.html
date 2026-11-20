@@ -20,14 +20,17 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
     <!-- Scripts -->
-    <script type="module" src="assets/js/main.js" defer></script>
-    <!-- Módulos específicos para esta página -->
+    <!-- Solo los módulos que usa esta página (main.js es para index.html) -->
     <script type="module">
-        import { initFab, openModal, closeModal, downloadCV } from '/assets/js/helpers/resume_fab_buttons.js';
+        import { initFab } from '/assets/js/helpers/resume_fab_buttons.js';
         import { loadPdf } from '/assets/js/helpers/pdf_loader.js';
         import switchLanguages from '/assets/js/helpers/switchLanguages.js';
         import { setAutoDarkMode } from '/assets/js/helpers/auto-dark-mode.js';
         import updateDateYear from '/assets/js/helpers/date_updater.js';
+        import SnowEffect from '/assets/js/helpers/snow-effect.js';
+        import { loadGoogleTagManager } from '/assets/js/helpers/google-tag-manager.js';
+
+        loadGoogleTagManager();
 
         document.addEventListener('DOMContentLoaded', () => {
             initFab();
@@ -35,6 +38,7 @@
             switchLanguages();
             setAutoDarkMode();
             updateDateYear();
+            SnowEffect.init();
         });
 
         window.openModal = () => {
@@ -113,7 +117,7 @@
     </header>
     <!-- Buttons -->
     <div class="fab-container">
-        <a href="#" class="fab btn btn--primary" id="btn-download" onclick="openModal()">
+        <a href="#" class="fab btn btn--primary" id="btn-download" onclick="openModal(); return false;">
             <i class="bx bxs-download"></i>
             <span class="fab-text">Download</span>
         </a>
