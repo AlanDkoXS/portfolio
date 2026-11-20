@@ -1,0 +1,21 @@
+# Netlify headers — https://docs.netlify.com/routing/headers/
+# Asset file names aren't fingerprinted, so caches are moderate and use
+# stale-while-revalidate: visitors get instant loads and pick up changes on
+# the next visit after the max-age expires.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+/assets/img/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/assets/docs/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/assets/css/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/assets/js/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400

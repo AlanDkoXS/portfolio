@@ -43,15 +43,21 @@ python -m http.server 8000   # then open http://localhost:8000
 
 **Profile sprite.** `.home__image--sprite` animates `profile_sprite.webp` (20 frames of 300×300 in a 6000×300 strip) using `background-size: 2000% 100%` and percentage `background-position` with `steps(20, jump-none)`, so frames stay aligned at any rendered size. Keep that if the sprite changes (adjust 2000% / steps to the new frame count).
 
-**External services** are loaded dynamically by helpers rather than via `<script>` tags: EmailJS (`email-js.js`, used by the contact form in `send_form.js`) and Google Tag Manager/Analytics (`google-tag-manager.js`). `fectchDribbbleShots.js` exists but isn't wired into `main.js`.
+**External services** are loaded dynamically by helpers rather than via `<script>` tags: EmailJS (`email-js.js`, used by the contact form in `send_form.js`, which silently drops submissions that fill the hidden `#website` honeypot field) and Google Tag Manager/Analytics (`google-tag-manager.js`). `fectchDribbbleShots.js` exists but isn't wired into `main.js`.
 
-**CSS.** `assets/css/main.css` is just `@import`s of partials organized as `base/` (variables, base), `layout/` (header, footer, buttons, modal, loader, background), and `sections/` (one file per page section, including `_resume.css`). Class naming follows BEM (`block__element--modifier`). Dark mode is set by `auto-dark-mode.js` from the local time (dark 18:00–06:00) via `data-theme` on `<body>`, not from `prefers-color-scheme`.
+**CSS.** `assets/css/main.css` is just `@import`s of partials organized as `base/` (variables, base), `layout/` (header, footer, buttons, modal, loader, background), and `sections/` (one file per page section, including `_resume.css`). Class naming follows BEM (`block__element--modifier`). Dark mode is the state of the `[name='color-scheme']` checkbox (CSS reacts via `:has(...:checked)`); `auto-dark-mode.js` sets it from the visitor's remembered choice (`localStorage.theme`), else from local time (dark 18:00–06:00). Not from `prefers-color-scheme`.
 
 **Seasonal effect.** `snow-effect.js` only activates Dec 12 – Jan 6.
 
 ## SEO files
 
-`sitemap.xml` (with `xhtml:link` hreflang alternates for `/` and `/es/`), `robots.txt`, and the JSON-LD block in `index.html`'s `<head>` should be kept in sync with page/URL changes.
+`sitemap.xml` (with `xhtml:link` hreflang alternates for `/` and `/es/`), `robots.txt`, and the JSON-LD block in `index.html`'s `<head>` should be kept in sync with page/URL changes. The JSON-LD block is marked `data-i18n-jsonld`; the generator merges `translations.meta[lang].jsonLd` into it.
+
+## Netlify
+
+`_redirects` (`/resume.html` → `/resume`) and `_headers` (security headers + moderate `Cache-Control` with `stale-while-revalidate`, since asset names aren't fingerprinted; replacing an image keeps its old version cached up to a day).
+
+`reload_page.js` forces `#home` only on a manual reload or when there's no hash, so shared links like `/es/#contact` keep working.
 
 ## Conventions
 

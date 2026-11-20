@@ -162,17 +162,9 @@ const loadExternalResources = async () => {
  */
 const setupDarkMode = () => {
   try {
-    // Set initial dark mode state
+    // Initial theme (remembered choice, else local time) + remembers the toggle
     setAutoDarkMode();
-
-    // Observer for system preferences changes
-    const darkModeMediaQuery = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    );
-    darkModeMediaQuery.addListener((e) => {
-      AppState.isDarkMode = e.matches;
-      setAutoDarkMode();
-    });
+    AppState.isDarkMode = document.body.getAttribute("data-theme") === "dark";
   } catch (error) {
     handleError(error, "setupDarkMode");
   }
@@ -221,11 +213,11 @@ const initialize = async () => {
     // Spanish visitors while third-party scripts load)
     switchLanguages();
 
-    // Load external resources first
-    await loadExternalResources();
-
-    // Set up dark mode
+    // Theme right away too, before awaiting third-party scripts
     setupDarkMode();
+
+    // Third-party scripts (GTM, EmailJS)
+    await loadExternalResources();
 
     // Initialize main components
     await initializeUIComponents();

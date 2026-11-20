@@ -22,7 +22,7 @@ Welcome to my personal webpage repository! This project showcases my portfolio a
 ## Features
 
 - **Responsive Design**: Fully responsive layout, optimized for both desktop and mobile devices.
-- **Language Switcher**: Users can switch between English and Spanish.
+- **Bilingual**: English at `/` and Spanish at `/es/` as separate static pages (indexable by search engines), with a language switcher that remembers the visitor's choice.
 - **Interactive Contact Form**: Includes a contact form connected to EmailJS for easy communication.
 - **Custom Animations**: Smooth scrolling and subtle animations for enhanced user experience.
 - **Portfolio Section**: Displays my latest work across various industries.
@@ -48,13 +48,26 @@ Welcome to my personal webpage repository! This project showcases my portfolio a
 
 To run this project locally:
 
-1. Clone this repository:
-   ```git clone https://github.com/AlanDkoXS/portfolio.git   ```
-2. Open the project folder:
+1. Clone this repository and open the folder:
+   ```sh
+   git clone https://github.com/AlanDkoXS/portfolio.git
+   cd portfolio
+   ```
+2. Serve it over HTTP (the JavaScript uses ES modules, so opening `index.html` directly from disk won't work):
+   ```sh
+   python -m http.server 8000
+   ```
+3. Open http://localhost:8000 (resume at http://localhost:8000/resume.html).
 
-```cd portfolio```
+## Editing texts (English / Spanish)
 
-3. Open index.html in your browser.
+All texts live in `assets/js/languages/translations.js`. After changing a text — or adding a new element marked with `data-i18n="key"` in `index.html` — regenerate the pages:
+
+```sh
+node scripts/build-i18n.mjs
+```
+
+This updates `index.html` (English) and generates `es/index.html` (Spanish). Don't edit `es/index.html` by hand.
 
 ## Usage
 

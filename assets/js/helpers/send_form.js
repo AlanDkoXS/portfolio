@@ -169,6 +169,16 @@ function sendEmail() {
     e.preventDefault();
 
     const submitButton = formDOM.querySelector('button[type="submit"]');
+
+    // Honeypot filled → almost certainly a bot. Pretend it worked, send nothing.
+    if (document.getElementById("website")?.value) {
+      modalDOM.querySelector("p").textContent =
+        FORM_MESSAGES[currentLanguage].success;
+      openModal();
+      formDOM.reset();
+      return;
+    }
+
     const params = {
       name: document.getElementById("name").value,
       email: document.getElementById("email").value,

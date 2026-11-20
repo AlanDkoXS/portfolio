@@ -9,6 +9,12 @@ const translations = {
         'Portfolio of Alan Quintana, specialized in graphic design and web development with React, JavaScript and Node.js',
       url: 'https://www.alanquintana.pro/',
       locale: 'en_US',
+      // Merged into the JSON-LD <script data-i18n-jsonld> block
+      jsonLd: {
+        jobTitle: 'Full Stack Designer & Developer',
+        description: 'Full stack designer, passionate about design, technology and development.',
+        knowsAbout: ['Graphic Design', 'Web Development', 'React', 'JavaScript', 'Node.js'],
+      },
     },
     es: {
       title: 'Alan Quintana | Diseñador y Desarrollador Full Stack',
@@ -18,6 +24,11 @@ const translations = {
         'Portafolio de Alan Quintana, especializado en diseño gráfico y desarrollo web con React, JavaScript y Node.js',
       url: 'https://www.alanquintana.pro/es/',
       locale: 'es_MX',
+      jsonLd: {
+        jobTitle: 'Diseñador y Desarrollador Full Stack',
+        description: 'Diseñador full stack, apasionado por el diseño, la tecnología y el desarrollo.',
+        knowsAbout: ['Diseño Gráfico', 'Desarrollo Web', 'React', 'JavaScript', 'Node.js'],
+      },
     },
   },
   /* <-- Nav Bar --> */
@@ -75,6 +86,10 @@ const translations = {
   aboutTitle: {
     en: 'About me',
     es: 'Sobre mí',
+  },
+  aboutImageAlt: {
+    en: 'Portrait of Alan Quintana',
+    es: 'Retrato de Alan Quintana',
   },
   aboutDescription: {
     en: 'I can help you develop modern, responsive, and functional web applications tailored to your business needs. My approach combines visually appealing design with a seamless user experience, ensuring that the applications are not only aesthetically pleasing but also intuitive and easy to use.',

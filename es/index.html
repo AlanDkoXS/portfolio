@@ -77,7 +77,7 @@
     />
 
     <!-- Schema.org -->
-    <script type="application/ld+json">
+    <script type="application/ld+json" data-i18n-jsonld>
       {
         "@context": "https://schema.org",
         "@type": "Person",
@@ -89,16 +89,16 @@
           "https://dribbble.com/Alan3XS",
           "https://www.instagram.com/anotherguyontheroad/"
         ],
-        "jobTitle": "Full Stack Designer & Developer",
+        "jobTitle": "Diseñador y Desarrollador Full Stack",
         "worksFor": {
           "@type": "Organization",
           "name": "Freelance"
         },
         "image": "https://www.alanquintana.pro/assets/img/aboutme.webp",
-        "description": "Full stack designer, passionate about design, technology and development.",
+        "description": "Diseñador full stack, apasionado por el diseño, la tecnología y el desarrollo.",
         "knowsAbout": [
-          "Graphic Design",
-          "Web Development",
+          "Diseño Gráfico",
+          "Desarrollo Web",
           "React",
           "JavaScript",
           "Node.js"
@@ -131,12 +131,6 @@
     <link
       rel="prefetch"
       href="/assets/img/logo.svg"
-      as="image"
-      type="image/svg+xml"
-    />
-    <link
-      rel="preload"
-      href="/assets/img/bgGrain.svg"
       as="image"
       type="image/svg+xml"
     />
@@ -396,8 +390,9 @@
               <div class="about__img">
                 <img
                   src="/assets/img/aboutme.webp"
-                  alt="About me image"
-                  title="About me image"
+                  data-i18n-attr="alt:aboutImageAlt;title:aboutImageAlt"
+                  alt="Retrato de Alan Quintana"
+                  title="Retrato de Alan Quintana"
                   loading="lazy"
                   width="200"
                   height="200"
@@ -1223,6 +1218,15 @@
                   class="contact__form-input"
                 ></textarea>
               </div>
+              <!-- Honeypot: invisible to people, bots tend to fill it -->
+              <div
+                aria-hidden="true"
+                style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden"
+              >
+                <label for="website">Website</label>
+                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+              </div>
+
               <dialog id="modal">
                 <div class="modal-content">
                   <p data-i18n="contactForm.formSuccess">¡Formulario enviado exitosamente!</p>

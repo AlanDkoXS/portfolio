@@ -22,7 +22,7 @@ Bienvenido al repositorio de mi página web personal. Este proyecto muestra mi p
 ## Características
 
 - **Diseño Responsivo**: Diseño completamente adaptable, optimizado para dispositivos de escritorio y móviles.
-- **Cambio de Idioma**: Los usuarios pueden cambiar entre inglés y español.
+- **Bilingüe**: Inglés en `/` y español en `/es/` como páginas estáticas separadas (indexables por buscadores), con un selector de idioma que recuerda la elección del visitante.
 - **Formulario de Contacto Interactivo**: Incluye un formulario conectado a EmailJS para facilitar la comunicación.
 - **Animaciones Personalizadas**: Desplazamiento suave y animaciones sutiles para mejorar la experiencia del usuario.
 - **Sección de Portafolio**: Muestra mis últimos trabajos en varias industrias.
@@ -48,11 +48,26 @@ Bienvenido al repositorio de mi página web personal. Este proyecto muestra mi p
 
 Para ejecutar este proyecto localmente:
 
-1. Clona este repositorio:
-   ```git clone https://github.com/AlanDkoXS/portfolio.git```
-2. Abre la carpeta del proyecto:
-   ```cd portfolio```
-3. Abre index.html en tu navegador.
+1. Clona este repositorio y entra a la carpeta:
+   ```sh
+   git clone https://github.com/AlanDkoXS/portfolio.git
+   cd portfolio
+   ```
+2. Sírvelo por HTTP (el JavaScript usa módulos ES, así que abrir `index.html` directo desde el disco no funciona):
+   ```sh
+   python -m http.server 8000
+   ```
+3. Abre http://localhost:8000 (el CV está en http://localhost:8000/resume.html).
+
+## Editar textos (inglés / español)
+
+Todos los textos viven en `assets/js/languages/translations.js`. Después de cambiar un texto — o de agregar un elemento nuevo con `data-i18n="clave"` en `index.html` — regenera las páginas:
+
+```sh
+node scripts/build-i18n.mjs
+```
+
+Esto actualiza `index.html` (inglés) y genera `es/index.html` (español). No edites `es/index.html` a mano.
 
 ## Uso
 

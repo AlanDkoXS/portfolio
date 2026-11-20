@@ -61,6 +61,23 @@ function render(html, lang) {
     return tag;
   });
 
+  // Structured data: <script type="application/ld+json" data-i18n-jsonld>
+  // gets translations.meta[lang].jsonLd merged over its fields.
+  out = out.replace(
+    /(<script type="application\/ld\+json" data-i18n-jsonld>)([\s\S]*?)(\n(\s*)<\/script>)/,
+    (m, open, body, close, indent) => {
+      const overrides = translations.meta?.[lang]?.jsonLd;
+      if (!overrides) return m;
+      const data = { ...JSON.parse(body), ...overrides };
+      const json = JSON.stringify(data, null, 2)
+        .replace(/</g, '\\u003c') // never close the <script> early
+        .split('\n')
+        .map((line) => `${indent}  ${line}`)
+        .join('\n');
+      return `${open}\n${json}${close}`;
+    },
+  );
+
   return out;
 }
 
