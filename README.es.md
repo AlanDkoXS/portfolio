@@ -17,71 +17,67 @@
 
 # Página Web Personal
 
-Bienvenido al repositorio de mi página web personal. Este proyecto muestra mi portafolio como diseñador gráfico y desarrollador web autodidacta, destacando mis habilidades, proyectos y experiencia. El sitio está construido con un enfoque mobile-first usando HTML, CSS y JavaScript.
+Código de [alanquintana.pro](https://alanquintana.pro), el portafolio de un diseñador gráfico y desarrollador full stack. HTML, CSS y JavaScript estáticos: sin framework ni bundler, con un par de scripts de Node sin dependencias que generan páginas y PDFs.
 
 ## Características
 
-- **Diseño Responsivo**: Diseño completamente adaptable, optimizado para dispositivos de escritorio y móviles.
-- **Bilingüe**: Inglés en `/` y español en `/es/` como páginas estáticas separadas (indexables por buscadores), con un selector de idioma que recuerda la elección del visitante.
-- **Formulario de Contacto Interactivo**: Incluye un formulario conectado a EmailJS para facilitar la comunicación.
-- **Animaciones Personalizadas**: Desplazamiento suave y animaciones sutiles para mejorar la experiencia del usuario.
-- **Sección de Portafolio**: Muestra mis últimos trabajos en varias industrias.
+- **Bilingüe e indexable**: inglés en `/` y español en `/es/`, como páginas estáticas separadas con `hreflang`. El botón de idioma recuerda la elección del visitante.
+- **Casos de estudio**: una página por proyecto (`/projects/<slug>/` y `/es/proyectos/<slug>/`) con capturas, funcionalidades, cómo está hecho, imagen para redes y datos estructurados (JSON-LD).
+- **Tema claro y oscuro**: por defecto sigue al sistema. El botón guarda una excepción solo si es distinta del sistema, y un script en el `<head>` la aplica antes de pintar, así que no parpadea.
+- **Accesible**: funciona sin JavaScript, respeta "reducir movimiento" (se detienen el parallax, las animaciones y el carrusel de habilidades), modales nativos, errores del formulario ligados a cada campo y botón para pausar lo que se mueve (WCAG 2.2.2).
+- **Identidad visual**: paleta turquesa y dorado, botones estilo cartoon con sombra dura y sombra interna granulada, parallax en el hero con mouse o giroscopio, e íconos de tecnologías en filas infinitas.
+- **CV**: `/resume` muestra el PDF en el idioma activo y permite descargarlo en inglés o español. Los PDF se generan desde código.
+- **Formulario de contacto** con EmailJS y un honeypot contra bots.
+- **Encontrable por IA**: [`llms.txt`](https://www.alanquintana.pro/llms.txt) y [`llms-full.txt`](https://www.alanquintana.pro/llms-full.txt) dan a buscadores de IA y agentes un perfil bilingüe con preguntas frecuentes. Se generan con los mismos datos que el sitio, junto con el JSON-LD y las meta etiquetas en ambos idiomas.
 
 ## Tecnologías Utilizadas
 
-- **HTML5**: Para estructurar el contenido de la página web.
-- **CSS3**: Para estilizar, incluyendo animaciones personalizadas y media queries.
-- **JavaScript**: Para manejar la interactividad, como el cambio de idioma y envío de formularios.
-- **EmailJS**: Para gestionar envíos de formularios y mensajes.
-- **Netlify**: Despliegue del sitio para acceso público.
+- **HTML, CSS y JavaScript (módulos ES)**, con CSS moderno: `light-dark()`, container style queries, animaciones ligadas al scroll, transiciones entre páginas, `@container`, `:has()`.
+- **Scripts de Node.js** (sin dependencias) para generar páginas y PDFs.
+- **pdf.js** para mostrar el CV y **EmailJS** para el formulario.
+- **Netlify** para el hosting, las redirecciones y los headers de caché.
 
 ## Secciones
 
-- **Inicio**: Una breve introducción sobre quién soy y qué hago.
-- **Sobre Mí**: Detalles sobre mi experiencia en diseño gráfico y desarrollo web.
-- **Habilidades**: Muestra de mis habilidades profesionales, incluyendo Adobe Creative Suite, Figma y tecnologías web como HTML, CSS, JavaScript y React.
-- **Portafolio**: Galería de trabajos seleccionados, incluyendo branding, ilustraciones digitales y proyectos de desarrollo web.
-- **Proyectos**: Destacados de proyectos recientes de desarrollo web y diseño.
-- **Contacto**: Un formulario donde los visitantes pueden contactarme directamente.
+- **Inicio**: presentación, redes sociales y accesos rápidos.
+- **Sobre mí**: trayectoria en diseño y desarrollo.
+- **Habilidades**: herramientas de diseño, frontend, backend y desarrollo, además de habilidades blandas.
+- **Proyectos**: carrusel de tarjetas con enlace a la demo, el código y el caso de estudio de cada uno.
+- **Contacto**: formulario para escribirme directamente.
 
 ## Instalación
-
-Para ejecutar este proyecto localmente:
 
 1. Clona este repositorio y entra a la carpeta:
    ```sh
    git clone https://github.com/AlanDkoXS/portfolio.git
    cd portfolio
    ```
-2. Sírvelo por HTTP (el JavaScript usa módulos ES, así que abrir `index.html` directo desde el disco no funciona):
+2. Sírvelo por HTTP (el JavaScript usa módulos ES, así que abrir `index.html` directamente desde el disco no funciona):
    ```sh
    python -m http.server 8000
    ```
-3. Abre http://localhost:8000 (el CV está en http://localhost:8000/resume.html).
+3. Abre http://localhost:8000 (el CV en http://localhost:8000/resume.html).
 
-## Editar textos (inglés / español)
+## Editar el contenido
 
-Todos los textos viven en `assets/js/languages/translations.js`. Después de cambiar un texto — o de agregar un elemento nuevo con `data-i18n="clave"` en `index.html` — regenera las páginas:
-
-```sh
-node scripts/build-i18n.mjs
-```
-
-Esto actualiza `index.html` (inglés) y genera `es/index.html` (español). No edites `es/index.html` a mano.
-
-## Uso
-
-- Abre la página web y explora las diferentes secciones.
-- Usa el cambiador de idioma para alternar entre inglés y español.
-- Completa el formulario de contacto para enviar un mensaje usando EmailJS.
+- **Textos (EN/ES)**: viven en `assets/js/languages/translations.js`. **Proyectos**: en `scripts/data/projects.mjs`. Después de editar cualquiera de los dos, o `index.html`, regenera las páginas:
+  ```sh
+  node scripts/build-i18n.mjs
+  ```
+  Esto actualiza `index.html` y genera `es/index.html`, las 12 páginas de proyectos, sus entradas en `sitemap.xml` y `llms.txt` / `llms-full.txt` (datos del perfil en `scripts/data/profile.mjs`). No edites a mano los archivos generados.
+- **CV**: edita `scripts/cv/data.mjs` y ejecuta:
+  ```sh
+  node scripts/build-cv.mjs
+  ```
+  Requiere tener instalados Chromium y `pdfunite` (poppler). Genera `assets/docs/[ENG] Alan Quintana.pdf`, `[ESP] Alan Quintana.pdf` y `resume.pdf`. Cada CV debe caber en una página carta; si no cabe, el script falla.
 
 ## Despliegue
 
-La página web está desplegada a través de Netlify. Puedes acceder al sitio en vivo [aquí](https://alanquintana.pro).
+El sitio se despliega en Netlify directamente desde la raíz del repositorio. Puedes verlo en vivo [aquí](https://alanquintana.pro).
 
-## Contribuir
+## Contribuciones
 
-¡Siéntete libre de hacer fork de este repositorio, crear una rama y enviar un pull request para cualquier mejora o sugerencia!
+¡Haz un fork del repositorio, crea una rama y envía un pull request con mejoras o sugerencias!
 
 ## Licencia
 
@@ -89,9 +85,9 @@ Este proyecto es de código abierto y está disponible bajo la Licencia MIT.
 
 ## Contacto
 
-Para cualquier pregunta, puedes contactarme en:
+Si tienes preguntas, puedes contactarme en:
 
-- Email: hello@alanquintana.pro
-- Instagram: @anotherguyontheroad
-- Twitter: @AlanDKO
-- LinkedIn: Alan Quintana
+    Email: hello@alanquintana.pro
+    Instagram: @anotherguyontheroad
+    Twitter: @AlanDKO
+    LinkedIn: Alan Quintana

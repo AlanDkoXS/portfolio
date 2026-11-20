@@ -14,6 +14,16 @@ node scripts/build-i18n.mjs   # run after editing index.html or translations.js
 
 Rewrites `index.html` in place with the English texts and generates `es/index.html` (Spanish, committed, never edit by hand). Idempotent; fails listing any missing translation keys.
 
+It also generates the **project case-study pages** from `scripts/data/projects.mjs` (content in EN/ES, facts taken from each repo) with the template in `scripts/lib/project-page.mjs`: `projects/<slug>/index.html` (en) and `es/proyectos/<slug>/index.html` (es), committed, never edit by hand. They reuse the home header/footer (section links rewritten to `/#…` or `/es/#…`), carry canonical/hreflang/OG/JSON-LD (SoftwareApplication + BreadcrumbList), and the generator rewrites the `<!-- projects:start/end -->` block of `sitemap.xml`. To add a project: add its entry to `projects.mjs` (same order as the home cards), its screenshots (`project_img/<image>.webp` 560×700 mobile, `desktop/<image>.webp` 1280×800, `og/<image>.jpg` 1200×630, plus `-dark` variants if it has its own dark mode), a card in `index.html` and its `projectCase` hrefs in `translations.js`.
+
+## CV (PDF) generator
+
+```sh
+node scripts/build-cv.mjs   # run after editing scripts/cv/data.mjs
+```
+
+Builds `assets/docs/[ENG] Alan Quintana.pdf`, `[ESP] Alan Quintana.pdf` and `resume.pdf` (EN page 1 + ES page 2, shown by `/resume`) from `scripts/cv/data.mjs`, printing an HTML template with the system Chromium and joining with `pdfunite` (poppler). Each CV must fit one Letter page; the script fails if one overflows. Experience lists the Aniwa (beaniwa.com) client sites.
+
 ## Running locally
 
 JS is loaded as native ES modules with absolute imports (e.g. `/assets/js/languages/translations.js`), so opening `index.html` via `file://` won't work. Serve the repo root over HTTP:
@@ -45,13 +55,21 @@ python -m http.server 8000   # then open http://localhost:8000
 
 **External services** are loaded dynamically by helpers rather than via `<script>` tags: EmailJS (`email-js.js`, used by the contact form in `send_form.js`, which silently drops submissions that fill the hidden `#website` honeypot field) and Google Tag Manager/Analytics (`google-tag-manager.js`). `fectchDribbbleShots.js` exists but isn't wired into `main.js`.
 
-**CSS.** `assets/css/main.css` is just `@import`s of partials organized as `base/` (variables, base), `layout/` (header, footer, buttons, modal, loader, background), and `sections/` (one file per page section, including `_resume.css`). Class naming follows BEM (`block__element--modifier`). Dark mode is the state of the `[name='color-scheme']` checkbox (CSS reacts via `:has(...:checked)`); `auto-dark-mode.js` sets it from the visitor's remembered choice (`localStorage.theme`), else from local time (dark 18:00–06:00). Not from `prefers-color-scheme`. Colors are `light-dark()` tokens in `_variables.css` (dark = deep teal `#00303d` + gold, light = light teal `#d6ebf0` + dark teal text with darker gold accents); use the semantic tokens (`--primary-color`, `--accent-color`, `--surface-color`, `--border-color`, `--shadow-color`, …) instead of hex values. Always-dark areas (footer, project cards over photos) locally override `--primary-color` to gold.
+**CSS.** `assets/css/main.css` is just `@import`s of partials organized as `base/` (variables, base), `layout/` (header, footer, buttons, modal, loader, background), and `sections/` (one file per page section, including `_resume.css`). Class naming follows BEM (`block__element--modifier`). Theme follows the system (`prefers-color-scheme`) by default. The toggle stores an override in `localStorage.theme` only when it differs from the system (toggling back to the system scheme removes it) and writes it to `<meta name="color-scheme">`; an inline `<head>` script applies it before first paint (no flash). CSS maps that meta to `color-scheme` and to a `--color-scheme` custom property in `_variables.css`. Colors are `light-dark()` tokens: both schemes are teal with gold `#f3ce3a` text (light = `#00303d`, dark = deeper `#001a23`); only backgrounds, surfaces and inputs differ; use the semantic tokens (`--primary-color`, `--accent-color`, `--accent-ink`, `--surface-color`, `--border-color`, `--shadow-color`, …) instead of hex values. Non-color light/dark branches use `@container style(--color-scheme: …)` as non-critical overrides. Buttons: `.btn--primary` (solid gold) for main actions, `.btn--ghost` (outline) only for secondary ones like the contact form submit. Always-dark areas (footer, project cards over photos) locally override `--primary-color` to gold.
 
 **Seasonal effect.** `snow-effect.js` only activates Dec 12 – Jan 6.
 
+**Motion & robustness.** Decorative motion (parallax, tilt, snow, sprite, greeting typing, smooth scroll, card flip, hover drift) only runs when the user has no reduced-motion preference: JS effects check `prefersReducedMotion()` from `helpers/motion.js`; CSS opts in with `@media (prefers-reduced-motion: no-preference)`. Content must be visible without JS: section entry and the header reveal are scroll-driven CSS animations behind `@supports`; `observer.js` only lazy-loads project images. Page-to-page navigations use a cross-document `@view-transition`.
+
+**Project covers.** `assets/img/project_img/*.webp` are 560×700 (4:5, 2× the card) mobile screenshots of each live project, set in `_projects.css` by `nth-of-type` (card order matters). Projects with their own dark mode (CRUD, Traktl) also have `*-dark.webp`, swapped via `@container style(--color-scheme: dark)`. Don't set covers inline from JS, or the dark override stops working.
+
+**Skills marquee.** Each stack in `#skills` is a `.skills__group` with an infinite left-to-right row: `.skills__track` holds 4 copies of the `<ul class="skills__list">` (only the first is accessible, the rest `aria-hidden`) and animates `translate: -50% → 0` over `--marquee-duration` (set inline per row). It pauses on hover/focus and with the `.skills__motion-toggle` button (WCAG 2.2.2, `helpers/skills_marquee.js`); with reduced motion it's a static wrapped list. When adding a tech, add it to all 4 copies. Icons are SVG `<symbol>` sprites in `assets/img/skills/` (newer ones from Simple Icons, CC0) and get the grainy inner shadow via `filter: url(#grain-inset)` (inline SVG filter at the top of `<body>` in `index.html`).
+
+**Dialogs.** Native `<dialog>` opened with `showModal()`, `closedby="any"` for light dismiss (Safari fallback in `helpers/dialog.js`), named via `aria-labelledby`. The dialog box is the card; the dim/blur lives in `::backdrop`.
+
 ## SEO files
 
-`sitemap.xml` (with `xhtml:link` hreflang alternates for `/` and `/es/`), `robots.txt`, and the JSON-LD block in `index.html`'s `<head>` should be kept in sync with page/URL changes. The JSON-LD block is marked `data-i18n-jsonld`; the generator merges `translations.meta[lang].jsonLd` into it.
+`sitemap.xml` (with `xhtml:link` hreflang alternates for `/`, `/es/` and the generated project pages), `robots.txt`, and the JSON-LD block in `index.html`'s `<head>` should be kept in sync with page/URL changes. `llms.txt` and `llms-full.txt` (profile for AI search engines and agents, EN + ES, with FAQ) are generated by `build-i18n.mjs` from `scripts/data/profile.mjs`, `projects.mjs` and `scripts/cv/data.mjs`; never edit them by hand. `robots.txt` explicitly allows AI crawlers and points to them. The JSON-LD block is marked `data-i18n-jsonld`; the generator merges `translations.meta[lang].jsonLd` into it.
 
 ## Netlify
 

@@ -17,36 +17,35 @@
 
 # Personal Webpage
 
-Welcome to my personal webpage repository! This project showcases my portfolio as a self-taught graphic designer and web developer, highlighting my skills, projects, and experience. The site is built with a mobile-first approach using HTML, CSS, and JavaScript.
+Source of [alanquintana.pro](https://alanquintana.pro), the portfolio of a graphic designer and full stack developer. Plain static HTML, CSS and vanilla JavaScript: no framework and no bundler, with a couple of zero-dependency Node scripts that generate pages and PDFs.
 
 ## Features
 
-- **Responsive Design**: Fully responsive layout, optimized for both desktop and mobile devices.
-- **Bilingual**: English at `/` and Spanish at `/es/` as separate static pages (indexable by search engines), with a language switcher that remembers the visitor's choice.
-- **Interactive Contact Form**: Includes a contact form connected to EmailJS for easy communication.
-- **Custom Animations**: Smooth scrolling and subtle animations for enhanced user experience.
-- **Portfolio Section**: Displays my latest work across various industries.
+- **Bilingual and indexable**: English at `/` and Spanish at `/es/` as separate static pages with `hreflang`. The language switcher remembers the visitor's choice.
+- **Project case studies**: a page per project (`/projects/<slug>/` and `/es/proyectos/<slug>/`) with screenshots, features, how it's built, Open Graph images and structured data (JSON-LD).
+- **Light and dark theme**: follows the system by default. The toggle stores an override only when it differs from the system, and an inline script applies it before the first paint, so there's no flash.
+- **Accessible**: works without JavaScript, respects "reduce motion" (parallax, animations and the skills carousel stop), native modal dialogs, labelled form errors and a pause button for moving content (WCAG 2.2.2).
+- **Visual identity**: teal and gold palette, cartoon-style buttons with a hard shadow and a grainy inner shadow, hero parallax driven by mouse or gyroscope, and tech stack icons in infinite rows.
+- **Resume**: `/resume` shows the PDF in the active language and offers EN/ES downloads. The PDFs are generated from code.
+- **Contact form** via EmailJS, with a honeypot against bots.
+- **Findable by AI**: [`llms.txt`](https://www.alanquintana.pro/llms.txt) and [`llms-full.txt`](https://www.alanquintana.pro/llms-full.txt) give AI search engines and agents a bilingual profile with an FAQ. They are generated from the same data as the site, along with JSON-LD and meta tags in both languages.
 
 ## Technologies Used
 
-- **HTML5**: For structuring the webpage content.
-- **CSS3**: For styling, including custom animations and media queries.
-- **JavaScript**: To handle interactivity, such as language switching and form submissions.
-- **EmailJS**: To manage form submissions and send messages.
-- **Netlify**: Deployment of the site for public access.
+- **HTML, CSS and JavaScript (ES modules)**, with modern CSS: `light-dark()`, container style queries, scroll-driven animations, cross-document view transitions, `@container`, `:has()`.
+- **Node.js scripts** (no dependencies) to generate pages and PDFs.
+- **pdf.js** to render the resume, **EmailJS** for the form.
+- **Netlify** for hosting, redirects and cache headers.
 
 ## Sections
 
-- **Home**: A brief introduction to who I am and what I do.
-- **About Me**: Details about my background in graphic design and web development.
-- **Skills**: A showcase of my professional skills, including Adobe Creative Suite, Figma, and web technologies like HTML, CSS, JavaScript, and React.
-- **Portfolio**: A gallery of selected works, including branding, digital illustrations, and web development projects.
-- **Projects**: Highlights of recent web development and design projects.
-- **Contact**: A form where visitors can get in touch directly.
+- **Home**: introduction, social links and quick actions.
+- **About Me**: background in design and development.
+- **Skills**: design, frontend, backend and development tools, plus soft skills.
+- **Projects**: carousel of cards, each linking to its demo, code and case study.
+- **Contact**: form to get in touch directly.
 
 ## Installation
-
-To run this project locally:
 
 1. Clone this repository and open the folder:
    ```sh
@@ -59,26 +58,24 @@ To run this project locally:
    ```
 3. Open http://localhost:8000 (resume at http://localhost:8000/resume.html).
 
-## Editing texts (English / Spanish)
+## Editing content
 
-All texts live in `assets/js/languages/translations.js`. After changing a text — or adding a new element marked with `data-i18n="key"` in `index.html` — regenerate the pages:
-
-```sh
-node scripts/build-i18n.mjs
-```
-
-This updates `index.html` (English) and generates `es/index.html` (Spanish). Don't edit `es/index.html` by hand.
-
-## Usage
-
-- Open the webpage and explore the different sections.
-- Use the language switcher to toggle between English and Spanish.
-- Fill out the contact form to send a message using EmailJS.
+- **Texts (EN/ES)** live in `assets/js/languages/translations.js`. **Projects** live in `scripts/data/projects.mjs`. After editing either one, or `index.html`, regenerate the pages:
+  ```sh
+  node scripts/build-i18n.mjs
+  ```
+  This updates `index.html`, generates `es/index.html`, the 12 project pages, the project entries in `sitemap.xml`, and `llms.txt` / `llms-full.txt` (profile data in `scripts/data/profile.mjs`). Don't edit the generated files by hand.
+- **Resume**: edit `scripts/cv/data.mjs` and run:
+  ```sh
+  node scripts/build-cv.mjs
+  ```
+  This needs Chromium and `pdfunite` (poppler) installed. It generates `assets/docs/[ENG] Alan Quintana.pdf`, `[ESP] Alan Quintana.pdf` and `resume.pdf`. Each CV must fit one Letter page; the script fails if it doesn't.
 
 ## Deployment
 
-The webpage is deployed via Netlify. You can access the live site [here](https://alanquintana.pro).
-Contributing
+The site is deployed via Netlify straight from the repo root. You can access the live site [here](https://alanquintana.pro).
+
+## Contributing
 
 Feel free to fork this repository, create a branch, and submit a pull request for any improvements or suggestions!
 
