@@ -43,6 +43,8 @@ export const FORM_MESSAGES = {
 };
 
 // send_form.js
+import { loadEmailJS } from "./email-js.js";
+
 const formDOM = document.querySelector("#form");
 const modalDOM = document.querySelector("#modal");
 let currentLanguage = "en";
@@ -157,6 +159,12 @@ function sendEmail() {
 
   addFieldValidationListeners();
 
+  // EmailJS se descarga cuando alguien empieza a usar el formulario, no al
+  // cargar la página (así no compite con el hero ni retrasa el evento load)
+  const warmUp = () => loadEmailJS().catch(() => {});
+  formDOM.addEventListener("focusin", warmUp, { once: true });
+  formDOM.addEventListener("pointerdown", warmUp, { once: true });
+
   formDOM.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -184,18 +192,13 @@ function sendEmail() {
       return;
     }
 
-    // Verificar que EmailJS esté disponible
-    if (typeof emailjs === "undefined") {
-      console.error("EmailJS not loaded");
-      modalDOM.querySelector("p").textContent =
-        FORM_MESSAGES[currentLanguage].error;
-      openModal();
-      return;
-    }
-
     try {
       submitButton.disabled = true;
       submitButton.innerHTML = `<i class="bx bx-loader-alt bx-spin"></i> ${FORM_MESSAGES[currentLanguage].sending}`;
+
+      // Normalmente ya se descargó al enfocar un campo; si no, se espera aquí.
+      // Si el CDN falla, cae al catch y se muestra el mensaje de error.
+      await loadEmailJS();
 
       // Enviar email con manejo de errores mejorado
       await emailjs.send("service_hokfs29", "template_bzic089", params);

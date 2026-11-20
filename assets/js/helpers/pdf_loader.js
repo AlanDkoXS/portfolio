@@ -2,12 +2,27 @@
 // /assets/docs/resume.pdf (página 1 = inglés, página 2 = español) y la cambia
 // cuando switchLanguages.js dispara `languageChange`.
 // Se dibuja a la densidad de la pantalla para que se vea nítida en móvil/retina.
+// pdf.js se importa como módulo al usarse (antes era un <script> síncrono en el
+// <head> que bloqueaba el parseo); resume.html lo adelanta con modulepreload.
+// El worker cross-origin lo envuelve pdf.js en un blob, así que funciona desde la CDN.
+const PDFJS_VERSION = '4.10.38';
+const PDFJS_BASE = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}`;
 const PDF_URL = '/assets/docs/resume.pdf';
 const PAGE_BY_LANG = { en: 1, es: 2 };
 
 export async function loadPdf() {
   const container = document.getElementById('pdf-container');
-  if (!container || typeof pdfjsLib === 'undefined') return;
+  if (!container) return;
+
+  let pdfjsLib;
+  try {
+    pdfjsLib = await import(`${PDFJS_BASE}/pdf.min.mjs`);
+  } catch (error) {
+    // Sin la CDN el CV sigue disponible con los botones de descarga
+    console.error('Could not load pdf.js:', error);
+    return;
+  }
+  pdfjsLib.GlobalWorkerOptions.workerSrc = `${PDFJS_BASE}/pdf.worker.min.mjs`;
 
   const pdf = await pdfjsLib.getDocument(PDF_URL).promise;
   let renderId = 0;

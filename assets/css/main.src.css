@@ -1,0 +1,36 @@
+/* ==========================================================================
+   MAIN CSS (fuente)
+   scripts/build-i18n.mjs sustituye cada @import por el parcial y escribe
+   assets/css/main.css (un solo archivo, sin cascada de peticiones).
+   Las páginas enlazan main.css; este archivo no se sirve.
+   ========================================================================== */
+
+/* BASE */
+/* @import url('./base/_reset.css'); */
+@import url('./base/_fonts.css');
+@import url('./base/_base.css');
+@import url('./base/_variables.css');
+
+/* LAYOUT */
+@import url('./layout/_background.css');
+@import url('./layout/_buttons.css');
+@import url('./layout/_footer.css');
+@import url('./layout/_header.css');
+@import url('./layout/_lamp.css');
+@import url('./layout/_loader.css');
+@import url('./layout/_modal.css');
+@import url('./layout/_section.css');
+
+/* SECTION */
+@import url('./sections/_home.css');
+@import url('./sections/_about.css');
+@import url('./sections/_contact.css');
+@import url('./sections/_projects.css');
+@import url('./sections/_portfolio.css');
+@import url('./sections/_skills.css');
+@import url('./sections/_resume.css');
+@import url('./sections/_project-page.css');
+
+/* VENDOR: Boxicons recortado (scripts/build-icons.mjs). Va al final, como
+   cuando se cargaba con su propio <link> después de main.css */
+@import url('./vendor/boxicons.min.css');

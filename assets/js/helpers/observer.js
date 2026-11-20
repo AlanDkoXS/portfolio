@@ -1,6 +1,7 @@
 // Carga diferida (lazy loading) de imágenes marcadas con data-src /
-// data-background dentro de las secciones. Las carátulas de proyectos NO pasan
-// por aquí: las define el CSS para poder cambiar según el modo claro/oscuro.
+// data-background dentro de las secciones. Las carátulas de proyectos las
+// define el CSS (para cambiar según el modo claro/oscuro); aquí solo se marca
+// la sección con .is-near al acercarse, y el CSS las pide a partir de ahí.
 // La aparición visual de las secciones ya no depende de JS: es CSS
 // (scroll-driven animations en _section.css), así el contenido se ve aunque
 // este script no corra.
@@ -8,10 +9,11 @@
 const createObserver = () => {
   // Configuración mejorada del Intersection Observer
   const observerOptions = {
-    // Umbral más bajo para comenzar a cargar contenido antes de que sea completamente visible
-    threshold: 0.1,
-    // Margen para comenzar a observar antes de que el elemento entre en viewport
-    rootMargin: '200px 0px',
+    // En cuanto cualquier parte de la sección entra en el margen: con un
+    // porcentaje, en secciones altas cargaría tarde
+    threshold: 0,
+    // Margen para empezar a cargar antes de que la sección llegue a la pantalla
+    rootMargin: '400px 0px',
   };
 
   const observer = new IntersectionObserver((entries, observer) => {
@@ -19,6 +21,9 @@ const createObserver = () => {
       const target = entry.target;
 
       if (entry.isIntersecting) {
+        // Señal para el CSS (carátulas de #projects)
+        target.classList.add('is-near');
+
         // Cargar imágenes dentro de la sección si tienen data-src
         const lazyImages = target.querySelectorAll('img[data-src]');
         lazyImages.forEach((img) => {

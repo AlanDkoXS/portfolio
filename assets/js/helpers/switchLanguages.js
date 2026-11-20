@@ -127,6 +127,28 @@ const restorePendingHash = () => {
   }
 };
 
+// Prerenderiza la página en el otro idioma cuando hay intención de cambiar
+// (cursor encima, foco con teclado o dedo en el botón), no en cada visita:
+// casi nadie cambia de idioma y construir la otra página cuesta datos y CPU.
+// El cambio sigue siendo casi instantáneo. Solo navegadores con speculation rules.
+const prerenderOnIntent = (toggle, alternates, targetLang) => {
+  if (!HTMLScriptElement.supports?.('speculationrules')) return;
+  const target = [...alternates].find((l) => l.hreflang === targetLang);
+  if (!target) return;
+  const { pathname } = new URL(target.href, location.href);
+  const area = toggle.closest('.navbar__toggle--language') || toggle;
+
+  const events = ['pointerenter', 'focusin', 'touchstart'];
+  const prerender = () => {
+    events.forEach((type) => area.removeEventListener(type, prerender));
+    const rules = document.createElement('script');
+    rules.type = 'speculationrules';
+    rules.textContent = JSON.stringify({ prerender: [{ urls: [pathname] }] });
+    document.head.append(rules);
+  };
+  events.forEach((type) => area.addEventListener(type, prerender, { passive: true }));
+};
+
 const switchLanguages = () => {
   restorePendingHash();
   const languageToggle = document.getElementById('language-toggle');
@@ -143,6 +165,8 @@ const switchLanguages = () => {
 
   if (languageToggle) {
     languageToggle.checked = initialLang === 'es';
+
+    if (urlMode) prerenderOnIntent(languageToggle, alternates, initialLang === 'es' ? 'en' : 'es');
 
     languageToggle.addEventListener('change', () => {
       const lang = languageToggle.checked ? 'es' : 'en';
