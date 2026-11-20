@@ -16,20 +16,19 @@
   --teal-800: #00303d; /* fondo del modo oscuro */
   --teal-700: #013d4c; /* tarjetas / superficies */
   --teal-600: #024b5c; /* inputs / controles */
-  --teal-50: #d6ebf0; /* fondo del modo claro: turquesa claro */
-  --teal-25: #edf7f9; /* superficies del modo claro */
-  --teal-100: #c2e0e7; /* inputs del modo claro */
+  --teal-50: #bde3eb; /* fondo del modo claro: turquesa claro saturado */
+  --teal-25: #e4f4f7; /* superficies del modo claro */
+  --teal-100: #a6d6e0; /* inputs del modo claro */
   --gold-300: #ffd95c;
   --gold-400: #f3ce3a;
-  --gold-600: #b8900f;
-  --gold-700: #947d24;
 
   /* Theme Colors (light-dark() sigue a color-scheme, controlado por el toggle) */
   --primary-color: light-dark(var(--teal-950), var(--gold-400)); /* texto, títulos, íconos */
-  --text-muted: light-dark(#3f5f68, #c9b25a);
-  --accent-color: light-dark(var(--gold-600), var(--gold-400)); /* acentos, hover, activos */
-  --accent-strong: light-dark(var(--gold-700), var(--gold-300));
-  --accent-glow: light-dark(rgb(184 144 15 / 0.35), rgb(243 206 58 / 0.35));
+  --text-muted: light-dark(#2f5560, #c9b25a);
+  --accent-color: var(--gold-400); /* rellenos, sombras, subrayados: mismo dorado en ambos temas */
+  --accent-ink: light-dark(var(--teal-950), var(--gold-400)); /* líneas/íconos que necesitan contraste */
+  --link-hover: light-dark(var(--teal-600), var(--gold-300));
+  --accent-glow: rgb(243 206 58 / 0.45);
   --on-accent-color: var(--teal-950); /* texto sobre dorado, igual en ambos temas */
   --on-image-color: var(--gold-400); /* texto sobre fotos/overlays oscuros */
 

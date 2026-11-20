@@ -152,7 +152,7 @@ html:has([name='color-scheme']:not(:checked)) {
   .bgBack,
   .bgMiddle,
   .bgFront {
-    color: var(--gold-600);
+    color: var(--gold-400);
   }
 
   .bgBack {

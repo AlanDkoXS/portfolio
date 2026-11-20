@@ -26,3 +26,9 @@ section.section {
   align-content: center;
   scroll-margin-top: var(--header-height);
 }
+
+/* Los contenedores usan margin: 0 auto; en un grid eso los encogería al
+   contenido, así que se fuerza el ancho completo (max-width sigue mandando) */
+section.section > * {
+  width: 100%;
+}

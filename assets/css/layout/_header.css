@@ -57,12 +57,12 @@
             transition: color 0.3s;
 
             &:hover {
-              color: var(--accent-color);
+              color: var(--link-hover);
             }
           }
 
           .active {
-            border-bottom: 2px solid var(--accent-color);
+            border-bottom: 3px solid var(--accent-color);
             transform: translateY(0);
             opacity: 1;
           }

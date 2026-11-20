@@ -58,7 +58,7 @@
 }
 
 .btn:focus-visible {
-  outline: 3px solid var(--accent-color);
+  outline: 3px solid var(--accent-ink);
   outline-offset: 4px;
 }
 
@@ -73,7 +73,7 @@
 .btn--ghost {
   color: var(--primary-color); /* turquesa oscuro en claro, dorado en oscuro */
   background: transparent;
-  border-color: var(--accent-color);
+  border-color: var(--accent-ink); /* tinta en claro, dorado en oscuro */
   box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--accent-color);
 }
 
