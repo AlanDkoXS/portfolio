@@ -50,22 +50,25 @@
    Símbolos de código caen y se acomodan como "alanquintana"; al ocultarse,
    las letras se dispersan hacia el fondo. */
 .loader--animated {
+  /* Logo y nombre escalan con la misma medida: siempre proporcionados */
+  --loader-size: clamp(1.5rem, 1rem + 2.5vw, 2.6rem);
+
   flex-direction: column;
-  gap: 0.75rem;
+  gap: calc(var(--loader-size) * 0.5);
   overflow: hidden;
   /* el desvanecido espera a que las letras empiecen a dispersarse */
   transition: opacity 0.5s 0.25s, visibility 0s 0.75s;
 
   .loader__logo {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: calc(var(--loader-size) * 3.2);
+    height: calc(var(--loader-size) * 3.2);
     animation: loader-logo-in 0.6s ease-out both;
   }
 
   .loader__name {
     display: flex;
     flex-direction: row;
-    font-size: clamp(1.6rem, 1rem + 3vw, 2.8rem);
+    font-size: var(--loader-size);
     line-height: 1;
   }
 }
