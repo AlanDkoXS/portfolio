@@ -105,7 +105,7 @@ function loader() {
     nameReady.then(hide);
   };
 
-  // main.js awaits external scripts before calling this, so `load`
+  // main.js runs this at DOMContentLoaded, but with a warm cache `load`
   // may already have fired; in that case hide right away.
   if (document.readyState === 'complete') {
     hideAfterMinimum();
