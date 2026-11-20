@@ -1,0 +1,171 @@
+/* ============= Lámpara colgante =============
+   Cuelga del borde superior derecho, debajo del menú, y cambia el tema:
+   encendida = modo oscuro, apagada = modo claro (ver helpers/lamp.js).
+   Estados: reposo (off) · hover (over) · presionando (pull) · encendida (on)
+   - Escritorio: reemplaza al botón de luna/sol del menú.
+   - Móvil: más pequeña, junto al menú hamburguesa; se recoge al hacer scroll
+     (el botón de luna/sol sigue dentro del menú como respaldo). */
+.lamp {
+  --lamp-width: 84px;
+  /* cable visible debajo del menú: la lámpara cuelga, no queda pegada a la barra */
+  --lamp-drop: 1.25rem;
+  --lamp-top: calc(var(--header-height) + var(--lamp-drop));
+  position: fixed;
+  top: 0;
+  right: 3.4rem;
+  z-index: var(--z-lamp);
+  display: block;
+  width: var(--lamp-width);
+  /* cable desde arriba hasta donde empieza la imagen (bajo el menú) */
+  padding: var(--lamp-top) 0 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  /* el cono de luz no bloquea clics del contenido */
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: var(--lamp-top);
+    translate: -50% 0;
+    background: #5d5d5d;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+    /* gira desde donde se une con el cable */
+    transform-origin: 50% 0;
+    transition: filter 0.2s ease;
+  }
+
+  /* Solo la pantalla y la cadena reciben el clic */
+  .lamp__hit {
+    position: absolute;
+    top: var(--lamp-top);
+    left: 15%;
+    width: 70%;
+    height: calc(var(--lamp-width) * 0.82);
+    pointer-events: auto;
+  }
+
+  .lamp__over,
+  .lamp__pull,
+  .lamp__on {
+    position: absolute;
+    top: var(--lamp-top);
+    left: 0;
+    opacity: 0;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    .lamp__hit {
+      outline: 3px solid var(--accent-color);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+  }
+}
+
+/* Móvil: al hacer scroll la lámpara sube y se esconde detrás de la barra */
+@media (max-width: 599px) {
+  .lamp {
+    transition: translate 0.45s cubic-bezier(0.5, 0, 0.3, 1.2), visibility 0s;
+  }
+
+  .lamp.lamp--retracted {
+    translate: 0 -100%;
+    visibility: hidden;
+    transition: translate 0.35s ease-in, visibility 0s 0.35s;
+  }
+}
+
+/* Escritorio: más grande, casi en la orilla, y sin el botón de luna/sol */
+@media (min-width: 600px) {
+  .header .navbar .navbar__toggle--darkmode {
+    display: none;
+  }
+
+  .lamp {
+    --lamp-drop: 2.75rem;
+    /* Centrada en el margen derecho (espacio entre el contenido de 1024px y la
+       orilla). El ancho se adapta al margen (150–230px) para que quepa
+       centrada; sin margen suficiente queda pegada a la orilla. */
+    --lamp-margin: max(0px, (100vw - var(--scrollbar-w, 0px) - 1024px) / 2);
+    --lamp-width: clamp(150px, var(--lamp-margin) - 0.75rem, 230px);
+    right: max(0px, var(--lamp-margin) / 2 - var(--lamp-width) / 2);
+  }
+}
+
+/* Estados. Orden de prioridad: presionando > encendida > hover > reposo */
+.lamp[aria-pressed='true'] .lamp__on {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  /* Apagada: la pantalla responde al pasar el mouse */
+  .lamp:hover:not([aria-pressed='true']) .lamp__over {
+    opacity: 1;
+    filter: brightness(1.25);
+  }
+
+  /* Encendida: la luz brilla un poco más al pasar el mouse */
+  .lamp[aria-pressed='true']:hover .lamp__on {
+    filter: brightness(1.12);
+  }
+}
+
+/* Balanceo: al pasar el mouse (escritorio) o después de tocarla (móvil) */
+@media (prefers-reduced-motion: no-preference) {
+  @media (hover: hover) {
+    .lamp:hover img {
+      animation: lamp-swing 1.4s ease-in-out;
+    }
+  }
+
+  .lamp.lamp--swing img {
+    animation: lamp-swing 1.4s ease-in-out;
+  }
+
+  /* La luz se enciende con un fundido suave */
+  .lamp .lamp__on {
+    transition: opacity 0.25s ease;
+  }
+}
+
+/* Presionando: solo se ve la imagen de la cadena jalada. Va con
+   !important porque debe ganarle al hover (que tiene más especificidad). */
+.lamp.lamp--pulling img {
+  opacity: 0 !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+.lamp.lamp--pulling .lamp__pull {
+  opacity: 1 !important;
+}
+
+@keyframes lamp-swing {
+  20% {
+    transform: rotate(4deg);
+  }
+  45% {
+    transform: rotate(-3deg);
+  }
+  70% {
+    transform: rotate(1.5deg);
+  }
+  90% {
+    transform: rotate(-0.5deg);
+  }
+}

@@ -13,6 +13,7 @@ import { cardCarousel } from "./helpers/cardCarousel.js";
 import { closeModal } from "./helpers/close-modal.js";
 import initObserver from "./helpers/observer.js";
 import skillsMarquee from "./helpers/skills_marquee.js";
+import lamp from "./helpers/lamp.js";
 
 // Visual Effects
 import ParallaxEffect from "./helpers/parallax.js";
@@ -166,6 +167,7 @@ const setupDarkMode = () => {
   try {
     // Theme follows the system; the toggle stores an override (see auto-dark-mode.js)
     setAutoDarkMode();
+    lamp();
     AppState.isDarkMode = document.body.getAttribute("data-theme") === "dark";
   } catch (error) {
     handleError(error, "setupDarkMode");
