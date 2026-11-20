@@ -2,10 +2,11 @@
 
 .modal-content {
   color: var(--primary-color);
-  background-color: var(--bg-color-section);
+  background-color: var(--surface-color);
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-large);
+  box-shadow: 0 12px 32px var(--shadow-color);
   width: 100%;
   max-width: 300px;
   margin: auto;

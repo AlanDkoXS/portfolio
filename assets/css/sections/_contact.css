@@ -29,8 +29,10 @@
     .contact__form {
       width: 100%;
       padding: 3rem 1.5rem 2rem;
-      background-color: var(--bg-color-section);
-      border-radius: 5px;
+      background-color: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-large);
+      box-shadow: 0 8px 24px var(--shadow-color);
       margin: 0 auto;
 
       .contact__form-container {
@@ -50,10 +52,17 @@
             padding: 1rem;
             font-size: 1.2rem;
             font-weight: 600;
-            border-radius: 5px;
+            border-radius: var(--border-radius-default);
             background-color: var(--bg-color-buttons);
             color: var(--primary-color);
-            border: 0;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+            &:focus {
+              outline: none;
+              border-color: var(--accent-color);
+              box-shadow: 0 0 0 3px var(--accent-glow);
+            }
           }
 
           textarea {

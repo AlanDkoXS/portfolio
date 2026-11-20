@@ -42,11 +42,9 @@ canvas {
   justify-content: center;
   width: 4rem;
   height: 4rem;
-  border-radius: 0.5rem;
-  background-color: var(--bg-color-buttons);
-  color: var(--primary-color);
+  border-radius: var(--border-radius-small);
   font-size: 1.5rem;
-  transition: width 0.3s, height 0.3s, font-size 0.3s, padding 0.3s;
+  transition: width 0.3s, height 0.3s, font-size 0.3s, padding 0.3s, transform 0.25s, box-shadow 0.3s;
   text-decoration: none;
   overflow: hidden;
 }

@@ -1,7 +1,9 @@
 /* ============= Footer ============= */
 .footer {
-  background-color: #111;
-  color: #efefef;
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  --primary-color: var(--gold-400); /* footer siempre oscuro: acentos dorados en ambos temas */
+  border-top: 1px solid var(--border-color);
   padding-bottom: 2rem;
   bottom: 0;
 }

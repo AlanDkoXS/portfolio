@@ -20,6 +20,8 @@
 }
 
 .project__card {
+  /* Las tarjetas van sobre fotos con overlay oscuro: texto dorado en ambos temas */
+  --primary-color: var(--on-image-color);
   position: absolute;
   width: 280px;
   height: 350px;
@@ -204,18 +206,23 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: var(--button-padding);
-  background-color: var(--bg-color-buttons);
-  color: var(--primary-color);
-  border-radius: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  background-color: rgb(0 18 25 / 0.55);
+  color: var(--on-image-color);
+  border: 1px solid rgb(243 206 58 / 0.6);
+  border-radius: var(--border-radius-small);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   text-decoration: none;
   transition: all 0.3s ease;
   font-weight: 600;
 }
 
 .project__button:hover {
-  background-color: var(--primary-color);
-  color: var(--bg-color-buttons);
+  background-color: var(--gold-400);
+  color: var(--on-accent-color);
+  border-color: var(--gold-400);
+  box-shadow: 0 8px 20px rgb(243 206 58 / 0.35);
   transform: translateY(-2px);
 }
 
@@ -229,9 +236,10 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: var(--bg-color-buttons);
-  color: var(--primary-color);
-  border: none;
+  background-color: var(--surface-color);
+  color: var(--accent-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 14px var(--shadow-color);
   border-radius: 50%;
   width: 3rem;
   height: 3rem;
@@ -244,8 +252,8 @@
 }
 
 .project__nav:hover {
-  background-color: var(--primary-color);
-  color: var(--bg-color-buttons);
+  background-color: var(--accent-color);
+  color: var(--on-accent-color);
   transform: translateY(-50%) scale(1.1);
 }
 
