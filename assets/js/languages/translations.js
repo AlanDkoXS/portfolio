@@ -194,15 +194,19 @@ const translations = {
     en: 'Development Tools',
     es: 'Herramientas para Desarrollo',
   },
-  /* <-- Portfolio Section --> */
-  /*   portfolioTitle: {
-    en: 'Portfolio',
-    es: 'Portafolio',
-},
-designsTitle: {
-    en: 'My Designs',
-    es: 'Mis Diseños',
-}, */
+  /* <-- Designs Section (Dribbble, scripts/build-dribbble.mjs) --> */
+  designsTitle: {
+    en: 'Designs',
+    es: 'Diseños',
+  },
+  designsDescription: {
+    en: 'Illustrations and interfaces I share on Dribbble.',
+    es: 'Ilustraciones e interfaces que comparto en Dribbble.',
+  },
+  designsButton: {
+    en: 'See more on Dribbble',
+    es: 'Ver más en Dribbble',
+  },
   /* <-- Projects Section --> */
   projectsTitle: {
     en: 'Projects',

@@ -1,0 +1,75 @@
+/* ============= Designs Section (shots de Dribbble) ============= */
+/* Markup generado por build-i18n.mjs desde scripts/data/dribbble.json */
+
+.designs {
+  max-width: calc(var(--container-width) + 2rem);
+  margin-inline: auto;
+  padding-inline: 1rem;
+  text-align: center;
+}
+
+.designs__description {
+  max-width: 60ch;
+  margin: 0 auto 1.5rem;
+}
+
+.designs__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: 1.25rem;
+}
+
+.designs__link {
+  display: block;
+  overflow: hidden;
+  color: var(--primary-color);
+  text-decoration: none;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  box-shadow: 0 6px 14px var(--shadow-color);
+}
+
+.designs__link:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+.designs__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.designs__caption {
+  display: block;
+  padding: 0.6rem 0.8rem;
+  font-size: var(--small-font-size);
+  text-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .designs__link {
+    transition: translate 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .designs__link:hover {
+    translate: 0 -4px;
+    box-shadow: 0 10px 20px var(--shadow-color);
+  }
+}
+
+/* section.section > * fuerza ancho completo; el botón va centrado */
+.designs > .designs__more {
+  width: auto;
+  justify-self: center;
+  margin-top: 1.5rem;
+}

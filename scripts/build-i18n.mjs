@@ -9,6 +9,8 @@
 // - es/index.html  → generated Spanish version (do not edit by hand)
 // - projects/<slug>/index.html and es/proyectos/<slug>/index.html → project
 //   case-study pages from scripts/data/projects.mjs (do not edit by hand)
+// - #designs       → the block between <!-- dribbble:start/end --> in index.html
+//   from scripts/data/dribbble.json (scripts/build-dribbble.mjs)
 // - sitemap.xml    → the block between <!-- projects:start/end --> is rewritten
 // - llms.txt, llms-full.txt → profile for AI search engines and agents
 //   (scripts/data/profile.mjs + projects.mjs + scripts/cv/data.mjs)
@@ -87,7 +89,12 @@ function render(html, lang) {
 }
 
 const sourcePath = path.join(root, 'index.html');
-const source = fs.readFileSync(sourcePath, 'utf8');
+const { injectDesigns } = await import(path.join(root, 'scripts/lib/designs-section.mjs'));
+// Sección "Designs" (shots de Dribbble, scripts/build-dribbble.mjs)
+const source = injectDesigns(
+  fs.readFileSync(sourcePath, 'utf8'),
+  path.join(root, 'scripts/data/dribbble.json'),
+);
 
 // Speculation rules: cada idioma precarga al otro
 const speculation = (html, target) =>

@@ -16,6 +16,14 @@ Rewrites `index.html` in place with the English texts and generates `es/index.ht
 
 It also generates the **project case-study pages** from `scripts/data/projects.mjs` (content in EN/ES, facts taken from each repo) with the template in `scripts/lib/project-page.mjs`: `projects/<slug>/index.html` (en) and `es/proyectos/<slug>/index.html` (es), committed, never edit by hand. They reuse the home header/footer (section links rewritten to `/#…` or `/es/#…`), carry canonical/hreflang/OG/JSON-LD (SoftwareApplication + BreadcrumbList), and the generator rewrites the `<!-- projects:start/end -->` block of `sitemap.xml`. To add a project: add its entry to `projects.mjs` (same order as the home cards), its screenshots (`project_img/<image>.webp` 560×700 home card, `mobile/<image>.webp` 390×844 phone screenshot for the case page, `desktop/<image>.webp` 1280×800, `og/<image>.jpg` 1200×630, plus `-dark` variants if it has its own dark mode), a card in `index.html` and its `projectCase` hrefs in `translations.js`.
 
+## Dribbble shots (Designs section)
+
+```sh
+DRIBBBLE_TOKEN=xxxx node scripts/build-dribbble.mjs   # DRIBBBLE_LIMIT=12 optional
+```
+
+Fetches the user's shots from the Dribbble API v2 (access token of a Dribbble app, never committed nor sent to the browser), converts each cover to `assets/img/dribbble/<id>.webp` (800×600, first frame if animated, ImageMagick `magick`), writes `scripts/data/dribbble.json` (committed) and runs `build-i18n.mjs`, which renders the `#designs` section into the `<!-- dribbble:start/end -->` block of `index.html` (template in `scripts/lib/designs-section.mjs`, styles in `sections/_designs.css`). Without shots the block stays empty and the section isn't shown.
+
 ## CV (PDF) generator
 
 ```sh
@@ -53,7 +61,7 @@ python -m http.server 8000   # then open http://localhost:8000
 
 **Profile sprite.** `.home__image--sprite` animates `profile_sprite.webp` (20 frames of 300×300 in a 6000×300 strip) using `background-size: 2000% 100%` and percentage `background-position` with `steps(20, jump-none)`, so frames stay aligned at any rendered size. Keep that if the sprite changes (adjust 2000% / steps to the new frame count).
 
-**External services** are loaded dynamically by helpers rather than via `<script>` tags: EmailJS (`email-js.js`, used by the contact form in `send_form.js`, which silently drops submissions that fill the hidden `#website` honeypot field) and Google Tag Manager/Analytics (`google-tag-manager.js`). `fectchDribbbleShots.js` exists but isn't wired into `main.js`.
+**External services** are loaded dynamically by helpers rather than via `<script>` tags: EmailJS (`email-js.js`, used by the contact form in `send_form.js`, which silently drops submissions that fill the hidden `#website` honeypot field) and Google Tag Manager/Analytics (`google-tag-manager.js`).
 
 **CSS.** `assets/css/main.css` is just `@import`s of partials organized as `base/` (variables, base), `layout/` (header, footer, buttons, modal, loader, background), and `sections/` (one file per page section, including `_resume.css`). Class naming follows BEM (`block__element--modifier`). Theme follows the system (`prefers-color-scheme`) by default. The toggle stores an override in `localStorage.theme` only when it differs from the system (toggling back to the system scheme removes it) and writes it to `<meta name="color-scheme">`; an inline `<head>` script applies it before first paint (no flash). CSS maps that meta to `color-scheme` and to a `--color-scheme` custom property in `_variables.css`. Colors are `light-dark()` tokens: both schemes are teal with gold `#f3ce3a` text (light = `#00303d`, dark = deeper `#001a23`); only backgrounds, surfaces and inputs differ; use the semantic tokens (`--primary-color`, `--accent-color`, `--accent-ink`, `--surface-color`, `--border-color`, `--shadow-color`, …) instead of hex values. Non-color light/dark branches use `@container style(--color-scheme: …)` as non-critical overrides. Buttons: `.btn--primary` (solid gold) for main actions, `.btn--ghost` (outline) only for secondary ones like the contact form submit. Always-dark areas (footer, project cards over photos) locally override `--primary-color` to gold.
 
