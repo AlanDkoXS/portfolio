@@ -72,8 +72,9 @@
 
 .home__image--sprite {
   background-image: url("/assets/img/profile_sprite.webp");
-  background-size: cover;
-  background-position: left top;
+  /* 20 frames: each frame is exactly the box width at any size */
+  background-size: 2000% 100%;
+  background-position: 0 0;
   max-width: none;
   filter: drop-shadow(5px -5px 5px rgba(0, 18, 25, 0.5));
   width: 100%;
@@ -81,7 +82,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  animation: animateSprite 1s steps(20) 2s;
+  animation: animateSprite 1s steps(20, jump-none) 2s;
   z-index: var(--z-fixed);
 }
 
@@ -106,10 +107,10 @@
 
 @keyframes animateSprite {
   from {
-    background-position: 0 0;
+    background-position: 0% 0;
   }
   to {
-    background-position: -6000px 0;
+    background-position: 100% 0;
   }
 }
 
