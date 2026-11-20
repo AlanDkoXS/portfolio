@@ -14,7 +14,7 @@ node scripts/build-i18n.mjs   # run after editing index.html or translations.js
 
 Rewrites `index.html` in place with the English texts and generates `es/index.html` (Spanish, committed, never edit by hand). Idempotent; fails listing any missing translation keys.
 
-It also generates the **project case-study pages** from `scripts/data/projects.mjs` (content in EN/ES, facts taken from each repo) with the template in `scripts/lib/project-page.mjs`: `projects/<slug>/index.html` (en) and `es/proyectos/<slug>/index.html` (es), committed, never edit by hand. They reuse the home header/footer (section links rewritten to `/#…` or `/es/#…`), carry canonical/hreflang/OG/JSON-LD (SoftwareApplication + BreadcrumbList), and the generator rewrites the `<!-- projects:start/end -->` block of `sitemap.xml`. To add a project: add its entry to `projects.mjs` (same order as the home cards), its screenshots (`project_img/<image>.webp` 560×700 mobile, `desktop/<image>.webp` 1280×800, `og/<image>.jpg` 1200×630, plus `-dark` variants if it has its own dark mode), a card in `index.html` and its `projectCase` hrefs in `translations.js`.
+It also generates the **project case-study pages** from `scripts/data/projects.mjs` (content in EN/ES, facts taken from each repo) with the template in `scripts/lib/project-page.mjs`: `projects/<slug>/index.html` (en) and `es/proyectos/<slug>/index.html` (es), committed, never edit by hand. They reuse the home header/footer (section links rewritten to `/#…` or `/es/#…`), carry canonical/hreflang/OG/JSON-LD (SoftwareApplication + BreadcrumbList), and the generator rewrites the `<!-- projects:start/end -->` block of `sitemap.xml`. To add a project: add its entry to `projects.mjs` (same order as the home cards), its screenshots (`project_img/<image>.webp` 560×700 home card, `mobile/<image>.webp` 390×844 phone screenshot for the case page, `desktop/<image>.webp` 1280×800, `og/<image>.jpg` 1200×630, plus `-dark` variants if it has its own dark mode), a card in `index.html` and its `projectCase` hrefs in `translations.js`.
 
 ## CV (PDF) generator
 
@@ -65,7 +65,15 @@ python -m http.server 8000   # then open http://localhost:8000
 
 **Skills marquee.** Each stack in `#skills` is a `.skills__group` with an infinite left-to-right row: `.skills__track` holds 4 copies of the `<ul class="skills__list">` (only the first is accessible, the rest `aria-hidden`) and animates `translate: -50% → 0` over `--marquee-duration` (set inline per row; `.skills__marquee--reverse` flips direction: Frontend and Development run reversed, Backend and Development slower). It pauses on hover/focus and with the `.skills__motion-toggle` button (WCAG 2.2.2, `helpers/skills_marquee.js`); with reduced motion it's a static wrapped list. When adding a tech, add it to all 4 copies. Icons are SVG `<symbol>` sprites in `assets/img/skills/` (newer ones from Simple Icons, CC0) and get a grainy inner shadow from every edge inward via `filter: url(#grain-inset)` (inline SVG filter at the top of `<body>` in `index.html`).
 
+**Fonts are self-hosted** (no Google Fonts / unpkg): Poppins woff2 (latin + latin-ext, weights 200–700) in `assets/fonts/poppins/` declared in `base/_fonts.css`, and Boxicons in `assets/fonts/boxicons/` with its CSS in `assets/css/vendor/boxicons.min.css`. Pages preload the most used files.
+
 **Icon font.** `body` uses `font-size-adjust: from-font` (stable Poppins fallback); Boxicons opts out in `_base.css`, otherwise every icon renders ~55% of its size.
+
+**Hanging lamp** (`helpers/lamp.js`, `layout/_lamp.css`): theme switch that hangs below the navbar (desktop: centered in the right margin, replaces the moon/sun toggle; mobile: small, retracts on scroll, moon/sun stays in the menu). Lit = dark mode. States: hover (`lamp__over`), pressing (`lamp--pulling`, chain pulled), on (`lamp__on`); images in `assets/img/lamp_button/`.
+
+**Loader & greeting.** The loader (letters falling into the name) shows only on the first load of the session (`sessionStorage['aq-loaded']`, `.skip-loader` set in `<head>`) and never while prerendering. When it leaves, `html.hero-ready` is set and `helpers/typing.js` types the greeting letter by letter with a blinking underscore caret. The other language is prerendered with speculation rules so switching is near instant.
+
+**Hero copy (desktop).** `homeDescription` (intro) + `heroLines` (7 phrases of exactly 7 words, plain language for non-technical readers), rendered as one paragraph by `handleResponsiveContent`. Keep the 7×7 rule when editing.
 
 **Dialogs.** Native `<dialog>` opened with `showModal()`, `closedby="any"` for light dismiss (Safari fallback in `helpers/dialog.js`), named via `aria-labelledby`. The dialog box is the card; the dim/blur lives in `::backdrop`.
 
