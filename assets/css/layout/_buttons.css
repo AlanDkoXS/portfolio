@@ -118,6 +118,19 @@
   }
 }
 
+/* Móvil / táctil: sin hover el grano se quedaba en su versión chica y, en
+   pantallas de alta densidad, los puntos del ruido salen tan finos que casi no
+   se ven. Aquí va más extendido (la máscara del hover) y con la variante de
+   puntos más grandes y densos. */
+@media (hover: none), (max-width: 599px) {
+  .btn::after {
+    background: var(--grain-gold-strong);
+    background-size: 120px;
+    -webkit-mask: var(--grain-mask-hover);
+    mask: var(--grain-mask-hover);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .btn,
   .btn i {

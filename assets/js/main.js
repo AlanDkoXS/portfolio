@@ -30,7 +30,7 @@ import switchLanguages from "./helpers/switchLanguages.js";
 
 // External Services
 import { loadGoogleTagManager } from "./helpers/google-tag-manager.js";
-import { loadEmailJS } from "./helpers/email-js.js";
+// EmailJS lo carga send_form.js cuando se usa el formulario
 
 // ---------------------------
 // APPLICATION STATE
@@ -152,11 +152,13 @@ const initializeFunctionalities = () => {
 };
 
 /**
- * Load external resources asynchronously
+ * Third-party scripts, off the critical path: GTM is injected after `load`
+ * when the browser is idle; EmailJS loads when the contact form is used.
+ * Nothing here is awaited, so a slow or blocked CDN can't delay the UI.
  */
-const loadExternalResources = async () => {
+const loadExternalResources = () => {
   try {
-    await Promise.all([loadGoogleTagManager(), loadEmailJS()]);
+    loadGoogleTagManager();
   } catch (error) {
     handleError(error, "loadExternalResources");
   }
@@ -211,19 +213,17 @@ const initialize = async () => {
     // Display console logo
     displayConsoleLogo();
 
-    // Loading screen: start before awaiting third-party scripts so a slow
-    // or blocked CDN (EmailJS, GTM) can't keep the loader on screen
+    // Loading screen
     loader();
 
-    // Apply detected language right away (avoids an English flash for
-    // Spanish visitors while third-party scripts load)
+    // Apply detected language right away
     switchLanguages();
 
-    // Theme right away too, before awaiting third-party scripts
+    // Theme right away too
     setupDarkMode();
 
-    // Third-party scripts (GTM, EmailJS)
-    await loadExternalResources();
+    // Third-party scripts (not awaited)
+    loadExternalResources();
 
     // Initialize main components
     await initializeUIComponents();

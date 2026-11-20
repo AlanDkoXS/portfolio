@@ -14,18 +14,27 @@
 }
 
 .bgGrain {
-  /* La imagen del grano se acaba a la mitad de la pantalla: un degradado
-     largo hace que se disuelva sin que se note dónde termina */
-  -webkit-mask: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.6) 25%, rgb(0 0 0 / 0.2) 45%, transparent 60%);
-  mask: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.6) 25%, rgb(0 0 0 / 0.2) 45%, transparent 60%);
+  /* Grano: un mosaico pequeño repetido (9 KB en vez de una imagen de
+     pantalla completa). La caída de densidad de arriba hacia abajo la da la
+     máscara, que ya incluye cómo se desvanecía la imagen original */
+  --grain-fade: linear-gradient(
+    to bottom,
+    #000 0%,
+    rgb(0 0 0 / 0.53) 11%,
+    rgb(0 0 0 / 0.25) 22%,
+    rgb(0 0 0 / 0.09) 33%,
+    rgb(0 0 0 / 0.015) 44%,
+    transparent 55%
+  );
+  -webkit-mask: var(--grain-fade);
+  mask: var(--grain-fade);
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-image: url('/assets/img/bgGrain.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-image: url('/assets/img/bgGrain-tile.webp');
+  background-size: 256px 128px;
+  background-repeat: repeat;
   width: 100% !important;
   height: 100% !important;
   opacity: 0.6;
@@ -97,10 +106,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-image: url('/assets/img/bgGrain.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     width: 100%;
     opacity: 0.6;
     height: 100%;

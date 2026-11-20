@@ -35,8 +35,8 @@
     <!-- Fonts -->
     <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="/assets/css/vendor/boxicons.min.css" />
+    <!-- Íconos: Boxicons va dentro de main.css; la fuente recortada pesa ~3 KB -->
+    <link rel="preload" href="/assets/fonts/boxicons/boxicons.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Scripts -->
     <!-- Solo los módulos que usa esta página (main.js es para index.html) -->
@@ -68,7 +68,9 @@
             document.getElementById('modal').showModal();
         };
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <!-- pdf.js (módulo, lo importa pdf_loader.js): se adelanta la descarga sin
+         bloquear el parseo. La versión debe coincidir con PDFJS_VERSION -->
+    <link rel="modulepreload" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" crossorigin />
     <script>
         function downloadCV(language) {
             const fileMap = {
