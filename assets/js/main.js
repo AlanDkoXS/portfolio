@@ -12,6 +12,7 @@ import activeMenu from "./helpers/activeMenu.js";
 import { cardCarousel } from "./helpers/cardCarousel.js";
 import { closeModal } from "./helpers/close-modal.js";
 import initObserver from "./helpers/observer.js";
+import skillsMarquee from "./helpers/skills_marquee.js";
 
 // Visual Effects
 import ParallaxEffect from "./helpers/parallax.js";
@@ -109,6 +110,7 @@ const initializeUIComponents = async () => {
     // UI Components
     cardCarousel();
     initObserver();
+    skillsMarquee();
     closeModal();
   } catch (error) {
     handleError(error, "initializeUIComponents");
@@ -162,7 +164,7 @@ const loadExternalResources = async () => {
  */
 const setupDarkMode = () => {
   try {
-    // Initial theme (remembered choice, else local time) + remembers the toggle
+    // Theme follows the system; the toggle stores an override (see auto-dark-mode.js)
     setAutoDarkMode();
     AppState.isDarkMode = document.body.getAttribute("data-theme") === "dark";
   } catch (error) {

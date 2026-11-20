@@ -19,13 +19,19 @@
 
 .skills__wrapper .skills__icons {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  justify-items: center;
-  align-items: center;
+  /* minmax(0, …) y min-width: 0: la fila en bucle es muy ancha (max-content)
+     y sin esto ensancharía la columna y toda la página */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.skills__group,
+.skills__marquee {
+  min-width: 0;
 }
 
 .skills__wrapper .skills__icons .skills__title {
-  grid-column: 1 / -1;
   text-align: center;
   position: relative;
   gap: var(--gap-small);
@@ -45,6 +51,8 @@
   object-fit: contain;
   transition: transform 0.3s ease;
   fill: var(--primary-color);
+  /* Sombra interna granulada, como los botones (filtro #grain-inset en index.html) */
+  filter: url(#grain-inset);
 }
 
 .skills__icon:hover {
@@ -82,12 +90,121 @@
   border-radius: 5px;
 }
 
-/* SKILLS MIN WIDTH 600px ========================== */
-@media (min-width: 600px) {
-  .skills .skills__wrapper .skills__icons {
-    grid-template-columns: repeat(6, 1fr);
+/* ============= Filas en bucle infinito (una por stack) =============
+   Cada fila tiene 4 copias de la lista (la 1.ª es la accesible; las demás
+   aria-hidden) y se desplaza de izquierda a derecha la mitad de su ancho,
+   así el bucle no tiene saltos. Cada fila define --marquee-duration. */
+.skills__marquee {
+  --marquee-gap: 1.25rem;
+  overflow: hidden;
+  /* Desvanecido en las orillas */
+  -webkit-mask: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.skills__track {
+  display: flex;
+  width: max-content;
+}
+
+.skills__list {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--marquee-gap);
+  /* el hueco entre copias = el hueco entre íconos: periodo exacto */
+  padding-inline-end: var(--marquee-gap);
+}
+
+.skills__wrapper .skills__list .skills__icon-container {
+  margin: 0;
+  min-width: 96px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skills__track {
+    animation: skills-marquee var(--marquee-duration, 40s) linear infinite;
+    will-change: transform;
   }
 
+  /* Pausa al pasar el mouse, al enfocar o con el botón */
+  .skills__marquee:hover .skills__track,
+  .skills__marquee:focus-within .skills__track,
+  .skills__icons.is-paused .skills__track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes skills-marquee {
+  from {
+    translate: -50% 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+/* Con "reducir movimiento": sin bucle, una sola copia en filas centradas */
+@media (prefers-reduced-motion: reduce) {
+  .skills__marquee {
+    -webkit-mask: none;
+    mask: none;
+  }
+
+  .skills__track {
+    width: auto;
+  }
+
+  .skills__list {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+
+    &[aria-hidden='true'] {
+      display: none;
+    }
+  }
+}
+
+/* Botón pausar / reanudar */
+.skills__motion-toggle {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  font: inherit;
+  font-size: var(--small-font-size);
+  color: var(--primary-color);
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-small);
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--accent-color);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--accent-ink);
+    outline-offset: 2px;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.skills__motion-play,
+.skills__icons.is-paused .skills__motion-pause {
+  display: none;
+}
+
+.skills__icons.is-paused .skills__motion-play {
+  display: inline;
+}
+
+/* SKILLS MIN WIDTH 600px ========================== */
+@media (min-width: 600px) {
   .skills .skills__wrapper .skills__icon {
     width: 100px;
     height: 100px;

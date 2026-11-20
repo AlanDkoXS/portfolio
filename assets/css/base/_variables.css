@@ -11,39 +11,52 @@
   /* Colors
      ========================================================================== */
   /* Paleta base (azul turquesa profundo + dorado) */
-  --teal-950: #001219; /* el tono original, ahora solo para texto y footer */
+  --teal-950: #001219; /* tinta: texto sobre dorado, contornos */
   --teal-900: #00222c;
-  --teal-800: #00303d; /* fondo del modo oscuro */
-  --teal-700: #013d4c; /* tarjetas / superficies */
-  --teal-600: #024b5c; /* inputs / controles */
-  --teal-50: #bde3eb; /* fondo del modo claro: turquesa claro saturado */
-  --teal-25: #e4f4f7; /* superficies del modo claro */
-  --teal-100: #a6d6e0; /* inputs del modo claro */
+  --teal-800: #00303d; /* fondo del modo claro */
+  --teal-700: #013d4c; /* superficies del modo claro */
+  --teal-600: #024b5c; /* inputs / controles del modo claro */
+  --teal-deep-800: #001a23; /* fondo del modo oscuro (mismo tono, más profundo) */
+  --teal-deep-700: #00242f; /* superficies del modo oscuro */
+  --teal-deep-600: #002f3c; /* inputs / controles del modo oscuro */
+  --teal-deep-900: #000d12; /* footer del modo oscuro */
   --gold-300: #ffd95c;
   --gold-400: #f3ce3a;
 
-  /* Theme Colors (light-dark() sigue a color-scheme, controlado por el toggle) */
-  --primary-color: light-dark(var(--teal-950), var(--gold-400)); /* texto, títulos, íconos */
-  --text-muted: light-dark(#2f5560, #c9b25a);
-  --accent-color: var(--gold-400); /* rellenos, sombras, subrayados: mismo dorado en ambos temas */
-  --accent-ink: light-dark(var(--teal-950), var(--gold-400)); /* líneas/íconos que necesitan contraste */
-  --link-hover: light-dark(var(--teal-600), var(--gold-300));
+  /* Theme Colors: ambos modos son turquesa con texto dorado; el oscuro es
+     más profundo (light-dark() sigue a color-scheme: sistema o botón) */
+  --primary-color: var(--gold-400); /* texto, títulos, íconos */
+  --text-muted: #c9b25a;
+  --accent-color: var(--gold-400); /* rellenos, sombras, subrayados */
+  --accent-ink: var(--gold-400); /* líneas/íconos que necesitan contraste */
+  --link-hover: var(--gold-300);
   --accent-glow: rgb(243 206 58 / 0.45);
-  --on-accent-color: var(--teal-950); /* texto sobre dorado, igual en ambos temas */
+  --on-accent-color: var(--teal-950); /* texto sobre dorado */
   --on-image-color: var(--gold-400); /* texto sobre fotos/overlays oscuros */
 
   /* Background Colors */
-  --bg-color-section: light-dark(var(--teal-50), var(--teal-800));
-  --surface-color: light-dark(var(--teal-25), var(--teal-700));
-  --bg-color-buttons: light-dark(var(--teal-100), var(--teal-600)); /* inputs, controles secundarios */
-  --border-color: light-dark(rgb(0 48 61 / 0.15), rgb(243 206 58 / 0.18));
-  --footer-bg: light-dark(var(--teal-800), var(--teal-900));
+  --bg-color-section: light-dark(var(--teal-800), var(--teal-deep-800));
+  --surface-color: light-dark(var(--teal-700), var(--teal-deep-700));
+  --bg-color-buttons: light-dark(var(--teal-600), var(--teal-deep-600)); /* inputs, controles secundarios */
+  --border-color: rgb(243 206 58 / 0.18);
+  --footer-bg: light-dark(var(--teal-900), var(--teal-deep-900));
   --footer-text: #e6eef0;
 
-  /* Sombras dependientes del tema */
-  --shadow-color: light-dark(rgb(0 48 61 / 0.18), rgb(0 0 0 / 0.45));
-  --bg-layer-shadow: light-dark(transparent, rgb(0 18 25 / 1)); /* capas del hero: sin sombra en claro */
-  --profile-shadow: light-dark(rgb(0 48 61 / 0.25), rgb(0 18 25 / 1));
+  /* Sombras */
+  --shadow-color: rgb(0 0 0 / 0.45);
+  --bg-layer-shadow: rgb(0 18 25 / 1); /* capas del hero */
+  --profile-shadow: rgb(0 18 25 / 1);
+  /* Contorno y sombra dura de los botones: en el fondo más profundo se usa
+     negro para que la sombra siga destacando */
+  --btn-ink-color: light-dark(var(--teal-950), #000);
+
+  /* Grano en dorado oscuro (#a8800f aprox.): cada punto toma su opacidad del
+     ruido. Se usa como sombra interna de botones y etiquetas (ver
+     _buttons.css); los íconos SVG usan el filtro #grain-inset de index.html */
+  --grain-gold: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .66  0 0 0 0 .5  0 0 0 0 .06  0 0 0 3.4 -1.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-inset-shadow: inset -5px -6px 8px -2px rgb(184 144 26 / 0.65);
+  --grain-mask: linear-gradient(to top, #000, transparent 55%), linear-gradient(to left, #000, transparent 30%);
+  --grain-mask-hover: linear-gradient(to top, #000, transparent 85%), linear-gradient(to left, #000, transparent 40%);
 
   /* Overlay Colors */
   --modal-overlay: rgba(0, 0, 0, 0.5);
@@ -157,14 +170,27 @@
 
 /* Dark Mode Support
    ========================================================================== */
+/* Por defecto sigue el tema del sistema. El botón de tema solo cambia
+   <meta name="color-scheme"> (light / dark = excepción guardada) y el CSS lo
+   refleja aquí. Si el JS no corre, la meta queda en "light dark" y todo sigue
+   al sistema. */
 :root {
   color-scheme: light dark;
+  /* Esquema efectivo, para ramificar valores que no son colores con
+     @container style(--color-scheme: light) */
+  --color-scheme: light;
 
-  &:has([name='color-scheme']:checked) {
-    color-scheme: dark;
+  @media (prefers-color-scheme: dark) {
+    --color-scheme: dark;
   }
 
-  &:has([name='color-scheme']) {
+  &:has(> head > meta[name='color-scheme'][content='dark']) {
+    color-scheme: dark;
+    --color-scheme: dark;
+  }
+
+  &:has(> head > meta[name='color-scheme'][content='light']) {
     color-scheme: light;
+    --color-scheme: light;
   }
 }

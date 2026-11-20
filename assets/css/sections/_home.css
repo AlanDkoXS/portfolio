@@ -82,8 +82,11 @@
   position: absolute;
   top: 0;
   left: 0;
-  animation: animateSprite 1s steps(20, jump-none) 2s;
   z-index: var(--z-fixed);
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: animateSprite 1s steps(20, jump-none) 2s;
+  }
 }
 
 .home__info {
@@ -96,12 +99,19 @@
   .home__title {
     margin: auto;
     text-transform: capitalize;
-    border-right: 4px solid;
+    /* Sin cursor en reposo: solo aparece mientras se escribe */
+    border-right: 4px solid transparent;
     white-space: nowrap;
     width: 9ch;
-    animation: typing 2s infinite steps(9) alternate,
-      blink 0.3s infinite step-end alternate;
     overflow: hidden;
+
+    /* Se escribe una sola vez; el cursor parpadea un momento y desaparece.
+       Con "reducir movimiento" el saludo aparece directo, sin animación. */
+    @media (prefers-reduced-motion: no-preference) {
+      animation:
+        typing 1.2s steps(9) 0.6s backwards,
+        caret 0.4s step-end 6;
+    }
   }
 }
 
@@ -129,7 +139,10 @@
   }
 }
 
-@keyframes blink {
+@keyframes caret {
+  0% {
+    border-color: currentColor;
+  }
   50% {
     border-color: transparent;
   }
@@ -202,7 +215,7 @@
   }
 
   /* Ajuste del menú de navegación */
-  .navbar__list .navbar__item a[href="#about"] {
+  .navbar__list .navbar__item a[href$="#about"] {
     display: none;
   }
 
@@ -236,9 +249,10 @@
   }
 
   .home .home__image {
-    width: clamp(100px, 62%, 260px);
+    width: min(80%, 320px);
     margin: 0 auto;
-    transform: translateX(14px) translateY(10px) scale(0.85);
+    justify-self: center;
+    transform: none;
   }
 
   .home .home__info .home__description {

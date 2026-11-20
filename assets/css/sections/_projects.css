@@ -35,8 +35,12 @@
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.6s;
   transform-style: preserve-3d;
+
+  /* Con "reducir movimiento" la tarjeta cambia de cara sin girar */
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform 0.6s;
+  }
   border-radius: 1rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
@@ -59,10 +63,13 @@
 
 .project__card-front {
   transform: rotateY(0);
-  background-color: var(--bg-color-section);
+  background-color: var(--teal-800);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 1rem;
 }
 
 .project__card-back {
@@ -73,7 +80,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.5rem;
+  gap: 1rem;
+  padding: 1.25rem;
   position: relative;
 }
 
@@ -124,20 +132,32 @@
   background-image: url("/assets/img/project_img/traktl.webp");
 }
 
-.project__image--container::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  -webkit-backdrop-filter: blur(1px);
-  backdrop-filter: blur(1px);
-  z-index: 1;
+/* Carátulas en modo oscuro: solo los proyectos que tienen modo oscuro propio
+   (CRUD y Traktl). Sigue al tema efectivo (sistema o botón) vía --color-scheme;
+   solo se descarga la imagen que gana en la cascada. */
+@container style(--color-scheme: dark) {
+  .project__card:nth-of-type(2) .project__image--container {
+    background-image: url("/assets/img/project_img/CRUD-dark.webp");
+  }
+
+  .project__card:nth-of-type(6) .project__image--container {
+    background-image: url("/assets/img/project_img/traktl-dark.webp");
+  }
+}
+
+/* La captura del proyecto se ve como fondo difuminado (scale evita que el
+   blur deje bordes transparentes en las orillas) */
+.project__image--container {
+  filter: blur(5px) saturate(1.15) brightness(1.1);
+  scale: 1.1;
 }
 
 .project__image--container::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1));
+  /* Velo oscuro solo detrás del texto (centro): las orillas dejan ver el diseño */
+  background: radial-gradient(ellipse 90% 42% at 50% 52%, rgb(0 18 25 / 0.82), rgb(0 18 25 / 0.12));
   z-index: 2;
 }
 
@@ -145,9 +165,20 @@
 .project__description {
   position: relative;
   color: var(--primary-color);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-  padding: 0.5rem;
+  text-shadow: 0 2px 6px rgb(0 18 25 / 0.9);
   z-index: 3;
+  text-align: center;
+}
+
+/* Reverso: el texto completo cabe en la tarjeta */
+.project__description {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  font-size: 0.95rem;
+  line-height: 1.45;
   text-align: center;
 }
 
@@ -156,13 +187,20 @@
 .project__tech-stack,
 .project__tech-icon {
   position: relative;
-  top: -25%;
-  margin: var(--margin-small) 0;
-  filter: drop-shadow(var(--drop-shadow));
+  z-index: 3;
+  margin: 0;
+  filter: drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
+}
+
+/* Íconos de tecnologías: sombra interna granulada (filtro #grain-inset en index.html) */
+.project__tech-icon {
+  filter: url(#grain-inset) drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
 }
 
 .project__title {
   text-transform: uppercase;
+  font-size: 1.15rem;
+  line-height: 1.25;
 }
 
 .project__subtitle {
@@ -177,15 +215,14 @@
 .project__tech-stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.75rem;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1rem;
 }
 
 .project__tech-icon {
-  width: var(--icon-font-size);
-  height: var(--icon-font-size);
+  width: 2rem;
+  height: 2rem;
   fill: var(--primary-color);
   transition: transform 0.3s ease;
   z-index: 3;
@@ -200,7 +237,7 @@
   position: relative;
   z-index: 2; /* por encima del degradado ::after del reverso */
   display: flex;
-  gap: 1rem;
+  gap: 0.6rem;
   justify-content: center;
   margin-top: auto;
 }
@@ -216,22 +253,40 @@
   /* mismo estilo cartoon que .btn: contorno de tinta y sombra dura */
   border: 2px solid var(--teal-950);
   border-radius: var(--border-radius-small);
-  box-shadow: 3px 3px 0 #000;
+  box-shadow: 3px 3px 0 #000, var(--grain-inset-shadow);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   text-decoration: none;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
   font-weight: 600;
 }
 
-.project__button:hover {
-  background-color: var(--gold-300);
-  color: var(--on-accent-color);
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 #000;
+/* Solo con puntero real: en pantallas táctiles el :hover se queda "pegado" tras tocar */
+@media (hover: hover) {
+  .project__button:hover {
+    background-color: var(--gold-300);
+    color: var(--on-accent-color);
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 #000, var(--grain-inset-shadow);
+  }
 }
 
 .project__button:active {
   transform: translate(3px, 3px);
-  box-shadow: 0 0 0 #000;
+  box-shadow: 0 0 0 #000, var(--grain-inset-shadow);
+}
+
+.project__button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--grain-gold);
+  background-size: 120px;
+  -webkit-mask: var(--grain-mask);
+  mask: var(--grain-mask);
+  pointer-events: none;
 }
 
 .project__button i {

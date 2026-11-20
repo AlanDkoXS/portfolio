@@ -4,30 +4,30 @@ const translations = {
     en: {
       title: 'Alan Quintana | Full Stack Designer & Developer',
       description:
-        'Portfolio of Alan Quintana, graphic designer and full stack web developer. Specialized in React, JavaScript, Node.js and UI/UX design.',
+        'Alan Quintana, graphic designer and full stack web developer in Chihuahua, Mexico. React, Astro, TypeScript, Node.js and UI/UX design. Founder of Aniwa.',
       ogDescription:
-        'Portfolio of Alan Quintana, specialized in graphic design and web development with React, JavaScript and Node.js',
+        'Graphic designer and full stack developer: websites and web apps with React, Astro, TypeScript and Node.js, designed with care.',
       url: 'https://www.alanquintana.pro/',
       locale: 'en_US',
       // Merged into the JSON-LD <script data-i18n-jsonld> block
       jsonLd: {
         jobTitle: 'Full Stack Designer & Developer',
-        description: 'Full stack designer, passionate about design, technology and development.',
-        knowsAbout: ['Graphic Design', 'Web Development', 'React', 'JavaScript', 'Node.js'],
+        description: 'Graphic designer and full stack web developer from Chihuahua, Mexico, with 15+ years creating digital experiences. Founder of the digital agency Aniwa.',
+        knowsAbout: ['Graphic Design', 'UI/UX Design', 'Branding', 'Web Development', 'Full Stack Development', 'React', 'Astro', 'TypeScript', 'JavaScript', 'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Supabase', 'Tailwind CSS', 'SEO', 'Web Accessibility'],
       },
     },
     es: {
       title: 'Alan Quintana | Diseñador y Desarrollador Full Stack',
       description:
-        'Portafolio de Alan Quintana, diseñador gráfico y desarrollador web full stack. Especializado en React, JavaScript, Node.js y diseño UI/UX.',
+        'Alan Quintana, diseñador gráfico y desarrollador web full stack en Chihuahua, México. React, Astro, TypeScript, Node.js y diseño UI/UX. Fundador de Aniwa.',
       ogDescription:
-        'Portafolio de Alan Quintana, especializado en diseño gráfico y desarrollo web con React, JavaScript y Node.js',
+        'Diseñador gráfico y desarrollador full stack: sitios y apps web con React, Astro, TypeScript y Node.js, diseñados con cuidado.',
       url: 'https://www.alanquintana.pro/es/',
       locale: 'es_MX',
       jsonLd: {
         jobTitle: 'Diseñador y Desarrollador Full Stack',
-        description: 'Diseñador full stack, apasionado por el diseño, la tecnología y el desarrollo.',
-        knowsAbout: ['Diseño Gráfico', 'Desarrollo Web', 'React', 'JavaScript', 'Node.js'],
+        description: 'Diseñador gráfico y desarrollador web full stack de Chihuahua, México, con más de 15 años creando experiencias digitales. Fundador de la agencia digital Aniwa.',
+        knowsAbout: ['Diseño Gráfico', 'Diseño UI/UX', 'Branding', 'Desarrollo Web', 'Desarrollo Full Stack', 'React', 'Astro', 'TypeScript', 'JavaScript', 'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Supabase', 'Tailwind CSS', 'SEO', 'Accesibilidad Web'],
       },
     },
   },
@@ -91,10 +91,36 @@ const translations = {
     en: 'Portrait of Alan Quintana',
     es: 'Retrato de Alan Quintana',
   },
-  aboutDescription: {
-    en: 'I can help you develop modern, responsive, and functional web applications tailored to your business needs. My approach combines visually appealing design with a seamless user experience, ensuring that the applications are not only aesthetically pleasing but also intuitive and easy to use.',
-    es: 'Puedo ayudarte a desarrollar aplicaciones web modernas, responsivas y funcionales, adaptadas a las necesidades de tu negocio. Mi enfoque combina un diseño visualmente atractivo con una experiencia de usuario fluida, asegurando que las aplicaciones no solo sean estéticamente agradables, sino también intuitivas y fáciles de usar.',
+  // Enlace de cada tarjeta de proyecto a su página de caso (scripts/data/projects.mjs)
+  projectCase: {
+    en: {
+      label: 'Case study',
+      1: '/projects/marvel-wiki/',
+      2: '/projects/crud-users/',
+      3: '/projects/rick-and-morty-wiki/',
+      4: '/projects/weather-app/',
+      5: '/projects/fortune-cookie/',
+      6: '/projects/traktl/',
+    },
+    es: {
+      label: 'Ver caso',
+      1: '/es/proyectos/marvel-wiki/',
+      2: '/es/proyectos/crud-users/',
+      3: '/es/proyectos/rick-and-morty-wiki/',
+      4: '/es/proyectos/weather-app/',
+      5: '/es/proyectos/fortune-cookie/',
+      6: '/es/proyectos/traktl/',
+    },
   },
+  skillsMotion: {
+    en: { pause: 'Pause animation', play: 'Play animation' },
+    es: { pause: 'Pausar animación', play: 'Reanudar animación' },
+  },
+  aboutDescription: {
+    en: "I come from graphic design and now build from start to finish: I design in Figma, Photoshop and Illustrator and code with React, JavaScript and Node.js, so every project goes from idea to code without losing its visual care. I create modern, responsive and fast web applications tailored to your business, where appealing design goes hand in hand with an intuitive, easy-to-use experience. I care about the details: typography, color, accessibility and performance.",
+    es: 'Vengo del diseño gráfico y hoy desarrollo de principio a fin: diseño en Figma, Photoshop e Illustrator y programo con React, JavaScript y Node.js, así que cada proyecto pasa de la idea al código sin perder el cuidado visual. Creo aplicaciones web modernas, responsivas y rápidas, adaptadas a las necesidades de tu negocio, donde el diseño atractivo va de la mano de una experiencia intuitiva y fácil de usar. Me importan los detalles: tipografía, color, accesibilidad y rendimiento.',
+  },
+
   /* <-- Skills Section --> */
   skillsTitle: {
     en: 'Skills',
@@ -272,6 +298,7 @@ designsTitle: {
       selectLanguage: 'Select language',
       english: 'English',
       spanish: 'Español',
+      close: 'Close',
       footerDescription: 'Made with ❤️ and ☕. Thanks to my tutor Alejandra Olazagasti.',
       footerCopyright: 'All rights reserved',
     },
@@ -282,6 +309,7 @@ designsTitle: {
       selectLanguage: 'Seleccionar idioma',
       english: 'English',
       spanish: 'Español',
+      close: 'Cerrar',
       footerDescription: 'Hecho con ❤️ y ☕. Gracias a mi tutora Alejandra Olazagasti.',
       footerCopyright: 'Todos los derechos reservados',
     },

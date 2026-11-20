@@ -4,10 +4,12 @@
    y sombra dura desplazada (sin difuminado ni degradados). Al presionar, el
    botón "se hunde" sobre su sombra. */
 .btn {
-  --btn-ink: var(--teal-950);
+  --btn-ink: var(--btn-ink-color);
   --btn-offset: 4px;
 
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -27,7 +29,7 @@
   background: var(--gold-400);
   border: 2px solid var(--btn-ink);
   border-radius: var(--border-radius-small);
-  box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--btn-ink);
+  box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--btn-ink), var(--grain-inset-shadow);
 
   cursor: pointer;
   transition:
@@ -37,24 +39,29 @@
     color 0.15s ease;
 }
 
+/* Sombra interna granulada (abajo y derecha, la luz viene de arriba-izquierda
+   como la sombra dura). Queda detrás del texto gracias a isolation. */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--grain-gold);
+  background-size: 120px;
+  -webkit-mask: var(--grain-mask);
+  mask: var(--grain-mask);
+  pointer-events: none;
+}
+
 .btn i {
   font-size: 1.25em;
   transition: transform 0.2s ease;
 }
 
-.btn:hover {
-  background: var(--gold-300);
-  transform: translate(-2px, -2px);
-  box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink);
-}
-
-.btn:hover i {
-  transform: translateX(2px);
-}
 
 .btn:active {
   transform: translate(var(--btn-offset), var(--btn-offset));
-  box-shadow: 0 0 0 var(--btn-ink);
+  box-shadow: 0 0 0 var(--btn-ink), var(--grain-inset-shadow);
 }
 
 .btn:focus-visible {
@@ -77,10 +84,38 @@
   box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--accent-color);
 }
 
-.btn--ghost:hover {
-  color: var(--on-accent-color);
-  background: var(--accent-color);
-  box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink);
+/* Sin relleno no hay sombra interna; aparece al rellenarse en hover */
+.btn--ghost::after {
+  opacity: 0;
+}
+
+/* Hover solo con puntero real: en pantallas táctiles se queda "pegado" tras tocar */
+@media (hover: hover) {
+  .btn:hover {
+    background: var(--gold-300);
+    transform: translate(-2px, -2px);
+    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--grain-inset-shadow);
+  }
+
+  /* El grano sube un poco al pasar el mouse */
+  .btn:hover::after {
+    -webkit-mask: var(--grain-mask-hover);
+    mask: var(--grain-mask-hover);
+  }
+
+  .btn:hover i {
+    transform: translateX(2px);
+  }
+
+  .btn--ghost:hover {
+    color: var(--on-accent-color);
+    background: var(--accent-color);
+    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--grain-inset-shadow);
+  }
+
+  .btn--ghost:hover::after {
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

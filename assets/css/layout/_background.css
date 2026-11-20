@@ -50,17 +50,19 @@
   filter: blur(0.5px) brightness(1) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
 }
 
-/* Hover effects */
-.background-container:hover .bgBack {
-  transform: translate(-50%, -50%) translate(-40px, 20px);
-}
+/* Hover effects (solo sin preferencia de movimiento reducido) */
+@media (prefers-reduced-motion: no-preference) {
+  .background-container:hover .bgBack {
+    transform: translate(-50%, -50%) translate(-40px, 20px);
+  }
 
-.background-container:hover .bgMiddle {
-  transform: translate(-50%, -50%) translate(-30px, -15px);
-}
+  .background-container:hover .bgMiddle {
+    transform: translate(-50%, -50%) translate(-30px, -15px);
+  }
 
-.background-container:hover .bgFront {
-  transform: translate(-50%, -50%) translate(40px, -10px);
+  .background-container:hover .bgFront {
+    transform: translate(-50%, -50%) translate(40px, -10px);
+  }
 }
 
 .bgBack,
@@ -123,67 +125,23 @@
     opacity: 0.7;
   }
 
-  .background-container:hover .bgBack {
-    transform: translate(-50%, -50%) translate(-40px, 20px);
-  }
+  @media (prefers-reduced-motion: no-preference) {
+    .background-container:hover .bgBack {
+      transform: translate(-50%, -50%) translate(-40px, 20px);
+    }
 
-  .background-container:hover .bgMiddle {
-    transform: translate(-50%, -50%) translate(-30px, -15px);
-  }
+    .background-container:hover .bgMiddle {
+      transform: translate(-50%, -50%) translate(-30px, -15px);
+    }
 
-  .background-container:hover .bgFront {
-    transform: translate(-50%, -50%) translate(40px, -10px);
+    .background-container:hover .bgFront {
+      transform: translate(-50%, -50%) translate(40px, -10px);
+    }
   }
 
   .bgBack,
   .bgMiddle,
   .bgFront {
     transition: transform 0.5s ease-in-out;
-  }
-}
-
-/* ============= Modo claro: sin sombras ni oscurecido; profundidad por opacidad ============= */
-html:has([name='color-scheme']:not(:checked)) {
-  .bgGrain {
-    opacity: 0.12;
-    mix-blend-mode: multiply;
-  }
-
-  .bgBack,
-  .bgMiddle,
-  .bgFront {
-    color: var(--gold-400);
-  }
-
-  .bgBack {
-    filter: blur(2px);
-    opacity: 0.35;
-  }
-
-  .bgMiddle {
-    filter: blur(1px);
-    opacity: 0.6;
-  }
-
-  .bgFront {
-    filter: blur(0.5px);
-    opacity: 0.85;
-  }
-
-  @media (min-width: 600px) {
-    .bgBack {
-      filter: blur(5px);
-      opacity: 0.35;
-    }
-
-    .bgMiddle {
-      filter: blur(3px);
-      opacity: 0.55;
-    }
-
-    .bgFront {
-      filter: blur(1px);
-      opacity: 0.75;
-    }
   }
 }
