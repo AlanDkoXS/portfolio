@@ -19,6 +19,18 @@
 
 Código de [alanquintana.pro](https://alanquintana.pro), el portafolio de un diseñador gráfico y desarrollador full stack. HTML, CSS y JavaScript estáticos: sin framework ni bundler, con un par de scripts de Node sin dependencias que generan páginas y PDFs.
 
+**Hecho con**
+
+<div>
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
+<img src="https://img.shields.io/badge/CSS-663399?style=for-the-badge&logo=css&logoColor=white" />
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+<img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" />
+<img src="https://img.shields.io/badge/Claude%20Code-D97757?style=for-the-badge&logo=claude&logoColor=white" />
+</div>
+
+
 ## Características
 
 - **Bilingüe e indexable**: inglés en `/` y español en `/es/`, como páginas estáticas separadas con `hreflang`. El botón de idioma recuerda la elección del visitante.
