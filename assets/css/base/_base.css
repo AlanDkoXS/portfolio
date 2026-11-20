@@ -136,3 +136,11 @@ html {
     navigation: auto;
   }
 }
+
+/* La fuente de íconos (Boxicons) casi no tiene altura de minúsculas: con
+   font-size-adjust se encogería. Los íconos usan su tamaño real. */
+.bx,
+[class^='bx-'],
+[class*=' bx-'] {
+  font-size-adjust: none;
+}

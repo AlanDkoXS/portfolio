@@ -34,6 +34,7 @@
 body:has(#pdf-container) .header {
   opacity: 1;
   animation: none;
+  background-color: color-mix(in srgb, var(--bg-color-section) 92%, transparent);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   box-shadow: var(--box-shadow);
@@ -57,7 +58,8 @@ body:has(#pdf-container) .header {
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  transition: transform 0.5s ease;
+  /* Lo mueve resume_fab_buttons.js (translate) para no tapar el footer */
+  transition: translate 0.15s linear;
 }
 
 .fab {

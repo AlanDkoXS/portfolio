@@ -8,7 +8,8 @@
 export const contact = {
   web: 'www.alanquintana.pro',
   phone: '+52 614 110 5668',
-  email: 'contact@alanquintana.pro',
+  // Correo por idioma (todos llegan al mismo buzón)
+  email: { en: 'hello@alanquintana.pro', es: 'hola@alanquintana.pro' },
 };
 
 export default {

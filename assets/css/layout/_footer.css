@@ -19,20 +19,21 @@
 
 .footer__social .footer__social-list {
   display: flex;
-  gap: var(--mr-2);
-  font-size: 1.5rem;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  font-size: 1.75rem;
 }
 
 .footer__social-link {
+  display: inline-flex;
   color: var(--primary-color);
-  transition: text-shadow 0.3s;
-  text-align: center;
-  margin-top: 2rem;
-  padding-top: 2rem;
+  transition: transform 0.2s ease;
 }
 
-.footer__social-link:hover {
-  transform: scale(1.2);
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .footer__social-link:hover {
+    transform: scale(1.15);
+  }
 }
 
 .footer__copyrightright {

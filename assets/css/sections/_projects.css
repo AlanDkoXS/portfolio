@@ -176,8 +176,7 @@
   min-height: 0;
   display: grid;
   place-items: center;
-  overflow-y: auto;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.45;
   text-align: center;
 }
@@ -366,5 +365,21 @@
 @media screen and (min-width: 600px) {
   .project__card--carousel {
     transform: translateX(10%);
+  }
+}
+
+/* Escritorio: tarjetas un poco más grandes (hay espacio y el texto respira) */
+@media (min-width: 900px) {
+  .project__card--carousel,
+  .project__card {
+    height: 390px;
+  }
+
+  .project__card {
+    width: 310px;
+  }
+
+  .project__container {
+    height: 29rem;
   }
 }

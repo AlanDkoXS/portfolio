@@ -15,6 +15,9 @@ export default function skillsMarquee() {
     const paused = container.classList.contains('is-paused');
     icon?.classList.toggle('bx-pause', !paused);
     icon?.classList.toggle('bx-play', paused);
+    // Tooltip igual al texto visible para lectores de pantalla
+    const label = toggle.querySelector(paused ? '.skills__motion-play' : '.skills__motion-pause');
+    if (label) toggle.title = label.textContent.trim();
   };
 
   toggle.addEventListener('click', () => {

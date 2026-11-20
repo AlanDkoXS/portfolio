@@ -78,7 +78,7 @@ function page(lang) {
     <div class="contact">
       <span>${icon.web}${contact.web}</span>
       <span>${icon.phone}${contact.phone}</span>
-      <span>${icon.email}${contact.email}</span>
+      <span>${icon.email}${contact.email[lang]}</span>
     </div>
   </header>
   <div class="cols">

@@ -87,11 +87,46 @@
   }
 }
 
+/* Datos de contacto: ícono + texto alineados, sin cortes raros */
+.contact__info-title {
+  margin-bottom: 0.25rem;
+}
+
+.contact__info-data {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  font-style: normal;
+}
+
+.contact__info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+
+  i {
+    flex: none;
+    font-size: 1.5rem;
+    color: var(--accent-color);
+  }
+
+  span,
+  a {
+    overflow-wrap: anywhere;
+  }
+}
+
 /* CONTACT MIN WIDTH 600px ========================== */
 @media (min-width: 600px) {
   .contact {
     .contact__container {
-      grid-template-columns: 0.5fr 1fr;
+      grid-template-columns: minmax(220px, 0.8fr) 1.6fr;
+      align-items: start;
     }
+  }
+
+  .contact__info-item {
+    font-size: 1rem;
   }
 }

@@ -295,8 +295,12 @@
   }
 
   .logo {
-    width: 4rem !important;
-    height: 4rem !important;
+    width: 2.6rem !important;
+    height: 2.6rem !important;
+  }
+
+  .navbar__logo {
+    font-size: 1.15rem;
   }
   .navbar__logo--name,
   .navbar__logo--lastname {

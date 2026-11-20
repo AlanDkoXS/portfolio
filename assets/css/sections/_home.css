@@ -159,19 +159,23 @@
       "image title"
       "image description"
       "image resume-button";
-    gap: 1rem;
-    align-items: start;
+    gap: 0.75rem 2.5rem;
+    align-items: center;
+    align-content: center;
     justify-content: center;
-    margin-top: 4rem;
-    padding: 2rem;
+    min-height: 100svh;
+    padding: calc(var(--header-height) + 1rem) 2rem 2rem 4.5rem;
+    transform: none;
   }
 
   /* Ajustes de la imagen */
   .home .home__image {
     grid-area: image;
-    width: clamp(300px, 90%, 500px);
-    transform: translateX(0) translateY(25%) scale(1);
+    width: clamp(220px, 32vw, 400px);
+    max-width: 55svh;
+    transform: none;
     justify-self: center;
+    align-self: center;
   }
 
   /* Ajustes del título */
@@ -180,18 +184,29 @@
     text-align: left;
   }
 
-  .home .home__info .home__title {
-    text-align: left;
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: calc(var(--title-font-size) * 1.5);
+  .home .home__info {
+    align-self: end;
   }
 
-  /* Descripción integrada (incluye contenido de about) */
+  .home .home__info .home__title {
+    text-align: left;
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.4rem, 1rem + 1.6vw, 2.2rem);
+  }
+
+  /* Descripción integrada (incluye contenido de about). El tamaño depende del
+     alto y del ancho de la pantalla para que el hero quepa sin cortarse. */
   .home .home__info .home__description {
     text-align: left;
-    max-width: 600px;
-    margin-bottom: 2rem;
+    max-width: 62ch;
+    margin-bottom: 0.5rem;
+    font-size: clamp(0.88rem, 0.35rem + 1.25svh + 0.35vw, 1.15rem);
+    line-height: 1.55;
+  }
+
+  .home .home__buttons {
+    align-self: start;
+    justify-content: flex-start !important;
   }
 
   /* Ocultar botones excepto resume */
@@ -225,11 +240,19 @@
     max-width: none;
   }
 
-  .home__social {
-    position: fixed;
-    top: 15%;
-    left: -16%;
+  /* Dentro del hero (no fijo a la ventana: no sigue el scroll) */
+  .home .home__social {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem;
+    transform: translateY(-50%);
     flex-direction: column;
+    z-index: var(--z-fixed);
+  }
+
+  .home .home__social-item {
+    margin: 0.6rem 0;
+    font-size: 1.6rem;
   }
 }
 

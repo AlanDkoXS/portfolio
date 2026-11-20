@@ -22,7 +22,7 @@ It also generates the **project case-study pages** from `scripts/data/projects.m
 node scripts/build-cv.mjs   # run after editing scripts/cv/data.mjs
 ```
 
-Builds `assets/docs/[ENG] Alan Quintana.pdf`, `[ESP] Alan Quintana.pdf` and `resume.pdf` (EN page 1 + ES page 2, shown by `/resume`) from `scripts/cv/data.mjs`, printing an HTML template with the system Chromium and joining with `pdfunite` (poppler). Each CV must fit one Letter page; the script fails if one overflows. Experience lists the Aniwa (beaniwa.com) client sites.
+Builds `assets/docs/[ENG] Alan Quintana.pdf`, `[ESP] Alan Quintana.pdf` and `resume.pdf` (EN page 1 + ES page 2, shown by `/resume`) from `scripts/cv/data.mjs`, printing an HTML template with the system Chromium and joining with `pdfunite` (poppler). Each CV must fit one Letter page; the script fails if one overflows. The email is per language (`hello@` EN, `hola@` ES; same inbox). Experience lists the Aniwa (beaniwa.com) client sites.
 
 ## Running locally
 
@@ -63,7 +63,9 @@ python -m http.server 8000   # then open http://localhost:8000
 
 **Project covers.** `assets/img/project_img/*.webp` are 560×700 (4:5, 2× the card) mobile screenshots of each live project, set in `_projects.css` by `nth-of-type` (card order matters). Projects with their own dark mode (CRUD, Traktl) also have `*-dark.webp`, swapped via `@container style(--color-scheme: dark)`. Don't set covers inline from JS, or the dark override stops working.
 
-**Skills marquee.** Each stack in `#skills` is a `.skills__group` with an infinite left-to-right row: `.skills__track` holds 4 copies of the `<ul class="skills__list">` (only the first is accessible, the rest `aria-hidden`) and animates `translate: -50% → 0` over `--marquee-duration` (set inline per row). It pauses on hover/focus and with the `.skills__motion-toggle` button (WCAG 2.2.2, `helpers/skills_marquee.js`); with reduced motion it's a static wrapped list. When adding a tech, add it to all 4 copies. Icons are SVG `<symbol>` sprites in `assets/img/skills/` (newer ones from Simple Icons, CC0) and get the grainy inner shadow via `filter: url(#grain-inset)` (inline SVG filter at the top of `<body>` in `index.html`).
+**Skills marquee.** Each stack in `#skills` is a `.skills__group` with an infinite left-to-right row: `.skills__track` holds 4 copies of the `<ul class="skills__list">` (only the first is accessible, the rest `aria-hidden`) and animates `translate: -50% → 0` over `--marquee-duration` (set inline per row; `.skills__marquee--reverse` flips direction: Frontend and Development run reversed, Backend and Development slower). It pauses on hover/focus and with the `.skills__motion-toggle` button (WCAG 2.2.2, `helpers/skills_marquee.js`); with reduced motion it's a static wrapped list. When adding a tech, add it to all 4 copies. Icons are SVG `<symbol>` sprites in `assets/img/skills/` (newer ones from Simple Icons, CC0) and get a grainy inner shadow from every edge inward via `filter: url(#grain-inset)` (inline SVG filter at the top of `<body>` in `index.html`).
+
+**Icon font.** `body` uses `font-size-adjust: from-font` (stable Poppins fallback); Boxicons opts out in `_base.css`, otherwise every icon renders ~55% of its size.
 
 **Dialogs.** Native `<dialog>` opened with `showModal()`, `closedby="any"` for light dismiss (Safari fallback in `helpers/dialog.js`), named via `aria-labelledby`. The dialog box is the card; the dim/blur lives in `::backdrop`.
 
