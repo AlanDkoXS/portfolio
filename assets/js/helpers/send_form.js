@@ -17,30 +17,28 @@ export const VALIDATION_RULES = {
 
 export const FORM_MESSAGES = {
   en: {
-    required: "This field is required",
-    invalidEmail: "Please enter a valid email address",
+    required: "Fill in this field",
+    invalidEmail: "Type a valid email",
     sending: "Sending...",
-    success: "Message sent successfully!",
-    error: "Error sending message. Please try again.",
-    send: "Send",
-    invalidName:
-      "Name must be between 2 and 50 characters and contain only letters",
-    invalidSubject: "Subject must be between 5 and 100 characters",
-    invalidMessage: "Message must be between 10 and 500 characters",
-    close: "Close",
+    success: "Done! I got your message.",
+    error: "Your message didn't go through. Try again.",
+    send: "Send your message",
+    invalidName: "Type your name: 2 to 50 letters",
+    invalidSubject: "Write a subject of 5 to 100 characters",
+    invalidMessage: "Write a message of 10 to 500 characters",
+    close: "Got it",
   },
   es: {
-    required: "Este campo es requerido",
-    invalidEmail: "Por favor ingresa un email válido",
+    required: "Llena este campo",
+    invalidEmail: "Escribe un correo válido",
     sending: "Enviando...",
-    success: "¡Mensaje enviado correctamente!",
-    error: "Error al enviar el mensaje. Por favor intenta nuevamente.",
-    send: "Enviar",
-    invalidName:
-      "El nombre debe tener entre 2 y 50 caracteres y contener solo letras",
-    invalidSubject: "El asunto debe tener entre 5 y 100 caracteres",
-    invalidMessage: "El mensaje debe tener entre 10 y 500 caracteres",
-    close: "Cerrar",
+    success: "¡Listo! Recibí tu mensaje.",
+    error: "Tu mensaje no se envió. Inténtalo de nuevo.",
+    send: "Envía tu mensaje",
+    invalidName: "Escribe tu nombre: de 2 a 50 letras",
+    invalidSubject: "Escribe un asunto de 5 a 100 caracteres",
+    invalidMessage: "Escribe un mensaje de 10 a 500 caracteres",
+    close: "Entendido",
   },
 };
 

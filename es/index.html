@@ -13,6 +13,22 @@
         if (t === 'light' || t === 'dark') document.querySelector('meta[name="color-scheme"]').content = t;
       } catch {}
     </script>
+    <script>
+      // El loader solo se muestra en la primera carga de la sesión: al cambiar
+      // de idioma o volver al inicio la página aparece directo
+      document.documentElement.classList.add('js');
+      try {
+        // También sin loader si la página se está prerenderizando (cambio de
+        // idioma): al activarse aparece lista, sin pantalla de carga
+        if (sessionStorage.getItem('aq-loaded') || document.prerendering)
+          document.documentElement.classList.add('skip-loader');
+      } catch {}
+    </script>
+    <!-- Prerenderiza la versión en el otro idioma al cargar: el cambio de idioma
+         es casi instantáneo (la página ya está construida en segundo plano) -->
+    <script type="speculationrules" data-i18n-speculation>
+      { "prerender": [{ "urls": ["/"], "eagerness": "immediate" }] }
+    </script>
     <!-- Sin JS no hay quien quite el loader: que no tape el contenido -->
     <noscript><style>.loader { display: none !important; }</style></noscript>
     <meta name="author" content="Alan Quintana" />
@@ -149,23 +165,8 @@
       }
     </script>
 
-    <!-- Preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://unpkg.com" crossorigin />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link
-      rel="preconnect"
-      href="https://www.googletagmanager.com"
-      crossorigin
-    />
-
-    <!-- DNS-Prefetch -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    <link rel="dns-prefetch" href="https://unpkg.com" />
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <!-- Preconnect (solo terceros que se siguen usando) -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
 
     <!-- Preload important sources -->
     <link rel="preload" href="/assets/css/main.css" as="style" />
@@ -178,25 +179,12 @@
       type="image/svg+xml"
     />
 
-    <!-- Fonts: only the weights the CSS uses (200 loader, 300 body, 500 loader, 600, 700 bold) -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Icons -->
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-        rel="stylesheet"
-      />
-    </noscript>
+    <!-- Fuentes autoalojadas: Poppins (en main.css) y Boxicons. Se precargan
+         las dos más usadas para que el texto y los íconos aparezcan sin espera -->
+    <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/poppins/poppins-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/boxicons/boxicons.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/assets/css/vendor/boxicons.min.css" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon.png" />
@@ -212,21 +200,22 @@
     <script type="module" src="/assets/js/main.js"></script>
 
     <!-- Prefetch Page -->
-    <link rel="prefetch" href="resume.html" />
+    <link rel="prefetch" href="/resume.html" />
   </head>
 
   <body>
     <!-- Filtro de sombra interna granulada para íconos SVG: dorado oscuro con
-         grano que entra desde todo el contorno hacia el centro.
+         grano que entra desde todo el contorno y se desvanece hacia el centro
+         (radial, ~50% del ícono).
          Se usa con filter: url(#grain-inset) -->
     <svg class="sr-filters" width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute">
       <filter id="grain-inset" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur" />
+        <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="blur" />
         <feComposite in="SourceAlpha" in2="blur" operator="out" result="edge" />
         <feTurbulence type="fractalNoise" baseFrequency="1.15" numOctaves="2" stitchTiles="stitch" result="noise" />
-        <feColorMatrix in="noise" values="0 0 0 0 .66  0 0 0 0 .5  0 0 0 0 .06  0 0 0 3.4 -1.25" result="grain" />
+        <feColorMatrix in="noise" values="0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.2 -1.35" result="grain" />
         <feComposite in="grain" in2="edge" operator="in" result="grainEdge" />
-        <feFlood flood-color="#b8901a" flood-opacity="0.5" />
+        <feFlood flood-color="#b08814" flood-opacity="0.55" />
         <feComposite in2="edge" operator="in" result="tint" />
         <feMerge>
           <feMergeNode in="SourceGraphic" />
@@ -241,8 +230,10 @@
       <svg class="loader__logo">
         <use xlink:href="/assets/img/logo.svg#logo"></use>
       </svg>
-      <span class="loader__name--light">alan</span>
-      <span class="loader__name--semibold">quintana</span>
+      <span class="loader__name"
+        ><span class="loader__name--light">alan</span
+        ><span class="loader__name--semibold">quintana</span></span
+      >
     </div>
 
     <!-- Background -->
@@ -334,14 +325,14 @@
               >
                 <div class="flag-wrapper">
                   <img
-                    src="/assets/img/english.webp"
+                    src="/assets/img/flag-en.svg"
                     class="navbar__toggle--language-en"
                     alt="English"
                     loading="lazy"
                     aria-hidden="true"
                   />
                   <img
-                    src="/assets/img/español.webp"
+                    src="/assets/img/flag-es.svg"
                     class="navbar__toggle--language-es"
                     alt="Español"
                     loading="lazy"
@@ -359,6 +350,21 @@
         ></a>
       </nav>
     </header>
+    <!-- Lámpara colgante (escritorio): cambia el tema. Encendida = modo claro -->
+    <button
+      type="button"
+      class="lamp"
+      aria-pressed="false"
+      data-i18n-attr="aria-label:lamp;title:lamp"
+      aria-label="Luz"
+      title="Luz"
+    >
+      <span class="lamp__hit" aria-hidden="true"></span>
+      <img class="lamp__off" src="/assets/img/lamp_button/button-lamp_lamp_original.webp" alt="" width="300" height="300" />
+      <img class="lamp__over" src="/assets/img/lamp_button/button-lamp_lamp_over.webp" alt="" width="300" height="300" loading="lazy" />
+      <img class="lamp__pull" src="/assets/img/lamp_button/button-lamp_lamp_clic.webp" alt="" width="300" height="300" loading="lazy" />
+      <img class="lamp__on" src="/assets/img/lamp_button/button-lamp_lamp_active.webp" alt="" width="300" height="401" />
+    </button>
 
     <main>
       <!-- Home -->
@@ -370,7 +376,7 @@
           </div>
           <div class="home__info">
             <h1 data-i18n="homeTitle" class="home__title">¡Hola 👨🏻‍💻!</h1>
-            <p data-i18n="homeDescription" class="home__description">Soy Alan, diseñador full stack, apasionado por el diseño, la tecnología y el desarrollo.</p>
+            <p data-i18n="homeDescription" class="home__description">Soy Alan: mitad diseñador, mitad programador, y completamente obsesionado con los detalles.</p>
           </div>
           <ul class="home__social flex--container">
             <li class="home__social-item">
@@ -418,28 +424,24 @@
             <a data-i18n="aboutButton"
               class="btn btn--primary"
               href="#about"
-              title="About Button"
               rel="noreferrer nofollow"
-            >Acerca de mí</a>
+            >Conóceme</a>
             <a data-i18n="resumeButton"
               class="btn btn--primary"
               id="resume-btn"
               href="/resume.html"
-              title="Resume Button"
               rel="noreferrer nofollow"
             >Mira mi CV</a>
             <a data-i18n="skillsButton"
               class="btn btn--primary"
               href="#skills"
-              title="Skills Button"
               rel="noreferrer nofollow"
-            >Habilidades</a>
+            >Descubre mis habilidades</a>
             <a data-i18n="projectButton"
               class="btn btn--primary"
               href="#projects"
-              title="Projects Button"
               rel="noreferrer nofollow"
-            >Proyectos</a>
+            >Explora mis proyectos</a>
           </div>
         </div>
       </section>
@@ -475,10 +477,10 @@
             <div class="skills__icons">
               <!-- Botón para pausar el movimiento (WCAG 2.2.2). Lo muestra skills_marquee.js
                    solo si hay animación (sin "reducir movimiento") -->
-              <button type="button" class="skills__motion-toggle" hidden data-i18n-attr="title:skillsMotion.pause" title="Pausar animación">
+              <button type="button" class="skills__motion-toggle" hidden data-i18n-attr="title:skillsMotion.pause" title="Pausa la animación">
                 <i class="bx bx-pause" aria-hidden="true"></i>
-                <span class="skills__motion-pause" data-i18n="skillsMotion.pause">Pausar animación</span>
-                <span class="skills__motion-play" data-i18n="skillsMotion.play">Reanudar animación</span>
+                <span class="skills__motion-pause" data-i18n="skillsMotion.pause">Pausa la animación</span>
+                <span class="skills__motion-play" data-i18n="skillsMotion.play">Reanuda la animación</span>
               </button>
               <!-- Design Tools -->
               <div class="skills__group">
@@ -813,8 +815,8 @@
                       href="/es/proyectos/marvel-wiki/"
                       class="project__button project__button--case"
                       data-i18n-attr="href:projectCase.1;aria-label:projectCase.label;title:projectCase.label"
-                      aria-label="Ver caso"
-                      title="Ver caso"
+                      aria-label="Lee el caso"
+                      title="Lee el caso"
                     >
                       <i class="bx bx-book-open" aria-hidden="true"></i>
                     </a>
@@ -823,7 +825,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="See"
+                      data-i18n-attr="title:projectLinks.demo;aria-label:projectLinks.demo"
+                      title="Mira la demo en vivo"
+                      aria-label="Mira la demo en vivo"
                     >
                       <i class="bx bx-link-external"></i>
                     </a>
@@ -832,7 +836,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="Code"
+                      data-i18n-attr="title:projectLinks.code;aria-label:projectLinks.code"
+                      title="Revisa el código"
+                      aria-label="Revisa el código"
                     >
                       <i class="bx bx-code-alt"></i>
                     </a>
@@ -885,8 +891,8 @@
                       href="/es/proyectos/crud-users/"
                       class="project__button project__button--case"
                       data-i18n-attr="href:projectCase.2;aria-label:projectCase.label;title:projectCase.label"
-                      aria-label="Ver caso"
-                      title="Ver caso"
+                      aria-label="Lee el caso"
+                      title="Lee el caso"
                     >
                       <i class="bx bx-book-open" aria-hidden="true"></i>
                     </a>
@@ -895,7 +901,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="See"
+                      data-i18n-attr="title:projectLinks.demo;aria-label:projectLinks.demo"
+                      title="Mira la demo en vivo"
+                      aria-label="Mira la demo en vivo"
                     >
                       <i class="bx bx-link-external"></i>
                     </a>
@@ -904,7 +912,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="Code"
+                      data-i18n-attr="title:projectLinks.code;aria-label:projectLinks.code"
+                      title="Revisa el código"
+                      aria-label="Revisa el código"
                     >
                       <i class="bx bx-code-alt"></i>
                     </a>
@@ -957,8 +967,8 @@
                       href="/es/proyectos/rick-and-morty-wiki/"
                       class="project__button project__button--case"
                       data-i18n-attr="href:projectCase.3;aria-label:projectCase.label;title:projectCase.label"
-                      aria-label="Ver caso"
-                      title="Ver caso"
+                      aria-label="Lee el caso"
+                      title="Lee el caso"
                     >
                       <i class="bx bx-book-open" aria-hidden="true"></i>
                     </a>
@@ -967,7 +977,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="See"
+                      data-i18n-attr="title:projectLinks.demo;aria-label:projectLinks.demo"
+                      title="Mira la demo en vivo"
+                      aria-label="Mira la demo en vivo"
                     >
                       <i class="bx bx-link-external"></i>
                     </a>
@@ -976,7 +988,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="Code"
+                      data-i18n-attr="title:projectLinks.code;aria-label:projectLinks.code"
+                      title="Revisa el código"
+                      aria-label="Revisa el código"
                     >
                       <i class="bx bx-code-alt"></i>
                     </a>
@@ -1028,8 +1042,8 @@
                       href="/es/proyectos/weather-app/"
                       class="project__button project__button--case"
                       data-i18n-attr="href:projectCase.4;aria-label:projectCase.label;title:projectCase.label"
-                      aria-label="Ver caso"
-                      title="Ver caso"
+                      aria-label="Lee el caso"
+                      title="Lee el caso"
                     >
                       <i class="bx bx-book-open" aria-hidden="true"></i>
                     </a>
@@ -1038,7 +1052,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="See"
+                      data-i18n-attr="title:projectLinks.demo;aria-label:projectLinks.demo"
+                      title="Mira la demo en vivo"
+                      aria-label="Mira la demo en vivo"
                     >
                       <i class="bx bx-link-external"></i>
                     </a>
@@ -1047,7 +1063,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="Code"
+                      data-i18n-attr="title:projectLinks.code;aria-label:projectLinks.code"
+                      title="Revisa el código"
+                      aria-label="Revisa el código"
                     >
                       <i class="bx bx-code-alt"></i>
                     </a>
@@ -1099,8 +1117,8 @@
                       href="/es/proyectos/fortune-cookie/"
                       class="project__button project__button--case"
                       data-i18n-attr="href:projectCase.5;aria-label:projectCase.label;title:projectCase.label"
-                      aria-label="Ver caso"
-                      title="Ver caso"
+                      aria-label="Lee el caso"
+                      title="Lee el caso"
                     >
                       <i class="bx bx-book-open" aria-hidden="true"></i>
                     </a>
@@ -1109,7 +1127,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="See"
+                      data-i18n-attr="title:projectLinks.demo;aria-label:projectLinks.demo"
+                      title="Mira la demo en vivo"
+                      aria-label="Mira la demo en vivo"
                     >
                       <i class="bx bx-link-external"></i>
                     </a>
@@ -1118,7 +1138,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="Code"
+                      data-i18n-attr="title:projectLinks.code;aria-label:projectLinks.code"
+                      title="Revisa el código"
+                      aria-label="Revisa el código"
                     >
                       <i class="bx bx-code-alt"></i>
                     </a>
@@ -1171,8 +1193,8 @@
                       href="/es/proyectos/traktl/"
                       class="project__button project__button--case"
                       data-i18n-attr="href:projectCase.6;aria-label:projectCase.label;title:projectCase.label"
-                      aria-label="Ver caso"
-                      title="Ver caso"
+                      aria-label="Lee el caso"
+                      title="Lee el caso"
                     >
                       <i class="bx bx-book-open" aria-hidden="true"></i>
                     </a>
@@ -1181,7 +1203,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="See"
+                      data-i18n-attr="title:projectLinks.demo;aria-label:projectLinks.demo"
+                      title="Mira la demo en vivo"
+                      aria-label="Mira la demo en vivo"
                     >
                       <i class="bx bx-link-external"></i>
                     </a>
@@ -1190,7 +1214,9 @@
                       class="project__button"
                       target="_blank"
                       rel="noreferrer noopener"
-                      title="Code"
+                      data-i18n-attr="title:projectLinks.code;aria-label:projectLinks.code"
+                      title="Revisa el código"
+                      aria-label="Revisa el código"
                     >
                       <i class="bx bx-code-alt"></i>
                     </a>
@@ -1218,8 +1244,8 @@
 
         <div class="contact__container grid--container">
           <div class="contact__info">
-            <h3 data-i18n="contactInfoTitle" class="contact__info-title">Información de Contacto</h3>
-            <p data-i18n="contactInfoDescription" class="contact__info-description">Dí Hola 👨🏻‍💻</p>
+            <h3 data-i18n="contactInfoTitle" class="contact__info-title">Contacto</h3>
+            <p data-i18n="contactInfoDescription" class="contact__info-description">Salúdame 👨🏻‍💻</p>
 
             <address class="contact__info-data">
               <div class="contact__info-item">
@@ -1260,7 +1286,7 @@
           </div>
 
           <div class="contact__form">
-            <h3 data-i18n="contactFormTitle" class="contact__form-title">Enviar Mensaje</h3>
+            <h3 data-i18n="contactFormTitle" class="contact__form-title">Envíame un mensaje</h3>
             <form id="form" class="contact__form-container" novalidate>
               <div class="contact__form-group">
                 <label data-i18n="contactForm.name" for="name" class="contact__form-label">Nombre</label>
@@ -1323,7 +1349,7 @@
 
               <dialog id="modal" closedby="any" aria-labelledby="modal-message">
                 <div class="modal-content">
-                  <p id="modal-message" data-i18n="contactForm.formSuccess">¡Formulario enviado exitosamente!</p>
+                  <p id="modal-message" data-i18n="contactForm.formSuccess">¡Listo! Recibí tu mensaje.</p>
                   <div class="resume__modal-content">
                     <button
                       type="button"
@@ -1331,14 +1357,14 @@
                       class="btn btn--primary"
                       autofocus
                     >
-                      <strong data-i18n="contactForm.close">Cerrar</strong>
+                      <strong data-i18n="contactForm.close">Entendido</strong>
                     </button>
                   </div>
                 </div>
               </dialog>
 
               <button type="submit" class="btn btn--ghost contact__form-button">
-                <strong data-i18n="contactForm.send">Enviar</strong>
+                <strong data-i18n="contactForm.send">Envía tu mensaje</strong>
               </button>
             </form>
           </div>

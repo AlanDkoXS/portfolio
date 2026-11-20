@@ -62,25 +62,25 @@ const translations = {
     es: '¡Hola 👨🏻‍💻!',
   },
   homeDescription: {
-    en: "I'm Alan, a full stack designer, passionate about design, technology, and development.",
-    es: 'Soy Alan, diseñador full stack, apasionado por el diseño, la tecnología y el desarrollo.',
+    en: "I'm Alan: half designer, half developer, fully obsessed with the details.",
+    es: 'Soy Alan: mitad diseñador, mitad programador, y completamente obsesionado con los detalles.',
   },
   /* <-- Home Buttons --> */
   aboutButton: {
-    en: 'About me',
-    es: 'Acerca de mí',
+    en: 'Meet me',
+    es: 'Conóceme',
   },
   resumeButton: {
-    en: 'Resume',
+    en: 'See my resume',
     es: 'Mira mi CV',
   },
   skillsButton: {
-    en: 'Skills',
-    es: 'Habilidades',
+    en: 'Explore my skills',
+    es: 'Descubre mis habilidades',
   },
   projectButton: {
-    en: 'Projects',
-    es: 'Proyectos',
+    en: 'Check out my projects',
+    es: 'Explora mis proyectos',
   },
   /* <-- About Section --> */
   aboutTitle: {
@@ -94,7 +94,7 @@ const translations = {
   // Enlace de cada tarjeta de proyecto a su página de caso (scripts/data/projects.mjs)
   projectCase: {
     en: {
-      label: 'Case study',
+      label: 'Read the case study',
       1: '/projects/marvel-wiki/',
       2: '/projects/crud-users/',
       3: '/projects/rick-and-morty-wiki/',
@@ -103,7 +103,7 @@ const translations = {
       6: '/projects/traktl/',
     },
     es: {
-      label: 'Ver caso',
+      label: 'Lee el caso',
       1: '/es/proyectos/marvel-wiki/',
       2: '/es/proyectos/crud-users/',
       3: '/es/proyectos/rick-and-morty-wiki/',
@@ -112,9 +112,41 @@ const translations = {
       6: '/es/proyectos/traktl/',
     },
   },
+  // Íconos de demo y código en las tarjetas de proyectos
+  projectLinks: {
+    en: { demo: 'See the live demo', code: 'Check out the code' },
+    es: { demo: 'Mira la demo en vivo', code: 'Revisa el código' },
+  },
+  // Lámpara colgante (botón de tema en escritorio)
+  lamp: {
+    en: 'Light',
+    es: 'Luz',
+  },
   skillsMotion: {
-    en: { pause: 'Pause animation', play: 'Play animation' },
-    es: { pause: 'Pausar animación', play: 'Reanudar animación' },
+    en: { pause: 'Pause the animation', play: 'Play the animation' },
+    es: { pause: 'Pausa la animación', play: 'Reanuda la animación' },
+  },
+  // Hero en escritorio: después de la presentación (homeDescription),
+  // 7 líneas de 7 palabras cada una
+  heroLines: {
+    en: [
+      "I started drawing; now I build websites,",
+      "so I design and code every detail",
+      "to make your page look great, load",
+      "fast and work well wherever you are,",
+      "always thinking of everyone who uses it.",
+      "Your idea becomes real, without the hassle.",
+      "Keep exploring and discover all my work.",
+    ],
+    es: [
+      "Empecé dibujando y hoy también construyo sitios,",
+      "por eso diseño y programo cada detalle",
+      "para que tu página luzca increíble, cargue",
+      "rápido y funcione bien en cualquier lugar,",
+      "pensando siempre en cada persona que entra.",
+      "Tu idea se vuelve real, sin complicaciones.",
+      "Sigue explorando y conoce todo mi trabajo.",
+    ],
   },
   aboutDescription: {
     en: "I come from graphic design and now build from start to finish: I design in Figma, Photoshop and Illustrator and code with React, JavaScript and Node.js, so every project goes from idea to code without losing its visual care. I create modern, responsive and fast web applications tailored to your business, where appealing design goes hand in hand with an intuitive, easy-to-use experience. I care about the details: typography, color, accessibility and performance.",
@@ -231,16 +263,16 @@ designsTitle: {
     es: 'Contacto',
   },
   contactInfoTitle: {
-    en: 'Contact Info',
-    es: 'Información de Contacto',
+    en: 'Contact',
+    es: 'Contacto',
   },
   contactInfoDescription: {
-    en: 'Say Hello',
-    es: 'Dí Hola 👨🏻‍💻',
+    en: 'Say hi 👨🏻‍💻',
+    es: 'Salúdame 👨🏻‍💻',
   },
   contactFormTitle: {
-    en: 'Send Message',
-    es: 'Enviar Mensaje',
+    en: 'Send me a message',
+    es: 'Envíame un mensaje',
   },
   contactForm: {
     en: {
@@ -248,34 +280,34 @@ designsTitle: {
       email: 'Email',
       subject: 'Subject',
       message: 'Message',
-      send: 'Send',
-      formSuccess: 'Form submitted successfully!',
-      close: 'Close',
+      send: 'Send your message',
+      formSuccess: 'Done! I got your message.',
+      close: 'Got it',
     },
     es: {
       name: 'Nombre',
       email: 'Correo',
       subject: 'Asunto',
       message: 'Mensaje',
-      send: 'Enviar',
-      formSuccess: '¡Formulario enviado exitosamente!',
-      close: 'Cerrar',
+      send: 'Envía tu mensaje',
+      formSuccess: '¡Listo! Recibí tu mensaje.',
+      close: 'Entendido',
     },
   },
   validation: {
     en: {
-      required: 'This field is required',
-      invalidEmail: 'Please enter a valid email',
-      invalidName: 'Name must be between 2 and 50 characters, letters only',
-      invalidSubject: 'Subject must be between 5 and 100 characters',
-      invalidMessage: 'Message must be between 10 and 500 characters',
+      required: 'Fill in this field',
+      invalidEmail: 'Type a valid email',
+      invalidName: 'Type your name: 2 to 50 letters',
+      invalidSubject: 'Write a subject of 5 to 100 characters',
+      invalidMessage: 'Write a message of 10 to 500 characters',
     },
     es: {
-      required: 'Este campo es requerido',
-      invalidEmail: 'Por favor ingresa un email válido',
-      invalidName: 'El nombre debe tener entre 2 y 50 caracteres, solo letras',
-      invalidSubject: 'El asunto debe tener entre 5 y 100 caracteres',
-      invalidMessage: 'El mensaje debe tener entre 10 y 500 caracteres',
+      required: 'Llena este campo',
+      invalidEmail: 'Escribe un correo válido',
+      invalidName: 'Escribe tu nombre: de 2 a 50 letras',
+      invalidSubject: 'Escribe un asunto de 5 a 100 caracteres',
+      invalidMessage: 'Escribe un mensaje de 10 a 500 caracteres',
     },
   },
 
@@ -294,8 +326,8 @@ designsTitle: {
     en: {
       homeLink: 'Home',
       homeHref: '/',
-      downloadButton: 'Download',
-      selectLanguage: 'Select language',
+      downloadButton: 'Download it',
+      selectLanguage: 'Pick a language',
       english: 'English',
       spanish: 'Español',
       close: 'Close',
@@ -305,11 +337,11 @@ designsTitle: {
     es: {
       homeLink: 'Inicio',
       homeHref: '/es/',
-      downloadButton: 'Descargar',
-      selectLanguage: 'Seleccionar idioma',
+      downloadButton: 'Descárgalo',
+      selectLanguage: 'Elige el idioma',
       english: 'English',
       spanish: 'Español',
-      close: 'Cerrar',
+      close: 'Cierra',
       footerDescription: 'Hecho con ❤️ y ☕. Gracias a mi tutora Alejandra Olazagasti.',
       footerCopyright: 'Todos los derechos reservados',
     },
