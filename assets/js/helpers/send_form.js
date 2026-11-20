@@ -195,19 +195,9 @@ function sendEmail() {
       submitButton.disabled = true;
       submitButton.innerHTML = `<i class="bx bx-loader-alt bx-spin"></i> ${FORM_MESSAGES[currentLanguage].sending}`;
 
-      // Debug: Log parameters being sent
-      console.log("Sending email with params:", params);
-      console.log("Service ID: service_hokfs29");
-      console.log("Template ID: template_bzic089");
-
       // Enviar email con manejo de errores mejorado
-      const response = await emailjs.send(
-        "service_hokfs29",
-        "template_bzic089",
-        params
-      );
+      await emailjs.send("service_hokfs29", "template_bzic089", params);
 
-      console.log("Email sent successfully:", response);
       modalDOM.querySelector("p").textContent =
         FORM_MESSAGES[currentLanguage].success;
       openModal();

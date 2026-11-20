@@ -9,7 +9,6 @@ export function loadEmailJS() {
     script.onload = () => {
       try {
         emailjs.init('U8cUUeHN0_JTVF8xK');
-        console.log('EmailJS initialized successfully');
         resolve();
       } catch (error) {
         console.error('Error initializing EmailJS:', error);

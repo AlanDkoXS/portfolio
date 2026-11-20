@@ -102,9 +102,6 @@ const displayConsoleLogo = () => {
  */
 const initializeUIComponents = async () => {
   try {
-    // Loading screen
-    loader();
-
     // Navigation and menu
     activeMenu();
     resetToHome();
@@ -144,9 +141,6 @@ const initializeFunctionalities = () => {
 
     // Email handling
     sendEmail();
-
-    // Language switching
-    switchLanguages();
   } catch (error) {
     handleError(error, "initializeFunctionalities");
   }
@@ -207,41 +201,6 @@ const setupCleanup = () => {
   });
 };
 
-/**
- * Handle responsive content adjustments
- */
-const handleResponsiveContent = () => {
-  const homeDescription = document.querySelector(".home__description");
-  const aboutDescription = document.querySelector(".about__description");
-  
-  if (!homeDescription) {
-    console.warn('Home description element not found');
-    return;
-  }
-  
-  const isDesktop = window.innerWidth >= 600;
-
-  // Save original home description text if not already saved
-  if (!homeDescription.dataset.originalText) {
-    homeDescription.dataset.originalText = homeDescription.innerHTML;
-  }
-
-  // On wide screens, combine content
-  if (isDesktop && aboutDescription) {
-    // Combine descriptions for desktop
-    homeDescription.innerHTML = `
-        ${homeDescription.dataset.originalText}
-        <br><br>
-        ${aboutDescription.textContent}
-      `;
-  } else {
-    // Restore original text on mobile
-    if (homeDescription.dataset.originalText) {
-      homeDescription.innerHTML = homeDescription.dataset.originalText;
-    }
-  }
-};
-
 // ---------------------------
 // MAIN INITIALIZATION
 // ---------------------------
@@ -253,6 +212,14 @@ const initialize = async () => {
   try {
     // Display console logo
     displayConsoleLogo();
+
+    // Loading screen: start before awaiting third-party scripts so a slow
+    // or blocked CDN (EmailJS, GTM) can't keep the loader on screen
+    loader();
+
+    // Apply detected language right away (avoids an English flash for
+    // Spanish visitors while third-party scripts load)
+    switchLanguages();
 
     // Load external resources first
     await loadExternalResources();
@@ -284,14 +251,10 @@ const initialize = async () => {
 // EVENT LISTENERS
 // ---------------------------
 
-// Initialize on DOM content loaded
-document.addEventListener("DOMContentLoaded", () => {
-  initialize();
-  handleResponsiveContent();
-});
-
-// Handle responsive content on resize
-window.addEventListener("resize", handleResponsiveContent);
+// Initialize on DOM content loaded.
+// Responsive home text (home + about merged on desktop) lives in
+// switchLanguages.js so it stays in the selected language.
+document.addEventListener("DOMContentLoaded", initialize);
 
 // Global error handlers
 window.addEventListener("error", (event) => {
