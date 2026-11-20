@@ -89,8 +89,14 @@ function render(html, lang) {
 const sourcePath = path.join(root, 'index.html');
 const source = fs.readFileSync(sourcePath, 'utf8');
 
-const en = render(source, 'en');
-const es = render(source, 'es');
+// Speculation rules: cada idioma precarga al otro
+const speculation = (html, target) =>
+  html.replace(
+    /(<script type="speculationrules" data-i18n-speculation>\s*\{ "prerender": \[\{ "urls": \[")[^"]*/,
+    `$1${target}`,
+  );
+const en = speculation(render(source, 'en'), '/es/');
+const es = speculation(render(source, 'es'), '/');
 
 if (missing.size) {
   console.error('Missing translations:\n  ' + [...missing].join('\n  '));
@@ -117,7 +123,8 @@ const { projectPage, projectPath, adaptHeader, SITE } = await import(
   path.join(root, 'scripts/lib/project-page.mjs')
 );
 
-const header = en.match(/ {4}<header class="header">[\s\S]*?<\/header>/)?.[0];
+// Header + lámpara colgante (va justo después del header)
+const header = en.match(/ {4}<header class="header">[\s\S]*?<\/header>\n(?: {4}<!-- Lámpara[\s\S]*?<\/button>)?/)?.[0];
 const footer = en.match(/ {4}<footer class="footer section">[\s\S]*?<\/footer>/)?.[0];
 if (!header || !footer) {
   console.error('Could not find the header/footer in index.html');

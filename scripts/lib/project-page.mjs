@@ -14,9 +14,9 @@ const UI = {
   en: {
     home: 'Home',
     projects: 'Projects',
-    breadcrumb: 'Breadcrumb',
-    demo: 'View live demo',
-    code: 'View code',
+    back: 'Back to projects',
+    demo: 'See the live demo',
+    code: 'Check out the code',
     screenshots: 'Screenshots',
     desktop: 'Desktop',
     mobile: 'Mobile',
@@ -29,7 +29,7 @@ const UI = {
     next: 'Next project',
     ctaTitle: 'Have a project in mind?',
     ctaText: 'I design and build web applications that look good and are easy to use. Let’s talk about yours.',
-    ctaButton: 'Contact me',
+    ctaButton: 'Write to me',
     by: 'by Alan Quintana',
     descriptionWith: (p) => `${p.en.tagline} ${p.en.kind} by Alan Quintana, built with ${p.stack.slice(0, 3).join(', ')}.`,
     alt: (p, kind) => `${p.en.title} on ${kind === 'desktop' ? 'desktop' : 'mobile'}`,
@@ -38,9 +38,9 @@ const UI = {
   es: {
     home: 'Inicio',
     projects: 'Proyectos',
-    breadcrumb: 'Ruta de navegación',
-    demo: 'Ver demo en vivo',
-    code: 'Ver código',
+    back: 'Volver a proyectos',
+    demo: 'Mira la demo en vivo',
+    code: 'Revisa el código',
     screenshots: 'Capturas',
     desktop: 'Escritorio',
     mobile: 'Móvil',
@@ -53,7 +53,7 @@ const UI = {
     next: 'Proyecto siguiente',
     ctaTitle: '¿Tienes un proyecto en mente?',
     ctaText: 'Diseño y desarrollo aplicaciones web que se ven bien y son fáciles de usar. Platiquemos del tuyo.',
-    ctaButton: 'Contáctame',
+    ctaButton: 'Escríbeme',
     by: 'de Alan Quintana',
     descriptionWith: (p) => `${p.es.tagline} ${p.es.kind} de Alan Quintana, hecha con ${p.stack.slice(0, 3).join(', ')}.`,
     alt: (p, kind) => `${p.es.title} en ${kind === 'desktop' ? 'escritorio' : 'móvil'}`,
@@ -82,8 +82,9 @@ export function adaptHeader(header, lang) {
 
 function screenshots(p, lang, ui) {
   const img = (kind, dark, attrs) => {
-    const dir = kind === 'desktop' ? 'desktop/' : '';
-    const [w, h] = kind === 'desktop' ? [1280, 800] : [560, 700];
+    // móvil: captura de teléfono completa (390×844), no la 4:5 de las tarjetas del home
+    const dir = kind === 'desktop' ? 'desktop/' : 'mobile/';
+    const [w, h] = kind === 'desktop' ? [1280, 800] : [390, 844];
     const file = `${p.image}${dark ? '-dark' : ''}.webp`;
     return `<img class="${dark ? 'if-dark' : 'if-light'}" src="/assets/img/project_img/${dir}${file}" alt="${esc(ui.alt(p, kind) + (dark ? ui.dark : ''))}" width="${w}" height="${h}" ${attrs} />`;
   };
@@ -92,7 +93,9 @@ function screenshots(p, lang, ui) {
     const imgs = [img(kind, false, first)];
     if (p.dark) imgs.push(img(kind, true, 'loading="lazy"'));
     return `<figure class="project-media__${kind}${p.dark ? ' has-dark' : ''}">
-  ${imgs.join('\n  ')}
+  <span class="project-media__frame">
+    ${imgs.join('\n    ')}
+  </span>
   <figcaption>${ui[kind]}</figcaption>
 </figure>`;
   };
@@ -148,8 +151,8 @@ export function projectPage({ project: p, lang, prev, next, header, footer }) {
   const description = full.length <= 160 ? full : c.tagline;
   const ogImage = `${SITE}/assets/img/project_img/og/${p.image}.jpg`;
   const pagerLink = (q, rel) =>
-    `<a class="project-pager__link project-pager__link--${rel}" href="${projectPath(q, lang)}" rel="${rel}">
-  <span class="project-pager__label">${rel === 'prev' ? '<i class="bx bx-left-arrow-alt" aria-hidden="true"></i> ' + ui.prev : ui.next + ' <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>'}</span>
+    `<a class="btn btn--ghost project-pager__link project-pager__link--${rel}" href="${projectPath(q, lang)}" rel="${rel}">
+  <span class="project-pager__label">${rel === 'prev' ? '<i class="bx bx-chevron-left" aria-hidden="true"></i> ' + ui.prev : ui.next + ' <i class="bx bx-chevron-right" aria-hidden="true"></i>'}</span>
   <span class="project-pager__title">${esc(q[lang].title)}</span>
 </a>`;
 
@@ -189,38 +192,54 @@ export function projectPage({ project: p, lang, prev, next, header, footer }) {
 ${indent(jsonLd(p, lang, ui), 6)}
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="/assets/css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/assets/css/vendor/boxicons.min.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon.png" />
 
     <script type="module">
       import switchLanguages from '/assets/js/helpers/switchLanguages.js';
       import { setAutoDarkMode } from '/assets/js/helpers/auto-dark-mode.js';
+      import lamp from '/assets/js/helpers/lamp.js';
+      import ParallaxEffect from '/assets/js/helpers/parallax.js';
+      import SnowEffect from '/assets/js/helpers/snow-effect.js';
       import updateDateYear from '/assets/js/helpers/date_updater.js';
       import { loadGoogleTagManager } from '/assets/js/helpers/google-tag-manager.js';
       loadGoogleTagManager();
       document.addEventListener('DOMContentLoaded', () => {
         switchLanguages();
         setAutoDarkMode();
+        lamp();
+        ParallaxEffect.init();
+        SnowEffect.init();
         updateDateYear();
       });
     </script>
   </head>
 
   <body class="project-page">
+    <!-- Fondo: mismas texturas que el home (grano + capas con parallax) -->
+    <div class="background-container bgGrain"></div>
+    <div class="background-container">
+      <svg class="background-container bgBack" aria-hidden="true">
+        <use href="/assets/img/bgBack.svg#bgBack"></use>
+      </svg>
+      <svg class="background-container bgMiddle" aria-hidden="true">
+        <use href="/assets/img/bgMiddle.svg#bgMiddle"></use>
+      </svg>
+      <svg class="background-container bgFront" aria-hidden="true">
+        <use href="/assets/img/bgFront.svg#bgFront"></use>
+      </svg>
+    </div>
+
 ${header}
 
     <main>
-      <nav class="breadcrumb grid--container" aria-label="${ui.breadcrumb}">
-        <ol>
-          <li><a href="${home}">${ui.home}</a></li>
-          <li><a href="${home}#projects">${ui.projects}</a></li>
-          <li aria-current="page">${esc(c.title)}</li>
-        </ol>
-      </nav>
+      <div class="project-back grid--container">
+        <a class="btn btn--ghost project-back__link" href="${home}#projects">
+          <i class="bx bx-chevron-left" aria-hidden="true"></i> ${ui.back}
+        </a>
+      </div>
 
       <article>
         <header class="project-hero grid--container">

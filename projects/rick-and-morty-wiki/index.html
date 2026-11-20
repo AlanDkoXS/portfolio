@@ -82,28 +82,46 @@
       }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="/assets/css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/assets/css/vendor/boxicons.min.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon.png" />
 
     <script type="module">
       import switchLanguages from '/assets/js/helpers/switchLanguages.js';
       import { setAutoDarkMode } from '/assets/js/helpers/auto-dark-mode.js';
+      import lamp from '/assets/js/helpers/lamp.js';
+      import ParallaxEffect from '/assets/js/helpers/parallax.js';
+      import SnowEffect from '/assets/js/helpers/snow-effect.js';
       import updateDateYear from '/assets/js/helpers/date_updater.js';
       import { loadGoogleTagManager } from '/assets/js/helpers/google-tag-manager.js';
       loadGoogleTagManager();
       document.addEventListener('DOMContentLoaded', () => {
         switchLanguages();
         setAutoDarkMode();
+        lamp();
+        ParallaxEffect.init();
+        SnowEffect.init();
         updateDateYear();
       });
     </script>
   </head>
 
   <body class="project-page">
+    <!-- Fondo: mismas texturas que el home (grano + capas con parallax) -->
+    <div class="background-container bgGrain"></div>
+    <div class="background-container">
+      <svg class="background-container bgBack" aria-hidden="true">
+        <use href="/assets/img/bgBack.svg#bgBack"></use>
+      </svg>
+      <svg class="background-container bgMiddle" aria-hidden="true">
+        <use href="/assets/img/bgMiddle.svg#bgMiddle"></use>
+      </svg>
+      <svg class="background-container bgFront" aria-hidden="true">
+        <use href="/assets/img/bgFront.svg#bgFront"></use>
+      </svg>
+    </div>
+
     <header class="header">
       <nav class="navbar grid--container flex--container">
         <a class="navbar__logo flex--container" href="/">
@@ -179,14 +197,14 @@
               >
                 <div class="flag-wrapper">
                   <img
-                    src="/assets/img/english.webp"
+                    src="/assets/img/flag-en.svg"
                     class="navbar__toggle--language-en"
                     alt="English"
                     loading="lazy"
                     aria-hidden="true"
                   />
                   <img
-                    src="/assets/img/español.webp"
+                    src="/assets/img/flag-es.svg"
                     class="navbar__toggle--language-es"
                     alt="Español"
                     loading="lazy"
@@ -204,15 +222,28 @@
         ></a>
       </nav>
     </header>
+    <!-- Lámpara colgante (escritorio): cambia el tema. Encendida = modo claro -->
+    <button
+      type="button"
+      class="lamp"
+      aria-pressed="false"
+      data-i18n-attr="aria-label:lamp;title:lamp"
+      aria-label="Light"
+      title="Light"
+    >
+      <span class="lamp__hit" aria-hidden="true"></span>
+      <img class="lamp__off" src="/assets/img/lamp_button/button-lamp_lamp_original.webp" alt="" width="300" height="300" />
+      <img class="lamp__over" src="/assets/img/lamp_button/button-lamp_lamp_over.webp" alt="" width="300" height="300" loading="lazy" />
+      <img class="lamp__pull" src="/assets/img/lamp_button/button-lamp_lamp_clic.webp" alt="" width="300" height="300" loading="lazy" />
+      <img class="lamp__on" src="/assets/img/lamp_button/button-lamp_lamp_active.webp" alt="" width="300" height="401" />
+    </button>
 
     <main>
-      <nav class="breadcrumb grid--container" aria-label="Breadcrumb">
-        <ol>
-          <li><a href="/">Home</a></li>
-          <li><a href="/#projects">Projects</a></li>
-          <li aria-current="page">Rick and Morty Wiki</li>
-        </ol>
-      </nav>
+      <div class="project-back grid--container">
+        <a class="btn btn--ghost project-back__link" href="/#projects">
+          <i class="bx bx-chevron-left" aria-hidden="true"></i> Back to projects
+        </a>
+      </div>
 
       <article>
         <header class="project-hero grid--container">
@@ -221,21 +252,25 @@
           <p class="project-hero__tagline">Explore Rick and Morty locations and the characters who live in them.</p>
           <div class="project-hero__actions">
             <a class="btn btn--primary" href="https://rickandmorty.alanquintana.pro/" target="_blank" rel="noopener">
-              <i class="bx bx-link-external" aria-hidden="true"></i> View live demo
+              <i class="bx bx-link-external" aria-hidden="true"></i> See the live demo
             </a>
             <a class="btn btn--ghost" href="https://github.com/AlanDkoXS/rick-morty" target="_blank" rel="noopener">
-              <i class="bx bxl-github" aria-hidden="true"></i> View code
+              <i class="bx bxl-github" aria-hidden="true"></i> Check out the code
             </a>
           </div>
         </header>
 
         <div class="project-media grid--container" role="group" aria-label="Screenshots">
           <figure class="project-media__desktop">
-            <img class="if-light" src="/assets/img/project_img/desktop/rick.webp" alt="Rick and Morty Wiki on desktop" width="1280" height="800" fetchpriority="high" />
+            <span class="project-media__frame">
+              <img class="if-light" src="/assets/img/project_img/desktop/rick.webp" alt="Rick and Morty Wiki on desktop" width="1280" height="800" fetchpriority="high" />
+            </span>
             <figcaption>Desktop</figcaption>
           </figure>
           <figure class="project-media__mobile">
-            <img class="if-light" src="/assets/img/project_img/rick.webp" alt="Rick and Morty Wiki on mobile" width="560" height="700" loading="lazy" />
+            <span class="project-media__frame">
+              <img class="if-light" src="/assets/img/project_img/mobile/rick.webp" alt="Rick and Morty Wiki on mobile" width="390" height="844" loading="lazy" />
+            </span>
             <figcaption>Mobile</figcaption>
           </figure>
         </div>
@@ -277,12 +312,12 @@
       </article>
 
       <nav class="project-pager grid--container" aria-label="More projects">
-        <a class="project-pager__link project-pager__link--prev" href="/projects/crud-users/" rel="prev">
-          <span class="project-pager__label"><i class="bx bx-left-arrow-alt" aria-hidden="true"></i> Previous project</span>
+        <a class="btn btn--ghost project-pager__link project-pager__link--prev" href="/projects/crud-users/" rel="prev">
+          <span class="project-pager__label"><i class="bx bx-chevron-left" aria-hidden="true"></i> Previous project</span>
           <span class="project-pager__title">CRUD Users</span>
         </a>
-        <a class="project-pager__link project-pager__link--next" href="/projects/weather-app/" rel="next">
-          <span class="project-pager__label">Next project <i class="bx bx-right-arrow-alt" aria-hidden="true"></i></span>
+        <a class="btn btn--ghost project-pager__link project-pager__link--next" href="/projects/weather-app/" rel="next">
+          <span class="project-pager__label">Next project <i class="bx bx-chevron-right" aria-hidden="true"></i></span>
           <span class="project-pager__title">Weather App</span>
         </a>
       </nav>
@@ -290,7 +325,7 @@
       <section class="project-cta grid--container">
         <h2>Have a project in mind?</h2>
         <p>I design and build web applications that look good and are easy to use. Let’s talk about yours.</p>
-        <a class="btn btn--primary" href="/#contact">Contact me</a>
+        <a class="btn btn--primary" href="/#contact">Write to me</a>
       </section>
     </main>
 
