@@ -38,20 +38,21 @@ function debounce(func, wait = 20, immediate = true) {
 function updateActiveNavLink() {
   const scrollPosition = window.scrollY + 100; // Adding offset for better UX
 
-  sectionsDOM.forEach((section, index) => {
+  sectionsDOM.forEach((section) => {
     // Check if the section is currently in view
     if (
       scrollPosition >= section.offsetTop &&
       scrollPosition < section.offsetTop + section.offsetHeight
     ) {
-      // Remove active class from the currently active link
-      const activeLink = navbarListDOM.querySelector('.navbar__link.active');
-      if (activeLink) {
-        activeLink.classList.remove('active');
-      }
+      // Link by href, not by position: sections without a menu link
+      // (e.g. #designs) keep the current one highlighted
+      const link = [...navbarLinksDOM].find(
+        (a) => a.getAttribute('href').endsWith(`#${section.id}`),
+      );
+      if (!link) return;
 
-      // Add active class to the link corresponding to the current section
-      navbarLinksDOM[index].classList.add('active');
+      navbarListDOM.querySelector('.navbar__link.active')?.classList.remove('active');
+      link.classList.add('active');
     }
   });
 }
