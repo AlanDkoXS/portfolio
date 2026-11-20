@@ -11,6 +11,15 @@
   /* Escala de lectura: el home usa textos grandes para frases cortas; aquí
      hay párrafos y listas, así que el contenido va más contenido (16–17px).
      Header y footer conservan la escala del home. */
+  /* Móvil: solo el grano del fondo; las letras chocaban con el texto */
+  @media (max-width: 599px) {
+    .bgBack,
+    .bgMiddle,
+    .bgFront {
+      display: none;
+    }
+  }
+
   main {
     --normal-font-size: clamp(0.95rem, 0.85rem + 0.25vw, 1.0625rem);
     --small-font-size: 0.875rem;
@@ -162,9 +171,20 @@
   }
 }
 
+/* Pantallas angostas: la captura móvil va al mismo ancho que la de
+   escritorio, recortada (4:5, se ve la parte de arriba) */
 .project-media__mobile {
-  max-width: 220px;
-  justify-self: center;
+  width: 100%;
+
+  .project-media__frame {
+    aspect-ratio: 4 / 5;
+  }
+
+  img {
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
 }
 
 /* Versión oscura de las capturas: override no crítico (sin style queries se
@@ -358,11 +378,9 @@
   /* El alto lo pone la captura de escritorio: la móvil va absoluta dentro de
      su marco (no aporta alto) y llena ese alto recortando lo que sobre abajo */
   .project-media__mobile {
-    max-width: none;
-    justify-self: stretch;
-
     .project-media__frame {
       height: 100%;
+      aspect-ratio: auto;
     }
 
     img {

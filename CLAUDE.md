@@ -71,6 +71,8 @@ python -m http.server 8000   # then open http://localhost:8000
 
 **Hanging lamp** (`helpers/lamp.js`, `layout/_lamp.css`): theme switch that hangs below the navbar (desktop: centered in the right margin, replaces the moon/sun toggle; mobile: small, retracts on scroll, moon/sun stays in the menu). Lit = dark mode. States: hover (`lamp__over`), pressing (`lamp--pulling`, chain pulled), on (`lamp__on`); images in `assets/img/lamp_button/`.
 
+**Mobile menu** (`helpers/nav_menu.js`, wired on home, resume and project pages): `.navbar__burger` toggles `.menu-open` on `.header` (with `aria-expanded`); the `#nav` panel drops just below the bar with the same subtle links as desktop and the burger morphs into an X. Closes on link click, Escape, outside click or when crossing to desktop. Without JS, `#nav:target` still opens it.
+
 **Loader & greeting.** The loader (letters falling into the name) shows only on the first load of the session (`sessionStorage['aq-loaded']`, `.skip-loader` set in `<head>`) and never while prerendering. When it leaves, `html.hero-ready` is set and `helpers/typing.js` types the greeting letter by letter with a blinking underscore caret. The other language is prerendered with speculation rules so switching is near instant.
 
 **Hero copy (desktop).** `homeDescription` (intro) + `heroLines` (7 phrases of exactly 7 words, plain language for non-technical readers), rendered as one paragraph by `handleResponsiveContent`. Keep the 7×7 rule when editing.

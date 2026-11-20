@@ -56,6 +56,10 @@ const translations = {
     en: 'Contact',
     es: 'Contacto',
   },
+  navMenu: {
+    en: 'Menu',
+    es: 'Menú',
+  },
   /* <-- Home Section --> */
   homeTitle: {
     en: 'Hi there!',

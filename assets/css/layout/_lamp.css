@@ -79,7 +79,12 @@
 
 /* Móvil: al hacer scroll la lámpara sube y se esconde detrás de la barra */
 @media (max-width: 599px) {
+  /* Pegada a la orilla, debajo de la hamburguesa: así no choca con el
+     retrato del hero (el cable queda tapado por la barra) */
   .lamp {
+    --lamp-width: 48px;
+    --lamp-drop: 0.25rem;
+    right: 0.35rem;
     transition: translate 0.45s cubic-bezier(0.5, 0, 0.3, 1.2), visibility 0s;
   }
 

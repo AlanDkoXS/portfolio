@@ -201,6 +201,7 @@ ${indent(jsonLd(p, lang, ui), 6)}
       import switchLanguages from '/assets/js/helpers/switchLanguages.js';
       import { setAutoDarkMode } from '/assets/js/helpers/auto-dark-mode.js';
       import lamp from '/assets/js/helpers/lamp.js';
+      import navMenu from '/assets/js/helpers/nav_menu.js';
       import ParallaxEffect from '/assets/js/helpers/parallax.js';
       import SnowEffect from '/assets/js/helpers/snow-effect.js';
       import updateDateYear from '/assets/js/helpers/date_updater.js';
@@ -210,6 +211,7 @@ ${indent(jsonLd(p, lang, ui), 6)}
         switchLanguages();
         setAutoDarkMode();
         lamp();
+        navMenu();
         ParallaxEffect.init();
         SnowEffect.init();
         updateDateYear();

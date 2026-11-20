@@ -9,6 +9,7 @@
 // UI Components
 import loader from "./helpers/loader.js";
 import activeMenu from "./helpers/activeMenu.js";
+import navMenu from "./helpers/nav_menu.js";
 import { cardCarousel } from "./helpers/cardCarousel.js";
 import { closeModal } from "./helpers/close-modal.js";
 import initObserver from "./helpers/observer.js";
@@ -106,6 +107,7 @@ const initializeUIComponents = async () => {
   try {
     // Navigation and menu
     activeMenu();
+    navMenu();
     resetToHome();
 
     // UI Components

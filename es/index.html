@@ -261,9 +261,6 @@
         </a>
         <!-- Menu Nav -->
         <div id="nav" class="navbar__menu">
-          <a href="#close" title="Close Navigation"
-            ><i class="bx bx-x btn__close navbar__icon flex--container"></i
-          ></a>
           <ul class="navbar__list flex--container">
             <li class="navbar__item">
               <a data-i18n="navHome" class="navbar__link active" href="#home">Inicio</a>
@@ -345,8 +342,9 @@
         </div>
 
         <!-- Toggles -->
-        <a href="#nav" title="Menu Nav"
-          ><i class="bx bx-menu btn__open navbar__icon"></i
+        <a class="navbar__burger" href="#nav" aria-controls="nav" aria-expanded="false" data-i18n-attr="aria-label:navMenu;title:navMenu" aria-label="Menú" title="Menú"
+          ><i class="bx bx-menu navbar__burger-open" aria-hidden="true"></i
+          ><i class="bx bx-x navbar__burger-close" aria-hidden="true"></i
         ></a>
       </nav>
     </header>
