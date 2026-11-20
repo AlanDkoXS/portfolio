@@ -1,0 +1,298 @@
+/* ============= Project case-study pages (/projects/<slug>/) =============
+   Generadas por scripts/build-i18n.mjs desde scripts/data/projects.mjs */
+
+.project-page {
+  /* El header se ve siempre (en el home aparece al hacer scroll) */
+  .header {
+    opacity: 1;
+    animation: none;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--box-shadow);
+  }
+
+  main {
+    padding-top: calc(var(--header-height) + 1rem);
+  }
+
+  section {
+    padding: 0;
+  }
+
+  p {
+    text-align: left;
+    line-height: 1.6;
+  }
+
+  p + p {
+    margin-top: 0.85rem;
+  }
+
+  /* .grid--container trae margin: 0 auto con más especificidad (anidado en
+     html); aquí se fijan los márgenes verticales de cada bloque */
+  .breadcrumb {
+    margin-block: 0.5rem 0;
+  }
+
+  .project-hero {
+    margin-block: 1.5rem 2.5rem;
+  }
+
+  .project-media,
+  .project-body,
+  .project-pager {
+    margin-block: 0 3rem;
+  }
+
+  .project-cta {
+    width: min(100% - 2rem, 1024px);
+    margin-block: 0 4rem;
+  }
+}
+
+/* Migas de pan */
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  font-size: var(--small-font-size);
+  color: var(--text-muted);
+
+  li + li::before {
+    content: '/';
+    margin-right: 0.35rem;
+    opacity: 0.6;
+  }
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+      color: var(--link-hover);
+    }
+  }
+}
+
+/* Encabezado del proyecto */
+.project-hero {
+  gap: 0.75rem;
+}
+
+.project-hero__kind {
+  font-size: var(--small-font-size);
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.project-hero__title {
+  font-size: clamp(2rem, 1.4rem + 3vw, 3.25rem);
+  line-height: 1.1;
+}
+
+.project-hero__tagline {
+  max-width: 40ch;
+  font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.35rem);
+}
+
+.project-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: 0.5rem;
+
+  .btn {
+    width: auto;
+    margin: 0;
+  }
+}
+
+/* Capturas: escritorio + móvil (con versión oscura si el proyecto la tiene) */
+.project-media {
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: end;
+
+  figure {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: center;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    border: 2px solid var(--teal-950);
+    border-radius: var(--border-radius-default);
+    box-shadow: 6px 6px 0 var(--btn-ink-color);
+    background: var(--surface-color);
+  }
+
+  figcaption {
+    font-size: var(--small-font-size);
+    color: var(--text-muted);
+  }
+}
+
+.project-media__mobile {
+  max-width: 260px;
+  justify-self: center;
+}
+
+/* Versión oscura de las capturas: override no crítico (sin style queries se
+   ve la clara). La imagen oculta es lazy, así que no se descarga. */
+.project-media .if-dark {
+  display: none;
+}
+
+@container style(--color-scheme: dark) {
+  .project-media .has-dark .if-light {
+    display: none;
+  }
+
+  .project-media .has-dark .if-dark {
+    display: block;
+  }
+}
+
+/* Contenido */
+.project-body {
+  gap: 2.5rem;
+
+  h2 {
+    margin-bottom: 0.75rem;
+    font-size: calc(var(--title-font-size) * 1.2);
+  }
+
+  h3 {
+    margin: 1.5rem 0 0.75rem;
+  }
+}
+
+.project-list {
+  display: grid;
+  gap: 0.6rem;
+
+  li {
+    position: relative;
+    padding-left: 1.5rem;
+    line-height: 1.55;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0.2rem;
+      top: 0.55em;
+      width: 0.55rem;
+      height: 0.55rem;
+      background: var(--accent-color);
+      border: 2px solid var(--btn-ink-color);
+      border-radius: 2px;
+    }
+  }
+}
+
+.project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+
+  li {
+    padding: 0.4rem 0.8rem;
+    font-size: var(--small-font-size);
+    font-weight: var(--font-semibold);
+    color: var(--on-accent-color);
+    background: var(--accent-color);
+    border: 2px solid var(--btn-ink-color);
+    border-radius: var(--border-radius-small);
+    box-shadow: 3px 3px 0 var(--btn-ink-color), var(--grain-inset-shadow);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    /* Misma sombra interna granulada que los botones */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: var(--grain-gold);
+      background-size: 120px;
+      -webkit-mask: var(--grain-mask);
+      mask: var(--grain-mask);
+      pointer-events: none;
+    }
+  }
+}
+
+/* Anterior / siguiente */
+.project-pager {
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.project-pager__link {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-default);
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: var(--accent-color);
+  }
+}
+
+.project-pager__link--next {
+  text-align: right;
+}
+
+.project-pager__label {
+  font-size: var(--small-font-size);
+  color: var(--text-muted);
+}
+
+.project-pager__title {
+  font-weight: var(--font-semibold);
+}
+
+/* Llamado a la acción */
+.project-cta {
+  justify-items: center;
+  gap: 0.75rem;
+  padding: 2rem 1.25rem;
+  text-align: center;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-large);
+
+  p {
+    max-width: 50ch;
+    text-align: center;
+  }
+
+  .btn {
+    width: auto;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .project-media {
+    grid-template-columns: 1fr 240px;
+    gap: 2rem;
+  }
+
+  .project-body {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 3rem;
+
+    .project-body__block:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+}
