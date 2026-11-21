@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// Genera los CV en PDF desde scripts/cv/data.mjs (sin dependencias: usa el
-// Chromium del sistema para imprimir y pdfunite de poppler para unir).
+// Generates the CV PDFs from scripts/cv/data.mjs (no dependencies: uses the
+// system Chromium to print and poppler's pdfunite to join).
 //
 //   node scripts/build-cv.mjs
 //
-// Salida en assets/docs/: [ENG] Alan Quintana.pdf, [ESP] Alan Quintana.pdf y
-// resume.pdf (EN + ES, la que muestra /resume con pdf.js).
+// Output in assets/docs/: [ENG] Alan Quintana.pdf, [ESP] Alan Quintana.pdf and
+// resume.pdf (EN + ES, the one /resume shows with pdf.js).
 
 import fs from 'node:fs';
 import os from 'node:os';
@@ -138,7 +138,7 @@ function page(lang) {
   </div>
 </div>
 <script>
-  // Señal para el build: ¿el contenido se desborda de la hoja?
+  // Signal for the build: does the content overflow the sheet?
   document.fonts.ready.then(() => {
     const s = document.getElementById('sheet');
     document.title = s.scrollHeight > s.clientHeight + 1 ? 'OVERFLOW ' + (s.scrollHeight - s.clientHeight) + 'px' : 'FITS';

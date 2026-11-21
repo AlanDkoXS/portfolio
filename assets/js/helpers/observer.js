@@ -1,18 +1,18 @@
-// Carga diferida (lazy loading) de imágenes marcadas con data-src /
-// data-background dentro de las secciones. Las carátulas de proyectos las
-// define el CSS (para cambiar según el modo claro/oscuro); aquí solo se marca
-// la sección con .is-near al acercarse, y el CSS las pide a partir de ahí.
-// La aparición visual de las secciones ya no depende de JS: es CSS
-// (scroll-driven animations en _section.css), así el contenido se ve aunque
-// este script no corra.
+// Lazy loading of images marked with data-src / data-background inside the
+// sections. Project covers are defined in the CSS (so they change with the
+// light/dark mode); here the section only gets .is-near when it comes close,
+// and the CSS requests them from then on.
+// The visual entry of the sections no longer depends on JS: it's CSS
+// (scroll-driven animations in _section.css), so the content shows even if
+// this script doesn't run.
 
 const createObserver = () => {
-  // Configuración mejorada del Intersection Observer
+  // Improved Intersection Observer configuration
   const observerOptions = {
-    // En cuanto cualquier parte de la sección entra en el margen: con un
-    // porcentaje, en secciones altas cargaría tarde
+    // As soon as any part of the section enters the margin: with a
+    // percentage, tall sections would load late
     threshold: 0,
-    // Margen para empezar a cargar antes de que la sección llegue a la pantalla
+    // Margin to start loading before the section reaches the screen
     rootMargin: '400px 0px',
   };
 
@@ -21,31 +21,31 @@ const createObserver = () => {
       const target = entry.target;
 
       if (entry.isIntersecting) {
-        // Señal para el CSS (carátulas de #projects)
+        // Signal for the CSS (#projects covers)
         target.classList.add('is-near');
 
-        // Cargar imágenes dentro de la sección si tienen data-src
+        // Load images inside the section if they have data-src
         const lazyImages = target.querySelectorAll('img[data-src]');
         lazyImages.forEach((img) => {
-          // Reemplazar src con data-src
+          // Replace src with data-src
           img.src = img.dataset.src;
-          // Opcional: también actualizar srcset si existe
+          // Optional: also update srcset if present
           if (img.dataset.srcset) {
             img.srcset = img.dataset.srcset;
           }
-          // Eliminar los atributos data- una vez cargados
+          // Remove the data- attributes once loaded
           img.removeAttribute('data-src');
           img.removeAttribute('data-srcset');
         });
 
-        // Cargar background images diferidos
+        // Load deferred background images
         const lazyBackgrounds = target.querySelectorAll('[data-background]');
         lazyBackgrounds.forEach((element) => {
           element.style.backgroundImage = `url('${element.dataset.background}')`;
           element.removeAttribute('data-background');
         });
 
-        // Ya cargó lo que tenía pendiente
+        // Everything pending has been loaded
         observer.unobserve(target);
       }
     });
@@ -55,25 +55,25 @@ const createObserver = () => {
 };
 
 const observeSections = (observer) => {
-  // Seleccionamos tanto secciones como otros elementos que quieran ser observados
+  // Select both sections and any other elements that want to be observed
   const sections = document.querySelectorAll('.section, [data-observe]');
   sections.forEach((section) => {
     observer.observe(section);
   });
 };
 
-// Función mejorada para inicializar el observador
+// Improved function to initialize the observer
 const initObserver = () => {
   const observer = createObserver();
   observeSections(observer);
 
-  // Utilizar el mismo observador para elementos fuera de las secciones
+  // Use the same observer for elements outside the sections
   const standaloneElements = document.querySelectorAll('[data-lazy-load]');
   standaloneElements.forEach((element) => {
     observer.observe(element);
   });
 
-  return observer; // Devolvemos el observador para posible uso futuro
+  return observer; // Return the observer for possible future use
 };
 
 export default initObserver;

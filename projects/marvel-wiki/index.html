@@ -4,13 +4,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Respeta el tamaño de texto del sistema: Android/Chrome lo aplica al tamaño
-         base (rem) en vez de hacer zoom a toda la página -->
+    <!-- Respects the system text size: Android/Chrome applies it to the base
+         size (rem) instead of zooming the whole page -->
     <meta name="text-scale" content="scale" />
-    <!-- Tema: oscuro si el sistema está en modo oscuro; si no, por horario (oscuro de
-         18:00 a 6:00, hora local). El botón guarda una excepción hasta el siguiente
-         cambio (localStorage.theme / themeUntil).
-         Se aplica antes de pintar; sin JS se sigue al sistema. -->
+    <!-- Theme: dark if the system is in dark mode; otherwise time-based (dark from
+         18:00 to 6:00, local time). The toggle stores an override until the next
+         switch (localStorage.theme / themeUntil).
+         Applied before first paint; without JS the system scheme is used. -->
     <meta name="color-scheme" content="light dark" />
     <script>
       {
@@ -24,8 +24,8 @@
       }
     </script>
     <script>
-      // Igual que el home: navegador en español (sin elección guardada en
-      // localStorage "lang") → versión en español de este proyecto
+      // Same as the home page: Spanish browser (no choice stored in
+      // localStorage "lang") → Spanish version of this project
       try {
         const pref = localStorage.getItem('lang');
         const langs = navigator.languages || [navigator.language || ''];
@@ -133,7 +133,7 @@
   </head>
 
   <body class="project-page">
-    <!-- Fondo: mismas texturas que el home (grano + capas con parallax) -->
+    <!-- Background: same textures as the home page (grain + parallax layers) -->
     <div class="background-container bgGrain"></div>
     <div class="background-container">
       <svg class="background-container bgBack" aria-hidden="true">
@@ -248,7 +248,7 @@
         ></a>
       </nav>
     </header>
-    <!-- Lámpara colgante (escritorio): cambia el tema. Encendida = modo claro -->
+    <!-- Hanging lamp: theme switch. Lit = dark mode -->
     <button
       type="button"
       class="lamp"

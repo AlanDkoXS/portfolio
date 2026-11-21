@@ -1,4 +1,4 @@
-/* ============= Home Section ============= */
+/* === Home Section === */
 
 #home {
   opacity: 1;
@@ -92,20 +92,20 @@
 .home__info {
   .home__title,
   .home__description {
-    /* sin relleno lateral: el texto usa el mismo ancho que los botones */
+    /* no side padding: the text uses the same width as the buttons */
     padding: 0.5rem 0;
     text-align: center;
   }
 
-  /* título y presentación a la izquierda */
+  /* title and intro on the left */
   .home__title,
   .home__description {
     text-align: start;
   }
 
-  /* Saludo "tecleado" (helpers/typing.js): aparece letra por letra cuando el
-     hero se muestra; el cursor (guion bajo) va detrás de la última letra y
-     sigue parpadeando al terminar */
+  /* "Typed" greeting (helpers/typing.js): appears letter by letter when the
+     hero is shown; the caret (underscore) follows the last letter and
+     keeps blinking when done */
   .home__title {
     margin: 0;
     text-transform: capitalize;
@@ -127,7 +127,7 @@
         animation: caret 1s step-end infinite;
       }
 
-      /* mientras escribe, el cursor queda fijo (como al teclear de verdad) */
+      /* while typing, the caret stays solid (like real typing) */
       &.is-typing::after {
         animation: none;
       }
@@ -153,8 +153,8 @@
   }
 }
 
-/* Con JS: el saludo se oculta hasta que se empieza a escribir (evita ver el
-   texto completo un instante) */
+/* With JS: the greeting is hidden until typing starts (avoids a flash of
+   the full text) */
 html.js:not(.hero-ready) .home .home__title {
   visibility: hidden;
 }
@@ -165,10 +165,10 @@ html.js:not(.hero-ready) .home .home__title {
   }
 }
 
-/* HOME MIN WIDTH 600px ========================== */
+/* === Home min width 600px === */
 
 @media (min-width: 600px) {
-  /* Estructura modificada del home */
+  /* Modified home structure */
   .home .home__container {
     grid-template-columns: 1fr 2fr;
     grid-template-rows: auto auto auto;
@@ -181,8 +181,8 @@ html.js:not(.hero-ready) .home .home__title {
     align-content: center;
     justify-content: center;
     min-height: 100svh;
-    /* El menú no se ve al cargar: el hero ocupa la primera pantalla completa,
-       centrado a lo alto, sin reservar espacio para el header */
+    /* The menu isn't visible on load: the hero fills the whole first screen,
+       vertically centered, without reserving space for the header */
     padding: 1.5rem 2rem 1.5rem 4.5rem;
     transform: none;
   }
@@ -191,13 +191,13 @@ html.js:not(.hero-ready) .home .home__title {
     padding: 0;
   }
 
-  /* Las redes se posicionan respecto a la sección (ancho completo), no al
-     contenedor centrado: quedan pegadas a la orilla izquierda */
+  /* The social links are positioned relative to the section (full width), not
+     the centered container: they sit flush with the left edge */
   .home .home__container {
     position: static;
   }
 
-  /* Ajustes de la imagen */
+  /* Image adjustments */
   .home .home__image {
     grid-area: image;
     width: clamp(200px, 30vw, 400px);
@@ -207,7 +207,7 @@ html.js:not(.hero-ready) .home .home__title {
     align-self: center;
   }
 
-  /* Ajustes del título */
+  /* Title adjustments */
   .home .home__info {
     grid-area: title;
     text-align: left;
@@ -223,13 +223,13 @@ html.js:not(.hero-ready) .home .home__title {
     font-size: calc(var(--title-scale) * clamp(1.25rem, 0.5rem + 2.6svh + 0.4vw, 2.2rem));
   }
 
-  /* Descripción integrada (incluye contenido de about). El tamaño depende del
-     alto y del ancho de la pantalla para que el hero quepa sin cortarse. */
+  /* Merged description (includes the about content). Its size depends on the
+     screen height and width so the hero fits without being cut off. */
   .home .home__info .home__description {
     text-align: left;
     max-width: 62ch;
     margin-bottom: 0.5rem;
-    /* Depende sobre todo del alto: todo el hero cabe en la primera pantalla */
+    /* Depends mostly on the height: the whole hero fits in the first screen */
     font-size: clamp(0.8rem, 0.25rem + 1.6svh + 0.2vw, 1.15rem);
     line-height: 1.5;
   }
@@ -239,7 +239,7 @@ html.js:not(.hero-ready) .home .home__title {
     justify-content: flex-start !important;
   }
 
-  /* Ocultar botones excepto resume */
+  /* Hide buttons except resume */
   .home .home__buttons {
     grid-area: resume-button;
     display: flex;
@@ -254,23 +254,23 @@ html.js:not(.hero-ready) .home .home__title {
     display: flex;
   }
 
-  /* Ocultar sección about */
+  /* Hide the about section */
   #about.about.section {
     display: none;
   }
 
-  /* Ajuste del menú de navegación */
+  /* Navigation menu adjustment */
   .navbar__list .navbar__item a[href$="#about"] {
     display: none;
   }
 
-  /* Mostrar solo el botón de resume */
+  /* Show only the resume button */
   .home .home__buttons .btn {
     width: 100%;
     max-width: none;
   }
 
-  /* Dentro del hero (no fijo a la ventana: no sigue el scroll) */
+  /* Inside the hero (not fixed to the window: doesn't follow the scroll) */
   .home .home__social {
     position: absolute;
     top: 50%;
@@ -286,13 +286,13 @@ html.js:not(.hero-ready) .home .home__title {
   }
 }
 
-/* HOME MAX WIDTH 599px: todo el hero cabe en pantalla, centrado ======
-   svh = alto visible con la barra del navegador desplegada */
+/* HOME MAX WIDTH 599px: the whole hero fits on screen, centered ======
+   svh = visible height with the browser bar expanded */
 @media (max-width: 599px) {
-  /* El hero ocupa una pantalla: el texto (que sigue el tamaño de letra del
-     sistema) toma lo que necesita y el retrato se encoge para llenar solo el
-     espacio que sobra. minmax(0, 1fr) evita que el contenido
-     ensanche la página con texto muy grande. */
+  /* The hero takes one screen: the text (which follows the system font
+     size) takes what it needs and the portrait shrinks to fill only the
+     leftover space. minmax(0, 1fr) keeps the content from
+     widening the page with very large text. */
   .home {
     min-height: 100svh;
     display: grid;
@@ -305,14 +305,14 @@ html.js:not(.hero-ready) .home .home__title {
     row-gap: 0;
     min-height: 0;
     grid-template-columns: minmax(0, 1fr);
-    /* con texto enorme (que ya no cabe aunque no hubiera retrato) el
-       retrato conserva un tamaño mínimo y la sección crece con scroll */
+    /* with huge text (that wouldn't fit even without the portrait) the
+       portrait keeps a minimum size and the section grows with scroll */
     grid-template-rows: minmax(7rem, 1fr) auto;
     align-content: stretch;
   }
 
   .home .home__image {
-    /* alto = el espacio libre de su fila; ancho por la proporción 1:1 */
+    /* height = the free space of its row; width from the 1:1 ratio */
     height: 100%;
     max-height: min(80vw, 320px);
     min-height: 0;
@@ -326,8 +326,8 @@ html.js:not(.hero-ready) .home .home__title {
 
   .home .home__info {
     min-width: 0;
-    /* separa el texto de los íconos de redes (el retrato se encoge para
-       dejar el espacio, así el texto sube) */
+    /* separates the text from the social icons (the portrait shrinks to
+       make room, so the text moves up) */
     margin-bottom: 1.5rem;
   }
 
@@ -342,25 +342,25 @@ html.js:not(.hero-ready) .home .home__title {
 
   .home .home__social-item {
     margin: 0.4rem 1rem;
-    /* los íconos no crecen con el texto del sistema (no son texto) */
+    /* icons don't grow with the system text (they aren't text) */
     font-size: 34px;
   }
 
   .home .home__buttons .btn {
     margin: 0.3rem 0;
-    /* alto del botón = el del texto + un relleno fijo: con texto grande
-       los cuatro siguen cabiendo en la pantalla */
+    /* button height = the text's + a fixed padding: with large text
+       all four still fit on screen */
     padding-block: min(0.7rem, 11px);
   }
 }
 
-/* Hero en escritorio: cada una de las 7 líneas en su propio renglón */
+/* Desktop hero: each of the 7 lines on its own row */
 .home .home__info .home__description--lines {
   max-width: 62ch;
 }
 
-/* Las 7 frases de 7 palabras se leen como un párrafo normal (no un renglón
-   por frase), para que suene a conversación y no a poema */
+/* The 7 phrases of 7 words read as a normal paragraph (not one row
+   per phrase), so it sounds like conversation rather than a poem */
 .home__description--lines .home__line {
   display: inline;
 }
@@ -369,13 +369,13 @@ html.js:not(.hero-ready) .home .home__title {
   content: ' ';
 }
 
-/* Presentación como párrafo normal, separada de las 7 líneas por un renglón */
+/* Intro as a normal paragraph, separated from the 7 lines by a blank line */
 .home__description--lines .home__intro {
   display: block;
   margin-bottom: 1lh;
 }
 
-/* Énfasis en la presentación (*…* en translations.js) */
+/* Emphasis in the intro (*…* in translations.js) */
 .home__description strong {
   font-weight: var(--font-semibold);
   color: var(--gold-emphasis);

@@ -47,7 +47,7 @@ import { loadEmailJS } from "./email-js.js";
 
 const formDOM = document.querySelector("#form");
 const modalDOM = document.querySelector("#modal");
-// Idioma de la página (/ o /es/); languageChange lo mantiene al día
+// Page language (/ or /es/); languageChange keeps it up to date
 let currentLanguage = document.documentElement.lang === "es" ? "es" : "en";
 
 function validateField(value, type, language = currentLanguage) {
@@ -108,7 +108,7 @@ function showFieldError(fieldId, error) {
   if (!field.nextElementSibling) {
     errorDiv.className = "field-error";
     errorDiv.id = `${fieldId}-error`;
-    // Se anuncia al aparecer y queda ligado al campo para lectores de pantalla
+    // Announced when it appears and tied to the field for screen readers
     errorDiv.setAttribute("aria-live", "polite");
     field.setAttribute("aria-describedby", errorDiv.id);
     field.parentNode.insertBefore(errorDiv, field.nextSibling);
@@ -138,8 +138,8 @@ function validateForm(formData) {
 }
 
 function openModal() {
-  // showModal(): modal real (top layer, foco atrapado, Esc nativo).
-  // El botón Cerrar tiene autofocus.
+  // showModal(): real modal (top layer, trapped focus, native Esc).
+  // The Close button has autofocus.
   if (modalDOM && !modalDOM.open) modalDOM.showModal();
 }
 
@@ -155,9 +155,9 @@ function addFieldValidationListeners() {
   });
 }
 
-// El mensaje crece con el texto. Con field-sizing: content lo hace el CSS;
-// sin soporte (Firefox, Safari viejo) se ajusta la altura al escribir. El
-// tope (max-block-size) sigue en el CSS y a partir de ahí hace scroll.
+// The message grows with the text. With field-sizing: content the CSS does
+// it; without support (Firefox, old Safari) the height is adjusted on input.
+// The cap (max-block-size) stays in the CSS and it scrolls from there on.
 function autoGrowMessage() {
   const textarea = document.getElementById("message");
   if (!textarea || CSS.supports("field-sizing", "content")) return;
@@ -176,8 +176,8 @@ function sendEmail() {
   addFieldValidationListeners();
   autoGrowMessage();
 
-  // EmailJS se descarga cuando alguien empieza a usar el formulario, no al
-  // cargar la página (así no compite con el hero ni retrasa el evento load)
+  // EmailJS is downloaded when someone starts using the form, not on page
+  // load (so it doesn't compete with the hero or delay the load event)
   const warmUp = () => loadEmailJS().catch(() => {});
   formDOM.addEventListener("focusin", warmUp, { once: true });
   formDOM.addEventListener("pointerdown", warmUp, { once: true });
@@ -213,11 +213,11 @@ function sendEmail() {
       submitButton.disabled = true;
       submitButton.innerHTML = `<i class="bx bx-loader-alt bx-spin"></i> ${FORM_MESSAGES[currentLanguage].sending}`;
 
-      // Normalmente ya se descargó al enfocar un campo; si no, se espera aquí.
-      // Si el CDN falla, cae al catch y se muestra el mensaje de error.
+      // Normally it was already downloaded when a field got focus; if not, wait here.
+      // If the CDN fails, it falls to the catch and the error message is shown.
       await loadEmailJS();
 
-      // Enviar email con manejo de errores mejorado
+      // Send the email with improved error handling
       await emailjs.send("service_hokfs29", "template_bzic089", params);
 
       modalDOM.querySelector("p").textContent =
@@ -227,9 +227,9 @@ function sendEmail() {
     } catch (error) {
       console.error("Error sending email:", error);
 
-      // Cualquier fallo (CDN, cuota, cuenta de Gmail desconectada en EmailJS
-      // → 412 "Invalid grant") muestra el correo directo para no perder el
-      // mensaje. El detalle técnico queda en la consola.
+      // Any failure (CDN, quota, Gmail account disconnected in EmailJS
+      // → 412 "Invalid grant") shows the direct email so the message isn't
+      // lost. The technical detail stays in the console.
       if (error?.status) {
         console.error(`EmailJS ${error.status}: ${error.text}`);
       }

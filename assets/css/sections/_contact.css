@@ -1,4 +1,4 @@
-/* ============= Contact Section ============= */
+/* === Contact Section === */
 
 .contact {
   .contact__container {
@@ -29,7 +29,7 @@
     .contact__form {
       width: 100%;
       padding: 3rem 1.5rem 2rem;
-      /* Más claro que los campos para que se distingan; con textura sutil */
+      /* Lighter than the fields so they stand out; with a subtle texture */
       position: relative;
       isolation: isolate;
       background-color: var(--bg-color-buttons);
@@ -64,9 +64,9 @@
           .contact__form-input {
             width: 100%;
             font-family: inherit;
-            /* altura de input normal (~44px): relleno en px para que no
-               crezca con el tamaño de texto del sistema; solo el mensaje
-               es más alto y crece */
+            /* regular input height (~44px): padding in px so it doesn't
+               grow with the system text size; only the message
+               is taller and grows */
             padding: 10px 14px;
             font-size: 1rem;
             line-height: 1.5;
@@ -78,7 +78,7 @@
             border: 0;
             transition: outline-color 0.2s ease;
 
-            /* Al enfocar, el mismo contorno dorado que los botones
+            /* On focus, the same gold outline as the buttons
                (.btn:focus-visible) */
             &:focus {
               outline: 3px solid var(--accent-ink);
@@ -86,9 +86,9 @@
             }
           }
 
-          /* Mensaje: empieza al doble de alto que los demás campos y crece
-             con el texto (field-sizing; send_form.js lo imita en
-             navegadores sin soporte) hasta un tope, luego hace scroll */
+          /* Message: starts at twice the height of the other fields and grows
+             with the text (field-sizing; send_form.js mimics it in
+             browsers without support) up to a cap, then scrolls */
           textarea.contact__form-input {
             resize: none;
             field-sizing: content;
@@ -115,7 +115,7 @@
   }
 }
 
-/* Datos de contacto: ícono + texto alineados, sin cortes raros */
+/* Contact details: icon + text aligned, no awkward breaks */
 .contact__info-data {
   display: grid;
   gap: 0.75rem;
@@ -141,7 +141,7 @@
   }
 }
 
-/* CONTACT MIN WIDTH 600px ========================== */
+/* === Contact min width 600px === */
 @media (min-width: 600px) {
   .contact {
     .contact__container {
@@ -155,7 +155,7 @@
   }
 }
 
-/* Escritorio: toda la sección cabe en una pantalla (también con zoom) */
+/* Desktop: the whole section fits in one screen (also when zoomed) */
 @media (min-width: 600px) {
   .contact.section {
     padding-block: 0.75rem;
@@ -178,7 +178,7 @@
     margin-bottom: 0.25rem;
   }
 
-  /* Nombre y correo lado a lado; asunto, mensaje y botón a todo lo ancho */
+  /* Name and email side by side; subject, message and button full width */
   #contact .contact__container .contact__form .contact__form-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -218,8 +218,8 @@
   }
 }
 
-/* Pantallas bajas (laptops con zoom): se quita lo redundante para que todo
-   el formulario quepa sin hacer scroll */
+/* Short screens (zoomed laptops): redundant parts are removed so the whole
+   form fits without scrolling */
 @media (min-width: 600px) and (max-height: 720px) {
   #contact .section__title {
     margin-block: 0 0.4rem;
@@ -250,9 +250,9 @@
   }
 }
 
-/* Textura visible en el formulario y en el "¿Tienes un proyecto en mente?" de
-   las páginas de caso (mismo estilo): los puntos del grano de la página, en una
-   capa propia encima del grano oscuro. Los dos llevan exactamente lo mismo. */
+/* Visible texture on the form and on the "Have a project in mind?" block of
+   the case pages (same style): the page grain dots, on their own layer
+   above the dark grain. Both carry exactly the same thing. */
 .contact .contact__container .contact__form::before,
 .project-cta::before {
   content: '';

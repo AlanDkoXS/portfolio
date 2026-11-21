@@ -1,10 +1,10 @@
-// Filas de íconos de tecnologías en bucle (CSS en _skills.css).
-// WCAG 2.2.2: el movimiento dura más de 5 s, así que hay un botón para
-// pausarlo. Solo se muestra si hay animación (sin "reducir movimiento").
+// Looping rows of technology icons (CSS in _skills.css).
+// WCAG 2.2.2: the motion lasts more than 5 s, so there's a button to
+// pause it. Only shown if there's animation (no "reduce motion").
 import { prefersReducedMotion } from './motion.js';
 
-// 100vw incluye la barra de scroll: se mide para que las filas lleguen
-// exactamente de orilla a orilla (ver --scrollbar-w en _skills.css)
+// 100vw includes the scrollbar: it's measured so the rows reach exactly
+// from edge to edge (see --scrollbar-w in _skills.css)
 const setScrollbarWidth = () => {
   const width = window.innerWidth - document.documentElement.clientWidth;
   document.documentElement.style.setProperty('--scrollbar-w', `${width}px`);
@@ -25,7 +25,7 @@ export default function skillsMarquee() {
     const paused = container.classList.contains('is-paused');
     icon?.classList.toggle('bx-pause', !paused);
     icon?.classList.toggle('bx-play', paused);
-    // Tooltip igual al texto visible para lectores de pantalla
+    // Tooltip matches the visible text for screen readers
     const label = toggle.querySelector(paused ? '.skills__motion-play' : '.skills__motion-pause');
     if (label) toggle.title = label.textContent.trim();
   };

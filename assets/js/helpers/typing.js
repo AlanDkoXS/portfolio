@@ -1,11 +1,11 @@
-// Saludo del hero "tecleado": aparece una letra a la vez y el cursor (guion
-// bajo, en CSS) avanza detrás de la última letra. Al terminar el texto se
-// queda y el cursor sigue parpadeando. Con "reducir movimiento" se muestra
-// completo de inmediato.
+// "Typed" hero greeting: one letter appears at a time and the caret
+// (underscore, in CSS) advances behind the last letter. When done, the text
+// stays and the caret keeps blinking. With "reduce motion" it's shown
+// in full right away.
 import { prefersReducedMotion } from './motion.js';
 
-const BASE_DELAY = 110; // ms por letra
-const JITTER = 70; // variación para que parezca tecleo humano
+const BASE_DELAY = 110; // ms per letter
+const JITTER = 70; // variation so it looks like human typing
 
 export function typeGreeting() {
   const title = document.querySelector('.home__title');
@@ -15,12 +15,12 @@ export function typeGreeting() {
   const text = title.textContent.trim();
   if (prefersReducedMotion() || !text) return;
 
-  // Letras visibles (un emoji compuesto cuenta como una sola)
+  // Visible letters (a compound emoji counts as one)
   const letters = 'Segmenter' in Intl
     ? [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map((s) => s.segment)
     : [...text];
 
-  title.setAttribute('aria-label', text); // lectores de pantalla: texto completo
+  title.setAttribute('aria-label', text); // screen readers: full text
   title.classList.add('is-typing');
   let i = 0;
   title.textContent = '';

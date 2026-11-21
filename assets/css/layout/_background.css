@@ -1,4 +1,4 @@
-/* ============= Background ============= */
+/* === Background === */
 
 .background-container {
   position: absolute;
@@ -14,13 +14,13 @@
 }
 
 .bgGrain {
-  /* Grano: un mosaico pequeño repetido (9 KB en vez de una imagen de
-     pantalla completa). La caída de densidad de arriba hacia abajo la da la
-     máscara, que ya incluye cómo se desvanecía la imagen original */
-  /* Fijo desde arriba de la pantalla: cuando la barra está oculta (en el hero)
-     no queda una franja sin grano; se desvanece con un degradado largo y suave
-     desde el borde superior. Sin tramo opaco a la altura de la barra: con la
-     barra oculta se veía como una franja más oscura con un corte */
+  /* Grain: a small repeated tile (9 KB instead of a full-screen
+     image). The top-to-bottom density falloff comes from the
+     mask, which already includes how the original image faded out */
+  /* Fixed from the top of the screen: when the navbar is hidden (in the hero)
+     no grainless band is left; it fades out with a long, soft gradient
+     from the top edge. No opaque stretch at navbar height: with the
+     navbar hidden it looked like a darker band with a hard edge */
   --grain-fade: linear-gradient(
     to bottom,
     #000 0,
@@ -39,9 +39,9 @@
   left: 0 !important;
   right: 0;
   transform: none !important;
-  /* Mosaico de grano sin costuras (cada punto es aleatorio e independiente,
-     con la misma densidad que el grano original). Va a 1px de imagen por px
-     de CSS para que en pantallas de alta densidad el grano siga visible */
+  /* Seamless grain tile (each dot is random and independent, with the
+     same density as the original grain). It runs at 1 image px per CSS
+     px so the grain stays visible on high-density screens */
   background-image: url('/assets/img/bgGrain-tile.webp');
   background-size: 256px 256px;
   background-repeat: repeat;
@@ -74,7 +74,7 @@
   filter: blur(0.5px) brightness(1) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
 }
 
-/* Hover effects (solo sin preferencia de movimiento reducido) */
+/* Hover effects (only without a reduced-motion preference) */
 @media (prefers-reduced-motion: no-preference) {
   .background-container:hover .bgBack {
     transform: translate(-50%, -50%) translate(-40px, 20px);
@@ -95,7 +95,7 @@
   transition: transform 0.5s ease-in-out;
 }
 
-/* Background MIN WIDTH 600px====================================*/
+/* === Background MIN WIDTH 600px === */
 @media (min-width: 600px) {
   .background-container {
     position: absolute;

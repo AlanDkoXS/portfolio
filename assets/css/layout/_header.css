@@ -1,4 +1,4 @@
-/* ============== Header & Nav Bar ================= */
+/* === Header & Nav Bar === */
 
 .header {
   position: fixed;
@@ -7,13 +7,13 @@
   width: 100%;
   height: var(--header-height);
   align-content: center;
-  /* Vidrio con el color del footer al 90%, desenfoque detrás y textura de
-     grano encima */
+  /* Glass with the footer color at 90%, blur behind and a grain texture
+     on top */
   isolation: isolate;
   z-index: var(--z-modal);
 
-  /* El vidrio va en una capa interna (no en el header): así el panel del menú
-     móvil, que es hijo del header, también puede desenfocar la página */
+  /* The glass lives in an inner layer (not on the header): that way the mobile
+     menu panel, a child of the header, can blur the page too */
   &::before {
     content: '';
     position: absolute;
@@ -22,7 +22,7 @@
     background-color: color-mix(in srgb, var(--footer-bg) 70%, transparent);
     -webkit-backdrop-filter: blur(16px) saturate(1.3);
     backdrop-filter: blur(16px) saturate(1.3);
-    /* misma sombra que el panel del menú móvil (el panel la tapa al abrirse) */
+    /* same shadow as the mobile menu panel (the panel covers it when open) */
     box-shadow: 0 14px 24px var(--shadow-color);
     pointer-events: none;
   }
@@ -32,18 +32,18 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    /* grano uniforme (la imagen bgGrain solo tiene puntos arriba) */
+    /* uniform grain (the bgGrain image only has dots at the top) */
     background: var(--grain-ink);
     background-size: 140px;
     opacity: 0.2;
     pointer-events: none;
   }
 
-  /* Sin soporte de animaciones ligadas al scroll, el header simplemente se ve.
-     Con soporte: aparece al empezar a hacer scroll (en el hero no estorba).
-     El fundido va en las piezas y no en el header: un padre con opacidad
-     animada corta el backdrop-filter (el vidrio no vería la página). El panel
-     móvil no se anima (tiene su propio mostrar/ocultar), sí su contenido. */
+  /* Without scroll-driven animation support, the header is simply visible.
+     With support: it appears once scrolling starts (out of the way in the hero).
+     The fade goes on the pieces and not on the header: a parent with animated
+     opacity cuts off backdrop-filter (the glass wouldn't see the page). The
+     mobile panel isn't animated (it has its own show/hide), its content is. */
   @supports (animation-timeline: scroll()) {
     &::before,
     &::after,
@@ -55,7 +55,7 @@
       animation-range: 0 100px;
     }
 
-    /* el grano termina en su opacidad de siempre (0.2), no en 1 */
+    /* the grain ends at its usual opacity (0.2), not at 1 */
     &::after {
       animation-name: animation-nav-grain;
     }
@@ -72,16 +72,16 @@
       fill: var(--primary-color);
     }
 
-    /* Móvil: panel que baja justo debajo de la barra, con el mismo vidrio
-       oscuro y grano que el header. Lo abre .navbar__burger (nav_menu.js
-       pone .menu-open en el header); sin JS, #nav:target. */
+    /* Mobile: panel that drops just below the bar, with the same dark glass
+       and grain as the header. Opened by .navbar__burger (nav_menu.js sets
+       .menu-open on the header); without JS, #nav:target. */
     .navbar__menu {
       position: absolute;
       top: 100%;
       left: 0;
       width: 100%;
       isolation: isolate;
-      /* mismo vidrio que la barra: translúcido, desenfoque y grano */
+      /* same glass as the bar: translucent, blur and grain */
       background-color: color-mix(in srgb, var(--footer-bg) 70%, transparent);
       -webkit-backdrop-filter: blur(16px) saturate(1.3);
       backdrop-filter: blur(16px) saturate(1.3);
@@ -118,8 +118,8 @@
             color: var(--primary-color);
             font-size: 1.1rem;
             font-weight: 600;
-            /* Mismo estilo que el botón de contorno ("Envía tu mensaje"):
-               contorno y sombra dura dorados */
+            /* Same style as the outline button ("Send your message"):
+               gold outline and hard shadow */
             padding: 0.2rem 0.65rem;
             border: 2px solid var(--accent-color);
             border-radius: var(--border-radius-small);
@@ -145,8 +145,8 @@
             }
           }
 
-          /* Sección activa: rellena de dorado con texto en tinta, como el
-             botón de contorno cuando se activa */
+          /* Active section: filled with gold with ink text, like the
+             outline button when activated */
           .active {
             color: var(--on-accent-color);
             background-color: var(--accent-color);
@@ -157,7 +157,7 @@
       }
     }
 
-    /* Toggles ====================================*/
+    /* === Toggles === */
     .navbar__toggles {
       display: flex;
       flex-wrap: wrap;
@@ -178,7 +178,7 @@
       cursor: pointer;
     }
 
-    /* Dark Mode Toggle ====================================*/
+    /* === Dark Mode Toggle === */
     .navbar__toggle--darkmode {
       .navbar__toggle--darkmode-input {
         visibility: hidden;
@@ -229,7 +229,7 @@
       }
     }
 
-    /* Language Toggle ====================================*/
+    /* === Language Toggle === */
     .navbar__toggle--language {
       .navbar__toggle--language-input {
         visibility: hidden;
@@ -291,7 +291,7 @@
     color: var(--primary-color);
   }
 
-  /* Hamburguesa → X (las dos íconos encimados, se cruzan girando) */
+  /* Hamburger → X (the two icons stacked, cross-fading as they rotate) */
   .navbar__burger {
     position: relative;
     display: grid;
@@ -344,9 +344,9 @@
 
 }
 
-/* Header siempre visible (sin el fundido del hero): con el menú abierto
-   (aunque en el hero del home todavía esté oculto), en el resume y en las
-   páginas de proyecto. */
+/* Header always visible (without the hero fade): with the menu open
+   (even if it is still hidden in the home hero), on the resume and on the
+   project pages. */
 .header.menu-open,
 .header:has(.navbar__menu:target),
 .project-page .header,
@@ -364,7 +364,7 @@ body:has(#pdf-container) .header {
   }
 }
 
-/* Menú abierto: el panel baja y la hamburguesa se vuelve X. */
+/* Menu open: the panel drops and the hamburger becomes an X. */
 
 .header.menu-open .navbar .navbar__menu,
 .header .navbar .navbar__menu:target {
@@ -376,9 +376,9 @@ body:has(#pdf-container) .header {
     translate 0.25s ease;
 }
 
-/* Menú abierto: barra y panel se ven como una sola superficie. Algo más
-   opacos y con más desenfoque para que el texto dorado de detrás no tiña el
-   panel de otro color que la barra (y los enlaces se lean bien) */
+/* Menu open: bar and panel look like a single surface. Slightly more
+   opaque and with more blur so the gold text behind doesn't tint the panel
+   a different color than the bar (and the links stay readable) */
 .header.menu-open::before,
 .header.menu-open .navbar .navbar__menu,
 .header .navbar .navbar__menu:target {
@@ -401,13 +401,13 @@ body:has(#pdf-container) .header {
   }
 }
 
-/* Móvil, modo oscuro (lámpara encendida): la lámpara cuelga sobre el panel,
-   arriba a la derecha (su centro a 92px de la orilla, ver _lamp.css), y su
-   luz aclara el menú con un halo cenital del mismo color que la luz
-   (rgb(255 250 134), de la imagen encendida). Se enciende y apaga al mismo
-   tiempo que la lámpara. */
+/* Mobile, dark mode (lamp lit): the lamp hangs over the panel, at the top
+   right (its center 92px from the edge, see _lamp.css), and its light
+   brightens the menu with an overhead halo in the same color as the light
+   (rgb(255 250 134), from the lit image). It turns on and off at the same
+   time as the lamp. */
 @media (max-width: 599px) {
-  /* el halo se mueve (rebote, balanceo): que no se salga del panel */
+  /* the halo moves (bounce, swing): keep it from spilling out of the panel */
   .header .navbar .navbar__menu {
     overflow: clip;
   }
@@ -415,7 +415,7 @@ body:has(#pdf-container) .header {
   .header .navbar .navbar__menu::before {
     content: '';
     position: absolute;
-    /* más grande que el panel (que lo recorta): al girar no se ven sus orillas */
+    /* larger than the panel (which clips it): its edges don't show when it rotates */
     inset: -200px;
     z-index: -1;
     background: radial-gradient(
@@ -424,36 +424,36 @@ body:has(#pdf-container) .header {
       rgb(255 250 134 / 0.12) 40%,
       transparent 78%
     );
-    /* gira con la lámpara (giroscopio, --lamp-tilt de lamp.js) desde su
-       punto de luz (a 92px de la orilla, arriba del panel), como el cono de
-       luz de un péndulo */
+    /* rotates with the lamp (gyroscope, --lamp-tilt from lamp.js) from its
+       light point (92px from the edge, above the panel), like the light
+       cone of a pendulum */
     transform-origin: calc(100% - 292px) 200px;
     rotate: var(--lamp-tilt, 0deg);
     opacity: 0;
-    /* se apaga junto con la lámpara (al instante) */
+    /* turns off together with the lamp (instantly) */
     transition: none;
     pointer-events: none;
   }
 
   @container style(--color-scheme: dark) {
-    /* Al abrir el menú, la lámpara (ya encendida) aparece a los 0.25s
-       (_lamp.css): el halo se enciende en ese mismo momento. Ya encendido
-       queda un poco más tenue (0.8). */
+    /* When the menu opens, the lamp (already lit) appears after 0.25s
+       (_lamp.css): the halo turns on at that same moment. Once lit it
+       stays slightly dimmer (0.8). */
     .header.menu-open .navbar .navbar__menu::before {
       opacity: 0.8;
       transition: opacity 0.12s ease-out 0.25s;
     }
 
-    /* Sigue a la lámpara: baja y rebota con ella (mismo ritmo que
-       lamp-bungee), con un destello al llegar que se asienta en 0.8 */
+    /* Follows the lamp: drops and bounces with it (same rhythm as
+       lamp-bungee), with a flash on arrival that settles at 0.8 */
     @media (prefers-reduced-motion: no-preference) {
       .header.menu-open .navbar .navbar__menu::before {
         transition: none;
         animation: halo-bungee 1.1s 0.25s backwards;
       }
 
-      /* La lámpara se balancea (al aterrizar o al jalar la cadena): el halo
-         se mece al compás. Se añade a la lista sin reiniciar halo-bungee. */
+      /* The lamp swings (on landing or when the chain is pulled): the halo
+         sways in time. Added to the list without restarting halo-bungee. */
       body:has(.lamp.lamp--swing) .header.menu-open .navbar .navbar__menu::before {
         animation:
           halo-bungee 1.1s 0.25s backwards,
@@ -463,8 +463,8 @@ body:has(#pdf-container) .header {
   }
 }
 
-/* Con el menú abierto, al jalar la cadena la luz cambia al instante (la
-   lámpara recibe .lamp--swing justo al cambiar el tema): el halo también */
+/* With the menu open, pulling the chain changes the light instantly (the
+   lamp gets .lamp--swing right when the theme changes): so does the halo */
 body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   transition: none;
 }
@@ -494,8 +494,8 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
-/* La lámpara gira desde el cable (lamp-swing): cuando su base va a un lado,
-   la luz que proyecta se mueve hacia ese lado */
+/* The lamp rotates from the cable (lamp-swing): when its base goes to one
+   side, the light it casts moves toward that side */
 @keyframes halo-swing {
   20% {
     transform: translateX(-10px);
@@ -530,7 +530,7 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
-/* ============= Media Queries MIN WIDTH (600px)============= */
+/* === Media Queries MIN WIDTH (600px) === */
 @media (min-width: 600px) {
   .header {
     .navbar {
@@ -541,9 +541,9 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
         position: static;
         border-radius: 0;
         background-color: transparent;
-        /* sin el vidrio del panel móvil: en escritorio el vidrio es el de la
-           barra (que se funde con el scroll); si no, queda una franja borrosa
-           en el hero que tapa el cable de la lámpara */
+        /* without the mobile panel glass: on desktop the glass is the bar's
+           (which fades in with scroll); otherwise a blurry strip is left in
+           the hero covering the lamp cable */
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
         box-shadow: none;
@@ -589,7 +589,7 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
-/* ============= Escritorio: barra compacta, logo a la izquierda y opciones a la derecha ============= */
+/* === Desktop: compact bar, logo on the left and options on the right === */
 @media (min-width: 600px) {
   :root {
     --header-height: 3.5rem;
@@ -612,7 +612,7 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
       .navbar__list {
         gap: clamp(0.6rem, 1.4vw, 1.25rem);
 
-        /* "Sobre mí" no se muestra en escritorio: que tampoco deje su hueco */
+        /* "About me" isn't shown on desktop: don't leave its gap either */
         .navbar__item:has(> a[href$='#about']) {
           display: none;
         }
@@ -645,12 +645,12 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
-/* ============= Botón de idioma: hover = vista previa, clic = confirmación =============
-   Al pasar el mouse la bandera gira y muestra el idioma al que se cambiará.
-   Al hacer clic esa misma bandera da un "pop" (no vuelve a girar) mientras
-   carga la otra página. El estado .is-switching lo pone switchLanguages.js. */
-/* Mismo prefijo que las reglas base del botón (.header .navbar …) para
-   ganarles en especificidad */
+/* ============= Language button: hover = preview, click = confirmation =============
+   On hover the flag rotates and shows the language it will switch to.
+   On click that same flag does a "pop" (it doesn't rotate again) while
+   the other page loads. The .is-switching state is set by switchLanguages.js. */
+/* Same prefix as the button's base rules (.header .navbar …) to
+   beat them on specificity */
 @media (hover: hover) {
   .header .navbar .navbar__toggle--language {
     .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label:hover {
@@ -679,7 +679,7 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
-/* Al hacer clic se queda la bandera del hover (el idioma destino) y rebota */
+/* On click the hover flag (the target language) stays and bounces */
 .header .navbar .navbar__toggle--language.is-switching {
   img {
     transition: none !important;
@@ -713,8 +713,8 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
-/* Botón de idioma con el mismo estilo y la misma altura que las opciones del
-   menú: caja con contorno y sombra dura dorados, bandera al centro */
+/* Language button with the same style and height as the menu options:
+   box with gold outline and hard shadow, flag in the center */
 .header .navbar .navbar__toggle--language {
   height: auto;
 
@@ -729,7 +729,7 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
     transition: box-shadow 0.15s, transform 0.15s, background-color 0.15s;
   }
 
-  /* La bandera llena todo el botón (cuadrada, no circular) */
+  /* The flag fills the whole button (square, not circular) */
   .navbar__toggle--language-label {
     overflow: hidden;
   }
@@ -739,7 +739,7 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
     height: 100%;
   }
 
-  /* (.flag-wrapper img para ganarle a las reglas anteriores del botón) */
+  /* (.flag-wrapper img to beat the button's earlier rules) */
   .flag-wrapper img {
     inset: 0;
     width: 100%;
@@ -749,9 +749,9 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
     box-shadow: none;
   }
 
-  /* Cambio de bandera con zoom (sin giro): la que sale crece y se desvanece,
-     la que entra llega desde grande a su tamaño. Ninguna baja de su tamaño
-     completo, así que el botón siempre queda cubierto (no se ve el fondo). */
+  /* Flag swap with zoom (no rotation): the outgoing one grows and fades out,
+     the incoming one shrinks from large to its size. Neither goes below its
+     full size, so the button is always covered (the background never shows). */
   .flag-wrapper img {
     transform: none !important;
     scale: 1.4;
@@ -784,7 +784,7 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
-/* Hover: la vista previa del otro idioma también entra con zoom */
+/* Hover: the preview of the other language also zooms in */
 @media (hover: hover) {
   .header .navbar .navbar__toggle--language {
     .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label:hover {
@@ -809,9 +809,9 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
-/* ============= Menú sutil (escritorio y panel móvil) =============
-   Opciones como texto claro atenuado; la activa a brillo completo con un
-   trazo dorado corto debajo (el único toque de color del menú). */
+/* ============= Subtle menu (desktop and mobile panel) =============
+   Options as dimmed light text; the active one at full brightness with a
+   short gold stroke below (the menu's only touch of color). */
 @media all {
   .header .navbar .navbar__menu .navbar__list {
     gap: 0.25rem;
@@ -867,8 +867,8 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
     }
   }
 
-  /* Botón de idioma a juego: sin contorno ni sombra, del alto de una letra
-     del menú, con la bandera siempre desaturada (también en hover) */
+  /* Matching language button: no outline or shadow, as tall as a menu
+     letter, with the flag always desaturated (on hover too) */
   .header .navbar .navbar__toggle--language .navbar__toggle--language-label {
     height: 1.15em;
     font-size: 0.95rem;
@@ -886,7 +886,7 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
     .header .navbar .navbar__toggle--language .navbar__toggle--language-label:hover {
       background: none;
       box-shadow: none;
-      /* sigue desaturada; solo se aclara un poco */
+      /* still desaturated; it only brightens a little */
       opacity: 1;
     }
   }
@@ -896,8 +896,8 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
-/* Panel móvil: mismas opciones que en escritorio, en columna y más grandes
-   para tocarlas con el dedo; luna/sol a juego (atenuado como las opciones) */
+/* Mobile panel: same options as on desktop, in a column and larger for
+   tapping with a finger; matching moon/sun (dimmed like the options) */
 @media (max-width: 599px) {
   .header .navbar .navbar__menu {
     .navbar__list {

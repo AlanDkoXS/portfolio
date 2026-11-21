@@ -112,4 +112,4 @@ python -m http.server 8000   # then open http://localhost:8000
 ## Conventions
 
 - Commit messages use gitmoji + uppercase verb, e.g. `:bug: FIXED: ...`, `:mag: MODIFIED: ...`.
-- Code comments are a mix of English and Spanish; READMEs exist in both (`README.md`, `README.es.md`).
+- All code is in English, comments included (JS, CSS, HTML, build scripts and the comments templates write into generated HTML). Only site content is Spanish (`translations.js` values, `scripts/data/`, `/es/` pages). READMEs exist in both languages (`README.md`, `README.es.md`).

@@ -1,4 +1,4 @@
-// Modal de resultado del formulario de contacto (index.html)
+// Contact form result modal (index.html)
 import { setupDialog } from './dialog.js';
 
 function closeModal() {

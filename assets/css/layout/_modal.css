@@ -1,4 +1,4 @@
-/* ============= Modal ============= */
+/* === Modal === */
 
 .modal-content {
   color: var(--primary-color);
@@ -11,7 +11,7 @@
   position: relative;
 }
 
-/* Botón X para cerrar (resume) */
+/* X button to close (resume) */
 .modal__close {
   position: absolute;
   top: 0.5rem;
@@ -44,8 +44,8 @@
   align-items: center;
   gap: 1rem;
 
-  /* Los botones no se encogen por debajo de su palabra: con texto del
-     sistema grande, si no caben juntos uno baja a la siguiente línea */
+  /* Buttons don't shrink below their word: with large system text,
+     if they don't fit together one drops to the next line */
   .btn {
     flex: 1 1 0;
     min-width: max-content;

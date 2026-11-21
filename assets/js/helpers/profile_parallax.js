@@ -31,7 +31,7 @@ function profileParallax() {
     const tilt = createTilt();
     const tick = (now) => {
       const { gamma, beta } = tilt.update(now);
-      moveLayers(gamma * 0.6, -beta * 0.6); // más sutil que con el mouse
+      moveLayers(gamma * 0.6, -beta * 0.6); // subtler than with the mouse
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);

@@ -1,8 +1,8 @@
-/* ============= Buttons ============= */
+/* === Buttons === */
 
-/* Estilo cartoon, a juego con las ilustraciones: color plano, contorno de tinta
-   y sombra dura desplazada (sin difuminado ni degradados). Al presionar, el
-   botón "se hunde" sobre su sombra. */
+/* Cartoon style, matching the illustrations: flat color, ink outline
+   and offset hard shadow (no blur or gradients). When pressed, the
+   button "sinks" onto its shadow. */
 .btn {
   --btn-ink: var(--btn-ink-color);
   --btn-offset: 4px;
@@ -23,12 +23,12 @@
   font-weight: var(--font-bold);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  /* Con texto del sistema grande el botón no se sale de la pantalla: su
-     texto pasa a otra línea en vez de forzar una sola. Sin balance: en una
-     caja con fondo/borde no cambia el ancho y solo deja hueco dentro */
+  /* With large system text the button doesn't overflow the screen: its text
+     wraps to another line instead of forcing a single one. No balance: in a box
+     with background/border it doesn't change the width and only leaves a gap inside */
   max-width: 100%;
-  /* break-word (no anywhere): solo parte una palabra si no cabe sola en
-     la línea; anywhere encogía el botón y partía "ENGL/ISH" */
+  /* break-word (not anywhere): only breaks a word if it doesn't fit alone
+     on the line; anywhere shrank the button and broke "ENGL/ISH" */
   overflow-wrap: break-word;
   text-align: center;
   color: var(--on-accent-color);
@@ -46,8 +46,8 @@
     color 0.15s ease;
 }
 
-/* Sombra interna granulada (abajo y derecha, la luz viene de arriba-izquierda
-   como la sombra dura). Queda detrás del texto gracias a isolation. */
+/* Grainy inner shadow (bottom and right, the light comes from the top left
+   like the hard shadow). It stays behind the text thanks to isolation. */
 .btn::after {
   content: '';
   position: absolute;
@@ -83,20 +83,20 @@
   pointer-events: none;
 }
 
-/* Secundario: mismo contorno y sombra, sin relleno; se rellena en hover */
+/* Secondary: same outline and shadow, no fill; it fills on hover */
 .btn--ghost {
-  color: var(--primary-color); /* turquesa oscuro en claro, dorado en oscuro */
+  color: var(--primary-color); /* dark teal in light, gold in dark */
   background: transparent;
-  border-color: var(--accent-ink); /* tinta en claro, dorado en oscuro */
+  border-color: var(--accent-ink); /* ink in light, gold in dark */
   box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--accent-color);
 }
 
-/* Sin relleno no hay sombra interna; aparece al rellenarse en hover */
+/* Without a fill there is no inner shadow; it appears when filled on hover */
 .btn--ghost::after {
   opacity: 0;
 }
 
-/* Hover solo con puntero real: en pantallas táctiles se queda "pegado" tras tocar */
+/* Hover only with a real pointer: on touch screens it stays "stuck" after a tap */
 @media (hover: hover) {
   .btn:hover {
     background: var(--btn-hover-bg);
@@ -104,7 +104,7 @@
     box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--btn-inset-shadow);
   }
 
-  /* El grano sube un poco al pasar el mouse */
+  /* The grain rises a bit on hover */
   .btn:hover::after {
     -webkit-mask: var(--btn-grain-mask-hover);
     mask: var(--btn-grain-mask-hover);
@@ -125,10 +125,10 @@
   }
 }
 
-/* Móvil / táctil: sin hover el grano se quedaba en su versión chica y, en
-   pantallas de alta densidad, los puntos del ruido salen tan finos que casi no
-   se ven. Aquí va más extendido (la máscara del hover) y con la variante de
-   puntos más grandes y densos. */
+/* Mobile / touch: without hover the grain stayed in its small version and,
+   on high-density screens, the noise dots come out so fine they're barely
+   visible. Here it spreads further (the hover mask) and uses the variant
+   with larger, denser dots. */
 @media (hover: none), (max-width: 599px) {
   .btn::after {
     background: var(--btn-grain-strong);

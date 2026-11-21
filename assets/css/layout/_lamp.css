@@ -1,14 +1,14 @@
-/* ============= Lámpara colgante =============
-   Cuelga del borde superior derecho, debajo del menú, y cambia el tema:
-   encendida = modo oscuro, apagada = modo claro (ver helpers/lamp.js).
-   Estados: reposo (off) · hover (over) · presionando (pull) · encendida (on)
-   - Escritorio: reemplaza al botón de luna/sol del menú.
-   - Móvil: centrada entre el borde y el retrato; se recoge al hacer scroll y
-     vuelve a los 3 s. Con el menú abierto aparece sobre el panel (en lugar
-     del botón de luna/sol, que en móvil se oculta). */
+/* ============= Hanging lamp =============
+   Hangs from the top right edge, below the menu, and switches the theme:
+   lit = dark mode, unlit = light mode (see helpers/lamp.js).
+   States: idle (off) · hover (over) · pressing (pull) · lit (on)
+   - Desktop: replaces the menu's moon/sun button.
+   - Mobile: centered between the edge and the portrait; it retracts on scroll
+     and comes back after 3 s. With the menu open it appears over the panel
+     (instead of the moon/sun button, which is hidden on mobile). */
 .lamp {
   --lamp-width: 84px;
-  /* cable visible debajo del menú: la lámpara cuelga, no queda pegada a la barra */
+  /* cable visible below the menu: the lamp hangs, it isn't stuck to the bar */
   --lamp-drop: 1.25rem;
   --lamp-top: calc(var(--header-height) + var(--lamp-drop));
   position: fixed;
@@ -17,12 +17,12 @@
   z-index: var(--z-lamp);
   display: block;
   width: var(--lamp-width);
-  /* cable desde arriba hasta donde empieza la imagen (bajo el menú) */
+  /* cable from the top down to where the image starts (below the menu) */
   padding: var(--lamp-top) 0 0;
   background: none;
   border: 0;
   cursor: pointer;
-  /* el cono de luz no bloquea clics del contenido */
+  /* the light cone doesn't block clicks on the content */
   pointer-events: none;
   -webkit-tap-highlight-color: transparent;
 
@@ -43,15 +43,15 @@
     height: auto;
     pointer-events: none;
     user-select: none;
-    /* gira desde donde se une con el cable */
+    /* rotates from where it joins the cable */
     transform-origin: 50% 0;
-    /* giroscopio (lamp.js): péndulo que se queda vertical al inclinar el
-       teléfono. Propiedad aparte de transform: se suma al balanceo */
+    /* gyroscope (lamp.js): pendulum that stays vertical when the phone is
+       tilted. A property separate from transform: it adds to the swing */
     rotate: var(--lamp-tilt, 0deg);
     transition: filter 0.2s ease;
   }
 
-  /* Solo la pantalla y la cadena reciben el clic */
+  /* Only the shade and the chain receive the click */
   .lamp__hit {
     position: absolute;
     top: var(--lamp-top);
@@ -81,8 +81,8 @@
   }
 }
 
-/* Móvil: la lámpara solo aparece dentro del menú hamburguesa abierto
-   (reemplaza al botón de luna/sol); cerrada, queda recogida detrás de la barra */
+/* Mobile: the lamp only appears inside the open hamburger menu
+   (replaces the moon/sun button); closed, it stays retracted behind the bar */
 @media (max-width: 599px) {
   .header .navbar .navbar__toggle--darkmode {
     display: none;
@@ -91,15 +91,15 @@
   .lamp {
     --lamp-width: clamp(96px, 27vw, 118px);
     --lamp-drop: 0.25rem;
-    /* a la izquierda de la X de cerrar: el cable no la cruza */
+    /* to the left of the close X: the cable doesn't cross it */
     right: calc(92px - var(--lamp-width) / 2);
     translate: 0 -100%;
     visibility: hidden;
     transition: translate 0.35s ease-in, visibility 0s 0.35s;
   }
 
-  /* Baja cuando el panel ya terminó de abrir (0.25s): cae, estira el cable
-     un poco de más y rebota como bungee hasta quedar quieta */
+  /* Drops once the panel has finished opening (0.25s): it falls, overstretches
+     the cable a little and bounces like a bungee until it comes to rest */
   .header.menu-open ~ .lamp {
     z-index: calc(var(--z-modal) + 1);
     translate: 0 0;
@@ -117,10 +117,10 @@
 @keyframes lamp-bungee {
   0% {
     translate: 0 -100%;
-    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.6); /* caída que acelera */
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.6); /* accelerating fall */
   }
   42% {
-    translate: 0 9%; /* el cable se estira de más */
+    translate: 0 9%; /* the cable overstretches */
     animation-timing-function: cubic-bezier(0.25, 0.6, 0.4, 1);
   }
   62% {
@@ -140,7 +140,7 @@
   }
 }
 
-/* Escritorio: más grande, casi en la orilla, y sin el botón de luna/sol */
+/* Desktop: larger, almost at the edge, and without the moon/sun button */
 @media (min-width: 600px) {
   .header .navbar .navbar__toggle--darkmode {
     display: none;
@@ -148,34 +148,34 @@
 
   .lamp {
     --lamp-drop: 2.75rem;
-    /* Centrada en el margen derecho (espacio entre el contenido de 1024px y la
-       orilla). El ancho se adapta al margen (150–230px) para que quepa
-       centrada; sin margen suficiente queda pegada a la orilla. */
+    /* Centered in the right margin (space between the 1024px content and the
+       edge). The width adapts to the margin (150–230px) so it fits
+       centered; without enough margin it sits flush against the edge. */
     --lamp-margin: max(0px, (100vw - var(--scrollbar-w, 0px) - 1024px) / 2);
     --lamp-width: clamp(150px, var(--lamp-margin) - 0.75rem, 230px);
     right: max(0px, var(--lamp-margin) / 2 - var(--lamp-width) / 2);
   }
 }
 
-/* Estados. Orden de prioridad: presionando > encendida > hover > reposo */
+/* States. Priority order: pressing > lit > hover > idle */
 .lamp[aria-pressed='true'] .lamp__on {
   opacity: 1;
 }
 
 @media (hover: hover) {
-  /* Apagada: la pantalla responde al pasar el mouse */
+  /* Unlit: the shade responds on mouse hover */
   .lamp:hover:not([aria-pressed='true']) .lamp__over {
     opacity: 1;
     filter: brightness(1.25);
   }
 
-  /* Encendida: la luz brilla un poco más al pasar el mouse */
+  /* Lit: the light glows a little brighter on mouse hover */
   .lamp[aria-pressed='true']:hover .lamp__on {
     filter: brightness(1.12);
   }
 }
 
-/* Balanceo: al pasar el mouse (escritorio) o después de tocarla (móvil) */
+/* Swing: on mouse hover (desktop) or after tapping it (mobile) */
 @media (prefers-reduced-motion: no-preference) {
   @media (hover: hover) {
     .lamp:hover img {
@@ -188,8 +188,8 @@
   }
 }
 
-/* Presionando: solo se ve la imagen de la cadena jalada. Va con
-   !important porque debe ganarle al hover (que tiene más especificidad). */
+/* Pressing: only the pulled-chain image is visible. Uses !important
+   because it must beat the hover (which has higher specificity). */
 .lamp.lamp--pulling img {
   opacity: 0 !important;
   animation: none !important;
@@ -200,9 +200,9 @@
   opacity: 1 !important;
 }
 
-/* Encendida y presionando: la imagen de la cadena jalada no tiene luz y
-   parecía que se apagaba al tocarla (y luego se apagaba de verdad). Se queda
-   la luz encendida, solo baja un poco como si se jalara, y se apaga una vez. */
+/* Lit and pressing: the pulled-chain image has no light, so it looked like
+   it turned off when touched (and then turned off for real). The light stays
+   on, it just drops a little as if pulled, and turns off only once. */
 .lamp[aria-pressed='true'].lamp--pulling .lamp__on {
   opacity: 1 !important;
   translate: 0 3px;

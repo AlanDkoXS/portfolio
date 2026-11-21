@@ -1,4 +1,4 @@
-/* ============= Resume  ============= */
+/* === Resume === */
 
 .resume__logo--name {
   font-weight: 300;
@@ -9,8 +9,8 @@
   font-weight: 600;
 }
 
-/* La sección del CV ocupa toda la pantalla visible: el footer queda fuera de
-   la vista inicial y el PDF baja un poco respecto a la barra */
+/* The CV section fills the whole visible screen: the footer stays out of
+   the initial view and the PDF sits a bit below the bar */
 #pdf-container {
   display: flex;
   flex-direction: column;
@@ -33,7 +33,7 @@
   outline: 1px solid var(--border-color);
 }
 
-/* Modal de descarga */
+/* Download modal */
 .modal-content h2,
 .modal-content p {
   text-align: center;
@@ -51,7 +51,7 @@
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  /* Lo mueve resume_fab_buttons.js (translate) para no tapar el footer */
+  /* Moved by resume_fab_buttons.js (translate) so it doesn't cover the footer */
   transition: translate 0.15s linear;
 }
 

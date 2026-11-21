@@ -1,8 +1,8 @@
-// Google Tag Manager (contenedor alanquintana.pro). GA4 (G-8QH5RNPMBF) y
-// cualquier otra etiqueta se configuran en GTM, no aquí.
-// Se carga diferido (inactividad o primera interacción) para no competir con
-// el LCP/INP, nunca en local ni durante el prerender de speculation rules
-// (contaría visitas que no ocurrieron), y una sola vez por página.
+// Google Tag Manager (alanquintana.pro container). GA4 (G-8QH5RNPMBF) and
+// any other tag are configured in GTM, not here.
+// It's loaded deferred (idle or first interaction) so it doesn't compete with
+// the LCP/INP, never locally nor during the speculation rules prerender
+// (it would count visits that never happened), and only once per page.
 const GTM_ID = "GTM-MRJGJ8NP";
 
 const isLocalhost = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
@@ -44,7 +44,7 @@ function scheduleLoad() {
 export function loadGoogleTagManager() {
     if (isLocalhost || started) return;
 
-    // Página prerenderizada: esperar a que el usuario la active de verdad
+    // Prerendered page: wait until the user actually activates it
     if (document.prerendering) {
         document.addEventListener("prerenderingchange", scheduleLoad, { once: true });
         return;

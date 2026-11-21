@@ -1,4 +1,4 @@
-// true cuando el sistema del usuario pide reducir el movimiento.
-// Los efectos decorativos (parallax, giroscopio, nieve) no se inician en ese caso.
+// true when the user's system asks for reduced motion.
+// Decorative effects (parallax, gyroscope, snow) don't start in that case.
 export const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;

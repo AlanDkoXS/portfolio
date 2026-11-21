@@ -5,10 +5,10 @@
 html {
   box-sizing: border-box;
 
-  /* Tamaño de texto del sistema. Todos los tamaños del sitio van en rem, así
-     que crecen con él: en Android/Chrome (meta text-scale) y con el ajuste de
-     tamaño de letra del navegador. En iPhone/iPad, -apple-system-body toma el
-     tamaño de "Texto más grande" (Dynamic Type); la familia la pone body. */
+  /* System text size. Every size on the site is in rem, so they grow with
+     it: on Android/Chrome (meta text-scale) and with the browser's font size
+     setting. On iPhone/iPad, -apple-system-body picks up the "Larger Text"
+     size (Dynamic Type); the family is set by body. */
   @supports (font: -apple-system-body) {
     font: -apple-system-body;
   }
@@ -27,9 +27,9 @@ html {
   body {
     margin: 0;
     padding: 0;
-    /* Textos en DM Sans; títulos en Outfit (--title-font); logo y loader en Poppins */
+    /* Text in DM Sans; headings in Outfit (--title-font); logo and loader in Poppins */
     font-family: var(--primary-font);
-    /* palabras largas (correo, URLs) se parten antes que salirse */
+    /* long words (email, URLs) break rather than overflow */
     overflow-wrap: break-word;
     font-size: var(--normal-font-size);
     color: var(--primary-color);
@@ -76,8 +76,8 @@ html {
     padding: 0;
   }
 
-  /* Títulos y descripciones cortas: líneas de largo parecido (sin una
-     palabra sola en la última línea). Los párrafos largos usan pretty (abajo). */
+  /* Headings and short descriptions: lines of similar length (no single
+     word alone on the last line). Long paragraphs use pretty (below). */
   :is(h1, h2, h3, h4, h5, h6),
   :is(
     .section__title,
@@ -94,8 +94,8 @@ html {
 
   p {
     font-size: var(--normal-font-size);
-    /* sin justificar (dejaba huecos entre palabras en móvil); pretty evita
-       líneas finales de una sola palabra */
+    /* not justified (it left gaps between words on mobile); pretty avoids
+       last lines with a single word */
     text-wrap: pretty;
   }
 
@@ -121,8 +121,8 @@ html {
     color: var(--primary-color);
   }
 
-  /* <dialog> modal nativo (showModal): la caja es la tarjeta; el oscurecido
-     va en ::backdrop, así el clic fuera (closedby="any") cae en el backdrop */
+  /* Native modal <dialog> (showModal): the box is the card; the dimming
+     lives in ::backdrop, so an outside click (closedby="any") hits the backdrop */
   dialog {
     width: min(100% - 2rem, 340px);
     padding: 0;
@@ -133,10 +133,10 @@ html {
     overflow: visible;
   }
 
-  /* Que el scroll dentro del modal o sobre el fondo no mueva la página */
+  /* Scrolling inside the modal or over the backdrop must not move the page */
   dialog:modal {
     overscroll-behavior: contain;
-    /* el reset global (margin: 0) quita el centrado nativo del <dialog> */
+    /* the global reset (margin: 0) removes the <dialog>'s native centering */
     margin: auto;
     inset: 0;
   }
@@ -151,7 +151,7 @@ html {
 
 }
 
-/* ============= Media Queries MIN WIDTH (600px)============= */
+/* === Media Queries MIN WIDTH (600px) === */
 
 @media (min-width: 600px) {
   section {
@@ -159,25 +159,25 @@ html {
   }
 }
 
-/* ============= Transición entre páginas (home ↔ resume, / ↔ /es/) =============
-   Fundido nativo entre documentos; los navegadores sin soporte cambian de
-   página como siempre. Sin animación con "reducir movimiento". */
+/* ============= Page transition (home ↔ resume, / ↔ /es/) =============
+   Native cross-document fade; browsers without support switch pages as
+   usual. No animation with "reduce motion". */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {
     navigation: auto;
   }
 }
 
-/* Las secciones llevan tabindex="-1" para recibir el foco al saltar a un
-   #hash (/es/#home al cambiar de idioma, enlaces del menú). No son
-   interactivas: sin anillo de foco (en Chrome Android dibujaba líneas
-   blancas alrededor del hero). */
+/* Sections carry tabindex="-1" so they receive focus when jumping to a
+   #hash (/es/#home when switching language, menu links). They aren't
+   interactive: no focus ring (Chrome Android drew white lines around
+   the hero). */
 section[tabindex='-1']:focus {
   outline: none;
 }
 
-/* La fuente de íconos (Boxicons) casi no tiene altura de minúsculas: con
-   font-size-adjust se encogería. Los íconos usan su tamaño real. */
+/* The icon font (Boxicons) has almost no x-height: font-size-adjust
+   would shrink it. Icons use their real size. */
 .bx,
 [class^='bx-'],
 [class*=' bx-'] {

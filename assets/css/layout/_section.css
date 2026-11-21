@@ -1,18 +1,18 @@
-/* ============= Sections ============= */
+/* === Sections === */
 
 section {
   padding: 4rem 0;
 }
 
-/* Fundido al hacer scroll: cada bloque aparece (opacidad + sube 2rem)
-   mientras entra por abajo de la pantalla, ligado al scroll (se ve el
-   fundido al bajar y se revierte al subir).
-   Antes se animaban los hijos directos de cada sección: en bloques más altos
-   que la pantalla el tramo de entrada abarcaba casi toda la sección, y
-   el efecto a veces no se notaba. Ahora se animan bloques pequeños y el
-   tramo es fijo (los primeros 240px de su entrada), sin importar su alto.
-   Contenido visible por defecto: sin soporte de scroll-driven animations o
-   con "reducir movimiento" simplemente se muestra (efecto decorativo). */
+/* Fade on scroll: each block appears (opacity + rises 2rem)
+   while it enters from the bottom of the screen, tied to the scroll (the
+   fade shows when scrolling down and reverses when scrolling up).
+   The direct children of each section used to be animated: in blocks taller
+   than the screen the entry range spanned almost the whole section, and
+   the effect was sometimes unnoticeable. Now small blocks are animated and
+   the range is fixed (the first 240px of their entry), whatever their height.
+   Content visible by default: without scroll-driven animations support or
+   with "reduce motion" it is simply shown (decorative effect). */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
     @keyframes section-enter {
@@ -52,17 +52,17 @@ section {
 .section__title {
   text-align: start;
   margin: 0.8rem 0;
-  /* el título va fuera de .grid--container: mismo ancho y margen lateral
-     que el contenido para alinearse a su izquierda */
+  /* the title sits outside .grid--container: same width and side margin
+     as the content so it aligns with its left edge */
   box-sizing: border-box;
   max-width: 1024px;
   margin-inline: auto;
   padding-inline: 1rem;
 }
 
-/* Al navegar desde el menú/botones, cada sección ocupa la pantalla visible
-   (debajo del header) y su contenido queda centrado verticalmente.
-   Solo <section>: el footer también lleva la clase .section */
+/* When navigating from the menu/buttons, each section fills the visible
+   screen (below the header) and its content is vertically centered.
+   <section> only: the footer also carries the .section class */
 section.section {
   min-height: calc(100svh - var(--header-height));
   display: grid;
@@ -70,8 +70,8 @@ section.section {
   scroll-margin-top: var(--header-height);
 }
 
-/* Los contenedores usan margin: 0 auto; en un grid eso los encogería al
-   contenido, así que se fuerza el ancho completo (max-width sigue mandando) */
+/* Containers use margin: 0 auto; in a grid that would shrink them to their
+   content, so full width is forced (max-width still wins) */
 section.section > * {
   width: 100%;
 }

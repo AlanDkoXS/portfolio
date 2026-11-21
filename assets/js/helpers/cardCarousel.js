@@ -25,15 +25,15 @@ export function cardCarousel() {
         }
       });
 
-      // Táctil: si el gesto es vertical se deja pasar (scroll de la página);
-      // si es horizontal, mueve el carrusel. touch-action: pan-y en el CSS
-      // hace que el navegador no compita por el gesto horizontal.
+      // Touch: if the gesture is vertical it's let through (page scroll);
+      // if it's horizontal, it moves the carousel. touch-action: pan-y in the CSS
+      // keeps the browser from competing for the horizontal gesture.
       this.target.addEventListener("touchstart", (e) => {
         const start = e.touches[0];
         const sx = start.clientX;
         const sy = start.clientY;
         const t0 = performance.now();
-        let mode = null; // null → aún no se sabe; 'x' → carrusel; 'y' → scroll
+        let mode = null; // null → not known yet; 'x' → carousel; 'y' → scroll
         let lastX = sx;
         handler = callback(e);
 
@@ -43,7 +43,7 @@ export function cardCarousel() {
             const dx = Math.abs(t.clientX - sx);
             const dy = Math.abs(t.clientY - sy);
             if (dx < 4 && dy < 4) return;
-            // ligera preferencia por el horizontal (los pulgares no van rectos)
+            // slight preference for horizontal (thumbs don't move in straight lines)
             mode = dx * 1.2 > dy ? "x" : "y";
           }
           if (mode === "x") {
@@ -52,8 +52,8 @@ export function cardCarousel() {
           }
         };
         const clearDraggingEvent = () => {
-          // Deslizamiento rápido y corto (flick): avanza una tarjeta aunque no
-          // se haya arrastrado la mitad del paso
+          // Quick, short swipe (flick): advances one card even if it wasn't
+          // dragged half a step
           const dx = lastX - sx;
           const step = this.dragStep ? this.dragStep() : 250;
           if (mode === "x" && Math.abs(dx) > 20 && Math.abs(dx) < step / 2 && performance.now() - t0 < 350) {
@@ -187,8 +187,8 @@ export function cardCarousel() {
         card.setAttribute("data-x", data.x);
       }
 
-      // La posición va en transform (la mueve la GPU, sin recalcular el
-      // diseño en cada cuadro); left se queda fijo en 50%
+      // The position goes in transform (moved by the GPU, without recomputing
+      // layout on every frame); left stays fixed at 50%
       if (data.scale !== undefined) card.dataset.scale = data.scale;
       if (data.leftPos !== undefined) card.dataset.pos = data.leftPos;
       const scale = card.dataset.scale ?? 1;
@@ -253,7 +253,7 @@ export function cardCarousel() {
       }
     }
 
-    // Escritorio: hay espacio para extender el carrusel hasta las flechas
+    // Desktop: there's room to extend the carousel out to the arrows
     isWide() {
       return this.container.offsetWidth >= 700;
     }
@@ -264,14 +264,14 @@ export function cardCarousel() {
         return 0; 
       }
 
-      // Móvil: solo la central y una a cada lado; de 1 a 2 se desvanece
+      // Mobile: only the center card and one on each side; from 1 to 2 it fades out
       if (!this.isWide()) {
         const a = Math.abs(x);
         if (a >= 2) return 0;
         if (a > 1) return 0.8 * (2 - a);
       }
 
-      // En escritorio las laterales se encogen menos (0.88 y 0.52)
+      // On desktop the side cards shrink less (0.88 and 0.52)
       const k = this.isWide() ? 0.12 : 1 / 5;
       const formula = 1 - k * Math.pow(x, 2);
       return formula <= 0 ? 0 : formula;
@@ -293,16 +293,16 @@ export function cardCarousel() {
         return 50; // Central position
       }
 
-      // Posición del centro de la tarjeta (con translateX(-50%) en CSS), continua
-      // respecto a x para que el arrastre se deslice sin saltos
+      // Position of the card's center (with translateX(-50%) in CSS), continuous
+      // with respect to x so the drag slides without jumps
       const a = Math.abs(x);
       const sign = Math.sign(x);
       const W = this.container.offsetWidth;
       if (this.isWide()) {
-        // Escritorio: las de la orilla llegan cerca de las flechas, que están
-        // en las orillas del contenido (1024px). Las intermedias, a la mitad.
+        // Desktop: the edge cards reach close to the arrows, which sit at the
+        // edges of the content (1024px). The in-between ones, halfway.
         const cardW = this.cards[0].offsetWidth;
-        // margen + flecha + 2rem de separación entre la flecha y la tarjeta
+        // margin + arrow + 2rem gap between the arrow and the card
         const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
         const arrowSpace = 16 + 48 + 2 * rem;
         const half = Math.min(W, 1024) / 2 - arrowSpace;
@@ -311,8 +311,8 @@ export function cardCarousel() {
         const off = a <= 1 ? inner * a : inner + (outer - inner) * Math.min(a - 1, 1);
         return 50 + (sign * off * 100) / W;
       }
-      // Móvil: la lateral asoma por completo en el espacio libre de cada lado
-      // (su orilla exterior toca la orilla del contenedor)
+      // Mobile: the side card peeks out fully in the free space on each side
+      // (its outer edge touches the container's edge)
       const sideW = this.cards[0].offsetWidth * 0.8;
       const innerPct = 50 - ((sideW / 2) * 100) / W;
       return 50 + sign * innerPct * a;
@@ -361,8 +361,8 @@ export function cardCarousel() {
       }
     }
 
-    // Distancia de arrastre que equivale a una tarjeta: 250px en escritorio,
-    // ~30% del ancho en móvil (basta un movimiento corto del pulgar)
+    // Drag distance equivalent to one card: 250px on desktop,
+    // ~30% of the width on mobile (a short thumb movement is enough)
     dragStep() {
       return this.isWide() ? 250 : this.container.offsetWidth * 0.3;
     }
@@ -371,7 +371,7 @@ export function cardCarousel() {
       let xDist;
 
       if (data != null) {
-        // mientras se arrastra, sin transición: las tarjetas van pegadas al dedo
+        // while dragging, no transition: the cards stick to the finger
         this.container.classList.add("is-dragging");
         this.container.classList.remove("smooth-return");
         xDist = data.x / this.dragStep();

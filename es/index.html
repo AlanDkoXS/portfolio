@@ -4,13 +4,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Respeta el tamaño de texto del sistema: Android/Chrome lo aplica al tamaño
-         base (rem) en vez de hacer zoom a toda la página -->
+    <!-- Respects the system text size: Android/Chrome applies it to the base
+         size (rem) instead of zooming the whole page -->
     <meta name="text-scale" content="scale" />
-    <!-- Tema: oscuro si el sistema está en modo oscuro; si no, por horario (oscuro de
-         18:00 a 6:00, hora local). El botón guarda una excepción hasta el siguiente
-         cambio (localStorage.theme / themeUntil).
-         Se aplica antes de pintar; sin JS se sigue al sistema. -->
+    <!-- Theme: dark if the system is in dark mode; otherwise time-based (dark from
+         18:00 to 6:00, local time). The button stores an override until the next
+         switch (localStorage.theme / themeUntil).
+         Applied before first paint; without JS the system scheme is followed. -->
     <meta name="color-scheme" content="light dark" />
     <script>
       {
@@ -24,17 +24,17 @@
       }
     </script>
     <script>
-      // El loader solo se muestra en la primera carga de la sesión: al cambiar
-      // de idioma o volver al inicio la página aparece directo
+      // The loader only shows on the first load of the session: when switching
+      // language or going back to the home page, the page appears right away
       document.documentElement.classList.add('js');
       try {
-        // También sin loader si la página se está prerenderizando (cambio de
-        // idioma): al activarse aparece lista, sin pantalla de carga
+        // Also no loader if the page is being prerendered (language switch):
+        // once activated it shows up ready, with no loading screen
         if (sessionStorage.getItem('aq-loaded') || document.prerendering)
           document.documentElement.classList.add('skip-loader');
         else
-          // Con loader: precargar ya sus pesos de Poppins (200 y 600) para que
-          // la animación arranque con la tipografía lista (loader.js la espera)
+          // With loader: preload its Poppins weights (200 and 600) right now so
+          // the animation starts with the font ready (loader.js waits for it)
           for (const w of [200, 600]) {
             const l = document.createElement('link');
             l.rel = 'preload';
@@ -46,7 +46,7 @@
           }
       } catch {}
     </script>
-    <!-- Sin JS no hay quien quite el loader: que no tape el contenido -->
+    <!-- Without JS nothing removes the loader: don't let it cover the content -->
     <noscript><style>.loader { display: none !important; }</style></noscript>
     <meta name="author" content="Alan Quintana" />
     <meta data-i18n-attr="content:meta.description"
@@ -64,7 +64,7 @@
     <link rel="alternate" hreflang="en" href="https://alanquintana.pro/" />
     <link rel="alternate" hreflang="es" href="https://alanquintana.pro/es/" />
     <link rel="alternate" hreflang="x-default" href="https://alanquintana.pro/" />
-    <!-- Perfil para asistentes de IA y agentes (EN/ES) -->
+    <!-- Profile for AI assistants and agents (EN/ES) -->
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly profile" />
     <script>
       // First visit to the English page with a Spanish browser → /es/.
@@ -182,26 +182,26 @@
       }
     </script>
 
-    <!-- Preconnect (solo terceros que se siguen usando) -->
+    <!-- Preconnect (only third parties still in use) -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
-    <!-- Estilos: un solo archivo generado (assets/css/main.src.css → main.css,
-         incluye Boxicons recortado) -->
+    <!-- Styles: a single generated file (assets/css/main.src.css → main.css,
+         includes the Boxicons subset) -->
     <link rel="stylesheet" href="/assets/css/main.css" />
 
-    <!-- Fuentes autoalojadas: DM Sans, Outfit y Poppins del logo (en main.css) y Boxicons (solo los
-         íconos usados, ~3 KB). Se precargan para que texto e íconos aparezcan sin espera -->
+    <!-- Self-hosted fonts: DM Sans, Outfit and the logo's Poppins (in main.css) and Boxicons (only the
+         icons in use, ~3 KB). Preloaded so text and icons show up without waiting -->
     <link rel="preload" href="/assets/fonts/dm-sans/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/outfit/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/boxicons/boxicons.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- El fondo del retrato es el LCP y es un fondo CSS: el escáner de
-         precarga no lo ve. El sprite se pide al aplicar el CSS -->
+    <!-- The portrait background is the LCP and it's a CSS background: the
+         preload scanner can't see it. The sprite is requested when the CSS applies -->
     <link rel="preload" href="/assets/img/profile_bg.svg" as="image" type="image/svg+xml" fetchpriority="high" />
 
-    <!-- Módulos del tercer nivel (main.js → helper → estos): sin esto se
-         descubren uno tras otro -->
+    <!-- Third-level modules (main.js → helper → these): without this they
+         are discovered one after another -->
     <link rel="modulepreload" href="/assets/js/helpers/motion.js" />
     <link rel="modulepreload" href="/assets/js/helpers/tilt.js" />
     <link rel="modulepreload" href="/assets/js/helpers/typing.js" />
@@ -224,10 +224,10 @@
   </head>
 
   <body>
-    <!-- Filtro de sombra interna granulada para íconos SVG: dorado oscuro con
-         grano que entra desde todo el contorno y se desvanece hacia el centro
-         (radial, ~50% del ícono).
-         Se usa con filter: url(#grain-inset) -->
+    <!-- Grainy inner shadow filter for SVG icons: dark gold with grain
+         coming in from the whole outline and fading out toward the center
+         (radial, ~50% of the icon).
+         Used with filter: url(#grain-inset) -->
     <svg class="sr-filters" width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute">
       <filter id="grain-inset" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
         <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="blur" />
@@ -243,8 +243,8 @@
           <feMergeNode in="grainEdge" />
         </feMerge>
       </filter>
-      <!-- Mismo grano en gris (#8f969b, igual que el de los botones):
-           íconos gris casi blanco del modo oscuro (ver --icon-grain en _variables.css) -->
+      <!-- Same grain in gray (#8f969b, same as the buttons'):
+           near-white gray icons of dark mode (see --icon-grain in _variables.css) -->
       <filter id="grain-inset-bright" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
         <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="blur" />
         <feComposite in="SourceAlpha" in2="blur" operator="out" result="edge" />
@@ -387,7 +387,7 @@
         ></a>
       </nav>
     </header>
-    <!-- Lámpara colgante (escritorio): cambia el tema. Encendida = modo claro -->
+    <!-- Hanging lamp: theme switch. Lit = dark mode -->
     <button
       type="button"
       class="lamp"
@@ -436,7 +436,7 @@
                 ><i class="bx bxl-github"></i
               ></a>
             </li>
-            <!-- Desactivado: la cuenta de Dribbble todavía no es Pro (el perfil aún no se puede usar).
+            <!-- Disabled: the Dribbble account isn't Pro yet (the profile can't be used yet).
             <li class="home__social-item">
               <a
                 class="home__social-link"
@@ -515,9 +515,9 @@
           <p data-i18n="skillsDescription" class="skills__description">Creo soluciones escalables y eficientes, desde interfaces interactivas hasta sistemas backend completos. Mi objetivo es crear herramientas digitales que optimicen procesos, mejoren la interacción con los usuarios y aporten valor a tu negocio.</p>
           <div class="skills__wrapper">
             <div class="skills__icons">
-              <!-- Desarrollo: fila en bucle infinito (4 copias de la lista; la 1.ª es la
-                   accesible). El botón de pausa (WCAG 2.2.2) va a la derecha del título;
-                   lo muestra skills_marquee.js solo si hay animación -->
+              <!-- Development: infinitely looping row (4 copies of the list; the 1st is
+                   the accessible one). The pause button (WCAG 2.2.2) sits right of the
+                   title; skills_marquee.js shows it only when there is animation -->
               <div class="skills__group skills__group--marquee">
                 <div class="skills__group-header">
                   <h3 data-i18n="skillsDevelopmentTools" class="skills__title skills__development-tools-title">Herramientas para Desarrollo</h3>
@@ -573,7 +573,7 @@
                 </div>
               </div>
 
-              <!-- Diseño, Frontend y Backend: acordeones nativos (funcionan sin JS) -->
+              <!-- Design, Frontend and Backend: native accordions (work without JS) -->
               <div class="skills__accordions">
                 <details class="skills__accordion">
                   <summary class="skills__summary btn btn--ghost">
@@ -645,7 +645,7 @@
               <span data-i18n="skillsTags.4" class="skills__tag">Comunicativo</span>
               <span data-i18n="skillsTags.5" class="skills__tag">Sentido de Urgencia</span>
               <span data-i18n="skillsTags.6" class="skills__tag">Detallista</span>
-              <!-- medios ladrillos decorativos en las orillas de la 1.ª y 3.ª hilada -->
+              <!-- decorative half bricks at the edges of the 1st and 3rd courses -->
               <span class="skills__brick-half skills__brick-half--r1-start" aria-hidden="true"></span>
               <span class="skills__brick-half skills__brick-half--r1-end" aria-hidden="true"></span>
               <span class="skills__brick-half skills__brick-half--r3-start" aria-hidden="true"></span>
@@ -1153,7 +1153,7 @@
             </div>
           </li>
         </ul>
-        <!-- Desactivado: la cuenta de Dribbble todavía no es Pro (el perfil aún no se puede usar).
+        <!-- Disabled: the Dribbble account isn't Pro yet (the profile can't be used yet).
         <a class="btn btn--primary designs__more" href="https://dribbble.com/Alan3XS" target="_blank" rel="noopener">See more on Dribbble</a>
         -->
       </section>

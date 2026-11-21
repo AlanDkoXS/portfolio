@@ -1,15 +1,15 @@
 #!/usr/bin/env node
-// Descarga los shots de Dribbble y los deja listos para la sección "Designs"
-// del home. Se corre a mano cuando subes shots nuevos; el token nunca llega
-// al navegador.
+// Downloads the Dribbble shots and gets them ready for the "Designs" section
+// of the home page. Run it by hand after uploading new shots; the token never
+// reaches the browser.
 //
-//   DRIBBBLE_TOKEN=xxxx node scripts/build-dribbble.mjs   (DRIBBBLE_LIMIT=12 opcional)
+//   DRIBBBLE_TOKEN=xxxx node scripts/build-dribbble.mjs   (DRIBBBLE_LIMIT=12 optional)
 //
-// - assets/img/dribbble/<id>.webp  → portada de cada shot, 800×600 (2× la tarjeta)
-// - scripts/data/dribbble.json     → datos de los shots (se commitea)
-// - luego corre build-i18n.mjs, que escribe la sección en index.html y es/index.html
+// - assets/img/dribbble/<id>.webp  → cover of each shot, 800×600 (2× the card)
+// - scripts/data/dribbble.json     → shot data (committed)
+// - then runs build-i18n.mjs, which writes the section into index.html and es/index.html
 //
-// El token es un access token de una app de Dribbble (scope "public"):
+// The token is an access token of a Dribbble app ("public" scope):
 // https://dribbble.com/account/applications
 
 import fs from 'node:fs';
@@ -26,7 +26,7 @@ const dataPath = path.join(root, 'scripts/data/dribbble.json');
 const SIZE = { width: 800, height: 600 };
 
 if (!token) {
-  console.error('Falta DRIBBBLE_TOKEN (access token de https://dribbble.com/account/applications)');
+  console.error('Missing DRIBBBLE_TOKEN (access token from https://dribbble.com/account/applications)');
   process.exit(1);
 }
 
@@ -48,11 +48,11 @@ for (const shot of shots.slice(0, limit)) {
   const src = shot.images?.hidpi || shot.images?.normal;
   if (!src) continue;
   const res = await fetch(src);
-  if (!res.ok) throw new Error(`Imagen del shot ${shot.id}: ${res.status}`);
+  if (!res.ok) throw new Error(`Image of shot ${shot.id}: ${res.status}`);
   const raw = path.join(tmp, String(shot.id));
   fs.writeFileSync(raw, Buffer.from(await res.arrayBuffer()));
   const file = `${shot.id}.webp`;
-  // [0]: primer cuadro si el shot es animado (GIF)
+  // [0]: first frame if the shot is animated (GIF)
   execFileSync('magick', [
     `${raw}[0]`,
     '-resize', `${SIZE.width}x${SIZE.height}^`,
@@ -73,11 +73,11 @@ for (const shot of shots.slice(0, limit)) {
 }
 fs.rmSync(tmp, { recursive: true, force: true });
 
-// Borra portadas de shots que ya no están
+// Deletes covers of shots that no longer exist
 const keep = new Set(items.map((s) => `${s.id}.webp`));
 for (const f of fs.readdirSync(imgDir)) if (!keep.has(f)) fs.rmSync(path.join(imgDir, f));
 
 fs.writeFileSync(dataPath, JSON.stringify({ profile: user.html_url, shots: items }, null, 2) + '\n');
-console.log(`✔ ${items.length} shots de Dribbble en scripts/data/dribbble.json`);
+console.log(`✔ ${items.length} Dribbble shots in scripts/data/dribbble.json`);
 
 execFileSync(process.execPath, [path.join(root, 'scripts/build-i18n.mjs')], { stdio: 'inherit' });

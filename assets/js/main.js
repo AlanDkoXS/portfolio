@@ -30,7 +30,7 @@ import switchLanguages from "./helpers/switchLanguages.js";
 
 // External Services
 import { loadGoogleTagManager } from "./helpers/google-tag-manager.js";
-// EmailJS lo carga send_form.js cuando se usa el formulario
+// EmailJS is loaded by send_form.js when the form is used
 
 // ---------------------------
 // APPLICATION STATE

@@ -54,7 +54,7 @@ function render(html, lang) {
     /(<([a-zA-Z][a-zA-Z0-9]*)\b[^>]*?\sdata-i18n="([^"]+)"[^>]*>)([\s\S]*?)(<\/\2>)/g,
     (m, open, _tag, key, _text, close) => {
       const value = t(key, lang);
-      // *texto* → <strong>texto</strong> (énfasis en textos traducidos)
+      // *text* → <strong>text</strong> (emphasis in translated texts)
       return value === null ? m : `${open}${emphasize(escapeText(value))}${close}`;
     },
   );
@@ -92,21 +92,21 @@ function render(html, lang) {
 }
 
 // ---------------------------------------------------------------------------
-// CSS: main.src.css (lista de @import) → main.css en un solo archivo.
-// Un @import encadena peticiones (HTML → main.css → parciales) antes de pintar.
+// CSS: main.src.css (list of @imports) → main.css as a single file.
+// An @import chains requests (HTML → main.css → partials) before painting.
 // ---------------------------------------------------------------------------
 {
   const cssDir = path.join(root, 'assets/css');
   const src = fs.readFileSync(path.join(cssDir, 'main.src.css'), 'utf8');
   const bundled = src
-    // los @import comentados se quedan fuera
+    // commented-out @imports are left out
     .replace(/\/\*\s*@import[^*]*\*\/\n?/g, '')
     .replace(/@import url\(['"]?\.\/([^'")]+)['"]?\);?/g, (_, file) => {
       const css = fs.readFileSync(path.join(cssDir, file), 'utf8').trim();
       return `/* --- ${file} --- */\n${css}\n`;
     });
   if (/^\s*@import/m.test(bundled)) {
-    console.error('main.src.css: quedó un @import sin resolver');
+    console.error('main.src.css: an @import was left unresolved');
     process.exit(1);
   }
   fs.writeFileSync(
@@ -117,9 +117,9 @@ function render(html, lang) {
 }
 
 // ---------------------------------------------------------------------------
-// Íconos de skills: los <symbol> de assets/img/skills/*.svg → un solo sprite
-// assets/img/skills.svg (una petición en vez de una por tecnología). El markup
-// usa <use href="/assets/img/skills.svg?v=<hash>#iconX"> (hash puesto por el generador).
+// Skill icons: the <symbol>s in assets/img/skills/*.svg → a single sprite
+// assets/img/skills.svg (one request instead of one per technology). The markup
+// uses <use href="/assets/img/skills.svg?v=<hash>#iconX"> (hash set by the generator).
 // ---------------------------------------------------------------------------
 {
   const dir = path.join(root, 'assets/img/skills');
@@ -133,7 +133,7 @@ function render(html, lang) {
       return [...svg.matchAll(/<symbol\b[\s\S]*?<\/symbol>/g)].map(([symbol]) => {
         const id = symbol.match(/\bid="([^"]+)"/)?.[1];
         if (!id || ids.has(id)) {
-          console.error(`skills/${file}: <symbol> sin id o con id repetido (${id})`);
+          console.error(`skills/${file}: <symbol> without an id or with a duplicate id (${id})`);
           process.exit(1);
         }
         ids.add(id);
@@ -145,8 +145,8 @@ function render(html, lang) {
     `<svg xmlns="http://www.w3.org/2000/svg" style="display:none">${symbols.join('')}</svg>\n`;
   fs.writeFileSync(path.join(root, 'assets/img/skills.svg'), sprite);
 
-  // Versión del sprite en la URL (?v=hash): /assets/img/* se cachea hasta un día,
-  // así un ícono nuevo no queda invisible por un sprite viejo en caché.
+  // Sprite version in the URL (?v=hash): /assets/img/* is cached for up to a day,
+  // so a new icon doesn't stay invisible because of an old cached sprite.
   const version = createHash('sha256').update(sprite).digest('hex').slice(0, 8);
   const homePath = path.join(root, 'index.html');
   const home = fs
@@ -154,12 +154,12 @@ function render(html, lang) {
     .replace(/\/assets\/img\/skills\.svg(?:\?v=\w+)?#/g, `/assets/img/skills.svg?v=${version}#`);
   fs.writeFileSync(homePath, home);
 
-  // Cada referencia del home debe existir en el sprite
+  // Every reference in the home page must exist in the sprite
   const unknown = [...home.matchAll(/\/assets\/img\/skills\.svg(?:\?v=\w+)?#([\w-]+)/g)]
     .map(([, id]) => id)
     .filter((id) => !ids.has(id));
   if (unknown.length) {
-    console.error(`index.html usa íconos que no están en skills.svg: ${[...new Set(unknown)].join(', ')}`);
+    console.error(`index.html uses icons that are not in skills.svg: ${[...new Set(unknown)].join(', ')}`);
     process.exit(1);
   }
   console.log(`✔ assets/img/skills.svg (${ids.size} icons)`);
@@ -167,7 +167,7 @@ function render(html, lang) {
 
 const sourcePath = path.join(root, 'index.html');
 const { injectDesigns } = await import(path.join(root, 'scripts/lib/designs-section.mjs'));
-// Sección "Designs" (shots de Dribbble, scripts/build-dribbble.mjs)
+// "Designs" section (Dribbble shots, scripts/build-dribbble.mjs)
 const source = injectDesigns(
   fs.readFileSync(sourcePath, 'utf8'),
   path.join(root, 'scripts/data/dribbble.json'),
@@ -201,11 +201,15 @@ const { projectPage, projectPath, adaptHeader, SITE } = await import(
   path.join(root, 'scripts/lib/project-page.mjs')
 );
 
-// Header + lámpara colgante (va justo después del header)
-const header = en.match(/ {4}<header class="header">[\s\S]*?<\/header>\n(?: {4}<!-- Lámpara[\s\S]*?<\/button>)?/)?.[0];
+// Header + hanging lamp (it goes right after the header)
+const header = en.match(/ {4}<header class="header">[\s\S]*?<\/header>\n(?: {4}<!-- Hanging lamp[\s\S]*?<\/button>)?/)?.[0];
 const footer = en.match(/ {4}<footer class="footer section">[\s\S]*?<\/footer>/)?.[0];
 if (!header || !footer) {
   console.error('Could not find the header/footer in index.html');
+  process.exit(1);
+}
+if (!header.includes('class="lamp"')) {
+  console.error('Could not find the hanging lamp (class="lamp") right after the header in index.html');
   process.exit(1);
 }
 

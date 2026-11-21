@@ -1,18 +1,18 @@
-/* ============= Projects Section ============= */
+/* === Projects Section === */
 
 .project__container {
   position: relative;
-  /* alto = tarjeta + relleno: las flechas (top: 50%) quedan al centro de las tarjetas */
+  /* height = card + padding: the arrows (top: 50%) sit at the center of the cards */
   padding: 20px;
   margin-top: 1.5rem;
-  /* Recorta solo a los lados (tarjetas fuera de vista); arriba y abajo deja
-     ver la sombra de las tarjetas */
+  /* Clips only the sides (off-screen cards); top and bottom let
+     the card shadows show */
   overflow-x: clip;
   overflow-y: visible;
 }
 
 .project__card--carousel {
-  /* el gesto horizontal es del carrusel; el vertical, del scroll de la página */
+  /* the horizontal gesture belongs to the carousel; the vertical one, to the page scroll */
   touch-action: pan-y;
   position: relative;
   margin: 0 auto;
@@ -24,8 +24,8 @@
 }
 
 .project__card {
-  /* Mismos colores que el resto de la página: dorado en claro, gris casi
-     blanco en oscuro (texto, íconos, botones, grano) */
+  /* Same colors as the rest of the page: gold in light, near-white
+     gray in dark (text, icons, buttons, grain) */
   position: absolute;
   width: 280px;
   height: 350px;
@@ -41,15 +41,15 @@
   height: 100%;
   transform-style: preserve-3d;
   border-radius: 1rem;
-  /* Sombra que cae hacia los lados sobre las tarjetas de atrás */
+  /* Shadow cast sideways onto the cards behind */
   box-shadow:
     0 6px 14px rgb(0 0 0 / 0.25),
     0 0 28px 4px rgb(0 0 0 / 0.35);
   transition: box-shadow 0.3s ease;
 
-  /* Giro suave al voltear. Va después del transition de arriba y lo repite:
-     si no, ese transition (solo box-shadow) lo pisaba y el giro era instantáneo.
-     Con "reducir movimiento" la tarjeta cambia de cara sin girar. */
+  /* Smooth spin when flipping. It comes after the transition above and repeats it:
+     otherwise that transition (box-shadow only) overrode it and the spin was instant.
+     With "reduce motion" the card changes face without spinning. */
   @media (prefers-reduced-motion: no-preference) {
     transition:
       transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
@@ -84,9 +84,9 @@
   padding: 1.25rem 1rem;
 }
 
-/* Anverso: textura de grano en toda la tarjeta, de arriba abajo (sin cortes),
-   un poco más densa hacia la base. Encima de la captura y debajo del texto e
-   íconos (z-index 3) */
+/* Front: grain texture across the whole card, top to bottom (seamless),
+   slightly denser toward the base. Above the screenshot and below the text and
+   icons (z-index 3) */
 .project__card-front::after {
   content: '';
   position: absolute;
@@ -101,7 +101,7 @@
 }
 
 .project__card-back {
-  /* Reverso: degradado turquesa; en oscuro con los turquesas profundos del modo */
+  /* Back: teal gradient; in dark, with the mode's deep teals */
   background: linear-gradient(
     160deg,
     light-dark(var(--teal-600), var(--teal-deep-600)) 0%,
@@ -141,10 +141,10 @@
   background-position: center;
 }
 
-/* Carátulas: solo cuando #projects se acerca a la pantalla (observer.js le pone
-   .is-near), así no se descargan al cargar la página. Sin JS (html sin .js) se
-   ven siempre. Todas las reglas llevan el mismo prefijo para que la versión
-   oscura siga ganando por orden, con la misma especificidad. */
+/* Covers: only when #projects gets near the screen (observer.js adds .is-near
+   to it), so they aren't downloaded on page load. Without JS (html without .js)
+   they always show. Every rule carries the same prefix so the dark version
+   keeps winning by order, with the same specificity. */
 :is(html:not(.js), .projects.is-near) .project__card:nth-of-type(1) .project__image--container {
   background-image: url("/assets/img/project_img/marvel.webp");
 }
@@ -169,9 +169,9 @@
   background-image: url("/assets/img/project_img/traktl.webp");
 }
 
-/* Carátulas en modo oscuro: solo los proyectos que tienen modo oscuro propio
-   (CRUD y Traktl). Sigue al tema efectivo (sistema o botón) vía --color-scheme;
-   solo se descarga la imagen que gana en la cascada. */
+/* Dark mode covers: only the projects that have their own dark mode
+   (CRUD and Traktl). Follows the effective theme (system or button) via --color-scheme;
+   only the image that wins the cascade is downloaded. */
 @container style(--color-scheme: dark) {
   :is(html:not(.js), .projects.is-near) .project__card:nth-of-type(2) .project__image--container {
     background-image: url("/assets/img/project_img/CRUD-dark.webp");
@@ -182,8 +182,8 @@
   }
 }
 
-/* La captura del proyecto se ve como fondo difuminado (scale evita que el
-   blur deje bordes transparentes en las orillas) */
+/* The project screenshot shows as a blurred background (scale keeps the
+   blur from leaving transparent borders at the edges) */
 .project__image--container {
   filter: blur(5px) saturate(1.15) brightness(1.1);
   scale: 1.1;
@@ -193,8 +193,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  /* Velo oscuro que sube desde abajo: denso en la base, se aclara hacia
-     arriba (deja ver el diseño) y sigue cubriendo el texto del centro */
+  /* Dark veil rising from the bottom: dense at the base, lighter toward
+     the top (lets the design show) and still covering the centered text */
   background: linear-gradient(
     to top,
     rgb(0 18 25 / 0.92) 0%,
@@ -214,13 +214,13 @@
   text-align: center;
 }
 
-/* título centrado (el margen que lo sube va en la regla de abajo, después
-   del margin: 0 compartido) */
+/* centered title (the margin that lifts it is in the rule below, after
+   the shared margin: 0) */
 .project__title {
   text-align: center;
 }
 
-/* Reverso: el texto completo cabe en la tarjeta */
+/* Back: the full text fits in the card */
 .project__description {
   flex: 1;
   min-height: 0;
@@ -241,7 +241,7 @@
   filter: drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
 }
 
-/* Íconos de tecnologías: sombra interna granulada (filtro de --icon-grain, como los de skills) */
+/* Tech icons: grainy inner shadow (--icon-grain filter, like the skills ones) */
 .project__tech-icon {
   filter: var(--icon-grain) drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
 }
@@ -261,7 +261,7 @@
   z-index: 3;
 }
 
-/* Tech stack icons: siempre en una sola línea; si no caben, se encogen */
+/* Tech stack icons: always on a single line; if they don't fit, they shrink */
 .project__tech-stack {
   display: flex;
   flex-wrap: nowrap;
@@ -288,7 +288,7 @@
 /* Buttons */
 .project__buttons {
   position: relative;
-  z-index: 2; /* por encima del degradado ::after del reverso */
+  z-index: 2; /* above the back's ::after gradient */
   display: flex;
   gap: 0.6rem;
   justify-content: center;
@@ -303,7 +303,7 @@
   padding: 0.6rem 1.1rem;
   background-color: var(--accent-color);
   color: var(--on-accent-color);
-  /* mismo estilo cartoon que .btn: contorno de tinta y sombra dura */
+  /* same cartoon style as .btn: ink outline and hard shadow */
   border: 2px solid var(--teal-950);
   border-radius: var(--border-radius-small);
   box-shadow: 3px 3px 0 #000, var(--grain-inset-shadow);
@@ -315,7 +315,7 @@
   font-weight: var(--font-bold);
 }
 
-/* Solo con puntero real: en pantallas táctiles el :hover se queda "pegado" tras tocar */
+/* Real pointer only: on touch screens :hover stays "stuck" after a tap */
 @media (hover: hover) {
   .project__button:hover {
     background-color: var(--btn-hover-bg);
@@ -352,8 +352,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  /* Mismo estilo que los botones de contorno del sitio: contorno y sombra
-     dura dorados, se rellena al pasar el mouse y se hunde al presionar */
+  /* Same style as the site's outline buttons: gold outline and hard
+     shadow, fills on hover and sinks when pressed */
   background-color: var(--bg-color-section);
   color: var(--accent-color);
   border: 2px solid var(--accent-color);
@@ -392,8 +392,8 @@
   font-size: 1.5rem;
 }
 
-/* Flechas en las orillas del contenido de la sección (mismo ancho máximo
-   que las demás secciones, 1024px), no en las orillas del navegador */
+/* Arrows at the edges of the section content (same max width
+   as the other sections, 1024px), not at the browser edges */
 .project__nav--prev {
   left: max(1rem, (100% - 1024px) / 2 + 1rem);
 }
@@ -407,7 +407,7 @@
   transition: all 0.2s ease;
 }
 
-/* Arrastrando: sin transición, las tarjetas siguen al dedo sin retraso */
+/* Dragging: no transition, the cards follow the finger with no lag */
 .project__card--carousel.is-dragging .project__card {
   transition: none;
 }
@@ -417,8 +417,8 @@
   z-index: 2;
 }
 
-/* Profundidad: la de enfrente proyecta una sombra más amplia sobre las de
-   atrás, y las de atrás se ven un poco más apagadas */
+/* Depth: the front one casts a wider shadow over the ones
+   behind, and those behind look slightly dimmer */
 .project__card.highlight .project__card-inner {
   box-shadow:
     0 14px 26px rgb(0 0 0 / 0.35),
@@ -449,9 +449,9 @@
   }
 }
 
-/* Escritorio: la sección cabe en una pantalla y queda centrada a lo alto.
-   El alto de las tarjetas depende del alto de la pantalla (entre 280 y 390 px)
-   y el ancho mantiene la proporción 4:5. */
+/* Desktop: the section fits in one screen and is vertically centered.
+   The card height depends on the screen height (between 280 and 390 px)
+   and the width keeps the 4:5 ratio. */
 @media (min-width: 600px) {
   #projects.section {
     --card-h: clamp(280px, 100svh - 12rem, 390px);
@@ -477,7 +477,7 @@
 
 }
 
-/* Pantallas bajas: tarjetas más chicas, la descripción completa sigue cabiendo */
+/* Short screens: smaller cards, the full description still fits */
 @media (min-width: 600px) and (max-height: 600px) {
   #projects .project__description {
     font-size: 0.8rem;

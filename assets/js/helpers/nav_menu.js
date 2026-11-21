@@ -1,8 +1,8 @@
 /**
- * Menú móvil: el botón hamburguesa abre el panel debajo de la barra y se
- * convierte en una X. Se cierra al elegir una opción, con Escape, al tocar
- * fuera o al pasar a escritorio. Sin JS, el enlace #nav lo abre con :target.
- * Tolera páginas sin menú (early return).
+ * Mobile menu: the hamburger button opens the panel below the bar and
+ * turns into an X. It closes when picking an option, with Escape, on an
+ * outside tap or when crossing to desktop. Without JS, the #nav link opens
+ * it with :target. Tolerates pages without a menu (early return).
  */
 export default function navMenu() {
   const header = document.querySelector('.header');
@@ -21,7 +21,7 @@ export default function navMenu() {
     setOpen(!isOpen());
   });
 
-  // Elegir una opción (sección, idioma) cierra el panel
+  // Picking an option (section, language) closes the panel
   menu.addEventListener('click', (e) => {
     if (e.target.closest('a')) setOpen(false);
   });
@@ -34,7 +34,7 @@ export default function navMenu() {
   });
 
   document.addEventListener('click', (e) => {
-    // La lámpara vive fuera del header pero es parte del menú en móvil
+    // The lamp lives outside the header but is part of the menu on mobile
     if (isOpen() && !header.contains(e.target) && !e.target.closest('.lamp')) setOpen(false);
   });
 

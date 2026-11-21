@@ -82,7 +82,7 @@ export function adaptHeader(header, lang) {
 
 function screenshots(p, lang, ui) {
   const img = (kind, dark, attrs) => {
-    // móvil: captura de teléfono completa (390×844), no la 4:5 de las tarjetas del home
+    // mobile: full phone screenshot (390×844), not the 4:5 one of the home cards
     const dir = kind === 'desktop' ? 'desktop/' : 'mobile/';
     const [w, h] = kind === 'desktop' ? [1280, 800] : [390, 844];
     const file = `${p.image}${dark ? '-dark' : ''}.webp`;
@@ -146,12 +146,12 @@ export function projectPage({ project: p, lang, prev, next, header, footer }) {
   const urlEn = SITE + projectPath(p, 'en');
   const urlEs = SITE + projectPath(p, 'es');
   const title = `${c.title} · ${c.kind} | Alan Quintana`;
-  // Google corta ~160 caracteres: la frase de tecnologías solo si cabe
+  // Google cuts at ~160 characters: the technologies sentence only if it fits
   const full = ui.descriptionWith(p);
   const description = full.length <= 160 ? full : c.tagline;
   const ogImage = `${SITE}/assets/img/project_img/og/${p.image}.jpg`;
-  // Botón solo con "Anterior/Siguiente"; el nombre del proyecto va
-  // debajo en texto pequeño (y el lector de pantalla lo lee como descripción)
+  // Button with just "Previous/Next"; the project name goes below
+  // in small text (and the screen reader reads it as the description)
   const pagerLink = (q, rel) =>
     `<div class="project-pager__item project-pager__item--${rel}">
   <a class="btn btn--ghost project-pager__link" href="${projectPath(q, lang)}" rel="${rel}" aria-describedby="pager-${rel}">${rel === 'prev' ? '<i class="bx bx-chevron-left" aria-hidden="true"></i> ' + ui.prev : ui.next + ' <i class="bx bx-chevron-right" aria-hidden="true"></i>'}</a>
@@ -163,13 +163,13 @@ export function projectPage({ project: p, lang, prev, next, header, footer }) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Respeta el tamaño de texto del sistema: Android/Chrome lo aplica al tamaño
-         base (rem) en vez de hacer zoom a toda la página -->
+    <!-- Respects the system text size: Android/Chrome applies it to the base
+         size (rem) instead of zooming the whole page -->
     <meta name="text-scale" content="scale" />
-    <!-- Tema: oscuro si el sistema está en modo oscuro; si no, por horario (oscuro de
-         18:00 a 6:00, hora local). El botón guarda una excepción hasta el siguiente
-         cambio (localStorage.theme / themeUntil).
-         Se aplica antes de pintar; sin JS se sigue al sistema. -->
+    <!-- Theme: dark if the system is in dark mode; otherwise time-based (dark from
+         18:00 to 6:00, local time). The toggle stores an override until the next
+         switch (localStorage.theme / themeUntil).
+         Applied before first paint; without JS the system scheme is used. -->
     <meta name="color-scheme" content="light dark" />
     <script>
       {
@@ -185,8 +185,8 @@ export function projectPage({ project: p, lang, prev, next, header, footer }) {
       lang === 'en'
         ? `
     <script>
-      // Igual que el home: navegador en español (sin elección guardada en
-      // localStorage "lang") → versión en español de este proyecto
+      // Same as the home page: Spanish browser (no choice stored in
+      // localStorage "lang") → Spanish version of this project
       try {
         const pref = localStorage.getItem('lang');
         const langs = navigator.languages || [navigator.language || ''];
@@ -249,7 +249,7 @@ ${indent(jsonLd(p, lang, ui), 6)}
   </head>
 
   <body class="project-page">
-    <!-- Fondo: mismas texturas que el home (grano + capas con parallax) -->
+    <!-- Background: same textures as the home page (grain + parallax layers) -->
     <div class="background-container bgGrain"></div>
     <div class="background-container">
       <svg class="background-container bgBack" aria-hidden="true">

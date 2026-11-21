@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Respeta el tamaño de texto del sistema: Android/Chrome lo aplica al tamaño
-         base (rem) en vez de hacer zoom a toda la página -->
+    <!-- Respects the system text size: Android/Chrome applies it to the base
+         size (rem) instead of zooming the whole page -->
     <meta name="text-scale" content="scale" />
-    <!-- Tema: oscuro si el sistema está en modo oscuro; si no, por horario (oscuro de
-         18:00 a 6:00, hora local). El botón guarda una excepción hasta el siguiente
-         cambio (localStorage.theme / themeUntil).
-         Se aplica antes de pintar; sin JS se sigue al sistema. -->
+    <!-- Theme: dark if the system is in dark mode; otherwise time-based (dark from
+         18:00 to 6:00, local time). The button stores an override until the next
+         switch (localStorage.theme / themeUntil).
+         Applied before first paint; without JS the system scheme is followed. -->
     <meta name="color-scheme" content="light dark" />
     <script>
       {
@@ -47,11 +47,11 @@
     <link rel="preload" href="/assets/fonts/outfit/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- Íconos: Boxicons va dentro de main.css; la fuente recortada pesa ~3 KB -->
+    <!-- Icons: Boxicons is bundled into main.css; the subset font weighs ~3 KB -->
     <link rel="preload" href="/assets/fonts/boxicons/boxicons.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Scripts -->
-    <!-- Solo los módulos que usa esta página (main.js es para index.html) -->
+    <!-- Only the modules this page uses (main.js is for index.html) -->
     <script type="module">
         import { initFab } from '/assets/js/helpers/resume_fab_buttons.js';
         import { loadPdf } from '/assets/js/helpers/pdf_loader.js';
@@ -80,8 +80,8 @@
             document.getElementById('modal').showModal();
         };
     </script>
-    <!-- pdf.js (módulo, lo importa pdf_loader.js): se adelanta la descarga sin
-         bloquear el parseo. La versión debe coincidir con PDFJS_VERSION -->
+    <!-- pdf.js (module, imported by pdf_loader.js): the download starts early
+         without blocking parsing. The version must match PDFJS_VERSION -->
     <link rel="modulepreload" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" crossorigin />
     <script>
         function downloadCV(language) {
@@ -105,7 +105,7 @@
 </head>
 
 <body>
-    <!-- Grano de fondo (el mismo del inicio), fijo debajo de la barra -->
+    <!-- Background grain (same as the home page), fixed below the navbar -->
     <div class="background-container bgGrain" aria-hidden="true"></div>
     <header class="header">
         <nav class="navbar grid--container flex--container">
@@ -155,7 +155,7 @@
                     class="bx bx-x navbar__burger-close" aria-hidden="true"></i></a>
         </nav>
     </header>
-    <!-- Lámpara colgante (escritorio): cambia el tema. Encendida = modo claro -->
+    <!-- Hanging lamp: theme switch. Lit = dark mode -->
     <button
       type="button"
       class="lamp"

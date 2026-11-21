@@ -1,7 +1,7 @@
-/* Fuentes autoalojadas (antes Google Fonts), variables, solo latin y latin-ext.
-   Outfit (100–900): títulos. DM Sans (100–1000, eje opsz 9–40):
-   textos. Licencia: SIL Open Font License.
-   Poppins (solo latin, 200/300/500/600): logo y loader, siempre. */
+/* Self-hosted fonts (formerly Google Fonts), variable, latin and latin-ext only.
+   Outfit (100–900): headings. DM Sans (100–1000, opsz axis 9–40):
+   text. License: SIL Open Font License.
+   Poppins (latin only, 200/300/500/600): logo and loader, always. */
 
 @font-face {
   font-family: 'Outfit';

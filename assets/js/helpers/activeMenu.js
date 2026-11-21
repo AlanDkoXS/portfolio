@@ -33,14 +33,14 @@ function debounce(func, wait = 20, immediate = true) {
 }
 
 /**
- * Marca el enlace de la sección que cruza la línea media de la pantalla.
- * IntersectionObserver en vez de calcular posiciones en cada scroll: no
- * depende de cuándo llegan los eventos (con el scroll suave del menú el
- * cálculo anterior se quedaba en la sección de partida).
- * El estado se refleja también con aria-current para lectores de pantalla.
+ * Marks the link of the section that crosses the middle line of the screen.
+ * IntersectionObserver instead of computing positions on every scroll: it
+ * doesn't depend on when the events arrive (with the menu's smooth scroll
+ * the previous calculation stayed on the starting section).
+ * The state is also reflected with aria-current for screen readers.
  */
 function setActiveLink(id) {
-  // Por href, no por posición: secciones sin enlace no cambian la marca
+  // By href, not by position: sections without a link don't change the mark
   const link = [...navbarLinksDOM].find((a) => a.getAttribute('href').endsWith(`#${id}`));
   if (!link) return;
   navbarLinksDOM.forEach((a) => {
@@ -58,7 +58,7 @@ function observeSections() {
         if (entry.isIntersecting) setActiveLink(entry.target.id);
       });
     },
-    // una línea horizontal a media pantalla
+    // a horizontal line at mid-screen
     { rootMargin: '-50% 0px -50% 0px', threshold: 0 },
   );
   sectionsDOM.forEach((section) => section.id && observer.observe(section));

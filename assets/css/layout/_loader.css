@@ -1,4 +1,4 @@
-/* ============== Loader ================= */
+/* === Loader === */
 
 .loader {
   position: fixed;
@@ -41,9 +41,9 @@
   }
 }
 
-/* Hasta que loader.js confirma que la tipografía y el logo cargaron, solo se
-   ve el fondo (tapa la página): así no aparecen un instante con la fuente de
-   respaldo o sin logo antes de que empiece la animación */
+/* Until loader.js confirms the font and the logo have loaded, only the
+   background shows (it covers the page): that way they don't flash with the
+   fallback font or without the logo before the animation starts */
 .loader:not(.loader--ready) :is(.loader__logo, .loader__name) {
   visibility: hidden;
 }
@@ -53,17 +53,17 @@
   visibility: hidden;
 }
 
-/* ============= Loader animado (loader.js, primera carga de la sesión) =============
-   Símbolos de código caen y se acomodan como "alanquintana"; al ocultarse,
-   las letras se dispersan hacia el fondo. */
+/* ============= Animated loader (loader.js, first load of the session) =============
+   Code symbols fall and settle as "alanquintana"; on hide,
+   the letters scatter toward the background. */
 .loader--animated {
-  /* Logo y nombre escalan con la misma medida: siempre proporcionados */
+  /* Logo and name scale with the same measure: always in proportion */
   --loader-size: clamp(1.5rem, 1rem + 2.5vw, 2.6rem);
 
   flex-direction: column;
   gap: calc(var(--loader-size) * 0.5);
   overflow: hidden;
-  /* el desvanecido espera a que las letras empiecen a dispersarse */
+  /* the fade waits until the letters start to scatter */
   transition: opacity 0.5s 0.25s, visibility 0s 0.75s;
 
   .loader__logo {
@@ -132,7 +132,7 @@
   }
 }
 
-/* Visitas siguientes de la sesión: sin loader (ver script en <head>) */
+/* Later visits in the session: no loader (see script in <head>) */
 .skip-loader .loader {
   display: none;
 }

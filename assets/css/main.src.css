@@ -1,8 +1,8 @@
 /* ==========================================================================
-   MAIN CSS (fuente)
-   scripts/build-i18n.mjs sustituye cada @import por el parcial y escribe
-   assets/css/main.css (un solo archivo, sin cascada de peticiones).
-   Las páginas enlazan main.css; este archivo no se sirve.
+   MAIN CSS (source)
+   scripts/build-i18n.mjs replaces each @import with its partial and writes
+   assets/css/main.css (a single file, no request chain).
+   Pages link main.css; this file is not served.
    ========================================================================== */
 
 /* BASE */
@@ -31,6 +31,6 @@
 @import url('./sections/_resume.css');
 @import url('./sections/_project-page.css');
 
-/* VENDOR: Boxicons recortado (scripts/build-icons.mjs). Va al final, como
-   cuando se cargaba con su propio <link> después de main.css */
+/* VENDOR: Boxicons subset (scripts/build-icons.mjs). Goes last, as when it
+   was loaded with its own <link> after main.css */
 @import url('./vendor/boxicons.min.css');

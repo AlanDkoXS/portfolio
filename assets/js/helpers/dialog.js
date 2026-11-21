@@ -1,6 +1,6 @@
-// Configura un <dialog> modal: se abre con showModal() (foco atrapado, Esc y
-// fondo inerte nativos) y se cierra al tocar fuera gracias a closedby="any".
-// Safari aún no soporta closedby: ahí se replica el cierre por clic fuera.
+// Sets up a modal <dialog>: it opens with showModal() (native focus trap, Esc
+// and inert background) and closes on an outside tap thanks to closedby="any".
+// Safari doesn't support closedby yet: there, closing on outside click is replicated.
 export function setupDialog(dialog) {
   if (!dialog || dialog.dataset.dialogReady) return;
   dialog.dataset.dialogReady = 'true';
@@ -8,10 +8,10 @@ export function setupDialog(dialog) {
   if ('closedBy' in HTMLDialogElement.prototype) return;
 
   dialog.addEventListener('click', (event) => {
-    // Un clic en el backdrop llega con el propio <dialog> como target
+    // A click on the backdrop arrives with the <dialog> itself as target
     if (event.target !== dialog) return;
 
-    // Distinguir el backdrop del padding/fondo del propio diálogo
+    // Tell the backdrop apart from the dialog's own padding/background
     const rect = dialog.getBoundingClientRect();
     const insideDialog =
       rect.top <= event.clientY &&

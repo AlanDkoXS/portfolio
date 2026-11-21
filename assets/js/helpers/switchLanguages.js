@@ -31,8 +31,8 @@ const storeLanguage = (lang) => {
   }
 };
 
-// CV: el enlace trae el idioma de la página de origen (?lang=es). Gana sobre
-// lo guardado, se guarda como la elección actual y se quita de la URL
+// CV: the link carries the language of the source page (?lang=es). It wins
+// over the stored one, is stored as the current choice and stripped from the URL
 const languageFromUrl = () => {
   const url = new URL(location.href);
   const lang = url.searchParams.get('lang');
@@ -57,7 +57,7 @@ let currentLanguage = 'en';
 
 export const getValidationMessages = () => translations.validation[currentLanguage];
 
-// *texto* en una traducción → <strong>texto</strong> (sin HTML arbitrario)
+// *text* in a translation → <strong>text</strong> (no arbitrary HTML)
 const setRichText = (el, value) => {
   el.textContent = '';
   value.split(/(\*[^*]+\*)/).forEach((part) => {
@@ -96,8 +96,8 @@ const handleResponsiveContent = (lang) => {
   const homeText = t('homeDescription', lang);
   const lines = translate(translations, 'heroLines', lang);
   if (window.innerWidth >= 600 && Array.isArray(lines)) {
-    // Escritorio: la presentación, una línea de espacio y luego 7 líneas
-    // de 7 palabras, una por renglón
+    // Desktop: the intro, a blank line and then 7 lines
+    // of 7 words, one per row
     homeDescription.textContent = '';
     homeDescription.classList.add('home__description--lines');
     const intro = document.createElement('span');
@@ -132,8 +132,8 @@ const setLanguage = (lang) => {
   );
 };
 
-// Tras un cambio de idioma, vuelve a la sección en la que estaba el visitante.
-// En una página prerenderizada se espera a que se active (se muestre).
+// After a language change, go back to the section the visitor was in.
+// On a prerendered page, wait until it's activated (shown).
 const restorePendingHash = () => {
   const run = () => {
     let hash = null;
@@ -154,10 +154,10 @@ const restorePendingHash = () => {
   }
 };
 
-// Prerenderiza la página en el otro idioma cuando hay intención de cambiar
-// (cursor encima, foco con teclado o dedo en el botón), no en cada visita:
-// casi nadie cambia de idioma y construir la otra página cuesta datos y CPU.
-// El cambio sigue siendo casi instantáneo. Solo navegadores con speculation rules.
+// Prerenders the page in the other language when there's intent to switch
+// (cursor over it, keyboard focus or finger on the button), not on every visit:
+// almost nobody switches language and building the other page costs data and CPU.
+// The switch is still near instant. Only browsers with speculation rules.
 const prerenderOnIntent = (toggle, alternates, targetLang) => {
   if (!HTMLScriptElement.supports?.('speculationrules')) return;
   const target = [...alternates].find((l) => l.hreflang === targetLang);
@@ -198,8 +198,8 @@ const switchLanguages = () => {
     languageToggle.addEventListener('change', () => {
       const lang = languageToggle.checked ? 'es' : 'en';
 
-      // Animación de clic: se fija la bandera del idioma destino (la misma que
-      // mostró el hover) y rebota, sin volver a girar
+      // Click animation: the target language's flag is pinned (the same one
+      // the hover showed) and bounces, without spinning again
       const wrapper = languageToggle.closest('.navbar__toggle--language');
       if (wrapper) {
         wrapper.querySelectorAll('img').forEach((img) => {
@@ -215,20 +215,20 @@ const switchLanguages = () => {
         const target = [...alternates].find((l) => l.hreflang === lang);
         if (target) {
           const url = new URL(target.href, location.href);
-          // Se navega a la URL exacta que está prerenderizada (sin #sección),
-          // y la sección se restaura al activarse (restorePendingHash)
+          // Navigate to the exact URL that is prerendered (without #section),
+          // and the section is restored on activation (restorePendingHash)
           try {
             if (location.hash) sessionStorage.setItem('aq-hash', location.hash);
           } catch {
-            /* sin almacenamiento: solo se pierde la sección */
+            /* no storage: only the section is lost */
           }
-          // Deja ver el rebote de la bandera antes de cambiar de página
+          // Lets the flag's bounce show before changing page
           setTimeout(() => location.assign(url.pathname), 220);
           return;
         }
       }
       setLanguage(lang);
-      // Cambio en la misma página (resume): termina la animación y limpia
+      // In-place switch (resume): finish the animation and clean up
       setTimeout(() => {
         wrapper?.classList.remove('is-switching');
         wrapper?.querySelectorAll('img').forEach((img) => img.classList.remove('is-target', 'is-current'));

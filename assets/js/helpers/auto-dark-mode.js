@@ -1,17 +1,17 @@
-// Tema automático: si el sistema del visitante está en modo oscuro, oscuro.
-// Si no (el modo claro es el valor por defecto de los equipos y no se puede
-// distinguir de una elección), va por horario con la hora local: oscuro de
-// 18:00 a 6:00, claro el resto del día; cambia a la hora exacta aunque la
-// página siga abierta. El botón (lámpara / luna-sol) guarda una excepción en
-// localStorage.theme ('light' | 'dark') que dura solo hasta el siguiente cambio
-// de horario (localStorage.themeUntil, timestamp); después vuelve el automático.
-// El tema se refleja en <meta name="color-scheme">, que el CSS lee (ver
-// _variables.css). El script inline del <head> aplica lo mismo antes de pintar
-// (sin JS, el meta queda en "light dark" y se sigue al sistema).
+// Automatic theme: if the visitor's system is in dark mode, dark.
+// Otherwise (light mode is every device's default, so it can't be told
+// apart from a choice) it follows a schedule in local time: dark from
+// 18:00 to 6:00, light the rest of the day; it switches at the exact hour
+// even with the page still open. The button (lamp / moon-sun) stores an
+// override in localStorage.theme ('light' | 'dark') that lasts only until the
+// next scheduled switch (localStorage.themeUntil, timestamp); then automatic returns.
+// The theme is reflected in <meta name="color-scheme">, which the CSS reads (see
+// _variables.css). The inline <head> script applies the same before painting
+// (without JS, the meta stays "light dark" and the system is followed).
 const STORAGE_KEY = 'theme';
 const UNTIL_KEY = 'themeUntil';
-export const DARK_FROM = 18; // hora en que empieza el modo oscuro
-export const DARK_UNTIL = 6; // hora en que vuelve el modo claro
+export const DARK_FROM = 18; // hour when dark mode starts
+export const DARK_UNTIL = 6; // hour when light mode returns
 
 const isDarkHour = (hour) => hour >= DARK_FROM || hour < DARK_UNTIL;
 
@@ -20,7 +20,7 @@ const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
 const scheduledTheme = (date = new Date()) =>
   systemDark.matches || isDarkHour(date.getHours()) ? 'dark' : 'light';
 
-// Siguiente cambio de horario (18:00 o 6:00) después de `date`
+// Next scheduled switch (18:00 or 6:00) after `date`
 const nextBoundary = (date = new Date()) => {
   const next = new Date(date);
   next.setMinutes(0, 0, 0);
@@ -39,11 +39,11 @@ const readOverride = () => {
     const value = localStorage.getItem(STORAGE_KEY);
     const until = Number(localStorage.getItem(UNTIL_KEY));
     if ((value === 'dark' || value === 'light') && Date.now() < until) return value;
-    // vencida (o de la versión anterior, sin fecha): se limpia
+    // expired (or from the previous version, with no date): cleared
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(UNTIL_KEY);
   } catch {
-    /* almacenamiento no disponible */
+    /* storage unavailable */
   }
   return null;
 };
@@ -58,11 +58,11 @@ const writeOverride = (value) => {
       localStorage.removeItem(UNTIL_KEY);
     }
   } catch {
-    /* almacenamiento no disponible: el tema se aplica igual, solo no se recuerda */
+    /* storage unavailable: the theme still applies, it just isn't remembered */
   }
 };
 
-let override = null; // excepción vigente en esta página (aunque no se pueda guardar)
+let override = null; // override in effect on this page (even if it can't be stored)
 let overrideUntil = 0;
 
 const renderedTheme = () => (override && Date.now() < overrideUntil ? override : scheduledTheme());
@@ -73,7 +73,7 @@ const sync = (toggle) => {
   if (meta) meta.content = theme;
   if (toggle) toggle.checked = theme === 'dark';
   document.body.setAttribute('data-theme', theme);
-  // la lámpara (lamp.js) refleja su estado con aria-pressed
+  // the lamp (lamp.js) reflects its state with aria-pressed
   const lamp = document.querySelector('.lamp');
   if (lamp) lamp.setAttribute('aria-pressed', String(theme === 'dark'));
 };
@@ -88,18 +88,18 @@ export function setAutoDarkMode() {
   toggle.dataset.themeBound = 'true';
 
   toggle.addEventListener('change', () => {
-    // El usuario pide "lo contrario de lo que ve ahora"
+    // The user asks for "the opposite of what they see now"
     const target = renderedTheme() === 'dark' ? 'light' : 'dark';
-    // Si coincide con el horario, está deshaciendo su ajuste: no se guarda nada
+    // If it matches the schedule, they're undoing their override: nothing is stored
     override = target === scheduledTheme() ? null : target;
     overrideUntil = override ? nextBoundary() : 0;
     writeOverride(override);
     sync(toggle);
   });
 
-  // Cambio automático a la hora exacta con la página abierta. Los timers se
-  // congelan en pestañas en segundo plano o con el teléfono bloqueado, así
-  // que también se revisa al volver a la pestaña.
+  // Automatic switch at the exact hour with the page open. Timers are
+  // frozen in background tabs or with the phone locked, so it's
+  // also re-checked when returning to the tab.
   let timer;
   const schedule = () => {
     clearTimeout(timer);
@@ -118,10 +118,10 @@ export function setAutoDarkMode() {
     schedule();
   });
 
-  // El sistema cambió a/desde modo oscuro
+  // The system switched to/from dark mode
   systemDark.addEventListener('change', () => sync(toggle));
 
-  // Cambio hecho desde otra pestaña
+  // Change made from another tab
   window.addEventListener('storage', (event) => {
     if (event.key !== STORAGE_KEY && event.key !== UNTIL_KEY) return;
     override = readOverride();

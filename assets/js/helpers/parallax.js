@@ -11,7 +11,7 @@ const ParallaxEffect = {
         middle: { x: 0.6, y: 0.2 },
         front: { x: 0.25, y: 0.08 },
       },
-      // fracción de la deriva automática por capa (antes iguales en middle/front)
+      // fraction of the automatic drift per layer (used to be equal in middle/front)
       autoFactor: {
         back: 1,
         middle: 0.45,
@@ -56,7 +56,7 @@ const ParallaxEffect = {
 
   init() {
     if (this.state.initialized) return;
-    if (prefersReducedMotion()) return; // el fondo se queda quieto
+    if (prefersReducedMotion()) return; // the background stays still
 
     this.elements = {
       back: document.querySelector('.bgBack'),

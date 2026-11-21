@@ -1,12 +1,12 @@
-/* ============= Footer ============= */
+/* === Footer === */
 .footer {
-  /* Fondo oscuro del footer (el mismo color que usa la barra del menú) */
+  /* Dark footer background (the same color the navbar uses) */
   position: relative;
   isolation: isolate;
   background-color: var(--footer-bg);
   color: var(--footer-text);
-  /* títulos e íconos: dorado en claro, gris casi blanco en oscuro (como la página) */
-  /* espacio entre el borde superior y el primer título */
+  /* headings and icons: gold in light, near-white gray in dark (like the page) */
+  /* space between the top edge and the first heading */
   padding: 2.5rem 0 2rem !important;
   bottom: 0;
   font-size: 0.85rem;
@@ -24,8 +24,8 @@
   pointer-events: none;
 }
 
-/* Modo oscuro: el footer queda exactamente del color de los campos del
-   formulario (sin grano encima que lo altere) */
+/* Dark mode: the footer is exactly the color of the form fields
+   (no grain on top to alter it) */
 @container style(--color-scheme: dark) {
   .footer::after {
     display: none;
@@ -69,7 +69,7 @@
   text-align: center;
   padding-top: 2rem;
 }
-/* ============= Media Queries MIN WIDTH (600px)============= */
+/* === Media Queries MIN WIDTH (600px) === */
 
 @media (min-width: 600px) {
   .footer {

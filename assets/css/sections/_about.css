@@ -1,4 +1,4 @@
-/* ============= About Section ============= */
+/* === About Section === */
 
 .about__container {
   display: flex;
@@ -28,15 +28,15 @@
   object-fit: cover;
 }
 
-/* Móvil: la sección cabe en una pantalla y queda centrada a lo alto bajo
-   la barra, también con texto del sistema grande: el retrato se encoge con
-   el alto disponible y los espacios no crecen con el texto */
+/* Mobile: the section fits in one screen and is vertically centered under
+   the bar, even with large system text: the portrait shrinks with the
+   available height and the gaps don't grow with the text */
 @media (max-width: 599px) {
   .about.section {
     padding-block: 12px;
   }
 
-  /* sin el margen superior del título el bloque queda centrado exacto */
+  /* without the title's top margin the block is exactly centered */
   .about .section__title {
     margin-top: 0;
   }
@@ -51,7 +51,7 @@
   }
 }
 
-/* ABOUT MIN WIDTH 600px ========================== */
+/* === About min width 600px === */
 @media (min-width: 600px) {
   .about__container {
     display: flex;
