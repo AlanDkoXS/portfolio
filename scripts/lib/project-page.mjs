@@ -15,7 +15,7 @@ const UI = {
     home: 'Home',
     projects: 'Projects',
     back: 'Back to projects',
-    demo: 'See the live demo',
+    demo: 'See the demo',
     code: 'Check out the code',
     screenshots: 'Screenshots',
     desktop: 'Desktop',
@@ -25,8 +25,8 @@ const UI = {
     built: 'How it’s built',
     stack: 'Technologies',
     pager: 'More projects',
-    prev: 'Previous project',
-    next: 'Next project',
+    prev: 'Previous',
+    next: 'Next',
     ctaTitle: 'Have a project in mind?',
     ctaText: 'I design and build web applications that look good and are easy to use. Let’s talk about yours.',
     ctaButton: 'Write to me',
@@ -39,7 +39,7 @@ const UI = {
     home: 'Inicio',
     projects: 'Proyectos',
     back: 'Volver a proyectos',
-    demo: 'Mira la demo en vivo',
+    demo: 'Mira la demo',
     code: 'Revisa el código',
     screenshots: 'Capturas',
     desktop: 'Escritorio',
@@ -49,8 +49,8 @@ const UI = {
     built: 'Cómo está hecho',
     stack: 'Tecnologías',
     pager: 'Más proyectos',
-    prev: 'Proyecto anterior',
-    next: 'Proyecto siguiente',
+    prev: 'Anterior',
+    next: 'Siguiente',
     ctaTitle: '¿Tienes un proyecto en mente?',
     ctaText: 'Diseño y desarrollo aplicaciones web que se ven bien y son fáciles de usar. Platiquemos del tuyo.',
     ctaButton: 'Escríbeme',
@@ -150,7 +150,7 @@ export function projectPage({ project: p, lang, prev, next, header, footer }) {
   const full = ui.descriptionWith(p);
   const description = full.length <= 160 ? full : c.tagline;
   const ogImage = `${SITE}/assets/img/project_img/og/${p.image}.jpg`;
-  // Botón solo con "Proyecto anterior/siguiente"; el nombre del proyecto va
+  // Botón solo con "Anterior/Siguiente"; el nombre del proyecto va
   // debajo en texto pequeño (y el lector de pantalla lo lee como descripción)
   const pagerLink = (q, rel) =>
     `<div class="project-pager__item project-pager__item--${rel}">

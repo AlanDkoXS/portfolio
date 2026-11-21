@@ -51,7 +51,7 @@
   object-fit: contain;
   fill: var(--primary-color);
   /* Sombra interna granulada, como los botones (filtro #grain-inset en index.html) */
-  filter: url(#grain-inset);
+  filter: var(--icon-grain);
 }
 
 .skills__icon-title {

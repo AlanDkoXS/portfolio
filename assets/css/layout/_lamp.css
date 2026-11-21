@@ -45,6 +45,9 @@
     user-select: none;
     /* gira desde donde se une con el cable */
     transform-origin: 50% 0;
+    /* giroscopio (lamp.js): péndulo que se queda vertical al inclinar el
+       teléfono. Propiedad aparte de transform: se suma al balanceo */
+    rotate: var(--lamp-tilt, 0deg);
     transition: filter 0.2s ease;
   }
 

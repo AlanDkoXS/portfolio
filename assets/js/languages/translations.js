@@ -127,8 +127,8 @@ const translations = {
   },
   // Íconos de demo y código en las tarjetas de proyectos
   projectLinks: {
-    en: { demo: 'See the live demo', code: 'Check out the code' },
-    es: { demo: 'Mira la demo en vivo', code: 'Revisa el código' },
+    en: { demo: 'See the demo', code: 'Check out the code' },
+    es: { demo: 'Mira la demo', code: 'Revisa el código' },
   },
   // Lámpara colgante (botón de tema en escritorio)
   lamp: {
@@ -280,8 +280,8 @@ const translations = {
     es: 'Contacto',
   },
   contactInfoDescription: {
-    en: 'Say hi 👨🏻‍💻',
-    es: 'Salúdame 👨🏻‍💻',
+    en: 'Write me 👨🏻‍💻',
+    es: 'Escríbeme 👨🏻‍💻',
   },
   contactFormTitle: {
     en: 'Send me a message',

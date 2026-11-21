@@ -41,6 +41,13 @@
   }
 }
 
+/* Hasta que loader.js confirma que la tipografía y el logo cargaron, solo se
+   ve el fondo (tapa la página): así no aparecen un instante con la fuente de
+   respaldo o sin logo antes de que empiece la animación */
+.loader:not(.loader--ready) :is(.loader__logo, .loader__name) {
+  visibility: hidden;
+}
+
 .loader--hidden {
   opacity: 0;
   visibility: hidden;

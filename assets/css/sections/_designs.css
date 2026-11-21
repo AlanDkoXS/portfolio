@@ -65,7 +65,8 @@
     transition: translate 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .designs__link:hover {
+  /* solo si es enlace (desactivados mientras la cuenta de Dribbble no sea Pro) */
+  a.designs__link:hover {
     translate: 0 -4px;
     box-shadow: 0 10px 20px var(--shadow-color);
   }

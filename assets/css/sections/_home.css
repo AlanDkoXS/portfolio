@@ -326,6 +326,9 @@ html.js:not(.hero-ready) .home .home__title {
 
   .home .home__info {
     min-width: 0;
+    /* separa el texto de los íconos de redes (el retrato se encoge para
+       dejar el espacio, así el texto sube) */
+    margin-bottom: 1.5rem;
   }
 
   .home .home__info .home__description {
@@ -375,5 +378,5 @@ html.js:not(.hero-ready) .home .home__title {
 /* Énfasis en la presentación (*…* en translations.js) */
 .home__description strong {
   font-weight: var(--font-semibold);
-  color: var(--gold-300);
+  color: var(--gold-emphasis);
 }

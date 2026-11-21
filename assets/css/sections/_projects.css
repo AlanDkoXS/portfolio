@@ -24,8 +24,8 @@
 }
 
 .project__card {
-  /* Las tarjetas van sobre fotos con overlay oscuro: texto dorado en ambos temas */
-  --primary-color: var(--on-image-color);
+  /* Mismos colores que el resto de la página: dorado en claro, gris casi
+     blanco en oscuro (texto, íconos, botones, grano) */
   position: absolute;
   width: 280px;
   height: 350px;
@@ -96,14 +96,19 @@
   background-size: 140px;
   -webkit-mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
   mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
-  opacity: 0.35;
+  opacity: 0.1;
   pointer-events: none;
 }
 
 .project__card-back {
-  /* Reverso: degradado turquesa propio (siempre oscuro, el texto es dorado) */
-  background: linear-gradient(160deg, var(--teal-600) 0%, var(--teal-800) 55%, var(--teal-950) 100%);
-  border: 1px solid rgb(243 206 58 / 0.25);
+  /* Reverso: degradado turquesa; en oscuro con los turquesas profundos del modo */
+  background: linear-gradient(
+    160deg,
+    light-dark(var(--teal-600), var(--teal-deep-600)) 0%,
+    light-dark(var(--teal-800), var(--teal-deep-800)) 55%,
+    light-dark(var(--teal-950), var(--teal-deep-900)) 100%
+  );
+  border: 1px solid var(--border-color);
   transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
@@ -209,9 +214,10 @@
   text-align: center;
 }
 
-/* todos los títulos van a la izquierda */
+/* título centrado (el margen que lo sube va en la regla de abajo, después
+   del margin: 0 compartido) */
 .project__title {
-  text-align: start;
+  text-align: center;
 }
 
 /* Reverso: el texto completo cabe en la tarjeta */
@@ -235,14 +241,15 @@
   filter: drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
 }
 
-/* Íconos de tecnologías: sombra interna granulada (filtro #grain-inset en index.html) */
+/* Íconos de tecnologías: sombra interna granulada (filtro de --icon-grain, como los de skills) */
 .project__tech-icon {
-  filter: url(#grain-inset) drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
+  filter: var(--icon-grain) drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
 }
 
 .project__title {
   text-transform: uppercase;
-  font-size: calc(var(--title-scale) * 1.15rem);
+  margin-bottom: 1.25rem;
+  font-size: calc(var(--title-scale) * 0.95rem);
   line-height: 1.25;
 }
 
@@ -254,18 +261,21 @@
   z-index: 3;
 }
 
-/* Tech stack icons */
+/* Tech stack icons: siempre en una sola línea; si no caben, se encogen */
 .project__tech-stack {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  flex-wrap: nowrap;
+  gap: 0.6rem;
   justify-content: center;
   align-items: center;
 }
 
 .project__tech-icon {
+  flex: 0 1 2rem;
+  min-width: 0;
   width: 2rem;
-  height: 2rem;
+  height: auto;
+  aspect-ratio: 1;
   fill: var(--primary-color);
   transition: transform 0.3s ease;
   z-index: 3;
@@ -291,7 +301,7 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.6rem 1.1rem;
-  background-color: var(--gold-400);
+  background-color: var(--accent-color);
   color: var(--on-accent-color);
   /* mismo estilo cartoon que .btn: contorno de tinta y sombra dura */
   border: 2px solid var(--teal-950);
@@ -308,7 +318,7 @@
 /* Solo con puntero real: en pantallas táctiles el :hover se queda "pegado" tras tocar */
 @media (hover: hover) {
   .project__button:hover {
-    background-color: var(--gold-300);
+    background-color: var(--btn-hover-bg);
     color: var(--on-accent-color);
     transform: translate(-2px, -2px);
     box-shadow: 5px 5px 0 #000, var(--grain-inset-shadow);

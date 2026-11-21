@@ -3,6 +3,41 @@
 // Encendida = modo oscuro, apagada = modo claro. Estados visuales:
 //   hover → imagen "over" · presionando → "clic" (cadena jalada) · encendida → "active"
 // Al soltar se cambia el tema usando el mismo checkbox (auto-dark-mode.js).
+import { createTilt } from './tilt.js';
+import { prefersReducedMotion } from './motion.js';
+
+// Giroscopio (táctiles): la lámpara cuelga como péndulo, así que al inclinar
+// el teléfono se queda vertical respecto al suelo y, en pantalla, gira al lado
+// contrario. Un resorte con amortiguación le da la oscilación de un péndulo.
+// El ángulo va en --lamp-tilt (en <html>): lo usan la imagen de la lámpara y
+// el halo del menú (_lamp.css, _header.css).
+const TILT_FACTOR = 0.5; // grados de la lámpara por grado de inclinación
+const MAX_ANGLE = 12; // grados
+const SPRING = 0.08; // rigidez
+const DAMPING = 0.86; // amortiguación (1 = sin pérdida)
+function lampTilt(button) {
+  if (!window.matchMedia('(pointer: coarse)').matches || prefersReducedMotion()) return;
+  const tilt = createTilt();
+  const root = document.documentElement.style;
+  let angle = 0;
+  let velocity = 0;
+  let last = null;
+  const tick = (now) => {
+    const { gamma } = tilt.update(now);
+    const target = Math.max(-MAX_ANGLE, Math.min(MAX_ANGLE, -gamma * TILT_FACTOR));
+    velocity = (velocity + (target - angle) * SPRING) * DAMPING;
+    angle += velocity;
+    // Solo escribe si la lámpara se ve y el valor cambió (ahorra estilos)
+    const value = Math.abs(angle) < 0.05 ? 0 : Math.round(angle * 10) / 10;
+    if (value !== last && button.checkVisibility?.({ visibilityProperty: true }) !== false) {
+      root.setProperty('--lamp-tilt', `${value}deg`);
+      last = value;
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
 // 100vw incluye la barra de scroll; se mide para centrar bien la lámpara
 const setScrollbarWidth = () => {
   const width = window.innerWidth - document.documentElement.clientWidth;
@@ -49,6 +84,11 @@ export default function lamp() {
     switching = true;
     // Teclado (Enter/Espacio) no pasa por pointerdown: mostrar el tirón un instante
     const fromKeyboard = event.detail === 0;
+    // Con mouse/dedo se suelta el foco: si no, al presionar cualquier tecla
+    // después (Shift, flechas para hacer scroll) Chrome pasa a :focus-visible
+    // y aparece el anillo de foco alrededor de la lámpara. Con teclado se
+    // mantiene (hace falta para ver dónde está el foco).
+    if (!fromKeyboard) button.blur();
     pull();
     setTimeout(() => {
       toggle.click();
@@ -89,4 +129,6 @@ export default function lamp() {
   // El tema también puede cambiar por el sistema o desde otra pestaña
   new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
   sync();
+
+  lampTilt(button);
 }

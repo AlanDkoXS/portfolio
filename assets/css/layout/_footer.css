@@ -5,7 +5,7 @@
   isolation: isolate;
   background-color: var(--footer-bg);
   color: var(--footer-text);
-  --primary-color: var(--gold-400);
+  /* títulos e íconos: dorado en claro, gris casi blanco en oscuro (como la página) */
   /* espacio entre el borde superior y el primer título */
   padding: 2.5rem 0 2rem !important;
   bottom: 0;

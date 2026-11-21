@@ -249,3 +249,18 @@
     }
   }
 }
+
+/* Textura visible en el formulario y en el "¿Tienes un proyecto en mente?" de
+   las páginas de caso (mismo estilo): los puntos del grano de la página, en una
+   capa propia encima del grano oscuro. Los dos llevan exactamente lo mismo. */
+.contact .contact__container .contact__form::before,
+.project-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: url('/assets/img/bgGrain-tile.webp') 0 0 / 256px 256px;
+  opacity: 0.1;
+  pointer-events: none;
+}

@@ -19,10 +19,11 @@
      máscara, que ya incluye cómo se desvanecía la imagen original */
   /* Fijo desde arriba de la pantalla: cuando la barra está oculta (en el hero)
      no queda una franja sin grano; se desvanece con un degradado largo y suave
-     que empieza justo debajo de la barra (sin un corte visible) */
+     desde el borde superior. Sin tramo opaco a la altura de la barra: con la
+     barra oculta se veía como una franja más oscura con un corte */
   --grain-fade: linear-gradient(
     to bottom,
-    #000 var(--header-height),
+    #000 0,
     rgb(0 0 0 / 0.82) 12%,
     rgb(0 0 0 / 0.6) 25%,
     rgb(0 0 0 / 0.4) 40%,

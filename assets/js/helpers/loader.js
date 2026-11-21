@@ -54,6 +54,18 @@ function buildName(word) {
   return done;
 }
 
+// Poppins 200/600 (precargadas desde el <head>) y el logo (sprite externo de
+// <use>). Con tope de ASSETS_WAIT_MS: con red lenta la animación empieza igual.
+const ASSETS_WAIT_MS = 1200;
+function assetsReady() {
+  const fonts = document.fonts
+    ? Promise.all([document.fonts.load('200 1em Poppins'), document.fonts.load('600 1em Poppins')])
+    : Promise.resolve();
+  const logo = fetch('/assets/img/logo.svg').then((r) => r.blob());
+  const timeout = new Promise((r) => setTimeout(r, ASSETS_WAIT_MS));
+  return Promise.race([Promise.all([fonts, logo]), timeout]).catch(() => {});
+}
+
 function loader() {
   let done = false;
 
@@ -67,12 +79,14 @@ function loader() {
 
   const word = loaderContainer?.querySelector('.loader__name');
   const animated = Boolean(word) && !prefersReducedMotion();
-  // Sin animación, el nombre ya está "listo"
-  let nameReady = Promise.resolve();
-  if (animated) {
-    nameReady = buildName(word).then(() => new Promise((r) => setTimeout(r, HOLD_MS)));
+  // El logo y el nombre se muestran (y la animación empieza) cuando ya
+  // cargaron la tipografía y el logo; mientras, solo se ve el fondo
+  const nameReady = assetsReady().then(() => {
+    loaderContainer?.classList.add('loader--ready');
+    if (!animated) return; // sin animación, el nombre ya está "listo"
     loaderContainer.classList.add('loader--animated');
-  }
+    return buildName(word).then(() => new Promise((r) => setTimeout(r, HOLD_MS)));
+  });
 
   const hide = () => {
     if (done) return;

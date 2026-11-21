@@ -401,6 +401,116 @@ body:has(#pdf-container) .header {
   }
 }
 
+/* Móvil, modo oscuro (lámpara encendida): la lámpara cuelga sobre el panel,
+   arriba a la derecha (su centro a 92px de la orilla, ver _lamp.css), y su
+   luz aclara el menú con un halo cenital del mismo color que la luz
+   (rgb(255 250 134), de la imagen encendida). Se enciende y apaga al mismo
+   tiempo que la lámpara. */
+@media (max-width: 599px) {
+  /* el halo se mueve (rebote, balanceo): que no se salga del panel */
+  .header .navbar .navbar__menu {
+    overflow: clip;
+  }
+
+  .header .navbar .navbar__menu::before {
+    content: '';
+    position: absolute;
+    /* más grande que el panel (que lo recorta): al girar no se ven sus orillas */
+    inset: -200px;
+    z-index: -1;
+    background: radial-gradient(
+      ellipse 330px 550px at calc(100% - 292px) 200px,
+      rgb(255 250 134 / 0.26),
+      rgb(255 250 134 / 0.12) 40%,
+      transparent 78%
+    );
+    /* gira con la lámpara (giroscopio, --lamp-tilt de lamp.js) desde su
+       punto de luz (a 92px de la orilla, arriba del panel), como el cono de
+       luz de un péndulo */
+    transform-origin: calc(100% - 292px) 200px;
+    rotate: var(--lamp-tilt, 0deg);
+    opacity: 0;
+    /* se apaga junto con la lámpara (al instante) */
+    transition: none;
+    pointer-events: none;
+  }
+
+  @container style(--color-scheme: dark) {
+    /* Al abrir el menú, la lámpara (ya encendida) aparece a los 0.25s
+       (_lamp.css): el halo se enciende en ese mismo momento. Ya encendido
+       queda un poco más tenue (0.8). */
+    .header.menu-open .navbar .navbar__menu::before {
+      opacity: 0.8;
+      transition: opacity 0.12s ease-out 0.25s;
+    }
+
+    /* Sigue a la lámpara: baja y rebota con ella (mismo ritmo que
+       lamp-bungee), con un destello al llegar que se asienta en 0.8 */
+    @media (prefers-reduced-motion: no-preference) {
+      .header.menu-open .navbar .navbar__menu::before {
+        transition: none;
+        animation: halo-bungee 1.1s 0.25s backwards;
+      }
+
+      /* La lámpara se balancea (al aterrizar o al jalar la cadena): el halo
+         se mece al compás. Se añade a la lista sin reiniciar halo-bungee. */
+      body:has(.lamp.lamp--swing) .header.menu-open .navbar .navbar__menu::before {
+        animation:
+          halo-bungee 1.1s 0.25s backwards,
+          halo-swing 1.4s ease-in-out;
+      }
+    }
+  }
+}
+
+/* Con el menú abierto, al jalar la cadena la luz cambia al instante (la
+   lámpara recibe .lamp--swing justo al cambiar el tema): el halo también */
+body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
+  transition: none;
+}
+
+@keyframes halo-bungee {
+  0% {
+    opacity: 0;
+    translate: 0 -40px;
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.6);
+  }
+  42% {
+    opacity: 1;
+    translate: 0 8px;
+    animation-timing-function: cubic-bezier(0.25, 0.6, 0.4, 1);
+  }
+  62% {
+    translate: 0 -4px;
+    animation-timing-function: ease-in-out;
+  }
+  78% {
+    translate: 0 2px;
+    animation-timing-function: ease-in-out;
+  }
+  100% {
+    opacity: 0.8;
+    translate: 0 0;
+  }
+}
+
+/* La lámpara gira desde el cable (lamp-swing): cuando su base va a un lado,
+   la luz que proyecta se mueve hacia ese lado */
+@keyframes halo-swing {
+  20% {
+    transform: translateX(-10px);
+  }
+  45% {
+    transform: translateX(7px);
+  }
+  70% {
+    transform: translateX(-3.5px);
+  }
+  90% {
+    transform: translateX(1px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .header .navbar .navbar__menu,
   .header .navbar__burger i {
@@ -431,6 +541,11 @@ body:has(#pdf-container) .header {
         position: static;
         border-radius: 0;
         background-color: transparent;
+        /* sin el vidrio del panel móvil: en escritorio el vidrio es el de la
+           barra (que se funde con el scroll); si no, queda una franja borrosa
+           en el hero que tapa el cable de la lámpara */
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
         box-shadow: none;
         visibility: visible;
         opacity: 1;
@@ -720,7 +835,7 @@ body:has(#pdf-container) .header {
         width: 1.1rem;
         height: 2px;
         translate: -50% 0;
-        background: var(--gold-400);
+        background: var(--accent-color);
         border-radius: 2px;
         opacity: 0;
         transition: opacity 0.15s;

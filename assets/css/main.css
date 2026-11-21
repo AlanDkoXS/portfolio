@@ -298,23 +298,31 @@ section[tabindex='-1']:focus {
   --teal-deep-900: #000d12; /* footer del modo oscuro */
   --gold-300: #ffd95c;
   --gold-400: #f3ce3a;
+  --gold-500: #e4e6e7; /* modo oscuro: gris casi blanco (neutro, sin amarillo) */
 
   /* Theme Colors: ambos modos son turquesa con texto dorado; el oscuro es
      más profundo (light-dark() sigue a color-scheme: sistema o botón) */
-  --primary-color: var(--gold-400); /* texto, títulos, íconos */
-  --text-muted: #c9b25a;
-  --accent-color: var(--gold-400); /* rellenos, sombras, subrayados */
-  --accent-ink: var(--gold-400); /* líneas/íconos que necesitan contraste */
-  --link-hover: var(--gold-300);
-  --accent-glow: rgb(243 206 58 / 0.45);
+  /* Color principal: dorado en el modo claro, gris casi blanco en el
+     oscuro; las zonas siempre oscuras (footer, barra, tarjetas sobre fotos)
+     usan --gold-400 */
+  --gold-main: light-dark(var(--gold-400), var(--gold-500));
+  /* Énfasis (<strong> del hero): un paso más claro que --gold-main (blanco en oscuro) */
+  --gold-emphasis: light-dark(var(--gold-300), #ffffff);
+  --primary-color: var(--gold-main); /* texto, títulos, íconos */
+  --text-muted: light-dark(#c9b25a, #a9aeb1);
+  --accent-color: var(--gold-main); /* rellenos, sombras, subrayados */
+  --accent-ink: var(--gold-main); /* líneas/íconos que necesitan contraste */
+  --link-hover: light-dark(var(--gold-300), #ffffff);
+  /* Fondo de los botones al pasar el mouse: dorado más claro / blanco */
+  --btn-hover-bg: light-dark(var(--gold-300), #ffffff);
+  --accent-glow: light-dark(rgb(243 206 58 / 0.45), rgb(228 230 231 / 0.35));
   --on-accent-color: light-dark(var(--teal-deep-800), var(--teal-950)); /* texto sobre dorado; en claro, el fondo del modo oscuro */
-  --on-image-color: var(--gold-400); /* texto sobre fotos/overlays oscuros */
 
   /* Background Colors */
   --bg-color-section: light-dark(var(--teal-800), var(--teal-deep-800));
   --surface-color: light-dark(var(--teal-700), var(--teal-deep-700));
   --bg-color-buttons: light-dark(var(--teal-600), var(--teal-deep-600)); /* inputs, controles secundarios */
-  --border-color: rgb(243 206 58 / 0.18);
+  --border-color: light-dark(rgb(243 206 58 / 0.18), rgb(228 230 231 / 0.18));
   --input-bg: light-dark(var(--teal-900), var(--teal-deep-900)); /* campos del formulario: más oscuros que el fondo */
   --footer-bg: light-dark(var(--teal-950), #00070a); /* footer y barra del menú; en oscuro, un poco más que los campos */ /* footer y barra del menú: más oscuros que la página */
   --footer-text: #e6eef0;
@@ -330,16 +338,36 @@ section[tabindex='-1']:focus {
   /* Grano en dorado oscuro (#a8800f aprox.): cada punto toma su opacidad del
      ruido. Se usa como sombra interna de botones y etiquetas (ver
      _buttons.css); los íconos SVG usan el filtro #grain-inset de index.html */
-  --grain-gold: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.2 -1.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-gold-deep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.2 -1.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Grano gris (#8f969b): botones gris casi blanco del modo oscuro */
+  --grain-gold-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .561  0 0 0 0 .588  0 0 0 0 .608  0 0 0 7 -1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Variante para móvil/táctil: puntos más grandes (frecuencia menor) y más
      densos (más puntos pasan el umbral de opacidad); ver _buttons.css */
-  --grain-gold-strong: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.6 -1.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-gold-strong-deep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.6 -1.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-gold-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .561  0 0 0 0 .588  0 0 0 0 .608  0 0 0 7 -1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Solo botones (.btn) en modo oscuro: grano gris oscuro (≈ #848b90; el
+     filtro mezcla en linearRGB, por eso los valores son bajos) y más intenso
+     (más puntos y más opacos) que el de etiquetas e íconos */
+  --grain-btn-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23  0 0 0 0 .255  0 0 0 0 .275  0 0 0 8 -1.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-btn-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23  0 0 0 0 .255  0 0 0 0 .275  0 0 0 8 -1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Grano oscuro uniforme (tinta), en mosaico sin cortes */
   --grain-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 .07  0 0 0 0 .1  0 0 0 3.6 -1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --grain-inset-shadow: inset -5px -6px 8px -2px rgb(176 136 20 / 0.78);
+  /* Sombra interna: dorado oscuro sobre botones dorados (modo claro); en el
+     oscuro (botones gris casi blanco) el mismo gris del grano */
+  --grain-inset-shadow: inset -5px -6px 8px -2px light-dark(rgb(176 136 20 / 0.78), #8f969b),
+    inset -2px -3px 4px -1px light-dark(transparent, #8f969b);
+  /* Sombra interna de los botones. Claro: abajo a la derecha (luz de arriba a
+     la izquierda). Oscuro: la luz es la lámpara, arriba a la derecha, así que
+     la sombra va abajo a la izquierda, gris y más marcada. Se elige por
+     esquema abajo (un desplazamiento no admite light-dark()). */
+  --btn-inset-shadow-light: inset -5px -6px 8px -2px rgb(176 136 20 / 0.78);
+  --btn-inset-shadow-dark: inset 5px -6px 8px -2px #868d92, inset 2px -3px 4px -1px #7c8388;
   --grain-mask: linear-gradient(to top, #000, transparent 55%), linear-gradient(to left, #000, transparent 30%);
   --grain-mask-all: radial-gradient(farthest-side, transparent 50%, #000 100%);
   --grain-mask-hover: linear-gradient(to top, #000, transparent 85%), linear-gradient(to left, #000, transparent 40%);
+  /* Mismas máscaras reflejadas (grano abajo a la izquierda): botones en oscuro */
+  --grain-mask-left: linear-gradient(to top, #000, transparent 55%), linear-gradient(to right, #000, transparent 30%);
+  --grain-mask-hover-left: linear-gradient(to top, #000, transparent 85%), linear-gradient(to right, #000, transparent 40%);
 
   /* Overlay Colors */
   --modal-overlay: rgba(0, 0, 0, 0.5);
@@ -468,19 +496,54 @@ section[tabindex='-1']:focus {
   /* Esquema efectivo, para ramificar valores que no son colores con
      @container style(--color-scheme: light) */
   --color-scheme: light;
+  /* Grano de botones y etiquetas según el esquema (una imagen no admite
+     light-dark()): dorado oscuro en claro, dorado del énfasis en oscuro */
+  --grain-gold: var(--grain-gold-deep);
+  --grain-gold-strong: var(--grain-gold-strong-deep);
+  --btn-grain: var(--grain-gold-deep);
+  --btn-grain-strong: var(--grain-gold-strong-deep);
+  --btn-inset-shadow: var(--btn-inset-shadow-light);
+  --btn-grain-mask: var(--grain-mask);
+  --btn-grain-mask-hover: var(--grain-mask-hover);
+  /* Grano de los íconos de skills (filtros SVG de index.html), igual que el de los botones */
+  --icon-grain: url(#grain-inset);
 
   @media (prefers-color-scheme: dark) {
     --color-scheme: dark;
+    --grain-gold: var(--grain-gold-bright);
+    --grain-gold-strong: var(--grain-gold-strong-bright);
+    --btn-grain: var(--grain-btn-bright);
+    --btn-grain-strong: var(--grain-btn-strong-bright);
+    --btn-inset-shadow: var(--btn-inset-shadow-dark);
+    --btn-grain-mask: var(--grain-mask-left);
+    --btn-grain-mask-hover: var(--grain-mask-hover-left);
+    --icon-grain: url(#grain-inset-bright);
   }
 
   &:has(> head > meta[name='color-scheme'][content='dark']) {
     color-scheme: dark;
     --color-scheme: dark;
+    --grain-gold: var(--grain-gold-bright);
+    --grain-gold-strong: var(--grain-gold-strong-bright);
+    --btn-grain: var(--grain-btn-bright);
+    --btn-grain-strong: var(--grain-btn-strong-bright);
+    --btn-inset-shadow: var(--btn-inset-shadow-dark);
+    --btn-grain-mask: var(--grain-mask-left);
+    --btn-grain-mask-hover: var(--grain-mask-hover-left);
+    --icon-grain: url(#grain-inset-bright);
   }
 
   &:has(> head > meta[name='color-scheme'][content='light']) {
     color-scheme: light;
     --color-scheme: light;
+    --grain-gold: var(--grain-gold-deep);
+    --grain-gold-strong: var(--grain-gold-strong-deep);
+    --btn-grain: var(--grain-gold-deep);
+    --btn-grain-strong: var(--grain-gold-strong-deep);
+    --btn-inset-shadow: var(--btn-inset-shadow-light);
+    --btn-grain-mask: var(--grain-mask);
+    --btn-grain-mask-hover: var(--grain-mask-hover);
+    --icon-grain: url(#grain-inset);
   }
 }
 
@@ -508,10 +571,11 @@ section[tabindex='-1']:focus {
      máscara, que ya incluye cómo se desvanecía la imagen original */
   /* Fijo desde arriba de la pantalla: cuando la barra está oculta (en el hero)
      no queda una franja sin grano; se desvanece con un degradado largo y suave
-     que empieza justo debajo de la barra (sin un corte visible) */
+     desde el borde superior. Sin tramo opaco a la altura de la barra: con la
+     barra oculta se veía como una franja más oscura con un corte */
   --grain-fade: linear-gradient(
     to bottom,
-    #000 var(--header-height),
+    #000 0,
     rgb(0 0 0 / 0.82) 12%,
     rgb(0 0 0 / 0.6) 25%,
     rgb(0 0 0 / 0.4) 40%,
@@ -684,10 +748,10 @@ section[tabindex='-1']:focus {
   text-align: center;
   color: var(--on-accent-color);
 
-  background: var(--gold-400);
+  background: var(--accent-color);
   border: 2px solid var(--btn-ink);
   border-radius: var(--border-radius-small);
-  box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--btn-ink), var(--grain-inset-shadow);
+  box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--btn-ink), var(--btn-inset-shadow);
 
   cursor: pointer;
   transition:
@@ -704,10 +768,10 @@ section[tabindex='-1']:focus {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--grain-gold);
+  background: var(--btn-grain);
   background-size: 120px;
-  -webkit-mask: var(--grain-mask);
-  mask: var(--grain-mask);
+  -webkit-mask: var(--btn-grain-mask);
+  mask: var(--btn-grain-mask);
   pointer-events: none;
 }
 
@@ -719,7 +783,7 @@ section[tabindex='-1']:focus {
 
 .btn:active {
   transform: translate(var(--btn-offset), var(--btn-offset));
-  box-shadow: 0 0 0 var(--btn-ink), var(--grain-inset-shadow);
+  box-shadow: 0 0 0 var(--btn-ink), var(--btn-inset-shadow);
 }
 
 .btn:focus-visible {
@@ -750,15 +814,15 @@ section[tabindex='-1']:focus {
 /* Hover solo con puntero real: en pantallas táctiles se queda "pegado" tras tocar */
 @media (hover: hover) {
   .btn:hover {
-    background: var(--gold-300);
+    background: var(--btn-hover-bg);
     transform: translate(-2px, -2px);
-    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--grain-inset-shadow);
+    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--btn-inset-shadow);
   }
 
   /* El grano sube un poco al pasar el mouse */
   .btn:hover::after {
-    -webkit-mask: var(--grain-mask-hover);
-    mask: var(--grain-mask-hover);
+    -webkit-mask: var(--btn-grain-mask-hover);
+    mask: var(--btn-grain-mask-hover);
   }
 
   .btn:hover i {
@@ -768,7 +832,7 @@ section[tabindex='-1']:focus {
   .btn--ghost:hover {
     color: var(--on-accent-color);
     background: var(--accent-color);
-    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--grain-inset-shadow);
+    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--btn-inset-shadow);
   }
 
   .btn--ghost:hover::after {
@@ -782,10 +846,10 @@ section[tabindex='-1']:focus {
    puntos más grandes y densos. */
 @media (hover: none), (max-width: 599px) {
   .btn::after {
-    background: var(--grain-gold-strong);
+    background: var(--btn-grain-strong);
     background-size: 120px;
-    -webkit-mask: var(--grain-mask-hover);
-    mask: var(--grain-mask-hover);
+    -webkit-mask: var(--btn-grain-mask-hover);
+    mask: var(--btn-grain-mask-hover);
   }
 }
 
@@ -804,7 +868,7 @@ section[tabindex='-1']:focus {
   isolation: isolate;
   background-color: var(--footer-bg);
   color: var(--footer-text);
-  --primary-color: var(--gold-400);
+  /* títulos e íconos: dorado en claro, gris casi blanco en oscuro (como la página) */
   /* espacio entre el borde superior y el primer título */
   padding: 2.5rem 0 2rem !important;
   bottom: 0;
@@ -1282,6 +1346,116 @@ body:has(#pdf-container) .header {
   }
 }
 
+/* Móvil, modo oscuro (lámpara encendida): la lámpara cuelga sobre el panel,
+   arriba a la derecha (su centro a 92px de la orilla, ver _lamp.css), y su
+   luz aclara el menú con un halo cenital del mismo color que la luz
+   (rgb(255 250 134), de la imagen encendida). Se enciende y apaga al mismo
+   tiempo que la lámpara. */
+@media (max-width: 599px) {
+  /* el halo se mueve (rebote, balanceo): que no se salga del panel */
+  .header .navbar .navbar__menu {
+    overflow: clip;
+  }
+
+  .header .navbar .navbar__menu::before {
+    content: '';
+    position: absolute;
+    /* más grande que el panel (que lo recorta): al girar no se ven sus orillas */
+    inset: -200px;
+    z-index: -1;
+    background: radial-gradient(
+      ellipse 330px 550px at calc(100% - 292px) 200px,
+      rgb(255 250 134 / 0.26),
+      rgb(255 250 134 / 0.12) 40%,
+      transparent 78%
+    );
+    /* gira con la lámpara (giroscopio, --lamp-tilt de lamp.js) desde su
+       punto de luz (a 92px de la orilla, arriba del panel), como el cono de
+       luz de un péndulo */
+    transform-origin: calc(100% - 292px) 200px;
+    rotate: var(--lamp-tilt, 0deg);
+    opacity: 0;
+    /* se apaga junto con la lámpara (al instante) */
+    transition: none;
+    pointer-events: none;
+  }
+
+  @container style(--color-scheme: dark) {
+    /* Al abrir el menú, la lámpara (ya encendida) aparece a los 0.25s
+       (_lamp.css): el halo se enciende en ese mismo momento. Ya encendido
+       queda un poco más tenue (0.8). */
+    .header.menu-open .navbar .navbar__menu::before {
+      opacity: 0.8;
+      transition: opacity 0.12s ease-out 0.25s;
+    }
+
+    /* Sigue a la lámpara: baja y rebota con ella (mismo ritmo que
+       lamp-bungee), con un destello al llegar que se asienta en 0.8 */
+    @media (prefers-reduced-motion: no-preference) {
+      .header.menu-open .navbar .navbar__menu::before {
+        transition: none;
+        animation: halo-bungee 1.1s 0.25s backwards;
+      }
+
+      /* La lámpara se balancea (al aterrizar o al jalar la cadena): el halo
+         se mece al compás. Se añade a la lista sin reiniciar halo-bungee. */
+      body:has(.lamp.lamp--swing) .header.menu-open .navbar .navbar__menu::before {
+        animation:
+          halo-bungee 1.1s 0.25s backwards,
+          halo-swing 1.4s ease-in-out;
+      }
+    }
+  }
+}
+
+/* Con el menú abierto, al jalar la cadena la luz cambia al instante (la
+   lámpara recibe .lamp--swing justo al cambiar el tema): el halo también */
+body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
+  transition: none;
+}
+
+@keyframes halo-bungee {
+  0% {
+    opacity: 0;
+    translate: 0 -40px;
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.6);
+  }
+  42% {
+    opacity: 1;
+    translate: 0 8px;
+    animation-timing-function: cubic-bezier(0.25, 0.6, 0.4, 1);
+  }
+  62% {
+    translate: 0 -4px;
+    animation-timing-function: ease-in-out;
+  }
+  78% {
+    translate: 0 2px;
+    animation-timing-function: ease-in-out;
+  }
+  100% {
+    opacity: 0.8;
+    translate: 0 0;
+  }
+}
+
+/* La lámpara gira desde el cable (lamp-swing): cuando su base va a un lado,
+   la luz que proyecta se mueve hacia ese lado */
+@keyframes halo-swing {
+  20% {
+    transform: translateX(-10px);
+  }
+  45% {
+    transform: translateX(7px);
+  }
+  70% {
+    transform: translateX(-3.5px);
+  }
+  90% {
+    transform: translateX(1px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .header .navbar .navbar__menu,
   .header .navbar__burger i {
@@ -1312,6 +1486,11 @@ body:has(#pdf-container) .header {
         position: static;
         border-radius: 0;
         background-color: transparent;
+        /* sin el vidrio del panel móvil: en escritorio el vidrio es el de la
+           barra (que se funde con el scroll); si no, queda una franja borrosa
+           en el hero que tapa el cable de la lámpara */
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
         box-shadow: none;
         visibility: visible;
         opacity: 1;
@@ -1601,7 +1780,7 @@ body:has(#pdf-container) .header {
         width: 1.1rem;
         height: 2px;
         translate: -50% 0;
-        background: var(--gold-400);
+        background: var(--accent-color);
         border-radius: 2px;
         opacity: 0;
         transition: opacity 0.15s;
@@ -1740,6 +1919,9 @@ body:has(#pdf-container) .header {
     user-select: none;
     /* gira desde donde se une con el cable */
     transform-origin: 50% 0;
+    /* giroscopio (lamp.js): péndulo que se queda vertical al inclinar el
+       teléfono. Propiedad aparte de transform: se suma al balanceo */
+    rotate: var(--lamp-tilt, 0deg);
     transition: filter 0.2s ease;
   }
 
@@ -1961,6 +2143,13 @@ body:has(#pdf-container) .header {
     font-weight: 500;
     font-size: 1rem;
   }
+}
+
+/* Hasta que loader.js confirma que la tipografía y el logo cargaron, solo se
+   ve el fondo (tapa la página): así no aparecen un instante con la fuente de
+   respaldo o sin logo antes de que empiece la animación */
+.loader:not(.loader--ready) :is(.loader__logo, .loader__name) {
+  visibility: hidden;
 }
 
 .loader--hidden {
@@ -2517,6 +2706,9 @@ html.js:not(.hero-ready) .home .home__title {
 
   .home .home__info {
     min-width: 0;
+    /* separa el texto de los íconos de redes (el retrato se encoge para
+       dejar el espacio, así el texto sube) */
+    margin-bottom: 1.5rem;
   }
 
   .home .home__info .home__description {
@@ -2566,7 +2758,7 @@ html.js:not(.hero-ready) .home .home__title {
 /* Énfasis en la presentación (*…* en translations.js) */
 .home__description strong {
   font-weight: var(--font-semibold);
-  color: var(--gold-300);
+  color: var(--gold-emphasis);
 }
 
 /* --- sections/_about.css --- */
@@ -2892,6 +3084,21 @@ html.js:not(.hero-ready) .home .home__title {
   }
 }
 
+/* Textura visible en el formulario y en el "¿Tienes un proyecto en mente?" de
+   las páginas de caso (mismo estilo): los puntos del grano de la página, en una
+   capa propia encima del grano oscuro. Los dos llevan exactamente lo mismo. */
+.contact .contact__container .contact__form::before,
+.project-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: url('/assets/img/bgGrain-tile.webp') 0 0 / 256px 256px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
 /* --- sections/_projects.css --- */
 /* ============= Projects Section ============= */
 
@@ -2919,8 +3126,8 @@ html.js:not(.hero-ready) .home .home__title {
 }
 
 .project__card {
-  /* Las tarjetas van sobre fotos con overlay oscuro: texto dorado en ambos temas */
-  --primary-color: var(--on-image-color);
+  /* Mismos colores que el resto de la página: dorado en claro, gris casi
+     blanco en oscuro (texto, íconos, botones, grano) */
   position: absolute;
   width: 280px;
   height: 350px;
@@ -2991,14 +3198,19 @@ html.js:not(.hero-ready) .home .home__title {
   background-size: 140px;
   -webkit-mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
   mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
-  opacity: 0.35;
+  opacity: 0.1;
   pointer-events: none;
 }
 
 .project__card-back {
-  /* Reverso: degradado turquesa propio (siempre oscuro, el texto es dorado) */
-  background: linear-gradient(160deg, var(--teal-600) 0%, var(--teal-800) 55%, var(--teal-950) 100%);
-  border: 1px solid rgb(243 206 58 / 0.25);
+  /* Reverso: degradado turquesa; en oscuro con los turquesas profundos del modo */
+  background: linear-gradient(
+    160deg,
+    light-dark(var(--teal-600), var(--teal-deep-600)) 0%,
+    light-dark(var(--teal-800), var(--teal-deep-800)) 55%,
+    light-dark(var(--teal-950), var(--teal-deep-900)) 100%
+  );
+  border: 1px solid var(--border-color);
   transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
@@ -3104,9 +3316,10 @@ html.js:not(.hero-ready) .home .home__title {
   text-align: center;
 }
 
-/* todos los títulos van a la izquierda */
+/* título centrado (el margen que lo sube va en la regla de abajo, después
+   del margin: 0 compartido) */
 .project__title {
-  text-align: start;
+  text-align: center;
 }
 
 /* Reverso: el texto completo cabe en la tarjeta */
@@ -3130,14 +3343,15 @@ html.js:not(.hero-ready) .home .home__title {
   filter: drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
 }
 
-/* Íconos de tecnologías: sombra interna granulada (filtro #grain-inset en index.html) */
+/* Íconos de tecnologías: sombra interna granulada (filtro de --icon-grain, como los de skills) */
 .project__tech-icon {
-  filter: url(#grain-inset) drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
+  filter: var(--icon-grain) drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
 }
 
 .project__title {
   text-transform: uppercase;
-  font-size: calc(var(--title-scale) * 1.15rem);
+  margin-bottom: 1.25rem;
+  font-size: calc(var(--title-scale) * 0.95rem);
   line-height: 1.25;
 }
 
@@ -3149,18 +3363,21 @@ html.js:not(.hero-ready) .home .home__title {
   z-index: 3;
 }
 
-/* Tech stack icons */
+/* Tech stack icons: siempre en una sola línea; si no caben, se encogen */
 .project__tech-stack {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  flex-wrap: nowrap;
+  gap: 0.6rem;
   justify-content: center;
   align-items: center;
 }
 
 .project__tech-icon {
+  flex: 0 1 2rem;
+  min-width: 0;
   width: 2rem;
-  height: 2rem;
+  height: auto;
+  aspect-ratio: 1;
   fill: var(--primary-color);
   transition: transform 0.3s ease;
   z-index: 3;
@@ -3186,7 +3403,7 @@ html.js:not(.hero-ready) .home .home__title {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.6rem 1.1rem;
-  background-color: var(--gold-400);
+  background-color: var(--accent-color);
   color: var(--on-accent-color);
   /* mismo estilo cartoon que .btn: contorno de tinta y sombra dura */
   border: 2px solid var(--teal-950);
@@ -3203,7 +3420,7 @@ html.js:not(.hero-ready) .home .home__title {
 /* Solo con puntero real: en pantallas táctiles el :hover se queda "pegado" tras tocar */
 @media (hover: hover) {
   .project__button:hover {
-    background-color: var(--gold-300);
+    background-color: var(--btn-hover-bg);
     color: var(--on-accent-color);
     transform: translate(-2px, -2px);
     box-shadow: 5px 5px 0 #000, var(--grain-inset-shadow);
@@ -3438,7 +3655,8 @@ html.js:not(.hero-ready) .home .home__title {
     transition: translate 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .designs__link:hover {
+  /* solo si es enlace (desactivados mientras la cuenta de Dribbble no sea Pro) */
+  a.designs__link:hover {
     translate: 0 -4px;
     box-shadow: 0 10px 20px var(--shadow-color);
   }
@@ -3547,7 +3765,7 @@ html.js:not(.hero-ready) .home .home__title {
   object-fit: contain;
   fill: var(--primary-color);
   /* Sombra interna granulada, como los botones (filtro #grain-inset en index.html) */
-  filter: url(#grain-inset);
+  filter: var(--icon-grain);
 }
 
 .skills__icon-title {
@@ -4365,6 +4583,24 @@ html.js:not(.hero-ready) .home .home__title {
   max-width: none;
   margin: 0;
   white-space: normal;
+  /* más aire entre el texto y el borde */
+  padding: 0.85rem 1.75rem;
+}
+
+/* Celular: cada botón mide media pantalla y "Siguiente ›" no cabía con el
+   relleno normal (el texto tocaba el borde). Letra un poco más chica y menos
+   relleno lateral: el texto queda centrado y separado del borde. */
+@media (max-width: 599px) {
+  .project-pager {
+    gap: 0.75rem;
+  }
+
+  .project-pager__link {
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    gap: 0.3rem;
+    padding-inline: 0.6rem;
+  }
 }
 
 /* nombre del proyecto debajo del botón, en texto pequeño */
@@ -4380,8 +4616,8 @@ html.js:not(.hero-ready) .home .home__title {
   }
 }
 
-/* Mismo estilo que el formulario de contacto: superficie más clara, sombra
-   suave y textura de grano encima */
+/* Idéntico al formulario de contacto ("Envíame un mensaje"): misma
+   superficie, sombra suave y el mismo grano encima */
 .project-cta {
   position: relative;
   isolation: isolate;
@@ -4408,6 +4644,7 @@ html.js:not(.hero-ready) .home .home__title {
   gap: 0.75rem;
   text-align: center;
 
+  h2,
   p {
     max-width: 50ch;
     text-align: center;

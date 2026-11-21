@@ -33,10 +33,10 @@
   text-align: center;
   color: var(--on-accent-color);
 
-  background: var(--gold-400);
+  background: var(--accent-color);
   border: 2px solid var(--btn-ink);
   border-radius: var(--border-radius-small);
-  box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--btn-ink), var(--grain-inset-shadow);
+  box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--btn-ink), var(--btn-inset-shadow);
 
   cursor: pointer;
   transition:
@@ -53,10 +53,10 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--grain-gold);
+  background: var(--btn-grain);
   background-size: 120px;
-  -webkit-mask: var(--grain-mask);
-  mask: var(--grain-mask);
+  -webkit-mask: var(--btn-grain-mask);
+  mask: var(--btn-grain-mask);
   pointer-events: none;
 }
 
@@ -68,7 +68,7 @@
 
 .btn:active {
   transform: translate(var(--btn-offset), var(--btn-offset));
-  box-shadow: 0 0 0 var(--btn-ink), var(--grain-inset-shadow);
+  box-shadow: 0 0 0 var(--btn-ink), var(--btn-inset-shadow);
 }
 
 .btn:focus-visible {
@@ -99,15 +99,15 @@
 /* Hover solo con puntero real: en pantallas táctiles se queda "pegado" tras tocar */
 @media (hover: hover) {
   .btn:hover {
-    background: var(--gold-300);
+    background: var(--btn-hover-bg);
     transform: translate(-2px, -2px);
-    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--grain-inset-shadow);
+    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--btn-inset-shadow);
   }
 
   /* El grano sube un poco al pasar el mouse */
   .btn:hover::after {
-    -webkit-mask: var(--grain-mask-hover);
-    mask: var(--grain-mask-hover);
+    -webkit-mask: var(--btn-grain-mask-hover);
+    mask: var(--btn-grain-mask-hover);
   }
 
   .btn:hover i {
@@ -117,7 +117,7 @@
   .btn--ghost:hover {
     color: var(--on-accent-color);
     background: var(--accent-color);
-    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--grain-inset-shadow);
+    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--btn-inset-shadow);
   }
 
   .btn--ghost:hover::after {
@@ -131,10 +131,10 @@
    puntos más grandes y densos. */
 @media (hover: none), (max-width: 599px) {
   .btn::after {
-    background: var(--grain-gold-strong);
+    background: var(--btn-grain-strong);
     background-size: 120px;
-    -webkit-mask: var(--grain-mask-hover);
-    mask: var(--grain-mask-hover);
+    -webkit-mask: var(--btn-grain-mask-hover);
+    mask: var(--btn-grain-mask-hover);
   }
 }
 
