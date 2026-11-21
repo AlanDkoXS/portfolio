@@ -10,6 +10,7 @@
          18:00 to 6:00, local time). The button stores an override until the next
          switch (localStorage.theme / themeUntil).
          Applied before first paint; without JS the system scheme is followed. -->
+    <!-- theme:start (single source: scripts/build-i18n.mjs copies this block to resume.html and the project pages) -->
     <meta name="color-scheme" content="light dark" />
     <script>
       {
@@ -22,6 +23,7 @@
         document.querySelector('meta[name="color-scheme"]').content = t;
       }
     </script>
+    <!-- theme:end -->
     <script>
       // The loader only shows on the first load of the session: when switching
       // language or going back to the home page, the page appears right away

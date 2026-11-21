@@ -13,22 +13,17 @@
 // https://dribbble.com/account/applications
 
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
+import { ROOT, fail, withTmpDir } from './lib/site.mjs';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const token = process.env.DRIBBBLE_TOKEN;
 const limit = Number(process.env.DRIBBBLE_LIMIT) || 12;
-const imgDir = path.join(root, 'assets/img/dribbble');
-const dataPath = path.join(root, 'scripts/data/dribbble.json');
+const imgDir = path.join(ROOT, 'assets/img/dribbble');
+const dataPath = path.join(ROOT, 'scripts/data/dribbble.json');
 const SIZE = { width: 800, height: 600 };
 
-if (!token) {
-  console.error('Missing DRIBBBLE_TOKEN (access token from https://dribbble.com/account/applications)');
-  process.exit(1);
-}
+if (!token) fail('Missing DRIBBBLE_TOKEN (access token from https://dribbble.com/account/applications)');
 
 const api = async (endpoint) => {
   const res = await fetch(`https://api.dribbble.com/v2${endpoint}`, {
@@ -41,37 +36,39 @@ const api = async (endpoint) => {
 const [user, shots] = await Promise.all([api('/user'), api(`/user/shots?per_page=${limit}`)]);
 
 fs.mkdirSync(imgDir, { recursive: true });
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'dribbble-'));
 
-const items = [];
-for (const shot of shots.slice(0, limit)) {
-  const src = shot.images?.hidpi || shot.images?.normal;
-  if (!src) continue;
-  const res = await fetch(src);
-  if (!res.ok) throw new Error(`Image of shot ${shot.id}: ${res.status}`);
-  const raw = path.join(tmp, String(shot.id));
-  fs.writeFileSync(raw, Buffer.from(await res.arrayBuffer()));
-  const file = `${shot.id}.webp`;
-  // [0]: first frame if the shot is animated (GIF)
-  execFileSync('magick', [
-    `${raw}[0]`,
-    '-resize', `${SIZE.width}x${SIZE.height}^`,
-    '-gravity', 'center',
-    '-extent', `${SIZE.width}x${SIZE.height}`,
-    '-strip',
-    '-quality', '82',
-    path.join(imgDir, file),
-  ]);
-  items.push({
-    id: shot.id,
-    title: shot.title,
-    url: shot.html_url,
-    image: `/assets/img/dribbble/${file}`,
-    ...SIZE,
-    publishedAt: shot.published_at,
-  });
-}
-fs.rmSync(tmp, { recursive: true, force: true });
+// The original covers are downloaded to a temporary directory
+const items = await withTmpDir('dribbble-', async (tmp) => {
+  const items = [];
+  for (const shot of shots.slice(0, limit)) {
+    const src = shot.images?.hidpi || shot.images?.normal;
+    if (!src) continue;
+    const res = await fetch(src);
+    if (!res.ok) throw new Error(`Image of shot ${shot.id}: ${res.status}`);
+    const raw = path.join(tmp, String(shot.id));
+    fs.writeFileSync(raw, Buffer.from(await res.arrayBuffer()));
+    const file = `${shot.id}.webp`;
+    // [0]: first frame if the shot is animated (GIF)
+    execFileSync('magick', [
+      `${raw}[0]`,
+      '-resize', `${SIZE.width}x${SIZE.height}^`,
+      '-gravity', 'center',
+      '-extent', `${SIZE.width}x${SIZE.height}`,
+      '-strip',
+      '-quality', '82',
+      path.join(imgDir, file),
+    ]);
+    items.push({
+      id: shot.id,
+      title: shot.title,
+      url: shot.html_url,
+      image: `/assets/img/dribbble/${file}`,
+      ...SIZE,
+      publishedAt: shot.published_at,
+    });
+  }
+  return items;
+});
 
 // Deletes covers of shots that no longer exist
 const keep = new Set(items.map((s) => `${s.id}.webp`));
@@ -80,4 +77,4 @@ for (const f of fs.readdirSync(imgDir)) if (!keep.has(f)) fs.rmSync(path.join(im
 fs.writeFileSync(dataPath, JSON.stringify({ profile: user.html_url, shots: items }, null, 2) + '\n');
 console.log(`✔ ${items.length} Dribbble shots in scripts/data/dribbble.json`);
 
-execFileSync(process.execPath, [path.join(root, 'scripts/build-i18n.mjs')], { stdio: 'inherit' });
+execFileSync(process.execPath, [path.join(ROOT, 'scripts/build-i18n.mjs')], { stdio: 'inherit' });

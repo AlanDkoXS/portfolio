@@ -10,27 +10,27 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { ROOT, fail } from './lib/site.mjs';
 
-const root = path.resolve(import.meta.dirname, '..');
-const vendor = path.join(root, 'scripts/vendor/boxicons');
+const vendor = path.join(ROOT, 'scripts/vendor/boxicons');
 const fullCss = fs.readFileSync(path.join(vendor, 'boxicons.min.css'), 'utf8');
 
 // Files where icon classes may appear
 const sources = [
   'index.html',
   'resume.html',
-  ...fs.readdirSync(path.join(root, 'scripts/lib')).map((f) => `scripts/lib/${f}`),
-  ...fs.readdirSync(path.join(root, 'scripts/data')).map((f) => `scripts/data/${f}`),
+  ...fs.readdirSync(path.join(ROOT, 'scripts/lib')).map((f) => `scripts/lib/${f}`),
+  ...fs.readdirSync(path.join(ROOT, 'scripts/data')).map((f) => `scripts/data/${f}`),
 ];
 const walk = (dir) =>
-  fs.readdirSync(path.join(root, dir), { withFileTypes: true }).flatMap((e) =>
+  fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true }).flatMap((e) =>
     e.isDirectory() ? walk(`${dir}/${e.name}`) : e.name.endsWith('.js') ? [`${dir}/${e.name}`] : [],
   );
 sources.push(...walk('assets/js'));
 
 const used = new Set();
 for (const file of sources) {
-  const text = fs.readFileSync(path.join(root, file), 'utf8');
+  const text = fs.readFileSync(path.join(ROOT, file), 'utf8');
   for (const [name] of text.matchAll(/\bbx[sl]?-[a-z0-9-]+\b/g)) used.add(name);
 }
 
@@ -65,10 +65,7 @@ for (const name of [...used].sort()) {
   missing.push(name);
 }
 
-if (missing.length) {
-  console.error(`bx-* classes with no rule in Boxicons: ${missing.join(', ')}`);
-  process.exit(1);
-}
+if (missing.length) fail(`bx-* classes with no rule in Boxicons: ${missing.join(', ')}`);
 
 const base = rules.find((r) => r.selectors.includes('.bx'));
 const css =
@@ -79,11 +76,11 @@ const css =
   out.join('') +
   '\n';
 
-fs.mkdirSync(path.join(root, 'assets/css/vendor'), { recursive: true });
-fs.writeFileSync(path.join(root, 'assets/css/vendor/boxicons.min.css'), css);
+fs.mkdirSync(path.join(ROOT, 'assets/css/vendor'), { recursive: true });
+fs.writeFileSync(path.join(ROOT, 'assets/css/vendor/boxicons.min.css'), css);
 
 // Font subset
-const fontOut = path.join(root, 'assets/fonts/boxicons/boxicons.woff2');
+const fontOut = path.join(ROOT, 'assets/fonts/boxicons/boxicons.woff2');
 fs.mkdirSync(path.dirname(fontOut), { recursive: true });
 const args = [
   path.join(vendor, 'boxicons.woff2'),
