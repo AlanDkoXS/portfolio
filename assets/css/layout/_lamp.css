@@ -3,8 +3,9 @@
    encendida = modo oscuro, apagada = modo claro (ver helpers/lamp.js).
    Estados: reposo (off) · hover (over) · presionando (pull) · encendida (on)
    - Escritorio: reemplaza al botón de luna/sol del menú.
-   - Móvil: más pequeña, junto al menú hamburguesa; se recoge al hacer scroll
-     (el botón de luna/sol sigue dentro del menú como respaldo). */
+   - Móvil: centrada entre el borde y el retrato; se recoge al hacer scroll y
+     vuelve a los 3 s. Con el menú abierto aparece sobre el panel (en lugar
+     del botón de luna/sol, que en móvil se oculta). */
 .lamp {
   --lamp-width: 84px;
   /* cable visible debajo del menú: la lámpara cuelga, no queda pegada a la barra */
@@ -77,21 +78,62 @@
   }
 }
 
-/* Móvil: al hacer scroll la lámpara sube y se esconde detrás de la barra */
+/* Móvil: la lámpara solo aparece dentro del menú hamburguesa abierto
+   (reemplaza al botón de luna/sol); cerrada, queda recogida detrás de la barra */
 @media (max-width: 599px) {
-  /* Pegada a la orilla, debajo de la hamburguesa: así no choca con el
-     retrato del hero (el cable queda tapado por la barra) */
-  .lamp {
-    --lamp-width: 48px;
-    --lamp-drop: 0.25rem;
-    right: 0.35rem;
-    transition: translate 0.45s cubic-bezier(0.5, 0, 0.3, 1.2), visibility 0s;
+  .header .navbar .navbar__toggle--darkmode {
+    display: none;
   }
 
-  .lamp.lamp--retracted {
+  .lamp {
+    --lamp-width: clamp(96px, 27vw, 118px);
+    --lamp-drop: 0.25rem;
+    /* a la izquierda de la X de cerrar: el cable no la cruza */
+    right: calc(92px - var(--lamp-width) / 2);
     translate: 0 -100%;
     visibility: hidden;
     transition: translate 0.35s ease-in, visibility 0s 0.35s;
+  }
+
+  /* Baja cuando el panel ya terminó de abrir (0.25s): cae, estira el cable
+     un poco de más y rebota como bungee hasta quedar quieta */
+  .header.menu-open ~ .lamp {
+    z-index: calc(var(--z-modal) + 1);
+    translate: 0 0;
+    visibility: visible;
+    transition: visibility 0s 0.25s;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .header.menu-open ~ .lamp {
+      animation: lamp-bungee 1.1s 0.25s both;
+    }
+  }
+}
+
+@keyframes lamp-bungee {
+  0% {
+    translate: 0 -100%;
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.6); /* caída que acelera */
+  }
+  42% {
+    translate: 0 9%; /* el cable se estira de más */
+    animation-timing-function: cubic-bezier(0.25, 0.6, 0.4, 1);
+  }
+  62% {
+    translate: 0 -4%;
+    animation-timing-function: ease-in-out;
+  }
+  78% {
+    translate: 0 2%;
+    animation-timing-function: ease-in-out;
+  }
+  90% {
+    translate: 0 -0.6%;
+    animation-timing-function: ease-in-out;
+  }
+  100% {
+    translate: 0 0;
   }
 }
 

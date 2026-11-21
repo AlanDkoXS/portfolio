@@ -282,36 +282,65 @@ html.js:not(.hero-ready) .home .home__title {
 /* HOME MAX WIDTH 599px: todo el hero cabe en pantalla, centrado ======
    svh = alto visible con la barra del navegador desplegada */
 @media (max-width: 599px) {
+  /* El hero ocupa una pantalla: el texto (que sigue el tamaño de letra del
+     sistema) toma lo que necesita y el retrato se encoge para llenar solo el
+     espacio que sobra. minmax(0, 1fr) evita que el contenido
+     ensanche la página con texto muy grande. */
   .home {
     min-height: 100svh;
     display: grid;
-    align-content: center;
+    grid-template-columns: minmax(0, 1fr);
     padding: 0.5rem 0 1rem;
   }
 
   .home .home__container {
     transform: none;
     row-gap: 0;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    /* con texto enorme (que ya no cabe aunque no hubiera retrato) el
+       retrato conserva un tamaño mínimo y la sección crece con scroll */
+    grid-template-rows: minmax(7rem, 1fr) auto;
+    align-content: stretch;
   }
 
   .home .home__image {
-    width: min(80%, 320px);
+    /* alto = el espacio libre de su fila; ancho por la proporción 1:1 */
+    height: 100%;
+    max-height: min(80vw, 320px);
+    min-height: 0;
+    width: auto;
+    max-width: 100%;
     margin: 0 auto;
     justify-self: center;
+    align-self: end;
     transform: none;
+  }
+
+  .home .home__info {
+    min-width: 0;
   }
 
   .home .home__info .home__description {
     padding-block: 0.25rem;
   }
 
+  .home .home__social {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .home .home__social-item {
     margin: 0.4rem 1rem;
+    /* los íconos no crecen con el texto del sistema (no son texto) */
+    font-size: 34px;
   }
 
   .home .home__buttons .btn {
     margin: 0.3rem 0;
-    padding-block: 0.7rem;
+    /* alto del botón = el del texto + un relleno fijo: con texto grande
+       los cuatro siguen cabiendo en la pantalla */
+    padding-block: min(0.7rem, 11px);
   }
 }
 
@@ -334,4 +363,10 @@ html.js:not(.hero-ready) .home .home__title {
 .home__description--lines .home__intro {
   display: block;
   margin-bottom: 1lh;
+}
+
+/* Énfasis en la presentación (*…* en translations.js) */
+.home__description strong {
+  font-weight: var(--font-semibold);
+  color: var(--gold-300);
 }

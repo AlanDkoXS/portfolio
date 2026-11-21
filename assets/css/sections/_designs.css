@@ -77,3 +77,40 @@
   justify-self: center;
   margin-top: 1.5rem;
 }
+
+/* Móvil: los shots se deslizan de lado (una fila con scroll horizontal y
+   snap) en vez de apilarse en una columna larga. La siguiente tarjeta asoma
+   por la orilla para que se note que hay más. Ocupa todo el ancho de la
+   pantalla (sale del padding de la sección) */
+@media (max-width: 599px) {
+  .designs .designs__grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 78%;
+    justify-content: start;
+    gap: 1rem;
+    /* section.section > * fija width: 100% (por eso .designs delante,
+       para ganarle en especificidad); se compensa el padding */
+    width: calc(100% + 2rem);
+    margin-inline: -1rem;
+    padding: 0.5rem 1rem 1.25rem; /* aire para la sombra de las tarjetas */
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1rem;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .designs__item {
+    scroll-snap-align: start;
+  }
+
+  /* Un solo shot: centrado, sin deslizar */
+  .designs__grid:has(> .designs__item:only-child) {
+    justify-content: center;
+  }
+}

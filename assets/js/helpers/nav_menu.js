@@ -34,7 +34,8 @@ export default function navMenu() {
   });
 
   document.addEventListener('click', (e) => {
-    if (isOpen() && !header.contains(e.target)) setOpen(false);
+    // La lámpara vive fuera del header pero es parte del menú en móvil
+    if (isOpen() && !header.contains(e.target) && !e.target.closest('.lamp')) setOpen(false);
   });
 
   window.matchMedia('(min-width: 600px)').addEventListener('change', (e) => {

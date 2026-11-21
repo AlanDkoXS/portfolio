@@ -10,10 +10,22 @@
   /* Vidrio con el color del footer al 90%, desenfoque detrás y textura de
      grano encima */
   isolation: isolate;
-  background-color: color-mix(in srgb, var(--footer-bg) 90%, transparent);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
   z-index: var(--z-modal);
+  /* misma sombra que el panel del menú móvil (el panel la tapa al abrirse) */
+  box-shadow: 0 14px 24px var(--shadow-color);
+
+  /* El vidrio va en una capa interna (no en el header): así el panel del menú
+     móvil, que es hijo del header, también puede desenfocar la página */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-color: color-mix(in srgb, var(--footer-bg) 90%, transparent);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    backdrop-filter: blur(12px) saturate(1.2);
+    pointer-events: none;
+  }
 
   &::after {
     content: '';
@@ -56,7 +68,10 @@
       left: 0;
       width: 100%;
       isolation: isolate;
-      background-color: var(--footer-bg);
+      /* mismo vidrio que la barra: 90% de opacidad, desenfoque y grano */
+      background-color: color-mix(in srgb, var(--footer-bg) 90%, transparent);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+      backdrop-filter: blur(12px) saturate(1.2);
       box-shadow: 0 14px 24px var(--shadow-color);
       padding: 1.25rem 0 1.5rem;
       z-index: var(--z-modal);
@@ -132,6 +147,7 @@
     /* Toggles ====================================*/
     .navbar__toggles {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: center;
       gap: 2rem;
@@ -299,6 +315,11 @@
     height: 2.2rem;
   }
 
+  .navbar__logo--name,
+  .navbar__logo--lastname {
+    font-family: var(--brand-font);
+  }
+
   .navbar__logo--name {
     font-weight: 300;
   }
@@ -326,6 +347,17 @@
   transition:
     opacity 0.25s ease,
     translate 0.25s ease;
+}
+
+/* Menú abierto: barra y panel se ven como una sola superficie. Más opacos y
+   con más desenfoque para que el texto dorado de detrás no tiña el panel de
+   otro color que la barra */
+.header.menu-open::before,
+.header.menu-open .navbar .navbar__menu,
+.header .navbar .navbar__menu:target {
+  background-color: color-mix(in srgb, var(--footer-bg) 96%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(1.1);
+  backdrop-filter: blur(24px) saturate(1.1);
 }
 
 .header.menu-open .navbar__burger {

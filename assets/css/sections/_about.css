@@ -28,6 +28,29 @@
   object-fit: cover;
 }
 
+/* Móvil: la sección cabe en una pantalla y queda centrada a lo alto bajo
+   la barra, también con texto del sistema grande: el retrato se encoge con
+   el alto disponible y los espacios no crecen con el texto */
+@media (max-width: 599px) {
+  .about.section {
+    padding-block: 12px;
+  }
+
+  /* sin el margen superior del título el bloque queda centrado exacto */
+  .about .section__title {
+    margin-top: 0;
+  }
+
+  .about__container {
+    gap: min(2rem, 24px);
+    padding-block: 0;
+  }
+
+  .about__img img {
+    max-width: min(200px, 24svh);
+  }
+}
+
 /* ABOUT MIN WIDTH 600px ========================== */
 @media (min-width: 600px) {
   .about__container {

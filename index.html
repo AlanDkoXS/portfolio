@@ -3,14 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Tema: sigue al sistema; el botón guarda una excepción en localStorage.theme.
-         Se aplica antes de pintar para evitar el parpadeo del tema equivocado. -->
+    <!-- Respeta el tamaño de texto del sistema: Android/Chrome lo aplica al tamaño
+         base (rem) en vez de hacer zoom a toda la página -->
+    <meta name="text-scale" content="scale" />
+    <!-- Tema: oscuro si el sistema está en modo oscuro; si no, por horario (oscuro de
+         18:00 a 6:00, hora local). El botón guarda una excepción hasta el siguiente
+         cambio (localStorage.theme / themeUntil).
+         Se aplica antes de pintar; sin JS se sigue al sistema. -->
     <meta name="color-scheme" content="light dark" />
     <script>
-      try {
-        const t = localStorage.getItem('theme');
-        if (t === 'light' || t === 'dark') document.querySelector('meta[name="color-scheme"]').content = t;
-      } catch {}
+      {
+        const h = new Date().getHours();
+        let t = matchMedia('(prefers-color-scheme: dark)').matches || h >= 18 || h < 6 ? 'dark' : 'light';
+        try {
+          const o = localStorage.getItem('theme');
+          if ((o === 'light' || o === 'dark') && Date.now() < Number(localStorage.getItem('themeUntil'))) t = o;
+        } catch {}
+        document.querySelector('meta[name="color-scheme"]').content = t;
+      }
     </script>
     <script>
       // El loader solo se muestra en la primera carga de la sesión: al cambiar
@@ -196,7 +206,7 @@
     <script type="module" src="/assets/js/main.js"></script>
 
     <!-- Prefetch Page -->
-    <link rel="prefetch" href="/resume.html" />
+    <link data-i18n-attr="href:resumeHref" rel="prefetch" href="/resume.html?lang=en" />
   </head>
 
   <body>
@@ -274,6 +284,9 @@
               <a data-i18n="navProjects" class="navbar__link" href="#projects">Projects</a>
             </li>
             <li class="navbar__item">
+              <a data-i18n="navDesigns" class="navbar__link" href="#designs">Designs</a>
+            </li>
+            <li class="navbar__item">
               <a data-i18n="navContact" class="navbar__link" href="#contact">Contact</a>
             </li>
           </ul>
@@ -319,14 +332,14 @@
                 <div class="flag-wrapper">
                   <img
                     src="/assets/img/flag-en.svg"
-                    class="navbar__toggle--language-en"
+                    class="navbar__toggle--language-en" lang="en"
                     alt="English"
                     loading="lazy"
                     aria-hidden="true"
                   />
                   <img
                     src="/assets/img/flag-es.svg"
-                    class="navbar__toggle--language-es"
+                    class="navbar__toggle--language-es" lang="es"
                     alt="Español"
                     loading="lazy"
                     aria-hidden="true"
@@ -362,7 +375,7 @@
 
     <main>
       <!-- Home -->
-      <section id="home" class="home">
+      <section id="home" tabindex="-1" class="home">
         <div class="home__container grid--container">
           <div class="home__image">
             <div class="home__image--background"></div>
@@ -370,7 +383,7 @@
           </div>
           <div class="home__info">
             <h1 data-i18n="homeTitle" class="home__title">Hi there!</h1>
-            <p data-i18n="homeDescription" class="home__description">I'm Alan: half designer, half developer, fully obsessed with the details.</p>
+            <p data-i18n="homeDescription" class="home__description">I'm Alan, <strong>half designer, half developer</strong>, fully obsessed with the details.</p>
           </div>
           <ul class="home__social flex--container">
             <li class="home__social-item">
@@ -421,9 +434,10 @@
               rel="noreferrer nofollow"
             >Meet me</a>
             <a data-i18n="resumeButton"
+              data-i18n-attr="href:resumeHref"
               class="btn btn--primary"
               id="resume-btn"
-              href="/resume.html"
+              href="/resume.html?lang=en"
               rel="noreferrer nofollow"
             >See my resume</a>
             <a data-i18n="skillsButton"
@@ -441,7 +455,7 @@
       </section>
 
       <!-- About -->
-      <section id="about" class="about section">
+      <section id="about" tabindex="-1" class="about section">
         <a href="#skills" class="section-link">
           <h2 data-i18n="aboutTitle" class="section__title">About me</h2>
           <div class="about__container grid--container">
@@ -463,7 +477,7 @@
         </a>
       </section>
       <!-- Skills -->
-      <section id="skills" class="skills section">
+      <section id="skills" tabindex="-1" class="skills section">
         <h2 data-i18n="skillsTitle" class="section__title">Skills</h2>
         <div class="skills__container grid--container">
           <p data-i18n="skillsDescription" class="skills__description">I build scalable and efficient solutions, from interactive interfaces to complete backend systems. My goal is to create digital tools that streamline processes, enhance user engagement, and add value to your business.</p>
@@ -675,30 +689,9 @@
         </div>
       </section>
       <!-- Designs (Dribbble) -->
-      <!-- dribbble:start (generated by scripts/build-i18n.mjs from scripts/data/dribbble.json) -->
-      <section id="designs" class="designs section">
-        <h2 data-i18n="designsTitle" class="section__title">Designs</h2>
-        <p data-i18n="designsDescription" class="designs__description">Illustrations and interfaces I share on Dribbble.</p>
-        <ul class="designs__grid">
-          <li class="designs__item">
-            <a class="designs__link" href="https://dribbble.com/shots/25190207-Pool-Fiction" target="_blank" rel="noopener">
-              <img class="designs__img" src="/assets/img/dribbble/25190207.webp" alt="" width="800" height="600" loading="lazy" decoding="async" />
-              <span class="designs__caption">Pool Fiction</span>
-            </a>
-          </li>
-          <li class="designs__item">
-            <a class="designs__link" href="https://dribbble.com/shots/25036703-Mi-Old-Padawan" target="_blank" rel="noopener">
-              <img class="designs__img" src="/assets/img/dribbble/25036703.webp" alt="" width="800" height="600" loading="lazy" decoding="async" />
-              <span class="designs__caption">Mi Old Padawan</span>
-            </a>
-          </li>
-        </ul>
-        <a data-i18n="designsButton" class="btn btn--primary designs__more" href="https://dribbble.com/Alan3XS" target="_blank" rel="noopener">See more on Dribbble</a>
-      </section>
-      <!-- dribbble:end -->
 
       <!-- Projects -->
-      <section id="projects" class="projects section">
+      <section id="projects" tabindex="-1" class="projects section">
         <h2 data-i18n="projectsTitle" class="section__title">Projects</h2>
         <div class="project__container">
           <button
@@ -1176,8 +1169,31 @@
         </div>
       </section>
 
+      <!-- dribbble:start (generated by scripts/build-i18n.mjs from scripts/data/dribbble.json) -->
+      <section id="designs" tabindex="-1" class="designs section">
+        <h2 data-i18n="designsTitle" class="section__title">Designs</h2>
+        <p data-i18n="designsDescription" class="designs__description">Illustrations and interfaces I share on Dribbble.</p>
+        <ul class="designs__grid">
+          <li class="designs__item">
+            <a class="designs__link" href="https://dribbble.com/shots/25190207-Pool-Fiction" target="_blank" rel="noopener">
+              <img class="designs__img" src="/assets/img/dribbble/25190207.webp" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <span class="designs__caption">Pool Fiction</span>
+            </a>
+          </li>
+          <li class="designs__item">
+            <a class="designs__link" href="https://dribbble.com/shots/25036703-Mi-Old-Padawan" target="_blank" rel="noopener">
+              <img class="designs__img" src="/assets/img/dribbble/25036703.webp" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <span class="designs__caption">Mi Old Padawan</span>
+            </a>
+          </li>
+        </ul>
+        <a data-i18n="designsButton" class="btn btn--primary designs__more" href="https://dribbble.com/Alan3XS" target="_blank" rel="noopener">See more on Dribbble</a>
+      </section>
+      <!-- dribbble:end -->
+
+
       <!-- Contact -->
-      <section id="contact" class="contact section">
+      <section id="contact" tabindex="-1" class="contact section">
         <h2 data-i18n="contactTitle" class="section__title">Contact</h2>
 
         <div class="contact__container grid--container">

@@ -25,18 +25,49 @@ export function cardCarousel() {
         }
       });
 
+      // Táctil: si el gesto es vertical se deja pasar (scroll de la página);
+      // si es horizontal, mueve el carrusel. touch-action: pan-y en el CSS
+      // hace que el navegador no compita por el gesto horizontal.
       this.target.addEventListener("touchstart", (e) => {
+        const start = e.touches[0];
+        const sx = start.clientX;
+        const sy = start.clientY;
+        const t0 = performance.now();
+        let mode = null; // null → aún no se sabe; 'x' → carrusel; 'y' → scroll
+        let lastX = sx;
         handler = callback(e);
-        window.addEventListener("touchmove", handler);
-        window.addEventListener("touchend", clearDraggingEvent);
-        document.body.addEventListener("mouseleave", clearDraggingEvent);
 
-        function clearDraggingEvent() {
-          window.removeEventListener("touchmove", handler);
+        const onMove = (ev) => {
+          const t = ev.touches[0];
+          if (!mode) {
+            const dx = Math.abs(t.clientX - sx);
+            const dy = Math.abs(t.clientY - sy);
+            if (dx < 4 && dy < 4) return;
+            // ligera preferencia por el horizontal (los pulgares no van rectos)
+            mode = dx * 1.2 > dy ? "x" : "y";
+          }
+          if (mode === "x") {
+            lastX = t.clientX;
+            handler(ev);
+          }
+        };
+        const clearDraggingEvent = () => {
+          // Deslizamiento rápido y corto (flick): avanza una tarjeta aunque no
+          // se haya arrastrado la mitad del paso
+          const dx = lastX - sx;
+          const step = this.dragStep ? this.dragStep() : 250;
+          if (mode === "x" && Math.abs(dx) > 20 && Math.abs(dx) < step / 2 && performance.now() - t0 < 350) {
+            handler({ touches: [{ clientX: sx + Math.sign(dx) * step * 0.6, clientY: sy }] });
+          }
+          window.removeEventListener("touchmove", onMove);
           window.removeEventListener("touchend", clearDraggingEvent);
+          window.removeEventListener("touchcancel", clearDraggingEvent);
           handler(null);
-        }
-      });
+        };
+        window.addEventListener("touchmove", onMove, { passive: true });
+        window.addEventListener("touchend", clearDraggingEvent);
+        window.addEventListener("touchcancel", clearDraggingEvent);
+      }, { passive: true });
     }
 
     getDistance(callback) {
@@ -156,22 +187,15 @@ export function cardCarousel() {
         card.setAttribute("data-x", data.x);
       }
 
-      // Keep base transformation for centering
-      let transformValue = "translateX(-50%)";
-
-      // Add scale if defined
-      if (data.scale !== undefined) {
-        transformValue += ` scale(${data.scale})`;
-        // Adjust opacity
-        card.style.opacity = data.scale === 0 ? 0 : 1;
-      }
-
-      // Apply transformation
-      card.style.transform = transformValue;
-
-      if (data.leftPos !== undefined) {
-        card.style.left = `${data.leftPos}%`;
-      }
+      // La posición va en transform (la mueve la GPU, sin recalcular el
+      // diseño en cada cuadro); left se queda fijo en 50%
+      if (data.scale !== undefined) card.dataset.scale = data.scale;
+      if (data.leftPos !== undefined) card.dataset.pos = data.leftPos;
+      const scale = card.dataset.scale ?? 1;
+      const pos = card.dataset.pos ?? 50;
+      const offset = ((pos - 50) / 100) * this.container.offsetWidth;
+      card.style.transform = `translateX(calc(-50% + ${offset}px)) scale(${scale})`;
+      if (data.scale !== undefined) card.style.opacity = data.scale === 0 ? 0 : 1;
 
       if (data.zIndex !== undefined) {
         if (data.zIndex === 0) {
@@ -240,6 +264,13 @@ export function cardCarousel() {
         return 0; 
       }
 
+      // Móvil: solo la central y una a cada lado; de 1 a 2 se desvanece
+      if (!this.isWide()) {
+        const a = Math.abs(x);
+        if (a >= 2) return 0;
+        if (a > 1) return 0.8 * (2 - a);
+      }
+
       // En escritorio las laterales se encogen menos (0.88 y 0.52)
       const k = this.isWide() ? 0.12 : 1 / 5;
       const formula = 1 - k * Math.pow(x, 2);
@@ -262,25 +293,31 @@ export function cardCarousel() {
         return 50; // Central position
       }
 
-      // Posición del centro de la tarjeta (con translateX(-50%) en CSS):
-      // la central exactamente al 50% y las laterales simétricas a cada lado
-      if (this.isWide() && x != 0) {
+      // Posición del centro de la tarjeta (con translateX(-50%) en CSS), continua
+      // respecto a x para que el arrastre se deslice sin saltos
+      const a = Math.abs(x);
+      const sign = Math.sign(x);
+      const W = this.container.offsetWidth;
+      if (this.isWide()) {
         // Escritorio: las de la orilla llegan cerca de las flechas, que están
         // en las orillas del contenido (1024px). Las intermedias, a la mitad.
-        const W = this.container.offsetWidth;
         const cardW = this.cards[0].offsetWidth;
         // margen + flecha + 2rem de separación entre la flecha y la tarjeta
         const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
         const arrowSpace = 16 + 48 + 2 * rem;
         const half = Math.min(W, 1024) / 2 - arrowSpace;
         const outer = half - (cardW * this.calcScale(2)) / 2;
-        const offset = Math.abs(x) >= 2 ? outer : outer * 0.52;
-        return 50 + (Math.sign(x) * offset * 100) / W;
+        const inner = outer * 0.52;
+        const off = a <= 1 ? inner * a : inner + (outer - inner) * Math.min(a - 1, 1);
+        return 50 + (sign * off * 100) / W;
       }
-      if (x < 0) return scale * 50;
-      if (x > 0) return 100 - scale * 50;
-      return 50;
+      // Móvil: la lateral asoma por completo en el espacio libre de cada lado
+      // (su orilla exterior toca la orilla del contenedor)
+      const sideW = this.cards[0].offsetWidth * 0.8;
+      const innerPct = 50 - ((sideW / 2) * 100) / W;
+      return 50 + sign * innerPct * a;
     }
+
 
     navigate(direction) {
       const temp = { ...this.xScale };
@@ -324,13 +361,22 @@ export function cardCarousel() {
       }
     }
 
+    // Distancia de arrastre que equivale a una tarjeta: 250px en escritorio,
+    // ~30% del ancho en móvil (basta un movimiento corto del pulgar)
+    dragStep() {
+      return this.isWide() ? 250 : this.container.offsetWidth * 0.3;
+    }
+
     moveCards(data) {
       let xDist;
 
       if (data != null) {
+        // mientras se arrastra, sin transición: las tarjetas van pegadas al dedo
+        this.container.classList.add("is-dragging");
         this.container.classList.remove("smooth-return");
-        xDist = data.x / 250;
+        xDist = data.x / this.dragStep();
       } else {
+        this.container.classList.remove("is-dragging");
         this.container.classList.add("smooth-return");
         xDist = 0;
 

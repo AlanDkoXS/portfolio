@@ -22,7 +22,7 @@ export function designsSection({ profile, shots = [] } = {}) {
     )
     .join('\n');
   return `${START}
-      <section id="designs" class="designs section">
+      <section id="designs" tabindex="-1" class="designs section">
         <h2 data-i18n="designsTitle" class="section__title">Designs</h2>
         <p data-i18n="designsDescription" class="designs__description">Designs</p>
         <ul class="designs__grid">

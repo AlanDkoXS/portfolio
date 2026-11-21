@@ -31,7 +31,7 @@
   --accent-ink: var(--gold-400); /* líneas/íconos que necesitan contraste */
   --link-hover: var(--gold-300);
   --accent-glow: rgb(243 206 58 / 0.45);
-  --on-accent-color: var(--teal-950); /* texto sobre dorado */
+  --on-accent-color: light-dark(var(--teal-deep-800), var(--teal-950)); /* texto sobre dorado; en claro, el fondo del modo oscuro */
   --on-image-color: var(--gold-400); /* texto sobre fotos/overlays oscuros */
 
   /* Background Colors */
@@ -49,7 +49,7 @@
   --profile-shadow: rgb(0 18 25 / 1);
   /* Contorno y sombra dura de los botones: en el fondo más profundo se usa
      negro para que la sombra siga destacando */
-  --btn-ink-color: light-dark(var(--teal-950), #000);
+  --btn-ink-color: light-dark(var(--teal-deep-800), #000); /* sombra/contorno de botones; en claro, el fondo del modo oscuro */
 
   /* Grano en dorado oscuro (#a8800f aprox.): cada punto toma su opacidad del
      ruido. Se usa como sombra interna de botones y etiquetas (ver
@@ -84,7 +84,8 @@
   --font-semibold: 600;
 
   /* Font Family */
-  --primary-font: 'Poppins', sans-serif;
+  --primary-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --brand-font: 'Poppins', sans-serif; /* logo y loader */
 
   /* Layers
      ========================================================================== */
@@ -179,10 +180,10 @@
 
 /* Dark Mode Support
    ========================================================================== */
-/* Por defecto sigue el tema del sistema. El botón de tema solo cambia
-   <meta name="color-scheme"> (light / dark = excepción guardada) y el CSS lo
-   refleja aquí. Si el JS no corre, la meta queda en "light dark" y todo sigue
-   al sistema. */
+/* El tema va por horario (oscuro de 18:00 a 6:00; auto-dark-mode.js y el
+   script del <head>) y se escribe en <meta name="color-scheme"> (light / dark);
+   el CSS lo refleja aquí. Si el JS no corre, la meta queda en "light dark" y
+   todo sigue al sistema. */
 :root {
   color-scheme: light dark;
   /* Esquema efectivo, para ramificar valores que no son colores con

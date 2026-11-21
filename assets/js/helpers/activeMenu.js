@@ -33,28 +33,35 @@ function debounce(func, wait = 20, immediate = true) {
 }
 
 /**
- * Updates the active navigation link based on the current scroll position
+ * Marca el enlace de la sección que cruza la línea media de la pantalla.
+ * IntersectionObserver en vez de calcular posiciones en cada scroll: no
+ * depende de cuándo llegan los eventos (con el scroll suave del menú el
+ * cálculo anterior se quedaba en la sección de partida).
+ * El estado se refleja también con aria-current para lectores de pantalla.
  */
-function updateActiveNavLink() {
-  const scrollPosition = window.scrollY + 100; // Adding offset for better UX
-
-  sectionsDOM.forEach((section) => {
-    // Check if the section is currently in view
-    if (
-      scrollPosition >= section.offsetTop &&
-      scrollPosition < section.offsetTop + section.offsetHeight
-    ) {
-      // Link by href, not by position: sections without a menu link
-      // (e.g. #designs) keep the current one highlighted
-      const link = [...navbarLinksDOM].find(
-        (a) => a.getAttribute('href').endsWith(`#${section.id}`),
-      );
-      if (!link) return;
-
-      navbarListDOM.querySelector('.navbar__link.active')?.classList.remove('active');
-      link.classList.add('active');
-    }
+function setActiveLink(id) {
+  // Por href, no por posición: secciones sin enlace no cambian la marca
+  const link = [...navbarLinksDOM].find((a) => a.getAttribute('href').endsWith(`#${id}`));
+  if (!link) return;
+  navbarLinksDOM.forEach((a) => {
+    const active = a === link;
+    a.classList.toggle('active', active);
+    if (active) a.setAttribute('aria-current', 'true');
+    else a.removeAttribute('aria-current');
   });
+}
+
+function observeSections() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActiveLink(entry.target.id);
+      });
+    },
+    // una línea horizontal a media pantalla
+    { rootMargin: '-50% 0px -50% 0px', threshold: 0 },
+  );
+  sectionsDOM.forEach((section) => section.id && observer.observe(section));
 }
 
 /**
@@ -76,8 +83,7 @@ function handleMobileMenu() {
  * Initializes the active menu functionality
  */
 function activeMenu() {
-  // Add debounced scroll event listener for better performance
-  window.addEventListener('scroll', debounce(updateActiveNavLink));
+  observeSections();
 
   // Initialize mobile menu handling
   handleMobileMenu();
@@ -90,8 +96,6 @@ function activeMenu() {
     }, 100),
   );
 
-  // Run once on page load to set the initial active link
-  updateActiveNavLink();
 }
 
 export default activeMenu;

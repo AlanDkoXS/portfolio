@@ -39,7 +39,15 @@
 
 .resume__modal-content {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+
+  /* Los botones no se encogen por debajo de su palabra: con texto del
+     sistema grande, si no caben juntos uno baja a la siguiente línea */
+  .btn {
+    flex: 1 1 0;
+    min-width: max-content;
+  }
 }

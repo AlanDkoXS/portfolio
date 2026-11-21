@@ -1,5 +1,5 @@
 // Lámpara colgante: cambia el tema (en escritorio reemplaza al botón de luna/sol;
-// en móvil cuelga en la primera pantalla y se recoge al hacer scroll).
+// en móvil solo aparece dentro del menú hamburguesa abierto).
 // Encendida = modo oscuro, apagada = modo claro. Estados visuales:
 //   hover → imagen "over" · presionando → "clic" (cadena jalada) · encendida → "active"
 // Al soltar se cambia el tema usando el mismo checkbox (auto-dark-mode.js).
@@ -45,23 +45,30 @@ export default function lamp() {
       button.classList.add('lamp--swing');
     }, fromKeyboard ? 160 : 90);
   });
-  button.addEventListener('animationend', () => button.classList.remove('lamp--swing'));
+  // Móvil: al abrir el menú la lámpara cae como bungee (CSS, 0.25s de espera
+  // + 1.1s); al llegar abajo se balancea igual que cuando se jala la cadena
+  const header = document.querySelector('.header');
+  if (header) {
+    let landTimer;
+    let wasOpen = header.classList.contains('menu-open');
+    new MutationObserver(() => {
+      const open = header.classList.contains('menu-open');
+      if (open === wasOpen) return;
+      wasOpen = open;
+      clearTimeout(landTimer);
+      if (!open || !window.matchMedia('(max-width: 599px)').matches) return;
+      landTimer = setTimeout(() => {
+        button.classList.remove('lamp--swing');
+        void button.offsetWidth; // reinicia la animación
+        button.classList.add('lamp--swing');
+      }, 250 + 1100 * 0.42); // cuando el cable se estira al final de la caída
+    }).observe(header, { attributes: true, attributeFilter: ['class'] });
+  }
 
-  // Móvil: se recoge al bajar y vuelve a colgar al regresar arriba
-  const mobile = window.matchMedia('(max-width: 599px)');
-  let ticking = false;
-  const updateRetract = () => {
-    ticking = false;
-    button.classList.toggle('lamp--retracted', mobile.matches && window.scrollY > 40);
-  };
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(updateRetract);
-    }
-  }, { passive: true });
-  mobile.addEventListener('change', updateRetract);
-  updateRetract();
+  button.addEventListener('animationend', (event) => {
+    if (event.animationName === 'lamp-swing') button.classList.remove('lamp--swing');
+  });
+
 
   // El tema también puede cambiar por el sistema o desde otra pestaña
   new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });

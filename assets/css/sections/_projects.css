@@ -12,6 +12,8 @@
 }
 
 .project__card--carousel {
+  /* el gesto horizontal es del carrusel; el vertical, del scroll de la página */
+  touch-action: pan-y;
   position: relative;
   margin: 0 auto;
   width: 100%;
@@ -388,6 +390,11 @@
 /* Transitions */
 .project__card--carousel.smooth-return {
   transition: all 0.2s ease;
+}
+
+/* Arrastrando: sin transición, las tarjetas siguen al dedo sin retraso */
+.project__card--carousel.is-dragging .project__card {
+  transition: none;
 }
 
 .project__card.highlight {

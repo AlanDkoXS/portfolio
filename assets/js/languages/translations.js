@@ -31,6 +31,11 @@ const translations = {
       },
     },
   },
+  /* El CV abre en el idioma de la página desde donde se llega (?lang=) */
+  resumeHref: {
+    en: '/resume.html?lang=en',
+    es: '/resume.html?lang=es',
+  },
   /* <-- Nav Bar --> */
   navHome: {
     en: 'Home',
@@ -52,6 +57,10 @@ const translations = {
     en: 'Projects',
     es: 'Proyectos',
   },
+  navDesigns: {
+    en: 'Designs',
+    es: 'Diseños',
+  },
   navContact: {
     en: 'Contact',
     es: 'Contacto',
@@ -66,8 +75,8 @@ const translations = {
     es: '¡Hola 👨🏻‍💻!',
   },
   homeDescription: {
-    en: "I'm Alan: half designer, half developer, fully obsessed with the details.",
-    es: 'Soy Alan: mitad diseñador, mitad programador, y completamente obsesionado con los detalles.',
+    en: "I'm Alan, *half designer, half developer*, fully obsessed with the details.",
+    es: 'Soy Alan, *mitad diseñador, mitad programador*, y completamente obsesionado con los detalles.',
   },
   /* <-- Home Buttons --> */
   aboutButton: {

@@ -161,14 +161,39 @@ export function projectPage({ project: p, lang, prev, next, header, footer }) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Tema: sigue al sistema; el botón guarda una excepción en localStorage.theme. -->
+    <!-- Respeta el tamaño de texto del sistema: Android/Chrome lo aplica al tamaño
+         base (rem) en vez de hacer zoom a toda la página -->
+    <meta name="text-scale" content="scale" />
+    <!-- Tema: oscuro si el sistema está en modo oscuro; si no, por horario (oscuro de
+         18:00 a 6:00, hora local). El botón guarda una excepción hasta el siguiente
+         cambio (localStorage.theme / themeUntil).
+         Se aplica antes de pintar; sin JS se sigue al sistema. -->
     <meta name="color-scheme" content="light dark" />
     <script>
+      {
+        const h = new Date().getHours();
+        let t = matchMedia('(prefers-color-scheme: dark)').matches || h >= 18 || h < 6 ? 'dark' : 'light';
+        try {
+          const o = localStorage.getItem('theme');
+          if ((o === 'light' || o === 'dark') && Date.now() < Number(localStorage.getItem('themeUntil'))) t = o;
+        } catch {}
+        document.querySelector('meta[name="color-scheme"]').content = t;
+      }
+    </script>${
+      lang === 'en'
+        ? `
+    <script>
+      // Igual que el home: navegador en español (sin elección guardada en
+      // localStorage "lang") → versión en español de este proyecto
       try {
-        const t = localStorage.getItem('theme');
-        if (t === 'light' || t === 'dark') document.querySelector('meta[name="color-scheme"]').content = t;
+        const pref = localStorage.getItem('lang');
+        const langs = navigator.languages || [navigator.language || ''];
+        const wantsEs = pref ? pref === 'es' : langs.some((l) => /^es\\b/i.test(l));
+        if (wantsEs) location.replace('${projectPath(p, 'es')}' + location.hash);
       } catch {}
-    </script>
+    </script>`
+        : ''
+    }
     <title>${esc(title)}</title>
     <meta name="description" content="${esc(description)}" />
     <meta name="author" content="Alan Quintana" />

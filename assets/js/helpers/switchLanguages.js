@@ -31,6 +31,18 @@ const storeLanguage = (lang) => {
   }
 };
 
+// CV: el enlace trae el idioma de la página de origen (?lang=es). Gana sobre
+// lo guardado, se guarda como la elección actual y se quita de la URL
+const languageFromUrl = () => {
+  const url = new URL(location.href);
+  const lang = url.searchParams.get('lang');
+  if (!SUPPORTED.includes(lang)) return null;
+  storeLanguage(lang);
+  url.searchParams.delete('lang');
+  history.replaceState(history.state, '', url.pathname + url.search + url.hash);
+  return lang;
+};
+
 const detectBrowserLanguage = () => {
   const languages = navigator.languages || [navigator.language || ''];
   return languages.some((l) => /^es\b/i.test(l)) ? 'es' : 'en';
@@ -45,10 +57,25 @@ let currentLanguage = 'en';
 
 export const getValidationMessages = () => translations.validation[currentLanguage];
 
+// *texto* en una traducción → <strong>texto</strong> (sin HTML arbitrario)
+const setRichText = (el, value) => {
+  el.textContent = '';
+  value.split(/(\*[^*]+\*)/).forEach((part) => {
+    if (!part) return;
+    if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
+      const strong = document.createElement('strong');
+      strong.textContent = part.slice(1, -1);
+      el.append(strong);
+    } else {
+      el.append(part);
+    }
+  });
+};
+
 const applyTranslations = (lang) => {
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     const value = t(el.dataset.i18n, lang);
-    if (typeof value === 'string') el.textContent = value;
+    if (typeof value === 'string') setRichText(el, value);
   });
 
   document.querySelectorAll('[data-i18n-attr]').forEach((el) => {
@@ -75,7 +102,7 @@ const handleResponsiveContent = (lang) => {
     homeDescription.classList.add('home__description--lines');
     const intro = document.createElement('span');
     intro.className = 'home__intro';
-    intro.textContent = homeText;
+    setRichText(intro, homeText);
     homeDescription.append(
       intro,
       ...lines.map((line) => {
@@ -87,7 +114,7 @@ const handleResponsiveContent = (lang) => {
     );
   } else {
     homeDescription.classList.remove('home__description--lines');
-    homeDescription.textContent = homeText;
+    setRichText(homeDescription, homeText);
   }
 };
 
@@ -159,7 +186,7 @@ const switchLanguages = () => {
     ? SUPPORTED.includes(document.documentElement.lang)
       ? document.documentElement.lang
       : 'en'
-    : getStoredLanguage() || detectBrowserLanguage();
+    : languageFromUrl() || getStoredLanguage() || detectBrowserLanguage();
 
   setLanguage(initialLang);
 

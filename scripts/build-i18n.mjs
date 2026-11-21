@@ -31,6 +31,7 @@ const { default: translations } = await import(
 const { translate } = await import(path.join(root, 'assets/js/languages/translate.js'));
 
 const escapeText = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const emphasize = (s) => s.replace(/\*([^*]+)\*/g, '<strong>$1</strong>');
 const escapeAttr = (s) => escapeText(s).replace(/"/g, '&quot;');
 
 const missing = new Set();
@@ -52,7 +53,8 @@ function render(html, lang) {
     /(<([a-zA-Z][a-zA-Z0-9]*)\b[^>]*?\sdata-i18n="([^"]+)"[^>]*>)([\s\S]*?)(<\/\2>)/g,
     (m, open, _tag, key, _text, close) => {
       const value = t(key, lang);
-      return value === null ? m : `${open}${escapeText(value)}${close}`;
+      // *texto* → <strong>texto</strong> (énfasis en textos traducidos)
+      return value === null ? m : `${open}${emphasize(escapeText(value))}${close}`;
     },
   );
 

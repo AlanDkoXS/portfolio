@@ -127,6 +127,14 @@
 html {
   box-sizing: border-box;
 
+  /* Tamaño de texto del sistema. Todos los tamaños del sitio van en rem, así
+     que crecen con él: en Android/Chrome (meta text-scale) y con el ajuste de
+     tamaño de letra del navegador. En iPhone/iPad, -apple-system-body toma el
+     tamaño de "Texto más grande" (Dynamic Type); la familia la pone body. */
+  @supports (font: -apple-system-body) {
+    font: -apple-system-body;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     scroll-behavior: smooth;
   }
@@ -141,10 +149,12 @@ html {
   body {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
-    /* Mientras carga Poppins, la fuente de respaldo se escala a su misma
-       altura de minúsculas: el texto no "salta" al llegar la fuente */
-    font-size-adjust: from-font;
+    /* Los textos usan la fuente del sistema del visitante (San Francisco en
+       Apple, Roboto en Android, Segoe UI en Windows…). Poppins queda solo
+       para el logo y el loader (identidad) */
+    font-family: var(--primary-font);
+    /* palabras largas (correo, URLs) se parten antes que salirse */
+    overflow-wrap: break-word;
     font-size: var(--normal-font-size);
     color: var(--primary-color);
     background-color: var(--bg-color-section);
@@ -188,9 +198,27 @@ html {
     padding: 0;
   }
 
+  /* Títulos y descripciones cortas: líneas de largo parecido (sin una
+     palabra sola en la última línea). Los párrafos largos usan pretty (abajo). */
+  :is(h1, h2, h3, h4, h5, h6),
+  :is(
+    .section__title,
+    .skills__description,
+    .designs__description,
+    .project__subtitle,
+    .project__description,
+    .project-hero__tagline,
+    .contact__info-description,
+    .footer__description
+  ) {
+    text-wrap: balance;
+  }
+
   p {
     font-size: var(--normal-font-size);
-    text-align: justify;
+    /* sin justificar (dejaba huecos entre palabras en móvil); pretty evita
+       líneas finales de una sola palabra */
+    text-wrap: pretty;
   }
 
   label {
@@ -230,6 +258,9 @@ html {
   /* Que el scroll dentro del modal o sobre el fondo no mueva la página */
   dialog:modal {
     overscroll-behavior: contain;
+    /* el reset global (margin: 0) quita el centrado nativo del <dialog> */
+    margin: auto;
+    inset: 0;
   }
 
   dialog::backdrop {
@@ -301,7 +332,7 @@ html {
   --accent-ink: var(--gold-400); /* líneas/íconos que necesitan contraste */
   --link-hover: var(--gold-300);
   --accent-glow: rgb(243 206 58 / 0.45);
-  --on-accent-color: var(--teal-950); /* texto sobre dorado */
+  --on-accent-color: light-dark(var(--teal-deep-800), var(--teal-950)); /* texto sobre dorado; en claro, el fondo del modo oscuro */
   --on-image-color: var(--gold-400); /* texto sobre fotos/overlays oscuros */
 
   /* Background Colors */
@@ -319,7 +350,7 @@ html {
   --profile-shadow: rgb(0 18 25 / 1);
   /* Contorno y sombra dura de los botones: en el fondo más profundo se usa
      negro para que la sombra siga destacando */
-  --btn-ink-color: light-dark(var(--teal-950), #000);
+  --btn-ink-color: light-dark(var(--teal-deep-800), #000); /* sombra/contorno de botones; en claro, el fondo del modo oscuro */
 
   /* Grano en dorado oscuro (#a8800f aprox.): cada punto toma su opacidad del
      ruido. Se usa como sombra interna de botones y etiquetas (ver
@@ -354,7 +385,8 @@ html {
   --font-semibold: 600;
 
   /* Font Family */
-  --primary-font: 'Poppins', sans-serif;
+  --primary-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --brand-font: 'Poppins', sans-serif; /* logo y loader */
 
   /* Layers
      ========================================================================== */
@@ -449,10 +481,10 @@ html {
 
 /* Dark Mode Support
    ========================================================================== */
-/* Por defecto sigue el tema del sistema. El botón de tema solo cambia
-   <meta name="color-scheme"> (light / dark = excepción guardada) y el CSS lo
-   refleja aquí. Si el JS no corre, la meta queda en "light dark" y todo sigue
-   al sistema. */
+/* El tema va por horario (oscuro de 18:00 a 6:00; auto-dark-mode.js y el
+   script del <head>) y se escribe en <meta name="color-scheme"> (light / dark);
+   el CSS lo refleja aquí. Si el JS no corre, la meta queda en "light dark" y
+   todo sigue al sistema. */
 :root {
   color-scheme: light dark;
   /* Esquema efectivo, para ramificar valores que no son colores con
@@ -496,26 +528,35 @@ html {
   /* Grano: un mosaico pequeño repetido (9 KB en vez de una imagen de
      pantalla completa). La caída de densidad de arriba hacia abajo la da la
      máscara, que ya incluye cómo se desvanecía la imagen original */
+  /* Fijo desde arriba de la pantalla: cuando la barra está oculta (en el hero)
+     no queda una franja sin grano; se desvanece con un degradado largo y suave
+     que empieza justo debajo de la barra (sin un corte visible) */
   --grain-fade: linear-gradient(
     to bottom,
-    #000 0%,
-    rgb(0 0 0 / 0.53) 11%,
-    rgb(0 0 0 / 0.25) 22%,
-    rgb(0 0 0 / 0.09) 33%,
-    rgb(0 0 0 / 0.015) 44%,
-    transparent 55%
+    #000 var(--header-height),
+    rgb(0 0 0 / 0.82) 12%,
+    rgb(0 0 0 / 0.6) 25%,
+    rgb(0 0 0 / 0.4) 40%,
+    rgb(0 0 0 / 0.22) 55%,
+    rgb(0 0 0 / 0.1) 70%,
+    rgb(0 0 0 / 0.03) 85%,
+    transparent 100%
   );
   -webkit-mask: var(--grain-fade);
   mask: var(--grain-fade);
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0 !important;
+  left: 0 !important;
+  right: 0;
+  transform: none !important;
+  /* Mosaico de grano sin costuras (cada punto es aleatorio e independiente,
+     con la misma densidad que el grano original). Va a 1px de imagen por px
+     de CSS para que en pantallas de alta densidad el grano siga visible */
   background-image: url('/assets/img/bgGrain-tile.webp');
-  background-size: 256px 128px;
+  background-size: 256px 256px;
   background-repeat: repeat;
   width: 100% !important;
-  height: 100% !important;
+  height: calc(75svh + var(--header-height)) !important;
   opacity: 0.6;
 }
 
@@ -581,13 +622,7 @@ html {
   }
 
   .bgGrain {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
     opacity: 0.6;
-    height: 100%;
   }
 
   .bgBack,
@@ -661,7 +696,13 @@ html {
   font-weight: var(--font-semibold);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  white-space: nowrap;
+  /* Con texto del sistema grande el botón no se sale de la pantalla: su
+     texto pasa a otra línea en vez de forzar una sola. Sin balance: en una
+     caja con fondo/borde no cambia el ancho y solo deja hueco dentro */
+  max-width: 100%;
+  /* break-word (no anywhere): solo parte una palabra si no cabe sola en
+     la línea; anywhere encogía el botón y partía "ENGL/ISH" */
+  overflow-wrap: break-word;
   color: var(--on-accent-color);
 
   background: var(--gold-400);
@@ -871,10 +912,22 @@ html {
   /* Vidrio con el color del footer al 90%, desenfoque detrás y textura de
      grano encima */
   isolation: isolate;
-  background-color: color-mix(in srgb, var(--footer-bg) 90%, transparent);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
   z-index: var(--z-modal);
+  /* misma sombra que el panel del menú móvil (el panel la tapa al abrirse) */
+  box-shadow: 0 14px 24px var(--shadow-color);
+
+  /* El vidrio va en una capa interna (no en el header): así el panel del menú
+     móvil, que es hijo del header, también puede desenfocar la página */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-color: color-mix(in srgb, var(--footer-bg) 90%, transparent);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    backdrop-filter: blur(12px) saturate(1.2);
+    pointer-events: none;
+  }
 
   &::after {
     content: '';
@@ -917,7 +970,10 @@ html {
       left: 0;
       width: 100%;
       isolation: isolate;
-      background-color: var(--footer-bg);
+      /* mismo vidrio que la barra: 90% de opacidad, desenfoque y grano */
+      background-color: color-mix(in srgb, var(--footer-bg) 90%, transparent);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+      backdrop-filter: blur(12px) saturate(1.2);
       box-shadow: 0 14px 24px var(--shadow-color);
       padding: 1.25rem 0 1.5rem;
       z-index: var(--z-modal);
@@ -993,6 +1049,7 @@ html {
     /* Toggles ====================================*/
     .navbar__toggles {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: center;
       gap: 2rem;
@@ -1160,6 +1217,11 @@ html {
     height: 2.2rem;
   }
 
+  .navbar__logo--name,
+  .navbar__logo--lastname {
+    font-family: var(--brand-font);
+  }
+
   .navbar__logo--name {
     font-weight: 300;
   }
@@ -1187,6 +1249,17 @@ html {
   transition:
     opacity 0.25s ease,
     translate 0.25s ease;
+}
+
+/* Menú abierto: barra y panel se ven como una sola superficie. Más opacos y
+   con más desenfoque para que el texto dorado de detrás no tiña el panel de
+   otro color que la barra */
+.header.menu-open::before,
+.header.menu-open .navbar .navbar__menu,
+.header .navbar .navbar__menu:target {
+  background-color: color-mix(in srgb, var(--footer-bg) 96%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(1.1);
+  backdrop-filter: blur(24px) saturate(1.1);
 }
 
 .header.menu-open .navbar__burger {
@@ -1613,8 +1686,9 @@ html {
    encendida = modo oscuro, apagada = modo claro (ver helpers/lamp.js).
    Estados: reposo (off) · hover (over) · presionando (pull) · encendida (on)
    - Escritorio: reemplaza al botón de luna/sol del menú.
-   - Móvil: más pequeña, junto al menú hamburguesa; se recoge al hacer scroll
-     (el botón de luna/sol sigue dentro del menú como respaldo). */
+   - Móvil: centrada entre el borde y el retrato; se recoge al hacer scroll y
+     vuelve a los 3 s. Con el menú abierto aparece sobre el panel (en lugar
+     del botón de luna/sol, que en móvil se oculta). */
 .lamp {
   --lamp-width: 84px;
   /* cable visible debajo del menú: la lámpara cuelga, no queda pegada a la barra */
@@ -1687,21 +1761,62 @@ html {
   }
 }
 
-/* Móvil: al hacer scroll la lámpara sube y se esconde detrás de la barra */
+/* Móvil: la lámpara solo aparece dentro del menú hamburguesa abierto
+   (reemplaza al botón de luna/sol); cerrada, queda recogida detrás de la barra */
 @media (max-width: 599px) {
-  /* Pegada a la orilla, debajo de la hamburguesa: así no choca con el
-     retrato del hero (el cable queda tapado por la barra) */
-  .lamp {
-    --lamp-width: 48px;
-    --lamp-drop: 0.25rem;
-    right: 0.35rem;
-    transition: translate 0.45s cubic-bezier(0.5, 0, 0.3, 1.2), visibility 0s;
+  .header .navbar .navbar__toggle--darkmode {
+    display: none;
   }
 
-  .lamp.lamp--retracted {
+  .lamp {
+    --lamp-width: clamp(96px, 27vw, 118px);
+    --lamp-drop: 0.25rem;
+    /* a la izquierda de la X de cerrar: el cable no la cruza */
+    right: calc(92px - var(--lamp-width) / 2);
     translate: 0 -100%;
     visibility: hidden;
     transition: translate 0.35s ease-in, visibility 0s 0.35s;
+  }
+
+  /* Baja cuando el panel ya terminó de abrir (0.25s): cae, estira el cable
+     un poco de más y rebota como bungee hasta quedar quieta */
+  .header.menu-open ~ .lamp {
+    z-index: calc(var(--z-modal) + 1);
+    translate: 0 0;
+    visibility: visible;
+    transition: visibility 0s 0.25s;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .header.menu-open ~ .lamp {
+      animation: lamp-bungee 1.1s 0.25s both;
+    }
+  }
+}
+
+@keyframes lamp-bungee {
+  0% {
+    translate: 0 -100%;
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.6); /* caída que acelera */
+  }
+  42% {
+    translate: 0 9%; /* el cable se estira de más */
+    animation-timing-function: cubic-bezier(0.25, 0.6, 0.4, 1);
+  }
+  62% {
+    translate: 0 -4%;
+    animation-timing-function: ease-in-out;
+  }
+  78% {
+    translate: 0 2%;
+    animation-timing-function: ease-in-out;
+  }
+  90% {
+    translate: 0 -0.6%;
+    animation-timing-function: ease-in-out;
+  }
+  100% {
+    translate: 0 0;
   }
 }
 
@@ -1818,12 +1933,12 @@ html {
     align-items: center;
   }
   .loader__name--light {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--brand-font);
     font-weight: 200;
     font-size: 1rem;
   }
   .loader__name--semibold {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--brand-font);
     font-weight: 500;
     font-size: 1rem;
   }
@@ -1865,7 +1980,7 @@ html {
   display: inline-block;
   min-width: 0.45em;
   text-align: center;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--brand-font);
   color: var(--primary-color);
   animation: loader-char-fall 0.75s cubic-bezier(0.3, 1.35, 0.5, 1) calc(var(--i) * 55ms) both;
 }
@@ -1960,9 +2075,17 @@ html {
 
 .resume__modal-content {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+
+  /* Los botones no se encogen por debajo de su palabra: con texto del
+     sistema grande, si no caben juntos uno baja a la siguiente línea */
+  .btn {
+    flex: 1 1 0;
+    min-width: max-content;
+  }
 }
 
 /* --- layout/_section.css --- */
@@ -2300,36 +2423,65 @@ html.js:not(.hero-ready) .home .home__title {
 /* HOME MAX WIDTH 599px: todo el hero cabe en pantalla, centrado ======
    svh = alto visible con la barra del navegador desplegada */
 @media (max-width: 599px) {
+  /* El hero ocupa una pantalla: el texto (que sigue el tamaño de letra del
+     sistema) toma lo que necesita y el retrato se encoge para llenar solo el
+     espacio que sobra. minmax(0, 1fr) evita que el contenido
+     ensanche la página con texto muy grande. */
   .home {
     min-height: 100svh;
     display: grid;
-    align-content: center;
+    grid-template-columns: minmax(0, 1fr);
     padding: 0.5rem 0 1rem;
   }
 
   .home .home__container {
     transform: none;
     row-gap: 0;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    /* con texto enorme (que ya no cabe aunque no hubiera retrato) el
+       retrato conserva un tamaño mínimo y la sección crece con scroll */
+    grid-template-rows: minmax(7rem, 1fr) auto;
+    align-content: stretch;
   }
 
   .home .home__image {
-    width: min(80%, 320px);
+    /* alto = el espacio libre de su fila; ancho por la proporción 1:1 */
+    height: 100%;
+    max-height: min(80vw, 320px);
+    min-height: 0;
+    width: auto;
+    max-width: 100%;
     margin: 0 auto;
     justify-self: center;
+    align-self: end;
     transform: none;
+  }
+
+  .home .home__info {
+    min-width: 0;
   }
 
   .home .home__info .home__description {
     padding-block: 0.25rem;
   }
 
+  .home .home__social {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .home .home__social-item {
     margin: 0.4rem 1rem;
+    /* los íconos no crecen con el texto del sistema (no son texto) */
+    font-size: 34px;
   }
 
   .home .home__buttons .btn {
     margin: 0.3rem 0;
-    padding-block: 0.7rem;
+    /* alto del botón = el del texto + un relleno fijo: con texto grande
+       los cuatro siguen cabiendo en la pantalla */
+    padding-block: min(0.7rem, 11px);
   }
 }
 
@@ -2352,6 +2504,12 @@ html.js:not(.hero-ready) .home .home__title {
 .home__description--lines .home__intro {
   display: block;
   margin-bottom: 1lh;
+}
+
+/* Énfasis en la presentación (*…* en translations.js) */
+.home__description strong {
+  font-weight: var(--font-semibold);
+  color: var(--gold-300);
 }
 
 /* --- sections/_about.css --- */
@@ -2383,6 +2541,29 @@ html.js:not(.hero-ready) .home .home__title {
   width: 70%;
   max-width: 200px;
   object-fit: cover;
+}
+
+/* Móvil: la sección cabe en una pantalla y queda centrada a lo alto bajo
+   la barra, también con texto del sistema grande: el retrato se encoge con
+   el alto disponible y los espacios no crecen con el texto */
+@media (max-width: 599px) {
+  .about.section {
+    padding-block: 12px;
+  }
+
+  /* sin el margen superior del título el bloque queda centrado exacto */
+  .about .section__title {
+    margin-top: 0;
+  }
+
+  .about__container {
+    gap: min(2rem, 24px);
+    padding-block: 0;
+  }
+
+  .about__img img {
+    max-width: min(200px, 24svh);
+  }
 }
 
 /* ABOUT MIN WIDTH 600px ========================== */
@@ -2663,6 +2844,8 @@ html.js:not(.hero-ready) .home .home__title {
 }
 
 .project__card--carousel {
+  /* el gesto horizontal es del carrusel; el vertical, del scroll de la página */
+  touch-action: pan-y;
   position: relative;
   margin: 0 auto;
   width: 100%;
@@ -3041,6 +3224,11 @@ html.js:not(.hero-ready) .home .home__title {
   transition: all 0.2s ease;
 }
 
+/* Arrastrando: sin transición, las tarjetas siguen al dedo sin retraso */
+.project__card--carousel.is-dragging .project__card {
+  transition: none;
+}
+
 .project__card.highlight {
   filter: brightness(1);
   z-index: 2;
@@ -3193,6 +3381,43 @@ html.js:not(.hero-ready) .home .home__title {
   width: auto;
   justify-self: center;
   margin-top: 1.5rem;
+}
+
+/* Móvil: los shots se deslizan de lado (una fila con scroll horizontal y
+   snap) en vez de apilarse en una columna larga. La siguiente tarjeta asoma
+   por la orilla para que se note que hay más. Ocupa todo el ancho de la
+   pantalla (sale del padding de la sección) */
+@media (max-width: 599px) {
+  .designs .designs__grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 78%;
+    justify-content: start;
+    gap: 1rem;
+    /* section.section > * fija width: 100% (por eso .designs delante,
+       para ganarle en especificidad); se compensa el padding */
+    width: calc(100% + 2rem);
+    margin-inline: -1rem;
+    padding: 0.5rem 1rem 1.25rem; /* aire para la sombra de las tarjetas */
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1rem;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .designs__item {
+    scroll-snap-align: start;
+  }
+
+  /* Un solo shot: centrado, sin deslizar */
+  .designs__grid:has(> .designs__item:only-child) {
+    justify-content: center;
+  }
 }
 
 /* --- sections/_skills.css --- */
@@ -3375,7 +3600,10 @@ html.js:not(.hero-ready) .home .home__title {
 /* Botón pausar / reanudar: mismo estilo que los botones de contorno del
    sitio (contorno y sombra dura dorados) */
 .skills__motion-toggle {
-  justify-self: end;
+  /* centrado, con el mismo espacio hacia el texto de arriba y el título de la
+     primera fila (abajo ya suman el gap del grid + el margen del título) */
+  justify-self: center;
+  margin-block: 2.5rem 0;
   display: inline-grid;
   place-items: center;
   width: 2.25rem;
@@ -3471,15 +3699,18 @@ html.js:not(.hero-ready) .home .home__title {
   font-weight: 600;
 }
 
+/* La sección del CV ocupa toda la pantalla visible: el footer queda fuera de
+   la vista inicial y el PDF baja un poco respecto a la barra */
 #pdf-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: calc(100vh - 200px);
-  padding: 20px;
+  box-sizing: border-box;
+  min-height: 100svh;
+  padding: calc(var(--header-height) + 2.5rem) 20px 2.5rem;
   gap: 20px;
-  margin: 3rem 0;
+  margin: 0;
 }
 
 .resume__page {

@@ -177,7 +177,10 @@
 /* Botón pausar / reanudar: mismo estilo que los botones de contorno del
    sitio (contorno y sombra dura dorados) */
 .skills__motion-toggle {
-  justify-self: end;
+  /* centrado, con el mismo espacio hacia el texto de arriba y el título de la
+     primera fila (abajo ya suman el gap del grid + el margen del título) */
+  justify-self: center;
+  margin-block: 2.5rem 0;
   display: inline-grid;
   place-items: center;
   width: 2.25rem;

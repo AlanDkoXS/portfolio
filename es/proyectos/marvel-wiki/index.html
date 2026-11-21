@@ -4,13 +4,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Tema: sigue al sistema; el botón guarda una excepción en localStorage.theme. -->
+    <!-- Respeta el tamaño de texto del sistema: Android/Chrome lo aplica al tamaño
+         base (rem) en vez de hacer zoom a toda la página -->
+    <meta name="text-scale" content="scale" />
+    <!-- Tema: oscuro si el sistema está en modo oscuro; si no, por horario (oscuro de
+         18:00 a 6:00, hora local). El botón guarda una excepción hasta el siguiente
+         cambio (localStorage.theme / themeUntil).
+         Se aplica antes de pintar; sin JS se sigue al sistema. -->
     <meta name="color-scheme" content="light dark" />
     <script>
-      try {
-        const t = localStorage.getItem('theme');
-        if (t === 'light' || t === 'dark') document.querySelector('meta[name="color-scheme"]').content = t;
-      } catch {}
+      {
+        const h = new Date().getHours();
+        let t = matchMedia('(prefers-color-scheme: dark)').matches || h >= 18 || h < 6 ? 'dark' : 'light';
+        try {
+          const o = localStorage.getItem('theme');
+          if ((o === 'light' || o === 'dark') && Date.now() < Number(localStorage.getItem('themeUntil'))) t = o;
+        } catch {}
+        document.querySelector('meta[name="color-scheme"]').content = t;
+      }
     </script>
     <title>Wiki de Marvel · App en React | Alan Quintana</title>
     <meta name="description" content="Busca y explora personajes de Marvel en una app de React con estilo de cómic." />
@@ -152,6 +163,9 @@
               <a data-i18n="navProjects" class="navbar__link" href="/es/#projects">Proyectos</a>
             </li>
             <li class="navbar__item">
+              <a data-i18n="navDesigns" class="navbar__link" href="/es/#designs">Diseños</a>
+            </li>
+            <li class="navbar__item">
               <a data-i18n="navContact" class="navbar__link" href="/es/#contact">Contacto</a>
             </li>
           </ul>
@@ -197,14 +211,14 @@
                 <div class="flag-wrapper">
                   <img
                     src="/assets/img/flag-en.svg"
-                    class="navbar__toggle--language-en"
+                    class="navbar__toggle--language-en" lang="en"
                     alt="English"
                     loading="lazy"
                     aria-hidden="true"
                   />
                   <img
                     src="/assets/img/flag-es.svg"
-                    class="navbar__toggle--language-es"
+                    class="navbar__toggle--language-es" lang="es"
                     alt="Español"
                     loading="lazy"
                     aria-hidden="true"

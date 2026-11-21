@@ -17,26 +17,35 @@
   /* Grano: un mosaico pequeño repetido (9 KB en vez de una imagen de
      pantalla completa). La caída de densidad de arriba hacia abajo la da la
      máscara, que ya incluye cómo se desvanecía la imagen original */
+  /* Fijo desde arriba de la pantalla: cuando la barra está oculta (en el hero)
+     no queda una franja sin grano; se desvanece con un degradado largo y suave
+     que empieza justo debajo de la barra (sin un corte visible) */
   --grain-fade: linear-gradient(
     to bottom,
-    #000 0%,
-    rgb(0 0 0 / 0.53) 11%,
-    rgb(0 0 0 / 0.25) 22%,
-    rgb(0 0 0 / 0.09) 33%,
-    rgb(0 0 0 / 0.015) 44%,
-    transparent 55%
+    #000 var(--header-height),
+    rgb(0 0 0 / 0.82) 12%,
+    rgb(0 0 0 / 0.6) 25%,
+    rgb(0 0 0 / 0.4) 40%,
+    rgb(0 0 0 / 0.22) 55%,
+    rgb(0 0 0 / 0.1) 70%,
+    rgb(0 0 0 / 0.03) 85%,
+    transparent 100%
   );
   -webkit-mask: var(--grain-fade);
   mask: var(--grain-fade);
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0 !important;
+  left: 0 !important;
+  right: 0;
+  transform: none !important;
+  /* Mosaico de grano sin costuras (cada punto es aleatorio e independiente,
+     con la misma densidad que el grano original). Va a 1px de imagen por px
+     de CSS para que en pantallas de alta densidad el grano siga visible */
   background-image: url('/assets/img/bgGrain-tile.webp');
-  background-size: 256px 128px;
+  background-size: 256px 256px;
   background-repeat: repeat;
   width: 100% !important;
-  height: 100% !important;
+  height: calc(75svh + var(--header-height)) !important;
   opacity: 0.6;
 }
 
@@ -102,13 +111,7 @@
   }
 
   .bgGrain {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
     opacity: 0.6;
-    height: 100%;
   }
 
   .bgBack,

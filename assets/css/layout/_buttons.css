@@ -23,7 +23,13 @@
   font-weight: var(--font-semibold);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  white-space: nowrap;
+  /* Con texto del sistema grande el botón no se sale de la pantalla: su
+     texto pasa a otra línea en vez de forzar una sola. Sin balance: en una
+     caja con fondo/borde no cambia el ancho y solo deja hueco dentro */
+  max-width: 100%;
+  /* break-word (no anywhere): solo parte una palabra si no cabe sola en
+     la línea; anywhere encogía el botón y partía "ENGL/ISH" */
+  overflow-wrap: break-word;
   color: var(--on-accent-color);
 
   background: var(--gold-400);

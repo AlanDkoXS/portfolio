@@ -4,14 +4,24 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Tema: sigue al sistema; el botón guarda una excepción en localStorage.theme.
-         Se aplica antes de pintar para evitar el parpadeo del tema equivocado. -->
+    <!-- Respeta el tamaño de texto del sistema: Android/Chrome lo aplica al tamaño
+         base (rem) en vez de hacer zoom a toda la página -->
+    <meta name="text-scale" content="scale" />
+    <!-- Tema: oscuro si el sistema está en modo oscuro; si no, por horario (oscuro de
+         18:00 a 6:00, hora local). El botón guarda una excepción hasta el siguiente
+         cambio (localStorage.theme / themeUntil).
+         Se aplica antes de pintar; sin JS se sigue al sistema. -->
     <meta name="color-scheme" content="light dark" />
     <script>
-      try {
-        const t = localStorage.getItem('theme');
-        if (t === 'light' || t === 'dark') document.querySelector('meta[name="color-scheme"]').content = t;
-      } catch {}
+      {
+        const h = new Date().getHours();
+        let t = matchMedia('(prefers-color-scheme: dark)').matches || h >= 18 || h < 6 ? 'dark' : 'light';
+        try {
+          const o = localStorage.getItem('theme');
+          if ((o === 'light' || o === 'dark') && Date.now() < Number(localStorage.getItem('themeUntil'))) t = o;
+        } catch {}
+        document.querySelector('meta[name="color-scheme"]').content = t;
+      }
     </script>
     <title>Resume - Alan Quintana Pacheco</title>
     <meta name="description"
@@ -93,6 +103,8 @@
 </head>
 
 <body>
+    <!-- Grano de fondo (el mismo del inicio), fijo debajo de la barra -->
+    <div class="background-container bgGrain" aria-hidden="true"></div>
     <header class="header">
         <nav class="navbar grid--container flex--container">
             <a class="navbar__logo flex--container" href="/" data-i18n-attr="href:resumePage.homeHref">
@@ -126,9 +138,9 @@
                             aria-label="Select Language" />
                         <label for="language-toggle" class="navbar__toggle--language-label">
                             <div class="flag-wrapper">
-                                <img src="/assets/img/flag-en.svg" class="navbar__toggle--language-en" alt="English"
+                                <img src="/assets/img/flag-en.svg" class="navbar__toggle--language-en" lang="en" alt="English"
                                     loading="lazy" aria-hidden="true">
-                                <img src="/assets/img/flag-es.svg" class="navbar__toggle--language-es" alt="Español"
+                                <img src="/assets/img/flag-es.svg" class="navbar__toggle--language-es" lang="es" alt="Español"
                                     loading="lazy" aria-hidden="true">
                             </div>
                         </label>
@@ -174,10 +186,10 @@
                 <p data-i18n="resumePage.selectLanguage">Select language</p>
                 <div class="resume__modal-content">
                     <button class="btn btn--primary" onclick="downloadCV('ENG')" autofocus>
-                        <strong data-i18n="resumePage.english">English</strong>
+                        <strong lang="en" data-i18n="resumePage.english">English</strong>
                     </button>
                     <button class="btn btn--primary" onclick="downloadCV('ESP')">
-                        <strong data-i18n="resumePage.spanish">Español</strong>
+                        <strong lang="es" data-i18n="resumePage.spanish">Español</strong>
                     </button>
                 </div>
             </div>

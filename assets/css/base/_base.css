@@ -5,6 +5,14 @@
 html {
   box-sizing: border-box;
 
+  /* Tamaño de texto del sistema. Todos los tamaños del sitio van en rem, así
+     que crecen con él: en Android/Chrome (meta text-scale) y con el ajuste de
+     tamaño de letra del navegador. En iPhone/iPad, -apple-system-body toma el
+     tamaño de "Texto más grande" (Dynamic Type); la familia la pone body. */
+  @supports (font: -apple-system-body) {
+    font: -apple-system-body;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     scroll-behavior: smooth;
   }
@@ -19,10 +27,12 @@ html {
   body {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
-    /* Mientras carga Poppins, la fuente de respaldo se escala a su misma
-       altura de minúsculas: el texto no "salta" al llegar la fuente */
-    font-size-adjust: from-font;
+    /* Los textos usan la fuente del sistema del visitante (San Francisco en
+       Apple, Roboto en Android, Segoe UI en Windows…). Poppins queda solo
+       para el logo y el loader (identidad) */
+    font-family: var(--primary-font);
+    /* palabras largas (correo, URLs) se parten antes que salirse */
+    overflow-wrap: break-word;
     font-size: var(--normal-font-size);
     color: var(--primary-color);
     background-color: var(--bg-color-section);
@@ -66,9 +76,27 @@ html {
     padding: 0;
   }
 
+  /* Títulos y descripciones cortas: líneas de largo parecido (sin una
+     palabra sola en la última línea). Los párrafos largos usan pretty (abajo). */
+  :is(h1, h2, h3, h4, h5, h6),
+  :is(
+    .section__title,
+    .skills__description,
+    .designs__description,
+    .project__subtitle,
+    .project__description,
+    .project-hero__tagline,
+    .contact__info-description,
+    .footer__description
+  ) {
+    text-wrap: balance;
+  }
+
   p {
     font-size: var(--normal-font-size);
-    text-align: justify;
+    /* sin justificar (dejaba huecos entre palabras en móvil); pretty evita
+       líneas finales de una sola palabra */
+    text-wrap: pretty;
   }
 
   label {
@@ -108,6 +136,9 @@ html {
   /* Que el scroll dentro del modal o sobre el fondo no mueva la página */
   dialog:modal {
     overscroll-behavior: contain;
+    /* el reset global (margin: 0) quita el centrado nativo del <dialog> */
+    margin: auto;
+    inset: 0;
   }
 
   dialog::backdrop {
