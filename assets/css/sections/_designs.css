@@ -16,9 +16,6 @@
 }
 
 .designs__grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: grid;
   /* Fixed-width, centered columns: with few shots they don't stick to the left */
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 280px));
@@ -43,9 +40,7 @@
 }
 
 .designs__img {
-  display: block;
   width: 100%;
-  height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }

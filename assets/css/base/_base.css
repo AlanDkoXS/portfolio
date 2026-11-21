@@ -35,10 +35,7 @@ html {
     color: var(--primary-color);
     background-color: var(--bg-color-section);
     overflow-x: hidden;
-    -ms-user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
@@ -149,14 +146,6 @@ html {
     overscroll-behavior: contain;
   }
 
-}
-
-/* === Media Queries MIN WIDTH (600px) === */
-
-@media (min-width: 600px) {
-  section {
-    padding: 2.5em 2em;
-  }
 }
 
 /* ============= Page transition (home ↔ resume, / ↔ /es/) =============

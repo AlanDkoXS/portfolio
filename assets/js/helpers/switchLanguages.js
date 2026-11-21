@@ -55,8 +55,6 @@ const t = (key, lang) => {
 
 let currentLanguage = 'en';
 
-export const getValidationMessages = () => translations.validation[currentLanguage];
-
 // *text* in a translation → <strong>text</strong> (no arbitrary HTML)
 const setRichText = (el, value) => {
   el.textContent = '';
@@ -127,7 +125,7 @@ const setLanguage = (lang) => {
 
   window.dispatchEvent(
     new CustomEvent('languageChange', {
-      detail: { language: lang, validationMessages: translations.validation?.[lang] ?? null },
+      detail: { language: lang },
     }),
   );
 };

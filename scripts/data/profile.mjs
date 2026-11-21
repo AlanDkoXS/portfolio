@@ -3,8 +3,6 @@
 // together with scripts/data/projects.mjs and scripts/cv/data.mjs.
 // Verifiable facts only (site, CV, beaniwa.com, repositories).
 
-export const SITE = 'https://alanquintana.pro';
-
 export default {
   name: 'Alan Quintana',
   location: { en: 'Chihuahua, Mexico', es: 'Chihuahua, México' },

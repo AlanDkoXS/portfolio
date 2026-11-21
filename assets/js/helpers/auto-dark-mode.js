@@ -10,8 +10,8 @@
 // (without JS, the meta stays "light dark" and the system is followed).
 const STORAGE_KEY = 'theme';
 const UNTIL_KEY = 'themeUntil';
-export const DARK_FROM = 18; // hour when dark mode starts
-export const DARK_UNTIL = 6; // hour when light mode returns
+const DARK_FROM = 18; // hour when dark mode starts
+const DARK_UNTIL = 6; // hour when light mode returns
 
 const isDarkHour = (hour) => hour >= DARK_FROM || hour < DARK_UNTIL;
 

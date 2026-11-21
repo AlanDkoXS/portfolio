@@ -10,13 +10,6 @@
   margin: var(--margin-small);
 }
 
-.skills__icons {
-  gap: var(--gap-medium);
-}
-.skills__title {
-  margin: var(--margin-medium);
-}
-
 .skills__wrapper .skills__icons {
   display: grid;
   /* minmax(0, …) and min-width: 0: the looping row is very wide (max-content)
@@ -37,14 +30,6 @@
   gap: var(--gap-small);
 }
 
-.skills__wrapper .skills__icons .skills__title::after {
-  content: '';
-  position: absolute;
-  bottom: -0.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .skills__icon {
   width: 64px;
   height: 64px;
@@ -57,10 +42,6 @@
 .skills__icon-title {
   margin: var(--margin-small);
   white-space: nowrap;
-}
-
-.skills__tags-container {
-  margin-top: 1rem;
 }
 
 .skills__tags {
@@ -88,8 +69,6 @@
   --marquee-gap: 1.25rem;
   /* Decorative: can't be tapped, selected or dragged */
   pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
   /* Edge to edge of the browser, even if the section has margins
      (body already has overflow-x: hidden, so no sideways scroll appears) */
   --viewport-w: calc(100vw - var(--scrollbar-w, 0px));
@@ -365,7 +344,6 @@
   /* the name scales with the box width (cqi): with large system
      text "Creative Cloud" or "Tailwind CSS" fit on one line */
   .skills__icon-title {
-    white-space: nowrap; /* name on a single line */
     font-size: min(var(--small-font-size), 3.7cqi);
   }
 }

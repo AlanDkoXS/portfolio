@@ -19,7 +19,7 @@ let permissionRequested = false;
 
 // iOS 13+ only fires deviceorientation after permission is granted inside a
 // user gesture. Safe to call many times; it only wires the listener once.
-export function requestTiltPermission() {
+function requestTiltPermission() {
   if (permissionRequested) return;
   permissionRequested = true;
 

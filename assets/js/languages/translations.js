@@ -49,10 +49,6 @@ const translations = {
     en: 'Skills',
     es: 'Habilidades',
   },
-  /*     navPortfolio: {
-      en: 'Portfolio',
-      es: 'Portafolio',
-    }, */
   navProjects: {
     en: 'Projects',
     es: 'Proyectos',

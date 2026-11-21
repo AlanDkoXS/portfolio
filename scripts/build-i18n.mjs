@@ -44,6 +44,12 @@ const t = (key, lang) => {
   }
   return value;
 };
+const failOnMissing = () => {
+  if (missing.size) {
+    console.error('Missing translations:\n  ' + [...missing].join('\n  '));
+    process.exit(1);
+  }
+};
 
 function render(html, lang) {
   // <html lang="..">
@@ -176,10 +182,7 @@ const source = injectDesigns(
 const en = render(source, 'en');
 const es = render(source, 'es');
 
-if (missing.size) {
-  console.error('Missing translations:\n  ' + [...missing].join('\n  '));
-  process.exit(1);
-}
+failOnMissing();
 
 fs.writeFileSync(sourcePath, en);
 fs.mkdirSync(path.join(root, 'es'), { recursive: true });
@@ -230,10 +233,7 @@ projects.forEach((project, i) => {
   }
 });
 
-if (missing.size) {
-  console.error('Missing translations:\n  ' + [...missing].join('\n  '));
-  process.exit(1);
-}
+failOnMissing();
 
 // Sitemap entries for the project pages (with hreflang alternates)
 const sitemapPath = path.join(root, 'sitemap.xml');

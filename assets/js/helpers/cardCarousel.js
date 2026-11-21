@@ -113,8 +113,6 @@ export function cardCarousel() {
       this.controllerElement = controller;
       this.cards = container.querySelectorAll(".project__card");
       this.centerIndex = Math.floor((this.cards.length - 1) / 2);
-      this.cardWidth =
-        (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
       this.xScale = {};
 
       window.addEventListener("resize", this.updateCardWidth.bind(this));
@@ -149,8 +147,6 @@ export function cardCarousel() {
     }
 
     updateCardWidth() {
-      this.cardWidth =
-        (this.cards[0].offsetWidth / this.container.offsetWidth) * 100;
       this.build();
     }
 
@@ -158,8 +154,7 @@ export function cardCarousel() {
       for (let i = 0; i < this.cards.length; i++) {
         const x = i - this.centerIndex;
         const scale = this.calcScale(x);
-        const scale2 = this.calcScale2(x);
-        const leftPos = this.calcPos(x, scale2);
+        const leftPos = this.calcPos(x);
 
         // Hidden cards go far back in z-index
         let zIndex;
@@ -233,8 +228,7 @@ export function cardCarousel() {
 
       for (let x in temp) {
         const scale = this.calcScale(x);
-        const scale2 = this.calcScale2(x);
-        const leftPos = this.calcPos(x, scale2);
+        const leftPos = this.calcPos(x);
 
         // Use the same z-index logic as in build()
         let zIndex;
@@ -277,17 +271,7 @@ export function cardCarousel() {
       return formula <= 0 ? 0 : formula;
     }
 
-    calcScale2(x) {
-      let formula;
-      if (x <= 0) {
-        formula = 1 - (-1 / 6) * x;
-      } else {
-        formula = 1 - (1 / 6) * x;
-      }
-      return formula;
-    }
-
-    calcPos(x, scale) {
+    calcPos(x) {
       // If the card is too far from center (not visible), position it at center
       if (Math.abs(x) > 2.5) {
         return 50; // Central position
@@ -341,8 +325,7 @@ export function cardCarousel() {
 
       for (let x in temp) {
         const scale = this.calcScale(x);
-        const scale2 = this.calcScale2(x);
-        const leftPos = this.calcPos(x, scale2);
+        const leftPos = this.calcPos(x);
 
         // Use the same z-index logic as in build()
         let zIndex;
@@ -395,8 +378,7 @@ export function cardCarousel() {
           xDist
         );
         const scale = this.calcScale(x + xDist);
-        const scale2 = this.calcScale2(x + xDist);
-        const leftPos = this.calcPos(x + xDist, scale2);
+        const leftPos = this.calcPos(x + xDist);
 
         this.updateCards(this.cards[i], {
           scale: scale,
@@ -437,5 +419,3 @@ export function cardCarousel() {
     new CardCarousel(cardsContainer, cardsController);
   }
 }
-
-export default cardCarousel;

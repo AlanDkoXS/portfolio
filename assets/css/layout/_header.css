@@ -286,11 +286,6 @@
     }
   }
 
-  .navbar__logo i {
-    font-size: var(--icon-font-size);
-    color: var(--primary-color);
-  }
-
   /* Hamburger → X (the two icons stacked, cross-fading as they rotate) */
   .navbar__burger {
     position: relative;
@@ -536,8 +531,6 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
     .navbar {
       .navbar__menu {
         display: flex;
-        justify-content: space-between;
-        padding: 10px;
         position: static;
         border-radius: 0;
         background-color: transparent;
@@ -573,19 +566,6 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
 
   .btn {
     max-width: 300px;
-  }
-
-  .logo {
-    width: 2.6rem !important;
-    height: 2.6rem !important;
-  }
-
-  .navbar__logo {
-    font-size: 1.15rem;
-  }
-  .navbar__logo--name,
-  .navbar__logo--lastname {
-    display: visible;
   }
 }
 
@@ -627,15 +607,9 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
       gap: 1rem;
     }
 
-    .navbar__toggle--darkmode,
     .navbar__toggle--language {
       height: 32px;
     }
-
-    .navbar__toggle--darkmode i {
-      font-size: 1.4rem;
-    }
-
 
   }
 
@@ -897,7 +871,7 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
 }
 
 /* Mobile panel: same options as on desktop, in a column and larger for
-   tapping with a finger; matching moon/sun (dimmed like the options) */
+   tapping with a finger */
 @media (max-width: 599px) {
   .header .navbar .navbar__menu {
     .navbar__list {
@@ -912,12 +886,6 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
     .navbar__toggles {
       gap: 1.75rem;
       margin-top: 1.25rem;
-    }
-
-    .navbar__toggle--darkmode i {
-      font-size: 1.6rem;
-      color: var(--footer-text);
-      opacity: 0.6;
     }
 
     .navbar__toggle--language .navbar__toggle--language-label {

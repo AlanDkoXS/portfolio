@@ -50,19 +50,3 @@
     max-width: min(200px, 24svh);
   }
 }
-
-/* === About min width 600px === */
-@media (min-width: 600px) {
-  .about__container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-    padding: 3rem;
-  }
-
-  .about__img img {
-    width: 25vw;
-  }
-}

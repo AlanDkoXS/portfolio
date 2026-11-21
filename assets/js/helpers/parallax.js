@@ -29,7 +29,6 @@ const ParallaxEffect = {
         middle: { x: 2.5, y: 1.5 },
         front: { x: 1.5, y: 2 },
       },
-      resetDelay: 300,
     },
   },
 
@@ -65,7 +64,6 @@ const ParallaxEffect = {
     };
 
     if (!this.elements.back || !this.elements.middle || !this.elements.front) {
-      console.warn('Not all the necessary elements for the parallax were found.');
       return;
     }
 

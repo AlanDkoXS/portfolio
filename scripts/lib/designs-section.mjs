@@ -15,7 +15,7 @@ const MARKER_RE = /<!-- dribbble:start[\s\S]*?<!-- dribbble:end -->/;
 // back on: replace the <div class="designs__link"> with
 // <a class="designs__link" href="${s.url}" target="_blank" rel="noopener">
 // and remove the HTML comment around the button.
-export function designsSection({ profile, shots = [] } = {}) {
+function designsSection({ profile, shots = [] } = {}) {
   if (!shots.length) return `${START}\n      <!-- dribbble:end -->`;
   const cards = shots
     .map(

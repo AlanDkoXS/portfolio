@@ -42,7 +42,6 @@
     width: 100%;
     height: auto;
     pointer-events: none;
-    user-select: none;
     /* rotates from where it joins the cable */
     transform-origin: 50% 0;
     /* gyroscope (lamp.js): pendulum that stays vertical when the phone is

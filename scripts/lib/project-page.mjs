@@ -80,7 +80,7 @@ export function adaptHeader(header, lang) {
     );
 }
 
-function screenshots(p, lang, ui) {
+function screenshots(p, ui) {
   const img = (kind, dark, attrs) => {
     // mobile: full phone screenshot (390×844), not the 4:5 one of the home cards
     const dir = kind === 'desktop' ? 'desktop/' : 'mobile/';
@@ -287,7 +287,7 @@ ${header}
           </div>
         </header>
 
-${indent(screenshots(p, lang, ui), 8)}
+${indent(screenshots(p, ui), 8)}
 
         <div class="project-body grid--container">
           <section class="project-body__block">

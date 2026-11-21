@@ -6,7 +6,6 @@ import { prefersReducedMotion } from './motion.js';
 import { typeGreeting } from './typing.js';
 
 const loaderContainer = document.querySelector('.loader');
-const spriteImage = document.querySelector('.home__image');
 
 // Never make the visitor wait longer than this, even if some resource is slow
 const MAX_WAIT_MS = 3000;
@@ -69,9 +68,8 @@ function assetsReady() {
 function loader() {
   let done = false;
 
-  // Already seen this session: the <head> hid it; just start the sprite
+  // Already seen this session: the <head> hid it
   if (document.documentElement.classList.contains('skip-loader')) {
-    spriteImage?.classList.add('animate');
     document.documentElement.classList.add('hero-ready');
     typeGreeting();
     return;
@@ -107,10 +105,6 @@ function loader() {
       document.documentElement.classList.add('hero-ready');
       typeGreeting();
     }, 350);
-
-    setTimeout(() => {
-      spriteImage?.classList.add('animate');
-    }, 500);
   };
 
   // It hides when the page has loaded AND the name has finished forming

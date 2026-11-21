@@ -1,5 +1,6 @@
-// form_validation.js
-export const VALIDATION_RULES = {
+import { loadEmailJS } from "./email-js.js";
+
+const VALIDATION_RULES = {
   name: {
     minLength: 2,
     maxLength: 50,
@@ -15,7 +16,7 @@ export const VALIDATION_RULES = {
   },
 };
 
-export const FORM_MESSAGES = {
+const FORM_MESSAGES = {
   en: {
     required: "Fill in this field",
     invalidEmail: "Type a valid email",
@@ -42,16 +43,13 @@ export const FORM_MESSAGES = {
   },
 };
 
-// send_form.js
-import { loadEmailJS } from "./email-js.js";
-
 const formDOM = document.querySelector("#form");
 const modalDOM = document.querySelector("#modal");
 // Page language (/ or /es/); languageChange keeps it up to date
 let currentLanguage = document.documentElement.lang === "es" ? "es" : "en";
 
-function validateField(value, type, language = currentLanguage) {
-  const messages = FORM_MESSAGES[language];
+function validateField(value, type) {
+  const messages = FORM_MESSAGES[currentLanguage];
 
   if (!value || !value.trim()) {
     return messages.required;
@@ -121,20 +119,18 @@ function showFieldError(fieldId, error) {
 
 function validateForm(formData) {
   let isValid = true;
-  const errors = {};
 
   ["name", "email", "subject", "message"].forEach((field) => {
     const error = validateField(formData[field], field);
     if (error) {
       isValid = false;
-      errors[field] = error;
       showFieldError(field, error);
     } else {
       showFieldError(field, "");
     }
   });
 
-  return { isValid, errors };
+  return { isValid };
 }
 
 function openModal() {
@@ -203,7 +199,7 @@ function sendEmail() {
       message: document.getElementById("message").value,
     };
 
-    const { isValid, errors } = validateForm(params);
+    const { isValid } = validateForm(params);
 
     if (!isValid) {
       return;

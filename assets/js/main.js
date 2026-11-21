@@ -33,16 +33,6 @@ import { loadGoogleTagManager } from "./helpers/google-tag-manager.js";
 // EmailJS is loaded by send_form.js when the form is used
 
 // ---------------------------
-// APPLICATION STATE
-// ---------------------------
-const AppState = {
-  isLoading: true,
-  isDarkMode: false,
-  currentLanguage: "en",
-  isMenuOpen: false,
-};
-
-// ---------------------------
 // ERROR HANDLING
 // ---------------------------
 /**
@@ -52,7 +42,6 @@ const AppState = {
  */
 const handleError = (error, context) => {
   console.error(`Error in ${context}:`, error);
-  // Future implementation: error reporting system
 };
 
 // ---------------------------
@@ -103,7 +92,7 @@ const displayConsoleLogo = () => {
 /**
  * Initialize UI components
  */
-const initializeUIComponents = async () => {
+const initializeUIComponents = () => {
   try {
     // Navigation and menu
     activeMenu();
@@ -172,23 +161,9 @@ const setupDarkMode = () => {
     // Theme follows the system; the toggle stores an override (see auto-dark-mode.js)
     setAutoDarkMode();
     lamp();
-    AppState.isDarkMode = document.body.getAttribute("data-theme") === "dark";
   } catch (error) {
     handleError(error, "setupDarkMode");
   }
-};
-
-/**
- * Set up page visibility handling
- */
-const setupVisibilityHandler = () => {
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      document.body.classList.add("reduce-motion");
-    } else {
-      document.body.classList.remove("reduce-motion");
-    }
-  });
 };
 
 /**
@@ -197,7 +172,6 @@ const setupVisibilityHandler = () => {
 const setupCleanup = () => {
   window.addEventListener("beforeunload", () => {
     SnowEffect.destroy();
-    // Additional resource cleanup can be added here
   });
 };
 
@@ -208,7 +182,7 @@ const setupCleanup = () => {
 /**
  * Main initialization function
  */
-const initialize = async () => {
+const initialize = () => {
   try {
     // Display console logo
     displayConsoleLogo();
@@ -226,7 +200,7 @@ const initialize = async () => {
     loadExternalResources();
 
     // Initialize main components
-    await initializeUIComponents();
+    initializeUIComponents();
 
     // Initialize visual effects
     initializeVisualEffects();
@@ -235,11 +209,7 @@ const initialize = async () => {
     initializeFunctionalities();
 
     // Set up system event handlers
-    setupVisibilityHandler();
     setupCleanup();
-
-    // Mark as loaded
-    AppState.isLoading = false;
   } catch (error) {
     handleError(error, "initialize");
   }
@@ -253,12 +223,3 @@ const initialize = async () => {
 // Responsive home text (home + about merged on desktop) lives in
 // switchLanguages.js so it stays in the selected language.
 document.addEventListener("DOMContentLoaded", initialize);
-
-// Global error handlers
-window.addEventListener("error", (event) => {
-  handleError(event.error, "window.error");
-});
-
-window.addEventListener("unhandledrejection", (event) => {
-  handleError(event.reason, "unhandledrejection");
-});

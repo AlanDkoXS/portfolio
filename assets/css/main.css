@@ -124,10 +124,7 @@ html {
     color: var(--primary-color);
     background-color: var(--bg-color-section);
     overflow-x: hidden;
-    -ms-user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
@@ -240,14 +237,6 @@ html {
 
 }
 
-/* === Media Queries MIN WIDTH (600px) === */
-
-@media (min-width: 600px) {
-  section {
-    padding: 2.5em 2em;
-  }
-}
-
 /* ============= Page transition (home ↔ resume, / ↔ /es/) =============
    Native cross-document fade; browsers without support switch pages as
    usual. No animation with "reduce motion". */
@@ -312,10 +301,8 @@ section[tabindex='-1']:focus {
   --text-muted: light-dark(#c9b25a, #a9aeb1);
   --accent-color: var(--gold-main); /* fills, shadows, underlines */
   --accent-ink: var(--gold-main); /* lines/icons that need contrast */
-  --link-hover: light-dark(var(--gold-300), #ffffff);
   /* Button background on hover: lighter gold / white */
   --btn-hover-bg: light-dark(var(--gold-300), #ffffff);
-  --accent-glow: light-dark(rgb(243 206 58 / 0.45), rgb(228 230 231 / 0.35));
   --on-accent-color: light-dark(var(--teal-deep-800), var(--teal-950)); /* text on gold; in light, the dark mode background */
 
   /* Background Colors */
@@ -324,7 +311,7 @@ section[tabindex='-1']:focus {
   --bg-color-buttons: light-dark(var(--teal-600), var(--teal-deep-600)); /* inputs, secondary controls */
   --border-color: light-dark(rgb(243 206 58 / 0.18), rgb(228 230 231 / 0.18));
   --input-bg: light-dark(var(--teal-900), var(--teal-deep-900)); /* form fields: darker than the background */
-  --footer-bg: light-dark(var(--teal-950), #00070a); /* footer and navbar; in dark, slightly darker than the fields */ /* footer and navbar: darker than the page */
+  --footer-bg: light-dark(var(--teal-950), #00070a); /* footer and navbar; in dark, slightly darker than the fields */
   --footer-text: #e6eef0;
 
   /* Shadows */
@@ -344,7 +331,6 @@ section[tabindex='-1']:focus {
   /* Mobile/touch variant: larger dots (lower frequency) and denser
      (more dots pass the opacity threshold); see _buttons.css */
   --grain-gold-strong-deep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.6 -1.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --grain-gold-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .561  0 0 0 0 .588  0 0 0 0 .608  0 0 0 7 -1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Buttons (.btn) only, in dark mode: dark gray grain (≈ #848b90; the
      filter blends in linearRGB, hence the low values) and stronger
      (more dots, more opaque) than the one on tags and icons */
@@ -369,10 +355,6 @@ section[tabindex='-1']:focus {
   --grain-mask-left: linear-gradient(to top, #000, transparent 55%), linear-gradient(to right, #000, transparent 30%);
   --grain-mask-hover-left: linear-gradient(to top, #000, transparent 85%), linear-gradient(to right, #000, transparent 40%);
 
-  /* Overlay Colors */
-  --modal-overlay: rgba(0, 0, 0, 0.5);
-  --gradient-overlay: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1));
-
   /* Typography
      ========================================================================== */
   /* Font Sizes */
@@ -383,9 +365,6 @@ section[tabindex='-1']:focus {
   --icon-font-size: calc(2rem + 0.5vw);
 
   /* Font Weights */
-  --font-light: 200;
-  --font-regular: 300;
-  --font-medium: 500;
   --font-semibold: 600;
   --font-bold: 700; /* buttons and headings */
 
@@ -396,92 +375,37 @@ section[tabindex='-1']:focus {
 
   /* Layers
      ========================================================================== */
-  --z-negative: -1;
   --z-fixed: 1;
   --z-lamp: 2; /* lamp: above the content, below the navbar */
   --z-modal: 3; /* header / menu */
   --z-loader: 4;
 
-  /* Shadows
-     ========================================================================== */
-  --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-  --box-shadow-light: 0px 3px 10px #0202023b;
-  --box-shadow-modal: 0 4px 10px rgba(0, 0, 0, 0.3);
-  --box-shadow-header: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
-  --drop-shadow: drop-shadow(2px 2px 5px rgba(1, 1, 1, 1));
-  --drop-shadow-sprite: drop-shadow(5px -5px 5px rgba(0, 18, 25, 0.5));
-
-  /* Animations
-     ========================================================================== */
-  --transition-default: all 0.3s ease;
-  --transition-background: background 0.3s;
-  --transition-transform: transform 0.3s ease-in-out;
-  --transition-color: color 0.3s;
-  --animation-timing: 0.5s ease-in-out;
-
-  /* Filters */
-  --blur-default: blur(5px);
-  --blur-bg-back: blur(2px) brightness(0.5);
-  --blur-bg-middle: blur(1px) brightness(0.9);
-  --blur-bg-front: blur(0.5px) brightness(1);
-
   /* Spacing
      ========================================================================== */
-  --section-padding: 3rem 0;
-  --modal-padding: 2rem;
-  --container-padding: 0 1rem;
-  --nav-padding: 10px;
   --button-padding: 0.8rem;
-  --card-padding: 0.75rem 1.5rem;
-  --form-padding: 3rem 1.5rem 2rem;
 
   /* Margins */
   --margin-small: 0.5rem;
   --margin-medium: 1rem;
-  --margin-large: 2rem;
 
   /* Gaps */
   --gap-small: 0.5rem;
   --gap-medium: 1rem;
-  --gap-large: 2rem;
-
-  /* Sizes
-     ========================================================================== */
-  /* Widths */
-  --card-width: 80%;
-  --card-max-width: 280px;
-  --card-height: 350px;
-  --carousel-min-width: 600px;
-  --toggle-width: 42px;
-  --toggle-height: 20px;
-  --toggle-button-size: 16px;
 
   /* Borders
      ========================================================================== */
   --border-radius-small: 0.25rem;
   --border-radius-default: 0.5rem;
   --border-radius-large: 1rem;
-  --border-radius-full: 50%;
-  --border-width: 2px;
-
-  /* Background Sizes
-     ========================================================================== */
-  --bg-size-mobile: 300%;
-  --bg-size-desktop: 100%;
-  --bg-back-width: 160%;
-  --bg-middle-width: 155%;
-  --bg-front-width: 150%;
 }
 
 /* Media Queries Adjustments
    ========================================================================== */
 @media (min-width: 600px) {
   :root {
-    --header-height: 4rem;
     /* Scales with the width: with zoom or on small laptops it doesn't look huge */
     --normal-font-size: clamp(0.95rem, 0.6rem + 0.8vw, 1.15rem);
     --small-font-size: 1rem;
-    --bg-size: var(--bg-size-desktop);
   }
 }
 
@@ -499,7 +423,6 @@ section[tabindex='-1']:focus {
   /* Grain of buttons and tags per scheme (an image can't take
      light-dark()): dark gold in light, emphasis gold in dark */
   --grain-gold: var(--grain-gold-deep);
-  --grain-gold-strong: var(--grain-gold-strong-deep);
   --btn-grain: var(--grain-gold-deep);
   --btn-grain-strong: var(--grain-gold-strong-deep);
   --btn-inset-shadow: var(--btn-inset-shadow-light);
@@ -511,7 +434,6 @@ section[tabindex='-1']:focus {
   @media (prefers-color-scheme: dark) {
     --color-scheme: dark;
     --grain-gold: var(--grain-gold-bright);
-    --grain-gold-strong: var(--grain-gold-strong-bright);
     --btn-grain: var(--grain-btn-bright);
     --btn-grain-strong: var(--grain-btn-strong-bright);
     --btn-inset-shadow: var(--btn-inset-shadow-dark);
@@ -524,7 +446,6 @@ section[tabindex='-1']:focus {
     color-scheme: dark;
     --color-scheme: dark;
     --grain-gold: var(--grain-gold-bright);
-    --grain-gold-strong: var(--grain-gold-strong-bright);
     --btn-grain: var(--grain-btn-bright);
     --btn-grain-strong: var(--grain-btn-strong-bright);
     --btn-inset-shadow: var(--btn-inset-shadow-dark);
@@ -537,7 +458,6 @@ section[tabindex='-1']:focus {
     color-scheme: light;
     --color-scheme: light;
     --grain-gold: var(--grain-gold-deep);
-    --grain-gold-strong: var(--grain-gold-strong-deep);
     --btn-grain: var(--grain-gold-deep);
     --btn-grain-strong: var(--grain-gold-strong-deep);
     --btn-inset-shadow: var(--btn-inset-shadow-light);
@@ -928,10 +848,6 @@ section[tabindex='-1']:focus {
   }
 }
 
-.footer__copyrightright {
-  text-align: center;
-  padding-top: 2rem;
-}
 /* === Media Queries MIN WIDTH (600px) === */
 
 @media (min-width: 600px) {
@@ -1231,11 +1147,6 @@ section[tabindex='-1']:focus {
     }
   }
 
-  .navbar__logo i {
-    font-size: var(--icon-font-size);
-    color: var(--primary-color);
-  }
-
   /* Hamburger → X (the two icons stacked, cross-fading as they rotate) */
   .navbar__burger {
     position: relative;
@@ -1481,8 +1392,6 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
     .navbar {
       .navbar__menu {
         display: flex;
-        justify-content: space-between;
-        padding: 10px;
         position: static;
         border-radius: 0;
         background-color: transparent;
@@ -1518,19 +1427,6 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
 
   .btn {
     max-width: 300px;
-  }
-
-  .logo {
-    width: 2.6rem !important;
-    height: 2.6rem !important;
-  }
-
-  .navbar__logo {
-    font-size: 1.15rem;
-  }
-  .navbar__logo--name,
-  .navbar__logo--lastname {
-    display: visible;
   }
 }
 
@@ -1572,15 +1468,9 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
       gap: 1rem;
     }
 
-    .navbar__toggle--darkmode,
     .navbar__toggle--language {
       height: 32px;
     }
-
-    .navbar__toggle--darkmode i {
-      font-size: 1.4rem;
-    }
-
 
   }
 
@@ -1842,7 +1732,7 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
 }
 
 /* Mobile panel: same options as on desktop, in a column and larger for
-   tapping with a finger; matching moon/sun (dimmed like the options) */
+   tapping with a finger */
 @media (max-width: 599px) {
   .header .navbar .navbar__menu {
     .navbar__list {
@@ -1857,12 +1747,6 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
     .navbar__toggles {
       gap: 1.75rem;
       margin-top: 1.25rem;
-    }
-
-    .navbar__toggle--darkmode i {
-      font-size: 1.6rem;
-      color: var(--footer-text);
-      opacity: 0.6;
     }
 
     .navbar__toggle--language .navbar__toggle--language-label {
@@ -1916,7 +1800,6 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
     width: 100%;
     height: auto;
     pointer-events: none;
-    user-select: none;
     /* rotates from where it joins the cable */
     transform-origin: 50% 0;
     /* gyroscope (lamp.js): pendulum that stays vertical when the phone is
@@ -2388,17 +2271,6 @@ section.section > * {
   position: relative;
 }
 
-.home__layer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100vw;
-  height: 100%;
-  color: var(--primary-color);
-  transform: translate(-50%, -50%);
-  transition: transform 1s ease, filter 1s ease;
-}
-
 .home__container {
   display: grid;
   position: relative;
@@ -2410,12 +2282,6 @@ section.section > * {
   height: 100%;
   transform: translateY(-90px);
 
-  .home__social__link {
-    color: var(--primary-color);
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    text-align: center;
-  }
   .home__social-item {
     margin: var(--margin-medium);
     font-size: var(--icon-font-size);
@@ -2521,15 +2387,6 @@ section.section > * {
   }
   to {
     background-position: 100% 0;
-  }
-}
-
-@keyframes moveBackground {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-300px);
   }
 }
 
@@ -2815,51 +2672,12 @@ html.js:not(.hero-ready) .home .home__title {
   }
 }
 
-/* === About min width 600px === */
-@media (min-width: 600px) {
-  .about__container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-    padding: 3rem;
-  }
-
-  .about__img img {
-    width: 25vw;
-  }
-}
-
 /* --- sections/_contact.css --- */
 /* === Contact Section === */
 
 .contact {
   .contact__container {
     gap: 2rem;
-    .contact__info {
-      .contatc__info-data {
-        font-style: normal;
-        display: flex;
-        color: inherit;
-        text-decoration: none;
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-      }
-    }
-
-    .contact__info-data {
-      .contact__form a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .contact__form a:visited {
-        color: inherit;
-      }
-    }
-
     .contact__form {
       width: 100%;
       padding: 3rem 1.5rem 2rem;
@@ -3606,9 +3424,6 @@ html.js:not(.hero-ready) .home .home__title {
 }
 
 .designs__grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: grid;
   /* Fixed-width, centered columns: with few shots they don't stick to the left */
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 280px));
@@ -3633,9 +3448,7 @@ html.js:not(.hero-ready) .home .home__title {
 }
 
 .designs__img {
-  display: block;
   width: 100%;
-  height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
@@ -3724,13 +3537,6 @@ html.js:not(.hero-ready) .home .home__title {
   margin: var(--margin-small);
 }
 
-.skills__icons {
-  gap: var(--gap-medium);
-}
-.skills__title {
-  margin: var(--margin-medium);
-}
-
 .skills__wrapper .skills__icons {
   display: grid;
   /* minmax(0, …) and min-width: 0: the looping row is very wide (max-content)
@@ -3751,14 +3557,6 @@ html.js:not(.hero-ready) .home .home__title {
   gap: var(--gap-small);
 }
 
-.skills__wrapper .skills__icons .skills__title::after {
-  content: '';
-  position: absolute;
-  bottom: -0.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .skills__icon {
   width: 64px;
   height: 64px;
@@ -3771,10 +3569,6 @@ html.js:not(.hero-ready) .home .home__title {
 .skills__icon-title {
   margin: var(--margin-small);
   white-space: nowrap;
-}
-
-.skills__tags-container {
-  margin-top: 1rem;
 }
 
 .skills__tags {
@@ -3802,8 +3596,6 @@ html.js:not(.hero-ready) .home .home__title {
   --marquee-gap: 1.25rem;
   /* Decorative: can't be tapped, selected or dragged */
   pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
   /* Edge to edge of the browser, even if the section has margins
      (body already has overflow-x: hidden, so no sideways scroll appears) */
   --viewport-w: calc(100vw - var(--scrollbar-w, 0px));
@@ -4079,7 +3871,6 @@ html.js:not(.hero-ready) .home .home__title {
   /* the name scales with the box width (cqi): with large system
      text "Creative Cloud" or "Tailwind CSS" fit on one line */
   .skills__icon-title {
-    white-space: nowrap; /* name on a single line */
     font-size: min(var(--small-font-size), 3.7cqi);
   }
 }
