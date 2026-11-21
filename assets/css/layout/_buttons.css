@@ -20,7 +20,7 @@
 
   font-family: inherit;
   font-size: inherit;
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-bold);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   /* Con texto del sistema grande el botón no se sale de la pantalla: su
@@ -30,6 +30,7 @@
   /* break-word (no anywhere): solo parte una palabra si no cabe sola en
      la línea; anywhere encogía el botón y partía "ENGL/ISH" */
   overflow-wrap: break-word;
+  text-align: center;
   color: var(--on-accent-color);
 
   background: var(--gold-400);

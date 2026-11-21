@@ -209,6 +209,11 @@
   text-align: center;
 }
 
+/* todos los títulos van a la izquierda */
+.project__title {
+  text-align: start;
+}
+
 /* Reverso: el texto completo cabe en la tarjeta */
 .project__description {
   flex: 1;
@@ -237,7 +242,7 @@
 
 .project__title {
   text-transform: uppercase;
-  font-size: 1.15rem;
+  font-size: calc(var(--title-scale) * 1.15rem);
   line-height: 1.25;
 }
 
@@ -297,7 +302,7 @@
   overflow: hidden;
   text-decoration: none;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
-  font-weight: 600;
+  font-weight: var(--font-bold);
 }
 
 /* Solo con puntero real: en pantallas táctiles el :hover se queda "pegado" tras tocar */

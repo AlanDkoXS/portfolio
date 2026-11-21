@@ -183,11 +183,6 @@
   .lamp.lamp--swing img {
     animation: lamp-swing 1.4s ease-in-out;
   }
-
-  /* La luz se enciende con un fundido suave */
-  .lamp .lamp__on {
-    transition: opacity 0.25s ease;
-  }
 }
 
 /* Presionando: solo se ve la imagen de la cadena jalada. Va con
@@ -200,6 +195,18 @@
 
 .lamp.lamp--pulling .lamp__pull {
   opacity: 1 !important;
+}
+
+/* Encendida y presionando: la imagen de la cadena jalada no tiene luz y
+   parecía que se apagaba al tocarla (y luego se apagaba de verdad). Se queda
+   la luz encendida, solo baja un poco como si se jalara, y se apaga una vez. */
+.lamp[aria-pressed='true'].lamp--pulling .lamp__on {
+  opacity: 1 !important;
+  translate: 0 3px;
+}
+
+.lamp[aria-pressed='true'].lamp--pulling .lamp__pull {
+  opacity: 0 !important;
 }
 
 @keyframes lamp-swing {

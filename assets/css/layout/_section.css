@@ -4,11 +4,17 @@ section {
   padding: 4rem 0;
 }
 
-/* Entrada suave del contenido al aparecer en pantalla. El contenido es
-   visible por defecto: sin soporte de scroll-driven animations, o con
-   "reducir movimiento", simplemente se muestra (efecto decorativo). */
+/* Fundido al hacer scroll: cada bloque aparece (opacidad + sube 2rem)
+   mientras entra por abajo de la pantalla, ligado al scroll (se ve el
+   fundido al bajar y se revierte al subir).
+   Antes se animaban los hijos directos de cada sección: en bloques más altos
+   que la pantalla el tramo de entrada abarcaba casi toda la sección, y
+   el efecto a veces no se notaba. Ahora se animan bloques pequeños y el
+   tramo es fijo (los primeros 240px de su entrada), sin importar su alto.
+   Contenido visible por defecto: sin soporte de scroll-driven animations o
+   con "reducir movimiento" simplemente se muestra (efecto decorativo). */
 @media (prefers-reduced-motion: no-preference) {
-  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+  @supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
     @keyframes section-enter {
       from {
         opacity: 0;
@@ -16,17 +22,42 @@ section {
       }
     }
 
-    section.section > * {
-      animation: section-enter linear backwards;
+    :is(
+      .section__title,
+      .about__img--container,
+      .about__description,
+      .skills__description,
+      .skills__group-header,
+      .skills__marquee,
+      .skills__accordion,
+      .skills__tags-title,
+      .skills__tags-container,
+      .project__container,
+      .designs__description,
+      .designs__item,
+      .designs__more,
+      .contact__info-description,
+      .contact__info-item,
+      .contact__form,
+      .footer__info > *,
+      .footer__social-list
+    ) {
+      animation: section-enter linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 60%;
+      animation-range: entry 0% entry 240px;
     }
   }
 }
 
 .section__title {
-  text-align: center;
+  text-align: start;
   margin: 0.8rem 0;
+  /* el título va fuera de .grid--container: mismo ancho y margen lateral
+     que el contenido para alinearse a su izquierda */
+  box-sizing: border-box;
+  max-width: 1024px;
+  margin-inline: auto;
+  padding-inline: 1rem;
 }
 
 /* Al navegar desde el menú/botones, cada sección ocupa la pantalla visible

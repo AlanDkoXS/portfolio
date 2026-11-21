@@ -23,20 +23,36 @@ export default function lamp() {
     button.setAttribute('aria-pressed', String(on));
   };
 
+  // true entre el clic y el cambio de tema: la cadena sigue jalada hasta que
+  // cambia el tema (si se soltara antes, al apagar se veía apagada → encendida
+  // → apagada)
+  let switching = false;
   const pull = () => button.classList.add('lamp--pulling');
-  const release = () => button.classList.remove('lamp--pulling');
+  const release = () => {
+    if (!switching) button.classList.remove('lamp--pulling');
+  };
 
-  // Mouse/touch: la cadena se ve jalada mientras se mantiene presionado
+  // Mouse/touch: la cadena se ve jalada mientras se mantiene presionado.
+  // En táctiles pointerleave llega justo al levantar el dedo (antes del
+  // clic): solo cuenta si el mouse sale con el botón todavía presionado.
   button.addEventListener('pointerdown', pull);
-  button.addEventListener('pointerleave', release);
+  button.addEventListener('pointerleave', (event) => {
+    if (event.pointerType === 'mouse' && event.buttons) release();
+  });
   button.addEventListener('pointercancel', release);
+  // Soltó fuera de la lámpara (no hubo clic): la cadena vuelve. El clic, si lo
+  // hay, llega antes que este timeout y deja switching en true.
+  window.addEventListener('pointerup', () => setTimeout(release, 0));
 
   button.addEventListener('click', (event) => {
+    if (switching) return; // doble clic rápido: un solo cambio
+    switching = true;
     // Teclado (Enter/Espacio) no pasa por pointerdown: mostrar el tirón un instante
     const fromKeyboard = event.detail === 0;
-    if (fromKeyboard) pull();
+    pull();
     setTimeout(() => {
       toggle.click();
+      switching = false;
       release();
       sync();
       // Al soltar la cadena la lámpara se balancea (en táctiles no hay hover)

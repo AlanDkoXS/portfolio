@@ -32,7 +32,7 @@
 }
 
 .skills__wrapper .skills__icons .skills__title {
-  text-align: center;
+  text-align: start;
   position: relative;
   gap: var(--gap-small);
 }
@@ -71,28 +71,13 @@
 }
 
 .skills__tags .skills__tags-title {
+  align-self: stretch; /* a la izquierda, aunque .flex--container centra */
   margin-bottom: 0.25rem;
 }
 
 .skills__tags .skills__tags-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.skills__tags .skills__tag {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  font-size: var(--small-font-size);
-  background-color: var(--primary-color);
-  color: var(--bg-color-section);
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  box-shadow: inset 0 0 14px rgb(176 136 20 / 0.62);
-  filter: drop-shadow(2px 2px 5px rgba(1, 1, 1, 0.5));
-  border-radius: 5px;
+  /* ver "muro de ladrillos" al final */
+  margin-top: 0.75rem;
 }
 
 /* ============= Filas en bucle infinito (una por stack) =============
@@ -177,10 +162,8 @@
 /* Botón pausar / reanudar: mismo estilo que los botones de contorno del
    sitio (contorno y sombra dura dorados) */
 .skills__motion-toggle {
-  /* centrado, con el mismo espacio hacia el texto de arriba y el título de la
-     primera fila (abajo ya suman el gap del grid + el margen del título) */
-  justify-self: center;
-  margin-block: 2.5rem 0;
+  /* a la derecha del título de Desarrollo (ver .skills__group-header) */
+  flex: none;
   display: inline-grid;
   place-items: center;
   width: 2.25rem;
@@ -250,6 +233,242 @@
     height: 100px;
   }
 }
+
+
+
+/* ============= Desarrollo: título + botón de pausa =============
+   Título a la izquierda y el botón de pausa en la orilla derecha */
+.skills__group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-block: 2rem 1.25rem;
+
+  .skills__title {
+    margin: 0;
+  }
+}
+
+/* ============= Diseño, Frontend y Backend: acordeones =============
+   <details> nativo (abre/cierra sin JS). El encabezado usa el estilo de los
+   botones de contorno (.btn .btn--ghost) y el panel es una caja con el mismo
+   contorno y sombra dura. */
+.skills__accordions {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.skills__summary.btn {
+  box-sizing: border-box; /* summary no hereda el border-box global */
+  justify-content: space-between;
+  /* 4px menos: su sombra termina donde la de la caja del panel */
+  width: calc(100% - 4px);
+  max-width: none; /* el header de escritorio limita .btn a 300px */
+  margin: 0;
+  list-style: none;
+  text-align: start;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--accent-ink);
+    outline-offset: 4px;
+  }
+}
+
+/* Mismo fondo que la caja del panel: el del footer (más oscuro que la
+   página) con su propio grano. Al pasar el mouse se rellena de dorado como
+   cualquier botón ghost. */
+.skills__summary.btn:not(:hover) {
+  background-color: var(--footer-bg);
+}
+
+.skills__summary.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--grain-ink);
+  background-size: 140px;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.skills__summary.btn:hover::before {
+  opacity: 0;
+}
+
+/* el título hereda el estilo del botón (mayúsculas, color, tamaño) */
+.skills__summary-title {
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+.skills__summary-icon {
+  flex: none;
+  font-size: 1.75rem;
+  transition: rotate 0.25s ease;
+}
+
+.skills__accordion[open] .skills__summary-icon {
+  rotate: 180deg;
+}
+
+/* Hueco a la derecha y abajo para que la sombra de la caja no se recorte */
+.skills__panel {
+  padding: 1rem 4px 4px 0;
+}
+
+.skills__grid {
+  display: grid;
+  /* móvil: siempre 3 por fila (con auto-fill en rem, el texto grande del
+     sistema dejaba solo 2) */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  container-type: inline-size;
+  gap: 1.25rem 0.5rem;
+  padding: 1.25rem 0.5rem;
+  border: 2px solid var(--accent-ink);
+  border-radius: var(--border-radius-small);
+  box-shadow: 4px 4px 0 var(--accent-color);
+  /* fondo del footer (más oscuro que la página) con su propio grano */
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--footer-bg);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--grain-ink);
+    background-size: 140px;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .skills__icon-container {
+    margin: 0;
+  }
+
+  .skills__icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  /* el nombre se ajusta al ancho de la caja (cqi): con texto grande del
+     sistema "Creative Cloud" o "Tailwind CSS" caben en una línea */
+  .skills__icon-title {
+    white-space: nowrap; /* nombre en una sola línea */
+    font-size: min(var(--small-font-size), 3.7cqi);
+  }
+}
+
+@media (min-width: 600px) {
+  .skills .skills__wrapper .skills__grid .skills__icon {
+    width: 72px;
+    height: 72px;
+  }
+
+  .skills__grid {
+    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+    padding: 1.5rem;
+  }
+}
+
+/* Abrir/cerrar con transición de altura donde se puede animar a auto */
+@media (prefers-reduced-motion: no-preference) {
+  .skills__accordion {
+    interpolate-size: allow-keywords;
+  }
+
+  .skills__accordion::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 0.3s ease,
+      content-visibility 0.3s allow-discrete;
+  }
+
+  .skills__accordion[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* ============= Habilidades blandas: muro de ladrillos =============
+   6 columnas; cada ladrillo ocupa 2. Tres hiladas alternadas como un
+   aparejo real: 1.ª y 3.ª con 2 ladrillos corridos medio ladrillo (con
+   medios ladrillos decorativos en las orillas) y la 2.ª con 3 ladrillos.
+   La separación es la junta de mortero. El texto se ajusta al ancho del
+   ladrillo (cqi del muro) para que las palabras largas no se salgan. */
+.skills__tags .skills__tags-container {
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: minmax(3.25rem, auto);
+  gap: 6px;
+  /* .flex--container centra: aquí cada ladrillo llena su celda */
+  align-items: stretch;
+  justify-items: stretch;
+  justify-content: normal;
+  width: 100%;
+  max-width: 44rem;
+  align-self: flex-start;
+}
+
+.skills__brick-half {
+  border-radius: 3px;
+  background: var(--primary-color);
+  box-shadow: inset 0 0 14px rgb(176 136 20 / 0.62);
+  opacity: 0.55;
+}
+
+.skills__brick-half--r1-start { grid-area: 1 / 1; }
+.skills__brick-half--r1-end { grid-area: 1 / 6; }
+.skills__brick-half--r3-start { grid-area: 3 / 1; }
+.skills__brick-half--r3-end { grid-area: 3 / 6; }
+
+.skills__tags .skills__tag {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: 0.6rem 0.3rem;
+  text-align: center;
+  line-height: 1.2;
+  font-weight: var(--font-bold);
+  /* ~11 caracteres caben en un ladrillo; con texto grande del sistema no
+     se sale, se ajusta al ancho del muro */
+  font-size: min(var(--small-font-size), 3.8cqi);
+  hyphens: auto;
+  overflow-wrap: break-word;
+  color: var(--bg-color-section);
+  background-color: var(--primary-color);
+  border-radius: 3px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* cara del ladrillo: borde interior más oscuro y un poco de relieve */
+  box-shadow:
+    inset 0 0 14px rgb(176 136 20 / 0.62),
+    inset 0 -3px 0 rgb(120 90 10 / 0.35);
+}
+
+/* 1.ª hilada (corrida medio ladrillo) */
+.skills__tags .skills__tag:nth-child(1) { grid-area: 1 / 2 / auto / span 2; }
+.skills__tags .skills__tag:nth-child(2) { grid-area: 1 / 4 / auto / span 2; }
+/* 2.ª hilada: 3 ladrillos completos */
+.skills__tags .skills__tag:nth-child(3) { grid-area: 2 / 1 / auto / span 2; }
+.skills__tags .skills__tag:nth-child(4) { grid-area: 2 / 3 / auto / span 2; }
+.skills__tags .skills__tag:nth-child(5) { grid-area: 2 / 5 / auto / span 2; }
+/* 3.ª hilada (corrida medio ladrillo) */
+.skills__tags .skills__tag:nth-child(6) { grid-area: 3 / 2 / auto / span 2; }
+.skills__tags .skills__tag:nth-child(7) { grid-area: 3 / 4 / auto / span 2; }
 
 /* Grano dorado oscuro que entra desde todo el borde hacia el centro */
 .skills__tags .skills__tag::after {

@@ -27,9 +27,7 @@ html {
   body {
     margin: 0;
     padding: 0;
-    /* Los textos usan la fuente del sistema del visitante (San Francisco en
-       Apple, Roboto en Android, Segoe UI en Windows…). Poppins queda solo
-       para el logo y el loader (identidad) */
+    /* Textos en DM Sans; títulos en Outfit (--title-font); logo y loader en Poppins */
     font-family: var(--primary-font);
     /* palabras largas (correo, URLs) se parten antes que salirse */
     overflow-wrap: break-word;
@@ -64,8 +62,10 @@ html {
   h4,
   h5,
   h6 {
-    font-size: var(--title-font-size);
-    font-weight: var(--font-semibold);
+    font-family: var(--title-font);
+    font-size: calc(var(--title-scale) * var(--title-font-size));
+    text-align: start;
+    font-weight: var(--font-bold);
     color: var(--primary-color);
   }
 
@@ -166,6 +166,14 @@ html {
   @view-transition {
     navigation: auto;
   }
+}
+
+/* Las secciones llevan tabindex="-1" para recibir el foco al saltar a un
+   #hash (/es/#home al cambiar de idioma, enlaces del menú). No son
+   interactivas: sin anillo de foco (en Chrome Android dibujaba líneas
+   blancas alrededor del hero). */
+section[tabindex='-1']:focus {
+  outline: none;
 }
 
 /* La fuente de íconos (Boxicons) casi no tiene altura de minúsculas: con

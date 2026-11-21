@@ -21,7 +21,7 @@ export const FORM_MESSAGES = {
     invalidEmail: "Type a valid email",
     sending: "Sending...",
     success: "Done! I got your message.",
-    error: "Your message didn't go through. Try again.",
+    error: "Your message didn't go through. Write to me at hello@alanquintana.pro",
     send: "Send your message",
     invalidName: "Type your name: 2 to 50 letters",
     invalidSubject: "Write a subject of 5 to 100 characters",
@@ -33,7 +33,7 @@ export const FORM_MESSAGES = {
     invalidEmail: "Escribe un correo válido",
     sending: "Enviando...",
     success: "¡Listo! Recibí tu mensaje.",
-    error: "Tu mensaje no se envió. Inténtalo de nuevo.",
+    error: "Tu mensaje no se envió. Escríbeme a hola@alanquintana.pro",
     send: "Envía tu mensaje",
     invalidName: "Escribe tu nombre: de 2 a 50 letras",
     invalidSubject: "Escribe un asunto de 5 a 100 caracteres",
@@ -47,7 +47,8 @@ import { loadEmailJS } from "./email-js.js";
 
 const formDOM = document.querySelector("#form");
 const modalDOM = document.querySelector("#modal");
-let currentLanguage = "en";
+// Idioma de la página (/ o /es/); languageChange lo mantiene al día
+let currentLanguage = document.documentElement.lang === "es" ? "es" : "en";
 
 function validateField(value, type, language = currentLanguage) {
   const messages = FORM_MESSAGES[language];
@@ -154,10 +155,26 @@ function addFieldValidationListeners() {
   });
 }
 
+// El mensaje crece con el texto. Con field-sizing: content lo hace el CSS;
+// sin soporte (Firefox, Safari viejo) se ajusta la altura al escribir. El
+// tope (max-block-size) sigue en el CSS y a partir de ahí hace scroll.
+function autoGrowMessage() {
+  const textarea = document.getElementById("message");
+  if (!textarea || CSS.supports("field-sizing", "content")) return;
+
+  const fit = () => {
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
+  textarea.addEventListener("input", fit);
+  formDOM.addEventListener("reset", () => requestAnimationFrame(fit));
+}
+
 function sendEmail() {
   if (!formDOM) return;
 
   addFieldValidationListeners();
+  autoGrowMessage();
 
   // EmailJS se descarga cuando alguien empieza a usar el formulario, no al
   // cargar la página (así no compite con el hero ni retrasa el evento load)
@@ -210,20 +227,13 @@ function sendEmail() {
     } catch (error) {
       console.error("Error sending email:", error);
 
-      // Manejo específico de errores de EmailJS
-      let errorMessage = FORM_MESSAGES[currentLanguage].error;
-
-      if (error.status === 400) {
-        console.error(
-          "EmailJS 400 Error - Check service ID, template ID, and parameters"
-        );
-        errorMessage =
-          "Error de configuración. Por favor contacta al administrador.";
-      } else if (error.status === 401) {
-        console.error("EmailJS 401 Error - Check user ID and permissions");
-        errorMessage =
-          "Error de autenticación. Por favor contacta al administrador.";
+      // Cualquier fallo (CDN, cuota, cuenta de Gmail desconectada en EmailJS
+      // → 412 "Invalid grant") muestra el correo directo para no perder el
+      // mensaje. El detalle técnico queda en la consola.
+      if (error?.status) {
+        console.error(`EmailJS ${error.status}: ${error.text}`);
       }
+      const errorMessage = FORM_MESSAGES[currentLanguage].error;
 
       modalDOM.querySelector("p").textContent = errorMessage;
       openModal();

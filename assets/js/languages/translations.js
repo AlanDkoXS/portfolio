@@ -72,11 +72,11 @@ const translations = {
   /* <-- Home Section --> */
   homeTitle: {
     en: 'Hi there!',
-    es: '¡Hola 👨🏻‍💻!',
+    es: '¡Hola!',
   },
   homeDescription: {
     en: "I'm Alan, *half designer, half developer*, fully obsessed with the details.",
-    es: 'Soy Alan, *mitad diseñador, mitad programador*, y completamente obsesionado con los detalles.',
+    es: 'Soy Alán, *mitad diseñador, mitad programador*, y completamente obsesionado con los detalles.',
   },
   /* <-- Home Buttons --> */
   aboutButton: {
@@ -88,8 +88,8 @@ const translations = {
     es: 'Mira mi CV',
   },
   skillsButton: {
-    en: 'Explore my skills',
-    es: 'Descubre mis habilidades',
+    en: 'My skills',
+    es: 'Mis habilidades',
   },
   projectButton: {
     en: 'Check out my projects',
@@ -180,8 +180,8 @@ const translations = {
     es: 'Habilidades Blandas',
   },
   skillsTags: {
-    en: ['Responsible', 'Teamwork', 'Creative', 'Sense of urgency', 'Proactive'],
-    es: ['Responsable', 'Trabajo en Equipo', 'Creativo', 'Sentido de Urgencia', 'Proactivo'],
+    en: ['Responsible', 'Teamwork', 'Creative', 'Proactive', 'Communicative', 'Sense of urgency', 'Detail-oriented'],
+    es: ['Responsable', 'Trabajo en Equipo', 'Creativo', 'Proactivo', 'Comunicativo', 'Sentido de Urgencia', 'Detallista'],
   },
   skillsToolsTitle: {
     en: 'Tools',
@@ -276,10 +276,6 @@ const translations = {
   /* <-- Contact Section --> */
 
   contactTitle: {
-    en: 'Contact',
-    es: 'Contacto',
-  },
-  contactInfoTitle: {
     en: 'Contact',
     es: 'Contacto',
   },

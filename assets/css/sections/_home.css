@@ -92,15 +92,22 @@
 .home__info {
   .home__title,
   .home__description {
-    padding: 0.5rem;
+    /* sin relleno lateral: el texto usa el mismo ancho que los botones */
+    padding: 0.5rem 0;
     text-align: center;
+  }
+
+  /* título y presentación a la izquierda */
+  .home__title,
+  .home__description {
+    text-align: start;
   }
 
   /* Saludo "tecleado" (helpers/typing.js): aparece letra por letra cuando el
      hero se muestra; el cursor (guion bajo) va detrás de la última letra y
      sigue parpadeando al terminar */
   .home__title {
-    margin: auto;
+    margin: 0;
     text-transform: capitalize;
     white-space: nowrap;
     width: max-content;
@@ -213,7 +220,7 @@ html.js:not(.hero-ready) .home .home__title {
   .home .home__info .home__title {
     text-align: left;
     margin: 0 0 0.75rem;
-    font-size: clamp(1.25rem, 0.5rem + 2.6svh + 0.4vw, 2.2rem);
+    font-size: calc(var(--title-scale) * clamp(1.25rem, 0.5rem + 2.6svh + 0.4vw, 2.2rem));
   }
 
   /* Descripción integrada (incluye contenido de about). El tamaño depende del

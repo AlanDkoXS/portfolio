@@ -11,8 +11,6 @@
      grano encima */
   isolation: isolate;
   z-index: var(--z-modal);
-  /* misma sombra que el panel del menú móvil (el panel la tapa al abrirse) */
-  box-shadow: 0 14px 24px var(--shadow-color);
 
   /* El vidrio va en una capa interna (no en el header): así el panel del menú
      móvil, que es hijo del header, también puede desenfocar la página */
@@ -21,9 +19,11 @@
     position: absolute;
     inset: 0;
     z-index: -2;
-    background-color: color-mix(in srgb, var(--footer-bg) 90%, transparent);
-    -webkit-backdrop-filter: blur(12px) saturate(1.2);
-    backdrop-filter: blur(12px) saturate(1.2);
+    background-color: color-mix(in srgb, var(--footer-bg) 70%, transparent);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    backdrop-filter: blur(16px) saturate(1.3);
+    /* misma sombra que el panel del menú móvil (el panel la tapa al abrirse) */
+    box-shadow: 0 14px 24px var(--shadow-color);
     pointer-events: none;
   }
 
@@ -40,12 +40,25 @@
   }
 
   /* Sin soporte de animaciones ligadas al scroll, el header simplemente se ve.
-     Con soporte: aparece al empezar a hacer scroll (en el hero no estorba) */
+     Con soporte: aparece al empezar a hacer scroll (en el hero no estorba).
+     El fundido va en las piezas y no en el header: un padre con opacidad
+     animada corta el backdrop-filter (el vidrio no vería la página). El panel
+     móvil no se anima (tiene su propio mostrar/ocultar), sí su contenido. */
   @supports (animation-timeline: scroll()) {
-    opacity: 0;
-    animation: animation-nav linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 0 100px;
+    &::before,
+    &::after,
+    .navbar > :not(.navbar__menu),
+    .navbar__menu > * {
+      opacity: 0;
+      animation: animation-nav linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100px;
+    }
+
+    /* el grano termina en su opacidad de siempre (0.2), no en 1 */
+    &::after {
+      animation-name: animation-nav-grain;
+    }
   }
 
   .navbar {
@@ -68,10 +81,10 @@
       left: 0;
       width: 100%;
       isolation: isolate;
-      /* mismo vidrio que la barra: 90% de opacidad, desenfoque y grano */
-      background-color: color-mix(in srgb, var(--footer-bg) 90%, transparent);
-      -webkit-backdrop-filter: blur(12px) saturate(1.2);
-      backdrop-filter: blur(12px) saturate(1.2);
+      /* mismo vidrio que la barra: translúcido, desenfoque y grano */
+      background-color: color-mix(in srgb, var(--footer-bg) 70%, transparent);
+      -webkit-backdrop-filter: blur(16px) saturate(1.3);
+      backdrop-filter: blur(16px) saturate(1.3);
       box-shadow: 0 14px 24px var(--shadow-color);
       padding: 1.25rem 0 1.5rem;
       z-index: var(--z-modal);
@@ -331,13 +344,27 @@
 
 }
 
-/* Menú abierto: el panel baja y la hamburguesa se vuelve X. La barra se ve
-   aunque en el hero del home todavía esté oculta. */
+/* Header siempre visible (sin el fundido del hero): con el menú abierto
+   (aunque en el hero del home todavía esté oculto), en el resume y en las
+   páginas de proyecto. */
 .header.menu-open,
-.header:has(.navbar__menu:target) {
-  opacity: 1;
-  animation: none;
+.header:has(.navbar__menu:target),
+.project-page .header,
+body:has(#pdf-container) .header {
+  &::before,
+  .navbar > *,
+  .navbar__menu > * {
+    opacity: 1;
+    animation: none;
+  }
+
+  &::after {
+    opacity: 0.2;
+    animation: none;
+  }
 }
+
+/* Menú abierto: el panel baja y la hamburguesa se vuelve X. */
 
 .header.menu-open .navbar .navbar__menu,
 .header .navbar .navbar__menu:target {
@@ -349,15 +376,15 @@
     translate 0.25s ease;
 }
 
-/* Menú abierto: barra y panel se ven como una sola superficie. Más opacos y
-   con más desenfoque para que el texto dorado de detrás no tiña el panel de
-   otro color que la barra */
+/* Menú abierto: barra y panel se ven como una sola superficie. Algo más
+   opacos y con más desenfoque para que el texto dorado de detrás no tiña el
+   panel de otro color que la barra (y los enlaces se lean bien) */
 .header.menu-open::before,
 .header.menu-open .navbar .navbar__menu,
 .header .navbar .navbar__menu:target {
-  background-color: color-mix(in srgb, var(--footer-bg) 96%, transparent);
-  -webkit-backdrop-filter: blur(24px) saturate(1.1);
-  backdrop-filter: blur(24px) saturate(1.1);
+  background-color: color-mix(in srgb, var(--footer-bg) 82%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  backdrop-filter: blur(24px) saturate(1.2);
 }
 
 .header.menu-open .navbar__burger {
@@ -384,6 +411,12 @@
 @keyframes animation-nav {
   to {
     opacity: 1;
+  }
+}
+
+@keyframes animation-nav-grain {
+  to {
+    opacity: 0.2;
   }
 }
 

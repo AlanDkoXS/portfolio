@@ -94,6 +94,8 @@
     </script>
 
     <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="preload" href="/assets/fonts/dm-sans/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/outfit/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/boxicons/boxicons.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon.png" />
@@ -327,14 +329,14 @@
       </article>
 
       <nav class="project-pager grid--container" aria-label="Más proyectos">
-        <a class="btn btn--ghost project-pager__link project-pager__link--prev" href="/es/proyectos/rick-and-morty-wiki/" rel="prev">
-          <span class="project-pager__label"><i class="bx bx-chevron-left" aria-hidden="true"></i> Proyecto anterior</span>
-          <span class="project-pager__title">Wiki de Rick and Morty</span>
-        </a>
-        <a class="btn btn--ghost project-pager__link project-pager__link--next" href="/es/proyectos/fortune-cookie/" rel="next">
-          <span class="project-pager__label">Proyecto siguiente <i class="bx bx-chevron-right" aria-hidden="true"></i></span>
-          <span class="project-pager__title">Galleta de la fortuna</span>
-        </a>
+        <div class="project-pager__item project-pager__item--prev">
+          <a class="btn btn--ghost project-pager__link" href="/es/proyectos/rick-and-morty-wiki/" rel="prev" aria-describedby="pager-prev"><i class="bx bx-chevron-left" aria-hidden="true"></i> Proyecto anterior</a>
+          <p class="project-pager__title" id="pager-prev">Wiki de Rick and Morty</p>
+        </div>
+        <div class="project-pager__item project-pager__item--next">
+          <a class="btn btn--ghost project-pager__link" href="/es/proyectos/fortune-cookie/" rel="next" aria-describedby="pager-next">Proyecto siguiente <i class="bx bx-chevron-right" aria-hidden="true"></i></a>
+          <p class="project-pager__title" id="pager-next">Galleta de la fortuna</p>
+        </div>
       </nav>
 
       <section class="project-cta grid--container">

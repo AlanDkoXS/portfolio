@@ -33,12 +33,6 @@
   outline: 1px solid var(--border-color);
 }
 
-/* En el resume el header siempre visible (en el home aparece con el scroll) */
-body:has(#pdf-container) .header {
-  opacity: 1;
-  animation: none;
-}
-
 /* Modal de descarga */
 .modal-content h2,
 .modal-content p {

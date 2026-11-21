@@ -150,11 +150,13 @@ export function projectPage({ project: p, lang, prev, next, header, footer }) {
   const full = ui.descriptionWith(p);
   const description = full.length <= 160 ? full : c.tagline;
   const ogImage = `${SITE}/assets/img/project_img/og/${p.image}.jpg`;
+  // Botón solo con "Proyecto anterior/siguiente"; el nombre del proyecto va
+  // debajo en texto pequeño (y el lector de pantalla lo lee como descripción)
   const pagerLink = (q, rel) =>
-    `<a class="btn btn--ghost project-pager__link project-pager__link--${rel}" href="${projectPath(q, lang)}" rel="${rel}">
-  <span class="project-pager__label">${rel === 'prev' ? '<i class="bx bx-chevron-left" aria-hidden="true"></i> ' + ui.prev : ui.next + ' <i class="bx bx-chevron-right" aria-hidden="true"></i>'}</span>
-  <span class="project-pager__title">${esc(q[lang].title)}</span>
-</a>`;
+    `<div class="project-pager__item project-pager__item--${rel}">
+  <a class="btn btn--ghost project-pager__link" href="${projectPath(q, lang)}" rel="${rel}" aria-describedby="pager-${rel}">${rel === 'prev' ? '<i class="bx bx-chevron-left" aria-hidden="true"></i> ' + ui.prev : ui.next + ' <i class="bx bx-chevron-right" aria-hidden="true"></i>'}</a>
+  <p class="project-pager__title" id="pager-${rel}">${esc(q[lang].title)}</p>
+</div>`;
 
   return `<!DOCTYPE html>
 <html lang="${lang}">
@@ -218,6 +220,8 @@ ${indent(jsonLd(p, lang, ui), 6)}
     </script>
 
     <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="preload" href="/assets/fonts/dm-sans/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/outfit/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/boxicons/boxicons.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon.png" />

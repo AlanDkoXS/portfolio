@@ -114,3 +114,8 @@
     justify-content: center;
   }
 }
+
+/* La sección ya tiene su ancho y margen lateral: el título no suma otro */
+.designs .section__title {
+  padding-inline: 0;
+}

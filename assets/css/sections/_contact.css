@@ -63,24 +63,38 @@
 
           .contact__form-input {
             width: 100%;
-            padding: 1rem;
-            font-size: 1.2rem;
+            font-family: inherit;
+            /* altura de input normal (~44px): relleno en px para que no
+               crezca con el tamaño de texto del sistema; solo el mensaje
+               es más alto y crece */
+            padding: 10px 14px;
+            font-size: 1rem;
+            line-height: 1.5;
+            field-sizing: fixed;
             font-weight: 600;
             border-radius: var(--border-radius-default);
             background-color: var(--input-bg);
             color: var(--primary-color);
             border: 0;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            transition: outline-color 0.2s ease;
 
-            /* Sin borde: al enfocar, solo un anillo dorado suave */
+            /* Al enfocar, el mismo contorno dorado que los botones
+               (.btn:focus-visible) */
             &:focus {
-              outline: none;
-              box-shadow: 0 0 0 3px var(--accent-glow);
+              outline: 3px solid var(--accent-ink);
+              outline-offset: 4px;
             }
           }
 
-          textarea {
+          /* Mensaje: empieza al doble de alto que los demás campos y crece
+             con el texto (field-sizing; send_form.js lo imita en
+             navegadores sin soporte) hasta un tope, luego hace scroll */
+          textarea.contact__form-input {
             resize: none;
+            field-sizing: content;
+            min-block-size: calc(2 * (1lh + 20px));
+            max-block-size: min(12lh, 40svh);
+            overflow-y: auto;
           }
         }
       }
@@ -102,10 +116,6 @@
 }
 
 /* Datos de contacto: ícono + texto alineados, sin cortes raros */
-.contact__info-title {
-  margin-bottom: 0.25rem;
-}
-
 .contact__info-data {
   display: grid;
   gap: 0.75rem;
@@ -159,17 +169,12 @@
     gap: 1.5rem 2rem;
   }
 
-  .contact__info-title {
-    font-size: clamp(1rem, 0.6rem + 1.2vw, 1.35rem);
-    line-height: 1.25;
-  }
-
   #contact .contact__container .contact__form {
     padding: clamp(1rem, 3svh, 1.75rem) 1.5rem;
   }
 
   .contact__form-title {
-    font-size: clamp(1rem, 0.6rem + 1.2vw, 1.3rem);
+    font-size: calc(var(--title-scale) * clamp(1rem, 0.6rem + 1.2vw, 1.3rem));
     margin-bottom: 0.25rem;
   }
 
@@ -197,12 +202,13 @@
       }
 
       .contact__form-input {
-        padding: 0.5rem 0.8rem;
+        padding: 8px 12px;
         font-size: 1rem;
       }
 
       textarea.contact__form-input {
-        height: clamp(3rem, 14svh, 11rem);
+        min-block-size: calc(2 * (1lh + 16px));
+        max-block-size: min(8lh, 30svh);
       }
     }
 
