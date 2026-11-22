@@ -2,7 +2,7 @@
 // breakpoint, the pointer type and the scrollbar width the CSS needs.
 
 // First width (px) that gets the desktop layout; same value as the CSS
-export const MOBILE_BREAKPOINT = 600;
+const MOBILE_BREAKPOINT = 600;
 
 // Three ways of asking the same question, each kept where it was already used
 // (they only disagree on fractional widths between 599 and 600):

@@ -13,6 +13,12 @@
   min-width: 0;
 }
 
+/* Group title ("Development Tools"): a positioned box */
+.skills__title {
+  position: relative;
+  gap: var(--gap-small);
+}
+
 /* === Tech icon (looping row and accordion grids) === */
 
 .skills__icon-container {

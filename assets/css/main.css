@@ -1729,7 +1729,10 @@ body:has(.lamp.lamp--swing) .header .navbar__menu::before {
 
 .loader {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: var(--z-loader);
   display: flex;
   align-items: center;
@@ -2250,7 +2253,8 @@ html.js:not(.hero-ready) .home .home__title {
   }
 
   /* The about content lives in the hero description: hide the About section
-     and its menu link */
+     and its menu link (kept next to the :has() rule in _header.css for
+     browsers without :has()) */
   #about.about.section {
     display: none;
   }
@@ -2275,6 +2279,7 @@ html.js:not(.hero-ready) .home .home__title {
     padding: 0.5rem 0 1rem;
 
     .home__container {
+      row-gap: 0;
       min-height: 0;
       grid-template-columns: minmax(0, 1fr);
       /* with huge text (that wouldn't fit even without the portrait) the
@@ -2667,12 +2672,10 @@ html.js:not(.hero-ready) .home .home__title {
   height: 350px;
   transform: translateX(-50%);
   /* cardCarousel.js moves the cards with inline transform, opacity and
-     z-index, and toggles .highlight (filter) */
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease,
-    z-index 0.3s ease,
-    filter 0.3s ease;
+     z-index, and toggles .highlight (filter). `all` on purpose: the size
+     (viewport resize, breakpoints) and the inherited color (theme switch)
+     ease too */
+  transition: all 0.3s ease;
   cursor: pointer;
 
   &:hover .project__card-inner {
@@ -2694,6 +2697,12 @@ html.js:not(.hero-ready) .home .home__title {
   &:not(.highlight) {
     filter: brightness(0.85);
   }
+}
+
+/* Released (cardCarousel.js sets it when a drag ends): the carousel box
+   itself eases its size changes */
+.project__card--carousel.smooth-return {
+  transition: all 0.2s ease;
 }
 
 /* Dragging: no transition, the cards follow the finger with no lag */
@@ -3067,8 +3076,9 @@ html.js:not(.hero-ready) .home .home__title {
 
 /* === Responsive === */
 
-/* Narrow screens: no arrows (the carousel is swiped) and narrower cards */
-@media (width <= 640px) {
+/* Narrow screens: no arrows (the carousel is swiped) and narrower cards.
+   Screen only: a narrow printed page keeps the arrows and the card width */
+@media screen and (width <= 640px) {
   .project__nav {
     display: none;
   }
@@ -3248,6 +3258,12 @@ html.js:not(.hero-ready) .home .home__title {
 
 .skills__group {
   min-width: 0;
+}
+
+/* Group title ("Development Tools"): a positioned box */
+.skills__title {
+  position: relative;
+  gap: var(--gap-small);
 }
 
 /* === Tech icon (looping row and accordion grids) === */
@@ -3752,6 +3768,7 @@ html.js:not(.hero-ready) .home .home__title {
     display: none;
     white-space: nowrap;
     margin-left: 0.2rem;
+    transition: margin-left 0.3s;
   }
 
   &.expanded {

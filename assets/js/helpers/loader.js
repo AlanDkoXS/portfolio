@@ -23,7 +23,8 @@ const random = (min, max) => min + Math.random() * (max - min);
 function buildName(word) {
   // Replaces the name's two <span>s with animatable letters. Returns a
   // promise that resolves when the last letter lands.
-  const { promise: done, resolve: resolveDone } = Promise.withResolvers();
+  let resolveDone;
+  const done = new Promise((resolve) => (resolveDone = resolve));
   const total = NAME.reduce((n, [part]) => n + part.length, 0);
   let landed = 0;
   const chars = [];

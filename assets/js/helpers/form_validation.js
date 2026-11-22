@@ -30,7 +30,7 @@ const VALIDATION_RULES = {
 };
 
 /** Error message for the value in the page language, or '' when it's valid. */
-export function validateField(value, type) {
+function validateField(value, type) {
   if (!value || !value.trim()) return t('validation.required');
 
   const rule = VALIDATION_RULES[type];
@@ -44,7 +44,7 @@ export function validateField(value, type) {
 }
 
 /** Shows (or clears, with '') the error under the field. */
-export function showFieldError(fieldId, error) {
+function showFieldError(fieldId, error) {
   const field = document.getElementById(fieldId);
   if (!field) return;
 

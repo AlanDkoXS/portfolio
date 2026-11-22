@@ -32,12 +32,10 @@
   height: 350px;
   transform: translateX(-50%);
   /* cardCarousel.js moves the cards with inline transform, opacity and
-     z-index, and toggles .highlight (filter) */
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease,
-    z-index 0.3s ease,
-    filter 0.3s ease;
+     z-index, and toggles .highlight (filter). `all` on purpose: the size
+     (viewport resize, breakpoints) and the inherited color (theme switch)
+     ease too */
+  transition: all 0.3s ease;
   cursor: pointer;
 
   &:hover .project__card-inner {
@@ -59,6 +57,12 @@
   &:not(.highlight) {
     filter: brightness(0.85);
   }
+}
+
+/* Released (cardCarousel.js sets it when a drag ends): the carousel box
+   itself eases its size changes */
+.project__card--carousel.smooth-return {
+  transition: all 0.2s ease;
 }
 
 /* Dragging: no transition, the cards follow the finger with no lag */
@@ -432,8 +436,9 @@
 
 /* === Responsive === */
 
-/* Narrow screens: no arrows (the carousel is swiped) and narrower cards */
-@media (width <= 640px) {
+/* Narrow screens: no arrows (the carousel is swiped) and narrower cards.
+   Screen only: a narrow printed page keeps the arrows and the card width */
+@media screen and (width <= 640px) {
   .project__nav {
     display: none;
   }
