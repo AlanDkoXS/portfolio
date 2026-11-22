@@ -1,34 +1,36 @@
-// parallax.js
+// Hero background parallax: three layers that follow the mouse on desktop and
+// the device tilt (plus a slow automatic drift) on touch devices.
 import { createTilt } from './tilt.js';
 import { prefersReducedMotion } from './motion.js';
+import { coarsePointerQuery } from './viewport.js';
+
+const CENTERED = 'translate(-50%, -50%)';
+
+// Per layer, px moved per unit of input; the sign is the direction (the layers
+// move against each other). `drift` is the share of the automatic drift.
+const STRENGTH = {
+  // Touch: px per degree of tilt (tilt is clamped to ±20°, see tilt.js)
+  mobile: {
+    back: { x: -1.5, y: -0.5, drift: -1 },
+    middle: { x: 0.6, y: 0.2, drift: 0.45 },
+    front: { x: -0.25, y: -0.08, drift: 0.2 },
+  },
+  // Mouse: px per px travelled between two mousemove events (no drift)
+  desktop: {
+    back: { x: -4, y: -1, drift: 0 },
+    middle: { x: 2.5, y: 1.5, drift: 0 },
+    front: { x: -1.5, y: 2, drift: 0 },
+  },
+};
 
 const ParallaxEffect = {
   config: {
     mobile: {
-      // px per degree of tilt (tilt is clamped to ±20°, see tilt.js)
-      sensitivity: {
-        back: { x: 1.5, y: 0.5 },
-        middle: { x: 0.6, y: 0.2 },
-        front: { x: 0.25, y: 0.08 },
-      },
-      // fraction of the automatic drift per layer (used to be equal in middle/front)
-      autoFactor: {
-        back: 1,
-        middle: 0.45,
-        front: 0.2,
-      },
       autoMovement: {
         speed: { x: 0.25, y: 0.05 }, // px per frame (~60fps)
         range: 10,
       },
       tilt: {}, // overrides for tilt.js defaults (maxTilt, smoothing, recenter)
-    },
-    desktop: {
-      sensitivity: {
-        back: { x: 4, y: 1 },
-        middle: { x: 2.5, y: 1.5 },
-        front: { x: 1.5, y: 2 },
-      },
     },
   },
 
@@ -72,7 +74,7 @@ const ParallaxEffect = {
     this.state.autoSpeedY = this.config.mobile.autoMovement.speed.y;
 
     // Touch devices use tilt regardless of width (tablets, landscape phones)
-    this.mobileQuery = window.matchMedia('(pointer: coarse)');
+    this.mobileQuery = coarsePointerQuery();
     this.state.isMobile = this.mobileQuery.matches;
 
     // Listeners are registered once; handlers check the current mode.
@@ -108,7 +110,7 @@ const ParallaxEffect = {
       this.stepAutoMovement();
 
       const { gamma, beta } = this.tilt.update(now);
-      this.updateLayersMobile(gamma, beta);
+      this.applyTransforms(STRENGTH.mobile, gamma, beta, s.autoX, s.autoY);
       s.rafId = requestAnimationFrame(tick);
     };
 
@@ -133,27 +135,6 @@ const ParallaxEffect = {
     if (Math.abs(s.autoY) > range) s.autoSpeedY *= -1;
   },
 
-  updateLayersMobile(gamma, beta) {
-    const { sensitivity, autoFactor: f } = this.config.mobile;
-    const { autoX, autoY } = this.state;
-
-    const transforms = {
-      back: `translate(-50%, -50%) translate(${-gamma * sensitivity.back.x - autoX * f.back}px, ${
-        -beta * sensitivity.back.y - autoY * f.back
-      }px)`,
-      middle: `translate(-50%, -50%) translate(${gamma * sensitivity.middle.x + autoX * f.middle}px, ${
-        beta * sensitivity.middle.y + autoY * f.middle
-      }px)`,
-      front: `translate(-50%, -50%) translate(${-gamma * sensitivity.front.x + autoX * f.front}px, ${
-        -beta * sensitivity.front.y + autoY * f.front
-      }px)`,
-    };
-
-    Object.entries(transforms).forEach(([layer, transform]) => {
-      this.elements[layer].style.transform = transform;
-    });
-  },
-
   onMouseMove(event) {
     if (this.state.isMobile) return;
 
@@ -163,26 +144,16 @@ const ParallaxEffect = {
     this.state.lastX = event.clientX;
     this.state.lastY = event.clientY;
 
-    this.updateLayersDesktop(deltaX, deltaY);
+    this.applyTransforms(STRENGTH.desktop, deltaX, deltaY);
   },
 
-  updateLayersDesktop(deltaX, deltaY) {
-    const { sensitivity } = this.config.desktop;
-
-    const transforms = {
-      back: `translate(-50%, -50%) translate(${-deltaX * sensitivity.back.x}px, ${
-        -deltaY * sensitivity.back.y
-      }px)`,
-      middle: `translate(-50%, -50%) translate(${deltaX * sensitivity.middle.x}px, ${
-        deltaY * sensitivity.middle.y
-      }px)`,
-      front: `translate(-50%, -50%) translate(${-deltaX * sensitivity.front.x}px, ${
-        deltaY * sensitivity.front.y
-      }px)`,
-    };
-
-    Object.entries(transforms).forEach(([layer, transform]) => {
-      this.elements[layer].style.transform = transform;
+  // Moves every layer: (x, y) is the input (tilt in degrees or mouse travel
+  // in px) and (driftX, driftY) the automatic drift, each scaled per layer
+  applyTransforms(strength, x, y, driftX = 0, driftY = 0) {
+    Object.entries(strength).forEach(([layer, k]) => {
+      const offsetX = x * k.x + driftX * k.drift;
+      const offsetY = y * k.y + driftY * k.drift;
+      this.elements[layer].style.transform = `${CENTERED} translate(${offsetX}px, ${offsetY}px)`;
     });
   },
 
@@ -194,7 +165,7 @@ const ParallaxEffect = {
 
   resetPositions() {
     Object.values(this.elements).forEach((element) => {
-      if (element) element.style.transform = 'translate(-50%, -50%)';
+      if (element) element.style.transform = CENTERED;
     });
   },
 };

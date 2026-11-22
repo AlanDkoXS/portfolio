@@ -1,5 +1,6 @@
+// Seasonal snow (Dec 12 - Jan 6), unless the user asks for reduced motion
 import { prefersReducedMotion } from './motion.js';
-// snow-effect.js
+
 const createSnowEffect = () => {
   // Check if we're in the Christmas period (Dec 12 - Jan 6)
   function isChristmasPeriod() {
@@ -39,7 +40,7 @@ const createSnowEffect = () => {
     if (!snowContainer) {
       snowContainer = document.createElement('div');
       snowContainer.className = 'snow-container';
-      document.body.insertBefore(snowContainer, document.body.firstChild);
+      document.body.prepend(snowContainer);
     }
 
     // Add styles if they don't exist
@@ -85,10 +86,10 @@ const createSnowEffect = () => {
     // Replace fallen snowflakes
     setInterval(() => {
       const flakes = snowContainer.children;
-      for (let flake of flakes) {
+      for (const flake of flakes) {
         const rect = flake.getBoundingClientRect();
         if (rect.top > window.innerHeight) {
-          snowContainer.removeChild(flake);
+          flake.remove();
           snowContainer.appendChild(createSnowflake());
         }
       }
@@ -98,15 +99,11 @@ const createSnowEffect = () => {
   function destroySnow() {
     // Remove snow container if it exists
     const snowContainer = document.querySelector('.snow-container');
-    if (snowContainer) {
-      document.body.removeChild(snowContainer);
-    }
+    snowContainer?.remove();
 
     // Remove styles if they exist
     const styleSheet = document.querySelector('#snow-styles');
-    if (styleSheet) {
-      document.head.removeChild(styleSheet);
-    }
+    styleSheet?.remove();
   }
 
   return {

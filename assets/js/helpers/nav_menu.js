@@ -1,3 +1,5 @@
+import { desktopWidthQuery } from './viewport.js';
+
 /**
  * Mobile menu: the hamburger button opens the panel below the bar and
  * turns into an X. It closes when picking an option, with Escape, on an
@@ -38,7 +40,7 @@ export default function navMenu() {
     if (isOpen() && !header.contains(e.target) && !e.target.closest('.lamp')) setOpen(false);
   });
 
-  window.matchMedia('(min-width: 600px)').addEventListener('change', (e) => {
+  desktopWidthQuery().addEventListener('change', (e) => {
     if (e.matches) setOpen(false);
   });
 }

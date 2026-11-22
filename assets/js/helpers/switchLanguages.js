@@ -1,5 +1,7 @@
 import translations from '/assets/js/languages/translations.js';
 import { translate } from '/assets/js/languages/translate.js';
+import { localStore, sessionStore } from './storage.js';
+import { isDesktopViewport } from './viewport.js';
 
 /*
  * Two modes:
@@ -12,23 +14,18 @@ import { translate } from '/assets/js/languages/translate.js';
  */
 
 const STORAGE_KEY = 'lang';
+const HASH_KEY = 'aq-hash'; // section to go back to after switching language
 const SUPPORTED = ['en', 'es'];
+const FLAG_WRAPPER = '.navbar__toggle--language';
 
 const getStoredLanguage = () => {
-  try {
-    const lang = localStorage.getItem(STORAGE_KEY);
-    return SUPPORTED.includes(lang) ? lang : null;
-  } catch {
-    return null;
-  }
+  const lang = localStore.get(STORAGE_KEY);
+  return SUPPORTED.includes(lang) ? lang : null;
 };
 
+// Private mode / blocked storage: the preference just isn't remembered
 const storeLanguage = (lang) => {
-  try {
-    localStorage.setItem(STORAGE_KEY, lang);
-  } catch {
-    /* private mode / blocked storage: preference just isn't remembered */
-  }
+  localStore.set(STORAGE_KEY, lang);
 };
 
 // CV: the link carries the language of the source page (?lang=es). It wins
@@ -44,30 +41,37 @@ const languageFromUrl = () => {
 };
 
 const detectBrowserLanguage = () => {
-  const languages = navigator.languages || [navigator.language || ''];
+  const languages = navigator.languages ?? [navigator.language ?? ''];
   return languages.some((l) => /^es\b/i.test(l)) ? 'es' : 'en';
 };
 
-const t = (key, lang) => {
+/**
+ * Language of the page: <html lang>, which the generator writes on the home
+ * and project pages and setLanguage() keeps up to date on in-place switches.
+ */
+export const getCurrentLanguage = () => {
+  const { lang } = document.documentElement;
+  return SUPPORTED.includes(lang) ? lang : 'en';
+};
+
+/** Text of a translation key, in English when the language lacks it. */
+export const t = (key, lang = getCurrentLanguage()) => {
   const value = translate(translations, key, lang);
   return typeof value === 'string' ? value : translate(translations, key, 'en');
 };
 
-let currentLanguage = 'en';
-
 // *text* in a translation → <strong>text</strong> (no arbitrary HTML)
 const setRichText = (el, value) => {
-  el.textContent = '';
-  value.split(/(\*[^*]+\*)/).forEach((part) => {
-    if (!part) return;
-    if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
+  const nodes = value
+    .split(/(\*[^*]+\*)/)
+    .filter(Boolean)
+    .map((part) => {
+      if (!(part.startsWith('*') && part.endsWith('*') && part.length > 2)) return part;
       const strong = document.createElement('strong');
       strong.textContent = part.slice(1, -1);
-      el.append(strong);
-    } else {
-      el.append(part);
-    }
-  });
+      return strong;
+    });
+  el.replaceChildren(...nodes);
 };
 
 const applyTranslations = (lang) => {
@@ -85,39 +89,36 @@ const applyTranslations = (lang) => {
   });
 };
 
-// Desktop (≥600px): the About section is hidden and its text is appended to
-// the home description.
+const heroElement = (className, fill) => {
+  const span = document.createElement('span');
+  span.className = className;
+  fill(span);
+  return span;
+};
+
+// Home only. Desktop (≥600px): the About section is hidden and the hero
+// paragraph becomes the intro, a blank line and then 7 lines of 7 words, one
+// per row. Mobile: just the intro.
 const handleResponsiveContent = (lang) => {
   const homeDescription = document.querySelector('.home__description');
   if (!homeDescription) return;
 
   const homeText = t('homeDescription', lang);
   const lines = translate(translations, 'heroLines', lang);
-  if (window.innerWidth >= 600 && Array.isArray(lines)) {
-    // Desktop: the intro, a blank line and then 7 lines
-    // of 7 words, one per row
-    homeDescription.textContent = '';
-    homeDescription.classList.add('home__description--lines');
-    const intro = document.createElement('span');
-    intro.className = 'home__intro';
-    setRichText(intro, homeText);
-    homeDescription.append(
-      intro,
-      ...lines.map((line) => {
-        const span = document.createElement('span');
-        span.className = 'home__line';
-        span.textContent = line;
-        return span;
-      }),
-    );
-  } else {
-    homeDescription.classList.remove('home__description--lines');
+  const asLines = isDesktopViewport() && Array.isArray(lines);
+
+  homeDescription.classList.toggle('home__description--lines', asLines);
+  if (!asLines) {
     setRichText(homeDescription, homeText);
+    return;
   }
+  homeDescription.replaceChildren(
+    heroElement('home__intro', (intro) => setRichText(intro, homeText)),
+    ...lines.map((line) => heroElement('home__line', (span) => (span.textContent = line))),
+  );
 };
 
 const setLanguage = (lang) => {
-  currentLanguage = lang;
   document.documentElement.lang = lang; // screen readers and search engines
 
   applyTranslations(lang);
@@ -134,14 +135,9 @@ const setLanguage = (lang) => {
 // On a prerendered page, wait until it's activated (shown).
 const restorePendingHash = () => {
   const run = () => {
-    let hash = null;
-    try {
-      hash = sessionStorage.getItem('aq-hash');
-      sessionStorage.removeItem('aq-hash');
-    } catch {
-      return;
-    }
-    if (!hash) return;
+    const hash = sessionStore.get(HASH_KEY);
+    // Without storage (or if it can't be cleared) nothing is restored
+    if (!sessionStore.remove(HASH_KEY) || !hash) return;
     history.replaceState(null, '', hash);
     document.querySelector(hash)?.scrollIntoView({ behavior: 'instant' });
   };
@@ -152,16 +148,19 @@ const restorePendingHash = () => {
   }
 };
 
+// <link rel="alternate" hreflang> of the page in that language (URL mode)
+const findAlternate = (alternates, lang) => [...alternates].find((link) => link.hreflang === lang);
+
 // Prerenders the page in the other language when there's intent to switch
 // (cursor over it, keyboard focus or finger on the button), not on every visit:
 // almost nobody switches language and building the other page costs data and CPU.
 // The switch is still near instant. Only browsers with speculation rules.
 const prerenderOnIntent = (toggle, alternates, targetLang) => {
   if (!HTMLScriptElement.supports?.('speculationrules')) return;
-  const target = [...alternates].find((l) => l.hreflang === targetLang);
+  const target = findAlternate(alternates, targetLang);
   if (!target) return;
   const { pathname } = new URL(target.href, location.href);
-  const area = toggle.closest('.navbar__toggle--language') || toggle;
+  const area = toggle.closest(FLAG_WRAPPER) ?? toggle;
 
   const events = ['pointerenter', 'focusin', 'touchstart'];
   const prerender = () => {
@@ -174,6 +173,24 @@ const prerenderOnIntent = (toggle, alternates, targetLang) => {
   events.forEach((type) => area.addEventListener(type, prerender, { passive: true }));
 };
 
+// Click animation: the target language's flag is pinned (the same one the
+// hover showed) and bounces, without spinning again
+const startFlagAnimation = (wrapper, lang) => {
+  if (!wrapper) return;
+  wrapper.querySelectorAll('img').forEach((img) => {
+    const isTarget = img.classList.contains(`navbar__toggle--language-${lang}`);
+    img.classList.toggle('is-target', isTarget);
+    img.classList.toggle('is-current', !isTarget);
+  });
+  wrapper.classList.add('is-switching');
+};
+
+const endFlagAnimation = (wrapper) => {
+  if (!wrapper) return;
+  wrapper.classList.remove('is-switching');
+  wrapper.querySelectorAll('img').forEach((img) => img.classList.remove('is-target', 'is-current'));
+};
+
 const switchLanguages = () => {
   restorePendingHash();
   const languageToggle = document.getElementById('language-toggle');
@@ -181,10 +198,8 @@ const switchLanguages = () => {
   const urlMode = alternates.length > 0;
 
   const initialLang = urlMode
-    ? SUPPORTED.includes(document.documentElement.lang)
-      ? document.documentElement.lang
-      : 'en'
-    : languageFromUrl() || getStoredLanguage() || detectBrowserLanguage();
+    ? getCurrentLanguage()
+    : (languageFromUrl() ?? getStoredLanguage() ?? detectBrowserLanguage());
 
   setLanguage(initialLang);
 
@@ -195,46 +210,30 @@ const switchLanguages = () => {
 
     languageToggle.addEventListener('change', () => {
       const lang = languageToggle.checked ? 'es' : 'en';
+      const wrapper = languageToggle.closest(FLAG_WRAPPER);
 
-      // Click animation: the target language's flag is pinned (the same one
-      // the hover showed) and bounces, without spinning again
-      const wrapper = languageToggle.closest('.navbar__toggle--language');
-      if (wrapper) {
-        wrapper.querySelectorAll('img').forEach((img) => {
-          const isTarget = img.classList.contains(`navbar__toggle--language-${lang}`);
-          img.classList.toggle('is-target', isTarget);
-          img.classList.toggle('is-current', !isTarget);
-        });
-        wrapper.classList.add('is-switching');
-      }
+      startFlagAnimation(wrapper, lang);
       storeLanguage(lang);
 
-      if (urlMode) {
-        const target = [...alternates].find((l) => l.hreflang === lang);
-        if (target) {
-          const url = new URL(target.href, location.href);
-          // Navigate to the exact URL that is prerendered (without #section),
-          // and the section is restored on activation (restorePendingHash)
-          try {
-            if (location.hash) sessionStorage.setItem('aq-hash', location.hash);
-          } catch {
-            /* no storage: only the section is lost */
-          }
-          // Lets the flag's bounce show before changing page
-          setTimeout(() => location.assign(url.pathname), 220);
-          return;
-        }
+      const target = urlMode && findAlternate(alternates, lang);
+      if (target) {
+        const url = new URL(target.href, location.href);
+        // Navigate to the exact URL that is prerendered (without #section),
+        // and the section is restored on activation (restorePendingHash).
+        // No storage: only the section is lost
+        if (location.hash) sessionStore.set(HASH_KEY, location.hash);
+        // Lets the flag's bounce show before changing page
+        setTimeout(() => location.assign(url.pathname), 220);
+        return;
       }
+
       setLanguage(lang);
       // In-place switch (resume): finish the animation and clean up
-      setTimeout(() => {
-        wrapper?.classList.remove('is-switching');
-        wrapper?.querySelectorAll('img').forEach((img) => img.classList.remove('is-target', 'is-current'));
-      }, 500);
+      setTimeout(() => endFlagAnimation(wrapper), 500);
     });
   }
 
-  window.addEventListener('resize', () => handleResponsiveContent(currentLanguage));
+  window.addEventListener('resize', () => handleResponsiveContent(getCurrentLanguage()));
 };
 
 export default switchLanguages;

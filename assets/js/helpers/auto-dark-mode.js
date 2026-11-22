@@ -8,6 +8,8 @@
 // The theme is reflected in <meta name="color-scheme">, which the CSS reads (see
 // _variables.css). The inline <head> script applies the same before painting
 // (without JS, the meta stays "light dark" and the system is followed).
+import { localStore } from './storage.js';
+
 const STORAGE_KEY = 'theme';
 const UNTIL_KEY = 'themeUntil';
 const DARK_FROM = 18; // hour when dark mode starts
@@ -34,36 +36,39 @@ const nextBoundary = (date = new Date()) => {
   return next.getTime();
 };
 
+// The second step of each pair only runs if the first one worked
+const clearStoredOverride = () => localStore.remove(STORAGE_KEY) && localStore.remove(UNTIL_KEY);
+
 const readOverride = () => {
-  try {
-    const value = localStorage.getItem(STORAGE_KEY);
-    const until = Number(localStorage.getItem(UNTIL_KEY));
-    if ((value === 'dark' || value === 'light') && Date.now() < until) return value;
-    // expired (or from the previous version, with no date): cleared
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(UNTIL_KEY);
-  } catch {
-    /* storage unavailable */
-  }
+  const value = localStore.get(STORAGE_KEY);
+  const until = Number(localStore.get(UNTIL_KEY));
+  if ((value === 'dark' || value === 'light') && Date.now() < until) return value;
+  // expired (or from the previous version, with no date): cleared
+  clearStoredOverride();
   return null;
 };
 
+// Storage unavailable: the theme still applies, it just isn't remembered
 const writeOverride = (value) => {
-  try {
-    if (value) {
-      localStorage.setItem(STORAGE_KEY, value);
-      localStorage.setItem(UNTIL_KEY, String(nextBoundary()));
-    } else {
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(UNTIL_KEY);
-    }
-  } catch {
-    /* storage unavailable: the theme still applies, it just isn't remembered */
+  if (value) {
+    if (localStore.set(STORAGE_KEY, value)) localStore.set(UNTIL_KEY, String(nextBoundary()));
+  } else {
+    clearStoredOverride();
   }
 };
 
 let override = null; // override in effect on this page (even if it can't be stored)
 let overrideUntil = 0;
+
+// An override lasts until the next scheduled switch
+const setOverride = (value) => {
+  override = value;
+  overrideUntil = value ? nextBoundary() : 0;
+};
+
+const expireOverride = () => {
+  if (Date.now() >= overrideUntil) override = null;
+};
 
 const renderedTheme = () => (override && Date.now() < overrideUntil ? override : scheduledTheme());
 
@@ -80,8 +85,7 @@ const sync = (toggle) => {
 
 export function setAutoDarkMode() {
   const toggle = document.querySelector('.navbar__toggle--darkmode-input');
-  override = readOverride();
-  overrideUntil = override ? nextBoundary() : 0;
+  setOverride(readOverride());
   sync(toggle);
 
   if (!toggle || toggle.dataset.themeBound) return;
@@ -91,8 +95,7 @@ export function setAutoDarkMode() {
     // The user asks for "the opposite of what they see now"
     const target = renderedTheme() === 'dark' ? 'light' : 'dark';
     // If it matches the schedule, they're undoing their override: nothing is stored
-    override = target === scheduledTheme() ? null : target;
-    overrideUntil = override ? nextBoundary() : 0;
+    setOverride(target === scheduledTheme() ? null : target);
     writeOverride(override);
     sync(toggle);
   });
@@ -101,21 +104,19 @@ export function setAutoDarkMode() {
   // frozen in background tabs or with the phone locked, so it's
   // also re-checked when returning to the tab.
   let timer;
+  const refresh = () => {
+    expireOverride();
+    sync(toggle);
+    schedule();
+  };
   const schedule = () => {
     clearTimeout(timer);
-    timer = setTimeout(() => {
-      if (Date.now() >= overrideUntil) override = null;
-      sync(toggle);
-      schedule();
-    }, nextBoundary() - Date.now() + 1000);
+    timer = setTimeout(refresh, nextBoundary() - Date.now() + 1000);
   };
   schedule();
 
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState !== 'visible') return;
-    if (Date.now() >= overrideUntil) override = null;
-    sync(toggle);
-    schedule();
+    if (document.visibilityState === 'visible') refresh();
   });
 
   // The system switched to/from dark mode
@@ -124,8 +125,7 @@ export function setAutoDarkMode() {
   // Change made from another tab
   window.addEventListener('storage', (event) => {
     if (event.key !== STORAGE_KEY && event.key !== UNTIL_KEY) return;
-    override = readOverride();
-    overrideUntil = override ? nextBoundary() : 0;
+    setOverride(readOverride());
     sync(toggle);
   });
 }

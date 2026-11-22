@@ -24,19 +24,12 @@ function handleScroll() {
   }
 
   // Expand the button when scrolling down
-  if (scrollTop > 20) {
-    fabButtons.forEach((button) => {
-      button.classList.add('expanded');
-    });
-  } else {
-    fabButtons.forEach((button) => {
-      button.classList.remove('expanded');
-    });
-  }
+  const expanded = scrollTop > 20;
+  fabButtons.forEach((button) => button.classList.toggle('expanded', expanded));
 }
 
-// The download button opens the modal with window.openModal() (inline in
-// resume.html → showModal()). Esc, outside click (closedby="any") and the X
+// The download button opens the modal with showModal() (listener in the inline
+// module of resume.html). Esc, outside click (closedby="any") and the X
 // button (form method="dialog") are handled by the native <dialog>.
 // If there's free space below the PDF on the first screen (phone), the
 // button is centered vertically between the PDF's edge and the bottom edge;

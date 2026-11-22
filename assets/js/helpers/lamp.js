@@ -5,6 +5,7 @@
 // On release the theme is switched using the same checkbox (auto-dark-mode.js).
 import { createTilt } from './tilt.js';
 import { prefersReducedMotion } from './motion.js';
+import { isCoarsePointer, isMobileWidth, trackScrollbarWidth } from './viewport.js';
 
 // Gyroscope (touch devices): the lamp hangs like a pendulum, so when the
 // phone is tilted it stays vertical relative to the ground and, on screen,
@@ -16,7 +17,7 @@ const MAX_ANGLE = 12; // degrees
 const SPRING = 0.08; // stiffness
 const DAMPING = 0.86; // damping (1 = no loss)
 function lampTilt(button) {
-  if (!window.matchMedia('(pointer: coarse)').matches || prefersReducedMotion()) return;
+  if (!isCoarsePointer() || prefersReducedMotion()) return;
   const tilt = createTilt();
   const root = document.documentElement.style;
   let angle = 0;
@@ -38,15 +39,9 @@ function lampTilt(button) {
   requestAnimationFrame(tick);
 }
 
-// 100vw includes the scrollbar; it's measured to center the lamp properly
-const setScrollbarWidth = () => {
-  const width = window.innerWidth - document.documentElement.clientWidth;
-  document.documentElement.style.setProperty('--scrollbar-w', `${width}px`);
-};
-
 export default function lamp() {
-  setScrollbarWidth();
-  window.addEventListener('resize', setScrollbarWidth);
+  // The scrollbar width is needed to center the lamp properly (_lamp.css)
+  trackScrollbarWidth();
 
   const button = document.querySelector('.lamp');
   const toggle = document.querySelector('.navbar__toggle--darkmode-input');
@@ -65,6 +60,11 @@ export default function lamp() {
   const pull = () => button.classList.add('lamp--pulling');
   const release = () => {
     if (!switching) button.classList.remove('lamp--pulling');
+  };
+  const swing = () => {
+    button.classList.remove('lamp--swing');
+    void button.offsetWidth; // restarts the animation
+    button.classList.add('lamp--swing');
   };
 
   // Mouse/touch: the chain looks pulled while it's held down.
@@ -96,9 +96,7 @@ export default function lamp() {
       release();
       sync();
       // When the chain is released the lamp swings (touch devices have no hover)
-      button.classList.remove('lamp--swing');
-      void button.offsetWidth; // restarts the animation
-      button.classList.add('lamp--swing');
+      swing();
     }, fromKeyboard ? 160 : 90);
   });
   // Mobile: when the menu opens the lamp drops like a bungee (CSS, 0.25s delay
@@ -112,19 +110,15 @@ export default function lamp() {
       if (open === wasOpen) return;
       wasOpen = open;
       clearTimeout(landTimer);
-      if (!open || !window.matchMedia('(max-width: 599px)').matches) return;
-      landTimer = setTimeout(() => {
-        button.classList.remove('lamp--swing');
-        void button.offsetWidth; // restarts the animation
-        button.classList.add('lamp--swing');
-      }, 250 + 1100 * 0.42); // when the cord stretches at the end of the drop
+      if (!open || !isMobileWidth()) return;
+      // when the cord stretches at the end of the drop
+      landTimer = setTimeout(swing, 250 + 1100 * 0.42);
     }).observe(header, { attributes: true, attributeFilter: ['class'] });
   }
 
   button.addEventListener('animationend', (event) => {
     if (event.animationName === 'lamp-swing') button.classList.remove('lamp--swing');
   });
-
 
   // The theme can also change via the system or from another tab
   new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });

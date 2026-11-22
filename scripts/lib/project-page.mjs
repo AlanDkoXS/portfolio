@@ -203,25 +203,23 @@ const HEAD_ASSETS = `    <link rel="stylesheet" href="/assets/css/main.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon.png" />
 
     <script type="module">
-      import switchLanguages from '/assets/js/helpers/switchLanguages.js';
-      import { setAutoDarkMode } from '/assets/js/helpers/auto-dark-mode.js';
-      import lamp from '/assets/js/helpers/lamp.js';
-      import navMenu from '/assets/js/helpers/nav_menu.js';
+      import { initCommon } from '/assets/js/helpers/common.js';
       import ParallaxEffect from '/assets/js/helpers/parallax.js';
-      import SnowEffect from '/assets/js/helpers/snow-effect.js';
-      import updateDateYear from '/assets/js/helpers/date_updater.js';
-      import { loadGoogleTagManager } from '/assets/js/helpers/google-tag-manager.js';
-      loadGoogleTagManager();
+      initCommon(['analytics']);
       document.addEventListener('DOMContentLoaded', () => {
-        switchLanguages();
-        setAutoDarkMode();
-        lamp();
-        navMenu();
+        initCommon(['language', 'theme', 'lamp', 'navMenu']);
         ParallaxEffect.init();
-        SnowEffect.init();
-        updateDateYear();
+        initCommon(['snow', 'footerYear']);
       });
-    </script>`;
+    </script>
+    <!-- The shared helpers hang from common.js: fetched now instead of after it -->
+    <link rel="modulepreload" href="/assets/js/helpers/switchLanguages.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/auto-dark-mode.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lamp.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/nav_menu.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/date_updater.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/snow-effect.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/google-tag-manager.js" />`;
 
 // themeHead: color-scheme meta + pre-paint theme script of the home page
 // (lib/theme-head.mjs); it goes right after the comment that ends HEAD_BASE

@@ -1,5 +1,6 @@
 import { createTilt } from './tilt.js';
 import { prefersReducedMotion } from './motion.js';
+import { isCoarsePointer } from './viewport.js';
 
 function profileParallax() {
   const container = document.querySelector('.home__image');
@@ -27,7 +28,7 @@ function profileParallax() {
   container.addEventListener('mouseleave', () => moveLayers(0, 0));
 
   // Touch devices: follow the phone tilt, relative and auto-recentering
-  if (window.matchMedia('(pointer: coarse)').matches) {
+  if (isCoarsePointer()) {
     const tilt = createTilt();
     const tick = (now) => {
       const { gamma, beta } = tilt.update(now);

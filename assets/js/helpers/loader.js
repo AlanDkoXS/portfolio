@@ -3,6 +3,7 @@
 // "alanquintana"; once the page finishes loading they scatter and the
 // hero appears. With "reduce motion" only the name appears and fades out.
 import { prefersReducedMotion } from './motion.js';
+import { sessionStore } from './storage.js';
 import { typeGreeting } from './typing.js';
 
 const loaderContainer = document.querySelector('.loader');
@@ -22,12 +23,10 @@ const random = (min, max) => min + Math.random() * (max - min);
 function buildName(word) {
   // Replaces the name's two <span>s with animatable letters. Returns a
   // promise that resolves when the last letter lands.
-  let resolveDone;
-  const done = new Promise((resolve) => (resolveDone = resolve));
+  const { promise: done, resolve: resolveDone } = Promise.withResolvers();
   const total = NAME.reduce((n, [part]) => n + part.length, 0);
   let landed = 0;
-  word.textContent = '';
-  word.setAttribute('aria-label', 'alanquintana');
+  const chars = [];
   let i = 0;
   for (const [part, weight] of NAME) {
     for (const char of part) {
@@ -47,9 +46,11 @@ function buildName(word) {
         span.textContent = char;
         if (++landed === total) resolveDone();
       });
-      word.append(span);
+      chars.push(span);
     }
   }
+  word.setAttribute('aria-label', 'alanquintana');
+  word.replaceChildren(...chars);
   return done;
 }
 
@@ -94,11 +95,8 @@ function loader() {
       // The letters scatter toward the background while the loader fades out
       loaderContainer.classList.add('loader--hidden');
     }
-    try {
-      sessionStorage.setItem('aq-loaded', '1');
-    } catch {
-      /* no storage: the loader will show on every load */
-    }
+    // No storage: the loader will show on every load
+    sessionStore.set('aq-loaded', '1');
 
     // The greeting starts typing when the loader is already leaving
     setTimeout(() => {

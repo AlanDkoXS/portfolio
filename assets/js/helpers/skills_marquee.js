@@ -1,18 +1,12 @@
 // Looping rows of technology icons (CSS in _skills.css).
 // WCAG 2.2.2: the motion lasts more than 5 s, so there's a button to
 // pause it. Only shown if there's animation (no "reduce motion").
-import { prefersReducedMotion } from './motion.js';
-
-// 100vw includes the scrollbar: it's measured so the rows reach exactly
-// from edge to edge (see --scrollbar-w in _skills.css)
-const setScrollbarWidth = () => {
-  const width = window.innerWidth - document.documentElement.clientWidth;
-  document.documentElement.style.setProperty('--scrollbar-w', `${width}px`);
-};
+import { prefersReducedMotion, reducedMotionQuery } from './motion.js';
+import { trackScrollbarWidth } from './viewport.js';
 
 export default function skillsMarquee() {
-  setScrollbarWidth();
-  window.addEventListener('resize', setScrollbarWidth);
+  // The rows reach exactly from edge to edge (see --scrollbar-w in _skills.css)
+  trackScrollbarWidth();
 
   const container = document.querySelector('.skills__icons');
   const toggle = container?.querySelector('.skills__motion-toggle');
@@ -34,6 +28,6 @@ export default function skillsMarquee() {
     container.classList.toggle('is-paused');
     sync();
   });
-  window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', sync);
+  reducedMotionQuery().addEventListener('change', sync);
   sync();
 }

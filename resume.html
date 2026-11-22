@@ -57,42 +57,31 @@
     <script type="module">
         import { initFab } from '/assets/js/helpers/resume_fab_buttons.js';
         import { loadPdf } from '/assets/js/helpers/pdf_loader.js';
-        import switchLanguages from '/assets/js/helpers/switchLanguages.js';
-        import { setAutoDarkMode } from '/assets/js/helpers/auto-dark-mode.js';
-        import lamp from '/assets/js/helpers/lamp.js';
-        import navMenu from '/assets/js/helpers/nav_menu.js';
-        import updateDateYear from '/assets/js/helpers/date_updater.js';
-        import SnowEffect from '/assets/js/helpers/snow-effect.js';
-        import { loadGoogleTagManager } from '/assets/js/helpers/google-tag-manager.js';
+        import { initCommon } from '/assets/js/helpers/common.js';
 
-        loadGoogleTagManager();
+        initCommon(['analytics']);
 
         document.addEventListener('DOMContentLoaded', () => {
             initFab();
             loadPdf();
-            switchLanguages();
-            setAutoDarkMode();
-            lamp();
-            navMenu();
-            updateDateYear();
-            SnowEffect.init();
+            initCommon(['language', 'theme', 'lamp', 'navMenu', 'footerYear', 'snow']);
         });
 
-        window.openModal = () => {
+        // Download button: opens the dialog with one button per language.
+        // The link's default action (jump to "#") is cancelled once it's open
+        document.getElementById('btn-download').addEventListener('click', (event) => {
             document.getElementById('modal').showModal();
-        };
-    </script>
-    <!-- pdf.js (module, imported by pdf_loader.js): the download starts early
-         without blocking parsing. The version must match PDFJS_VERSION -->
-    <link rel="modulepreload" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" crossorigin />
-    <script>
-        function downloadCV(language) {
-            const fileMap = {
-                ENG: '[ENG] Alan Quintana.pdf',
-                ESP: '[ESP] Alan Quintana.pdf',
-            };
+            event.preventDefault();
+        });
 
-            const fileName = fileMap[language];
+        // data-cv on each dialog button → the PDF it downloads
+        const CV_FILES = {
+            ENG: '[ENG] Alan Quintana.pdf',
+            ESP: '[ESP] Alan Quintana.pdf',
+        };
+
+        const downloadCV = (language) => {
+            const fileName = CV_FILES[language];
             if (fileName) {
                 const link = document.createElement('a');
                 link.href = `/assets/docs/${fileName}`;
@@ -102,8 +91,23 @@
             } else {
                 alert('Invalid language selected.');
             }
-        }
+        };
+
+        document.querySelectorAll('[data-cv]').forEach((button) => {
+            button.addEventListener('click', () => downloadCV(button.dataset.cv));
+        });
     </script>
+    <!-- The shared helpers hang from common.js: fetched now instead of after it -->
+    <link rel="modulepreload" href="/assets/js/helpers/switchLanguages.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/auto-dark-mode.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lamp.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/nav_menu.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/date_updater.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/snow-effect.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/google-tag-manager.js" />
+    <!-- pdf.js (module, imported by pdf_loader.js): the download starts early
+         without blocking parsing. The version must match PDFJS_VERSION -->
+    <link rel="modulepreload" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" crossorigin />
 </head>
 
 <body>
@@ -174,7 +178,7 @@
     </button>
     <!-- Buttons -->
     <div class="fab-container">
-        <a href="#" class="fab btn btn--primary" id="btn-download" onclick="openModal(); return false;">
+        <a href="#" class="fab btn btn--primary" id="btn-download">
             <i class="bx bxs-download"></i>
             <span class="fab-text" data-i18n="resumePage.downloadButton">Download</span>
         </a>
@@ -189,10 +193,10 @@
                 <h2 id="download-title" data-i18n="resumePage.downloadButton">Download</h2>
                 <p data-i18n="resumePage.selectLanguage">Select language</p>
                 <div class="resume__modal-content">
-                    <button class="btn btn--primary" onclick="downloadCV('ENG')" autofocus>
+                    <button class="btn btn--primary" data-cv="ENG" autofocus>
                         <strong lang="en" data-i18n="resumePage.english">English</strong>
                     </button>
-                    <button class="btn btn--primary" onclick="downloadCV('ESP')">
+                    <button class="btn btn--primary" data-cv="ESP">
                         <strong lang="es" data-i18n="resumePage.spanish">Español</strong>
                     </button>
                 </div>

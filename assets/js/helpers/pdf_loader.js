@@ -5,6 +5,8 @@
 // pdf.js is imported as a module when used (it used to be a sync <script> in the
 // <head> that blocked parsing); resume.html fetches it early with modulepreload.
 // pdf.js wraps the cross-origin worker in a blob, so it works from the CDN.
+import { getCurrentLanguage } from './switchLanguages.js';
+
 const PDFJS_VERSION = '4.10.38';
 const PDFJS_BASE = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}`;
 const PDF_URL = '/assets/docs/resume.pdf';
@@ -51,5 +53,5 @@ export async function loadPdf() {
   window.addEventListener('languageChange', (event) => render(event.detail?.language));
 
   // switchLanguages() already set <html lang> while the PDF was downloading
-  await render(document.documentElement.lang === 'es' ? 'es' : 'en');
+  await render(getCurrentLanguage());
 }
