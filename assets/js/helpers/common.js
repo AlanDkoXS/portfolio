@@ -5,8 +5,24 @@ import { setAutoDarkMode } from './auto-dark-mode.js';
 import { lamp } from './lamp.js';
 import { navMenu } from './nav-menu.js';
 import { updateFooterYear } from './footer-year.js';
-import { snowEffect } from './snow-effect.js';
 import { loadGoogleTagManager } from './google-tag-manager.js';
+import { isSnowSeason, prefersReducedMotion } from './motion.js';
+import { loadStep } from './lazy.js';
+
+// Seasonal snow: snow-effect.js is only downloaded in season and with motion
+// allowed. It's removed on pagehide (not beforeunload, which can keep the page
+// out of the back/forward cache) and started again if the page comes back
+// from that cache.
+function startSnow() {
+  if (!isSnowSeason() || prefersReducedMotion()) return;
+  loadStep('snow', () => import('./snow-effect.js'), ({ snowEffect }) => {
+    snowEffect.init();
+    window.addEventListener('pagehide', () => snowEffect.destroy());
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) snowEffect.init();
+    });
+  });
+}
 
 // In their canonical order. Every step tolerates pages without its elements.
 export const commonSteps = {
@@ -15,7 +31,7 @@ export const commonSteps = {
   lamp, // hanging lamp (theme switch)
   navMenu, // mobile hamburger menu
   footerYear: updateFooterYear,
-  snow: () => snowEffect.init(), // seasonal
+  snow: startSnow, // seasonal, loaded on demand
   analytics: loadGoogleTagManager, // deferred, never awaited
 };
 

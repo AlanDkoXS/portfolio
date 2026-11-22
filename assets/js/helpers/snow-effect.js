@@ -1,24 +1,18 @@
-// Seasonal snow (Dec 12 - Jan 6), unless the user asks for reduced motion
-import { prefersReducedMotion } from './motion.js';
+// Seasonal snow (Dec 12 - Jan 6, see isSnowSeason), unless the user asks for
+// reduced motion. common.js only imports this module when both allow it.
+import { isSnowSeason, prefersReducedMotion } from './motion.js';
 
 const createSnowEffect = () => {
-  // Check if we're in the Christmas period (Dec 12 - Jan 6)
-  function isChristmasPeriod() {
-    const today = new Date();
-    const month = today.getMonth(); // 0-11
-    const day = today.getDate();
-
-    // Period from December 12 to January 6
-    return (month === 11 && day >= 12) || (month === 0 && day <= 6);
-  }
-
-  function createSnowflake() {
+  // A flake with a random position, speed and opacity. The first ones start
+  // falling at random moments (up to 10s); a flake that replaces one that has
+  // reached the bottom starts right away, so the snowfall stays continuous.
+  function createSnowflake({ delayed = true } = {}) {
     const flake = document.createElement('div');
     flake.classList.add('snow');
 
     // Random initial position
     const startPosition = Math.random() * window.innerWidth;
-    const delay = Math.random() * 10; // Random delay
+    const delay = delayed ? Math.random() * 10 : 0; // Random delay
     const duration = 5 + Math.random() * 10; // Random duration between 5-15s
 
     Object.assign(flake.style, {
@@ -33,7 +27,7 @@ const createSnowEffect = () => {
 
   function initSnow() {
     if (prefersReducedMotion()) return;
-    if (!isChristmasPeriod()) return;
+    if (!isSnowSeason()) return;
 
     // Create snow container if it doesn't exist
     let snowContainer = document.querySelector('.snow-container');
@@ -83,17 +77,16 @@ const createSnowEffect = () => {
       snowContainer.appendChild(createSnowflake());
     }
 
-    // Replace fallen snowflakes
-    setInterval(() => {
-      const flakes = snowContainer.children;
-      for (const flake of flakes) {
-        const rect = flake.getBoundingClientRect();
-        if (rect.top > window.innerHeight) {
-          flake.remove();
-          snowContainer.appendChild(createSnowflake());
-        }
-      }
-    }, 1000);
+    // Each time a flake's fall starts over (top of the screen again), it's
+    // replaced by a new one somewhere else and at another speed. One listener
+    // for all of them (the event bubbles), and nothing is measured: the old
+    // timer read every flake's position (a layout) once per second.
+    if (!snowContainer.dataset.bound) {
+      snowContainer.dataset.bound = 'true';
+      snowContainer.addEventListener('animationiteration', (event) => {
+        if (event.target.classList.contains('snow')) event.target.replaceWith(createSnowflake({ delayed: false }));
+      });
+    }
   }
 
   function destroySnow() {

@@ -44,10 +44,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/main.css" />
 
-    <!-- Fonts -->
+    <!-- Fonts: DM Sans is the logo and the menu at the top. Outfit (headings) is
+         only used further down: low priority. Poppins isn't used on this page -->
     <link rel="preload" href="/assets/fonts/dm-sans/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/outfit/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/outfit/outfit-latin.woff2" as="font" type="font/woff2" crossorigin fetchpriority="low" />
 
     <!-- Icons: Boxicons is bundled into main.css; the subset font weighs ~3 KB -->
     <link rel="preload" href="/assets/fonts/boxicons/boxicons.woff2" as="font" type="font/woff2" crossorigin />
@@ -97,14 +97,22 @@
             button.addEventListener('click', () => downloadCV(button.dataset.cv));
         });
     </script>
-    <!-- The shared helpers hang from common.js: fetched now instead of after it -->
+    <!-- Every module the three imports above bring in (common.js, pdf-loader.js
+         and resume-fab.js hang them): fetched now instead of one level at a
+         time after them. snow-effect.js is imported on demand, only in season -->
+    <link rel="modulepreload" href="/assets/js/helpers/dialog.js" />
     <link rel="modulepreload" href="/assets/js/helpers/language-switcher.js" />
+    <link rel="modulepreload" href="/assets/js/languages/translations.js" />
+    <link rel="modulepreload" href="/assets/js/languages/translate.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/storage.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/viewport.js" />
     <link rel="modulepreload" href="/assets/js/helpers/auto-dark-mode.js" />
     <link rel="modulepreload" href="/assets/js/helpers/lamp.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/motion.js" />
     <link rel="modulepreload" href="/assets/js/helpers/nav-menu.js" />
     <link rel="modulepreload" href="/assets/js/helpers/footer-year.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/snow-effect.js" />
     <link rel="modulepreload" href="/assets/js/helpers/google-tag-manager.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lazy.js" />
     <!-- pdf.js (module, imported by pdf-loader.js): the download starts early
          without blocking parsing. The version must match PDFJS_VERSION -->
     <link rel="modulepreload" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" crossorigin />
@@ -117,7 +125,7 @@
         <nav class="navbar grid--container flex--container">
             <a class="navbar__logo flex--container" href="/" data-i18n-attr="href:resumePage.homeHref">
                 <svg class="logo">
-                    <use xlink:href="/assets/img/logo.svg#logo"></use>
+                    <use href="/assets/img/logo.svg#logo"></use>
                 </svg>
                 <span class="resume__logo--name">alan</span>
                 <span class="resume__logo--lastname">quintana</span>
@@ -146,10 +154,8 @@
                             aria-label="Select Language" />
                         <label for="language-toggle" class="navbar__toggle--language-label">
                             <div class="flag-wrapper">
-                                <img src="/assets/img/flag-en.svg" class="navbar__toggle--language-en" lang="en" alt="English"
-                                    loading="lazy" aria-hidden="true">
-                                <img src="/assets/img/flag-es.svg" class="navbar__toggle--language-es" lang="es" alt="Español"
-                                    loading="lazy" aria-hidden="true">
+                                <img src="/assets/img/flag-en.svg" class="navbar__toggle--language-en" lang="en" alt="English" aria-hidden="true">
+                                <img src="/assets/img/flag-es.svg" class="navbar__toggle--language-es" lang="es" alt="Español" aria-hidden="true">
                             </div>
                         </label>
                     </div>
@@ -171,10 +177,10 @@
       title="Light"
     >
       <span class="lamp__hit" aria-hidden="true"></span>
-      <img class="lamp__off" src="/assets/img/lamp_button/button-lamp_lamp_original.webp" alt="" width="300" height="300" />
+      <img class="lamp__off" src="/assets/img/lamp_button/button-lamp_lamp_original.webp" alt="" width="300" height="300" fetchpriority="low" />
       <img class="lamp__over" src="/assets/img/lamp_button/button-lamp_lamp_over.webp" alt="" width="300" height="300" loading="lazy" />
       <img class="lamp__pull" src="/assets/img/lamp_button/button-lamp_lamp_clic.webp" alt="" width="300" height="300" loading="lazy" />
-      <img class="lamp__on" src="/assets/img/lamp_button/button-lamp_lamp_active.webp" alt="" width="300" height="401" />
+      <img class="lamp__on" src="/assets/img/lamp_button/button-lamp_lamp_active.webp" alt="" width="300" height="401" fetchpriority="low" />
     </button>
     <!-- Buttons -->
     <div class="fab-container">

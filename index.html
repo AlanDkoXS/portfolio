@@ -190,7 +190,10 @@
     <link rel="stylesheet" href="/assets/css/main.css" />
 
     <!-- Self-hosted fonts: DM Sans, Outfit and the logo's Poppins (in main.css) and Boxicons (only the
-         icons in use, ~3 KB). Preloaded so text and icons show up without waiting -->
+         icons in use, ~3 KB). Preloaded so the hero's text and icons show up without waiting.
+         The logo's Poppins 300 is hidden at the top (the header is revealed on scroll) but laid
+         out from the first frame: it keeps its normal priority so the header never re-lays out
+         late. The loader's Poppins weights are preloaded by the script above -->
     <link rel="preload" href="/assets/fonts/dm-sans/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/outfit/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -200,14 +203,32 @@
          preload scanner can't see it. The sprite is requested when the CSS applies -->
     <link rel="preload" href="/assets/img/profile_bg.svg" as="image" type="image/svg+xml" fetchpriority="high" />
 
-    <!-- Third-level modules (main.js → helper → these): without this they
-         are discovered one after another -->
-    <link rel="modulepreload" href="/assets/js/helpers/motion.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/tilt.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/typing.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/dialog.js" />
+    <!-- Every module main.js imports up front, directly or through another
+         helper: fetched in parallel with main.js instead of one level at a time
+         after it. The ones main.js imports on demand (import()) are left out -->
+    <link rel="modulepreload" href="/assets/js/helpers/common.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/language-switcher.js" />
     <link rel="modulepreload" href="/assets/js/languages/translations.js" />
     <link rel="modulepreload" href="/assets/js/languages/translate.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/storage.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/viewport.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/auto-dark-mode.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lamp.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/motion.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/nav-menu.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/footer-year.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/google-tag-manager.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lazy.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/loader.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/typing.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/active-menu.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/card-carousel.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/contact-dialog.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/dialog.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/project-covers.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/skills-marquee.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/reset-to-home.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/form-validation.js" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon.png" />
@@ -218,9 +239,6 @@
 
     <!-- Scripts -->
     <script type="module" src="/assets/js/main.js"></script>
-
-    <!-- Prefetch Page -->
-    <link data-i18n-attr="href:resumeHref" rel="prefetch" href="/resume.html?lang=en" />
   </head>
 
   <body>
@@ -264,7 +282,7 @@
     <!-- Loader -->
     <div class="loader flex--container">
       <svg class="loader__logo">
-        <use xlink:href="/assets/img/logo.svg#logo"></use>
+        <use href="/assets/img/logo.svg#logo"></use>
       </svg>
       <span class="loader__name"
         ><span class="loader__name--light">alan</span
@@ -290,7 +308,7 @@
       <nav class="navbar grid--container flex--container">
         <a class="navbar__logo flex--container" href="#">
           <svg class="logo">
-            <use xlink:href="/assets/img/logo.svg#logo"></use>
+            <use href="/assets/img/logo.svg#logo"></use>
           </svg>
           <span class="navbar__logo--name">alan</span>
           <span class="navbar__logo--lastname">quintana</span>
@@ -361,14 +379,12 @@
                     src="/assets/img/flag-en.svg"
                     class="navbar__toggle--language-en" lang="en"
                     alt="English"
-                    loading="lazy"
                     aria-hidden="true"
                   />
                   <img
                     src="/assets/img/flag-es.svg"
                     class="navbar__toggle--language-es" lang="es"
                     alt="Español"
-                    loading="lazy"
                     aria-hidden="true"
                   />
                 </div>
@@ -394,10 +410,10 @@
       title="Light"
     >
       <span class="lamp__hit" aria-hidden="true"></span>
-      <img class="lamp__off" src="/assets/img/lamp_button/button-lamp_lamp_original.webp" alt="" width="300" height="300" />
+      <img class="lamp__off" src="/assets/img/lamp_button/button-lamp_lamp_original.webp" alt="" width="300" height="300" fetchpriority="low" />
       <img class="lamp__over" src="/assets/img/lamp_button/button-lamp_lamp_over.webp" alt="" width="300" height="300" loading="lazy" />
       <img class="lamp__pull" src="/assets/img/lamp_button/button-lamp_lamp_clic.webp" alt="" width="300" height="300" loading="lazy" />
-      <img class="lamp__on" src="/assets/img/lamp_button/button-lamp_lamp_active.webp" alt="" width="300" height="401" />
+      <img class="lamp__on" src="/assets/img/lamp_button/button-lamp_lamp_active.webp" alt="" width="300" height="401" fetchpriority="low" />
     </button>
 
     <main>
@@ -466,7 +482,7 @@
               data-i18n-attr="href:resumeHref"
               class="btn btn--primary"
               id="resume-btn"
-              href="/resume.html?lang=en"
+              href="/resume?lang=en"
               rel="noreferrer nofollow"
             >See my resume</a>
             <a data-i18n="skillsButton"
@@ -527,44 +543,44 @@
                 <div class="skills__marquee skills__marquee--reverse" style="--marquee-duration: 56s">
                   <div class="skills__track">
                     <ul class="skills__list">
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
                     </ul>
                     <ul class="skills__list" aria-hidden="true">
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
                     </ul>
                     <ul class="skills__list" aria-hidden="true">
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
                     </ul>
                     <ul class="skills__list" aria-hidden="true">
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
                     </ul>
                   </div>
                 </div>
@@ -579,12 +595,12 @@
                   </summary>
                   <div class="skills__panel">
                     <ul class="skills__grid">
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPhotoshop" ></use> </svg> <span class="skills__icon-title">Photoshop</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconIllustrator" ></use> </svg> <span class="skills__icon-title">Illustrator</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconAFX" ></use> </svg> <span class="skills__icon-title">After Effects</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCreativeCloud" ></use> </svg> <span class="skills__icon-title">Creative Cloud</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconFigma" ></use> </svg> <span class="skills__icon-title">Figma</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconSvg"></use> </svg> <span class="skills__icon-title">SVG</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPhotoshop" ></use> </svg> <span class="skills__icon-title">Photoshop</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconIllustrator" ></use> </svg> <span class="skills__icon-title">Illustrator</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconAFX" ></use> </svg> <span class="skills__icon-title">After Effects</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconCreativeCloud" ></use> </svg> <span class="skills__icon-title">Creative Cloud</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconFigma" ></use> </svg> <span class="skills__icon-title">Figma</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconSvg"></use> </svg> <span class="skills__icon-title">SVG</span></li>
                     </ul>
                   </div>
                 </details>
@@ -595,17 +611,17 @@
                   </summary>
                   <div class="skills__panel">
                     <ul class="skills__grid">
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"></use> </svg> <span class="skills__icon-title">HTML5</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"></use> </svg> <span class="skills__icon-title">CSS</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript" ></use> </svg> <span class="skills__icon-title">JavaScript</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconTypeScript" ></use> </svg> <span class="skills__icon-title">TypeScript</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact" ></use> </svg> <span class="skills__icon-title">React</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS" ></use> </svg> <span class="skills__icon-title">Vite</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReactRouter" ></use> </svg> <span class="skills__icon-title">React Router</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReactNative" ></use> </svg> <span class="skills__icon-title">React Native</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconExpo"></use> </svg> <span class="skills__icon-title">Expo</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconTailwindCSS" ></use> </svg> <span class="skills__icon-title">Tailwind CSS</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconAstro" ></use> </svg> <span class="skills__icon-title">Astro</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconHTML"></use> </svg> <span class="skills__icon-title">HTML5</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconCSS"></use> </svg> <span class="skills__icon-title">CSS</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconJavascript" ></use> </svg> <span class="skills__icon-title">JavaScript</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconTypeScript" ></use> </svg> <span class="skills__icon-title">TypeScript</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconReact" ></use> </svg> <span class="skills__icon-title">React</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconViteJS" ></use> </svg> <span class="skills__icon-title">Vite</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconReactRouter" ></use> </svg> <span class="skills__icon-title">React Router</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconReactNative" ></use> </svg> <span class="skills__icon-title">React Native</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconExpo"></use> </svg> <span class="skills__icon-title">Expo</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconTailwindCSS" ></use> </svg> <span class="skills__icon-title">Tailwind CSS</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconAstro" ></use> </svg> <span class="skills__icon-title">Astro</span></li>
                     </ul>
                   </div>
                 </details>
@@ -616,16 +632,16 @@
                   </summary>
                   <div class="skills__panel">
                     <ul class="skills__grid">
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNodeJS" ></use> </svg> <span class="skills__icon-title">Node.js</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconExpress" ></use> </svg> <span class="skills__icon-title">Express</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconSocketIO" ></use> </svg> <span class="skills__icon-title">Socket.IO</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNextJS" ></use> </svg> <span class="skills__icon-title">Next.js</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconAws"></use> </svg> <span class="skills__icon-title">AWS</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconFirebase" ></use> </svg> <span class="skills__icon-title">Firebase</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconDocker" ></use> </svg> <span class="skills__icon-title">Docker</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPostgreSql" ></use> </svg> <span class="skills__icon-title">PostgreSQL</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconMongoDb" ></use> </svg> <span class="skills__icon-title">MongoDB</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPostman" ></use> </svg> <span class="skills__icon-title">Postman</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNodeJS" ></use> </svg> <span class="skills__icon-title">Node.js</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconExpress" ></use> </svg> <span class="skills__icon-title">Express</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconSocketIO" ></use> </svg> <span class="skills__icon-title">Socket.IO</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNextJS" ></use> </svg> <span class="skills__icon-title">Next.js</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconAws"></use> </svg> <span class="skills__icon-title">AWS</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconFirebase" ></use> </svg> <span class="skills__icon-title">Firebase</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconDocker" ></use> </svg> <span class="skills__icon-title">Docker</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPostgreSql" ></use> </svg> <span class="skills__icon-title">PostgreSQL</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconMongoDb" ></use> </svg> <span class="skills__icon-title">MongoDB</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPostman" ></use> </svg> <span class="skills__icon-title">Postman</span></li>
                     </ul>
                   </div>
                 </details>
@@ -675,27 +691,27 @@
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
                       ></use>
                     </svg>
                   </div>
@@ -751,27 +767,27 @@
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
                       ></use>
                     </svg>
                   </div>
@@ -827,27 +843,27 @@
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
                       ></use>
                     </svg>
                   </div>
@@ -902,27 +918,27 @@
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
                       ></use>
                     </svg>
                   </div>
@@ -977,27 +993,27 @@
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
                       ></use>
                     </svg>
                   </div>
@@ -1053,27 +1069,27 @@
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNodeJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconNodeJS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconExpress"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconExpress"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconMongoDb"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconMongoDb"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                   </div>

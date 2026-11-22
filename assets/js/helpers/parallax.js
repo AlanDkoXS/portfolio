@@ -1,6 +1,6 @@
 // Hero background parallax: three layers that follow the mouse on desktop and
 // the device tilt (plus a slow automatic drift) on touch devices.
-import { createTilt } from './tilt.js';
+// tilt.js is only downloaded on touch devices (when touch mode starts).
 import { prefersReducedMotion } from './motion.js';
 import { coarsePointerQuery } from './viewport.js';
 
@@ -30,7 +30,6 @@ const parallaxEffect = {
         speed: { x: 0.25, y: 0.05 }, // px per frame (~60fps)
         range: 10,
       },
-      tilt: {}, // overrides for tilt.js defaults (maxTilt, smoothing, recenter)
     },
   },
 
@@ -51,7 +50,9 @@ const parallaxEffect = {
     lastY: 0,
     // misc
     isMobile: false,
-    rafId: null,
+    tilt: null, // subscription to the shared tilt (tilt.js), touch mode only
+    tiltWanted: false, // touch mode is on (the subscription may still be loading)
+    tiltLoading: false,
     initialized: false,
   },
 
@@ -78,7 +79,6 @@ const parallaxEffect = {
     this.state.isMobile = this.mobileQuery.matches;
 
     // Listeners are registered once; handlers check the current mode.
-    this.tilt = createTilt(this.config.mobile.tilt);
     document.addEventListener('mousemove', (e) => this.onMouseMove(e));
     document.addEventListener('mouseleave', () => {
       if (!this.state.isMobile) this.resetPositions();
@@ -102,26 +102,36 @@ const parallaxEffect = {
     }
   },
 
+  // Touch mode: every frame of the shared tilt loop moves the layers (tilt +
+  // automatic drift). The loop doesn't run while the page is hidden.
   startLoop() {
-    if (this.state.rafId !== null) return;
-
     const s = this.state;
-    const tick = (now) => {
-      this.stepAutoMovement();
-
-      const { gamma, beta } = this.tilt.update(now);
-      this.applyTransforms(STRENGTH.mobile, gamma, beta, s.autoX, s.autoY);
-      s.rafId = requestAnimationFrame(tick);
-    };
-
-    this.state.rafId = requestAnimationFrame(tick);
+    s.tiltWanted = true;
+    if (s.tilt) {
+      s.tilt.setActive(true);
+      return;
+    }
+    if (s.tiltLoading) return;
+    s.tiltLoading = true;
+    import('./tilt.js')
+      .then(({ subscribeTilt }) => {
+        s.tilt = subscribeTilt(
+          ({ gamma, beta }) => {
+            this.stepAutoMovement();
+            this.applyTransforms(STRENGTH.mobile, gamma, beta, s.autoX, s.autoY);
+          },
+          { active: s.tiltWanted }, // back to mouse mode while it loaded
+        );
+      })
+      .catch((error) => console.error('Error in parallaxEffect:', error))
+      .finally(() => {
+        s.tiltLoading = false;
+      });
   },
 
   stopLoop() {
-    if (this.state.rafId !== null) {
-      cancelAnimationFrame(this.state.rafId);
-      this.state.rafId = null;
-    }
+    this.state.tiltWanted = false;
+    this.state.tilt?.setActive(false);
   },
 
   stepAutoMovement() {

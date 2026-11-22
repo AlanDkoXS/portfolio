@@ -20,6 +20,17 @@ const NAME = [
 
 const random = (min, max) => min + Math.random() * (max - min);
 
+// Resolves when the hero is shown (html.hero-ready): right away when the loader
+// is skipped, otherwise when it leaves. Effects that only matter once the hero
+// is visible wait for it (main.js).
+let markHeroReady;
+export const heroReady = new Promise((resolve) => (markHeroReady = resolve));
+const showHero = () => {
+  document.documentElement.classList.add('hero-ready');
+  typeGreeting();
+  markHeroReady();
+};
+
 function buildName(word) {
   // Replaces the name's two <span>s with animatable letters. Returns a
   // promise that resolves when the last letter lands.
@@ -72,8 +83,7 @@ function loader() {
 
   // Already seen this session: the <head> hid it
   if (document.documentElement.classList.contains('skip-loader')) {
-    document.documentElement.classList.add('hero-ready');
-    typeGreeting();
+    showHero();
     return;
   }
 
@@ -100,10 +110,7 @@ function loader() {
     sessionStore.set('aq-loaded', '1');
 
     // The greeting starts typing when the loader is already leaving
-    setTimeout(() => {
-      document.documentElement.classList.add('hero-ready');
-      typeGreeting();
-    }, 350);
+    setTimeout(showHero, 350);
   };
 
   // It hides when the page has loaded AND the name has finished forming

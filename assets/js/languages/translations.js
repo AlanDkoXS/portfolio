@@ -33,8 +33,8 @@ const translations = {
   },
   /* The CV opens in the language of the page it's reached from (?lang=) */
   resumeHref: {
-    en: '/resume.html?lang=en',
-    es: '/resume.html?lang=es',
+    en: '/resume?lang=en',
+    es: '/resume?lang=es',
   },
   /* <-- Nav Bar --> */
   navHome: {

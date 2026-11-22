@@ -1,9 +1,11 @@
 // Contact form submission: honeypot, EmailJS and the result dialog.
-// The field rules live in form-validation.js; every text comes from
+// The field rules live in form-validation.js (its blur validation is started
+// by main.js with the page, so it never waits for this module, which main.js
+// imports on demand); every text comes from
 // translations.js in the page language (contactForm.*).
 /* global emailjs */
 import { loadEmailJS } from './email-js.js';
-import { FORM_FIELDS, addFieldValidationListeners, validateForm } from './form-validation.js';
+import { FORM_FIELDS, validateForm } from './form-validation.js';
 import { t } from './language-switcher.js';
 
 const EMAILJS_SERVICE = 'service_hokfs29';
@@ -81,17 +83,27 @@ async function submitForm(e) {
   }
 }
 
-function initContactForm() {
+/**
+ * main.js imports this module when the form gets near or is first used, so it
+ * can start after that use already happened:
+ * @param {object} [options]
+ * @param {boolean} [options.inUse] the form is already being used (focus or
+ *   pointer inside it): EmailJS starts downloading right away
+ */
+function initContactForm({ inUse = false } = {}) {
   if (!formDOM) return;
 
-  addFieldValidationListeners();
   autoGrowMessage();
 
   // EmailJS is downloaded when someone starts using the form, not on page
   // load (so it doesn't compete with the hero or delay the load event)
   const warmUp = () => loadEmailJS().catch(() => {});
-  formDOM.addEventListener('focusin', warmUp, { once: true });
-  formDOM.addEventListener('pointerdown', warmUp, { once: true });
+  if (inUse) {
+    warmUp();
+  } else {
+    formDOM.addEventListener('focusin', warmUp, { once: true });
+    formDOM.addEventListener('pointerdown', warmUp, { once: true });
+  }
 
   formDOM.addEventListener('submit', submitForm);
 }

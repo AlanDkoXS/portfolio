@@ -19,6 +19,8 @@
 // - sitemap.xml    → the block between <!-- projects:start/end --> is rewritten
 // - llms.txt, llms-full.txt → profile for AI search engines and agents
 //   (scripts/data/profile.mjs + projects.mjs + scripts/cv/data.mjs)
+// - checks that every page preloads (modulepreload) exactly the modules it
+//   imports up front (lib/module-preloads.mjs)
 //
 // This file only orchestrates: each step lives in scripts/lib/ (the i18n markup
 // conventions, data-i18n and data-i18n-attr, are described in lib/render.mjs).
@@ -31,6 +33,7 @@ import projects from './data/projects.mjs';
 import { bundleCss } from './lib/css-bundle.mjs';
 import { injectDesigns } from './lib/designs-section.mjs';
 import { llmsFullTxt, llmsTxt } from './lib/llms.mjs';
+import { checkModulePreloads } from './lib/module-preloads.mjs';
 import { adaptHeader, homeChrome, projectPage } from './lib/project-page.mjs';
 import { failOnMissing, render } from './lib/render.mjs';
 import { LANGS, PROJECT_DIRS, ROOT, fail, projectPath } from './lib/site.mjs';
@@ -96,6 +99,7 @@ function buildHome(html) {
   const es = render(source, 'es');
   failOnMissing();
 
+  checkModulePreloads(en, 'index.html');
   write('index.html', en);
   // The theme markers stay in index.html only: they say "edit this block here"
   write('es/index.html', withBanner(stripThemeMarkers(es), 'index.html'));
@@ -109,7 +113,9 @@ function buildHome(html) {
  */
 function syncThemeHead(homeHtml) {
   const block = extractThemeHead(homeHtml, 'index.html');
-  write('resume.html', injectThemeHead(read('resume.html'), block, 'resume.html'));
+  const resume = injectThemeHead(read('resume.html'), block, 'resume.html');
+  checkModulePreloads(resume, 'resume.html');
+  write('resume.html', resume);
   return block;
 }
 
@@ -125,6 +131,7 @@ function buildProjectPages(homeHtml, themeHead) {
     const next = projects[(i + 1) % projects.length];
     for (const lang of LANGS) {
       const page = projectPage({ project, lang, prev, next, header: adaptHeader(header, lang), footer, themeHead });
+      checkModulePreloads(page, 'scripts/lib/project-page.mjs');
       write(
         path.join(projectPath(project, lang), 'index.html'),
         withBanner(render(page, lang), 'scripts/data/projects.mjs'),

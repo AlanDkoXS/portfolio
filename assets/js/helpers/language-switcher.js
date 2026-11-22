@@ -173,6 +173,29 @@ const prerenderOnIntent = (toggle, alternates, targetLang) => {
   events.forEach((type) => area.addEventListener(type, prerender, { passive: true }));
 };
 
+// Pages of the site the visitor is likely to open next from this one: the CV
+// (/resume?lang=…) and the project case studies. Prefetched by the browser
+// (speculation rules, moderate eagerness: when the pointer rests on a link or
+// it's pressed), instead of downloading the CV page on every visit. Same
+// pages as the language prerender: only browsers with speculation rules.
+const PREFETCHED_LINKS = ['/resume*', '/projects/*', '/es/proyectos/*'];
+
+const prefetchLikelyPages = () => {
+  if (!HTMLScriptElement.supports?.('speculationrules')) return;
+  const rules = document.createElement('script');
+  rules.type = 'speculationrules';
+  rules.textContent = JSON.stringify({
+    prefetch: [
+      {
+        source: 'document',
+        where: { or: PREFETCHED_LINKS.map((pattern) => ({ href_matches: pattern })) },
+        eagerness: 'moderate',
+      },
+    ],
+  });
+  document.head.append(rules);
+};
+
 // Click animation: the target language's flag is pinned (the same one the
 // hover showed) and bounces, without spinning again
 const startFlagAnimation = (wrapper, lang) => {
@@ -206,7 +229,10 @@ const switchLanguages = () => {
   if (languageToggle) {
     languageToggle.checked = initialLang === 'es';
 
-    if (urlMode) prerenderOnIntent(languageToggle, alternates, initialLang === 'es' ? 'en' : 'es');
+    if (urlMode) {
+      prerenderOnIntent(languageToggle, alternates, initialLang === 'es' ? 'en' : 'es');
+      prefetchLikelyPages();
+    }
 
     languageToggle.addEventListener('change', () => {
       const lang = languageToggle.checked ? 'es' : 'en';

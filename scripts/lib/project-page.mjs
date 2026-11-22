@@ -195,10 +195,13 @@ ${indent(jsonLd(ctx), 6)}
     </script>`;
 }
 
+// Fonts: everything the first screen shows (DM Sans, the hero's Outfit title,
+// the logo's two Poppins weights, the Boxicons icons) is preloaded
 const HEAD_ASSETS = `    <link rel="stylesheet" href="/assets/css/main.css" />
     <link rel="preload" href="/assets/fonts/dm-sans/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/outfit/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/poppins/poppins-600-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/boxicons/boxicons.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon.png" />
 
@@ -212,14 +215,21 @@ const HEAD_ASSETS = `    <link rel="stylesheet" href="/assets/css/main.css" />
         initCommon(['snow', 'footerYear']);
       });
     </script>
-    <!-- The shared helpers hang from common.js: fetched now instead of after it -->
+    <!-- Every module common.js and parallax.js bring in: fetched now instead of
+         one level at a time after them. Imported on demand: snow-effect.js
+         (only in season) and tilt.js (only on touch devices) -->
     <link rel="modulepreload" href="/assets/js/helpers/language-switcher.js" />
+    <link rel="modulepreload" href="/assets/js/languages/translations.js" />
+    <link rel="modulepreload" href="/assets/js/languages/translate.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/storage.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/viewport.js" />
     <link rel="modulepreload" href="/assets/js/helpers/auto-dark-mode.js" />
     <link rel="modulepreload" href="/assets/js/helpers/lamp.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/motion.js" />
     <link rel="modulepreload" href="/assets/js/helpers/nav-menu.js" />
     <link rel="modulepreload" href="/assets/js/helpers/footer-year.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/snow-effect.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/google-tag-manager.js" />`;
+    <link rel="modulepreload" href="/assets/js/helpers/google-tag-manager.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lazy.js" />`;
 
 // themeHead: color-scheme meta + pre-paint theme script of the home page
 // (lib/theme-head.mjs); it goes right after the comment that ends HEAD_BASE

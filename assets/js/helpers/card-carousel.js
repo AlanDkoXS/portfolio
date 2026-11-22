@@ -1,6 +1,7 @@
 // Projects carousel: the cards sit in numbered slots around the center one
 // (slot 0, negative to the left). It moves with the arrow buttons, the
-// keyboard (arrow keys on the controller link) and by dragging (mouse or touch).
+// keyboard (arrow keys on the controller link) and by dragging (Pointer
+// Events: mouse, touch or pen).
 const cardsContainer = document.querySelector('.project__card--carousel');
 const cardsController = document.querySelector('.project__card--controller');
 
@@ -11,100 +12,18 @@ const HIDDEN_Z_INDEX = -100;
 // Container width (px) from which there's room for the desktop layout
 const WIDE_MIN_WIDTH = 700;
 
-class DraggingEvent {
-  #target;
+// Touch: until the finger has moved this far (px) its direction isn't known;
+// then a horizontal gesture drags the carousel and a vertical one is left to
+// the page scroll (touch-action: pan-y in the CSS lets the browser take it)
+const AXIS_SLOP = 4;
+const HORIZONTAL_BIAS = 1.2; // slight preference for horizontal (thumbs don't move in straight lines)
+// Touch flick: a quick (< FLICK_MS), short swipe (> FLICK_MIN_PX, under half
+// a step) still advances one card, as if dragged FLICK_ADVANCE of a step
+const FLICK_MIN_PX = 20;
+const FLICK_MS = 350;
+const FLICK_ADVANCE = 0.6;
 
-  constructor(target = undefined) {
-    this.#target = target;
-  }
-
-  #event(callback) {
-    let handler;
-
-    this.#target.addEventListener('mousedown', (e) => {
-      e.preventDefault();
-      handler = callback(e);
-      window.addEventListener('mousemove', handler);
-      document.addEventListener('mouseleave', clearDraggingEvent);
-      window.addEventListener('mouseup', clearDraggingEvent);
-
-      function clearDraggingEvent() {
-        window.removeEventListener('mousemove', handler);
-        window.removeEventListener('mouseup', clearDraggingEvent);
-        document.removeEventListener('mouseleave', clearDraggingEvent);
-        handler(null);
-      }
-    });
-
-    // Touch: if the gesture is vertical it's let through (page scroll);
-    // if it's horizontal, it moves the carousel. touch-action: pan-y in the CSS
-    // keeps the browser from competing for the horizontal gesture.
-    this.#target.addEventListener(
-      'touchstart',
-      (e) => {
-        const start = e.touches[0];
-        const sx = start.clientX;
-        const sy = start.clientY;
-        const t0 = performance.now();
-        let mode = null; // null → not known yet; 'x' → carousel; 'y' → scroll
-        let lastX = sx;
-        handler = callback(e);
-
-        const onMove = (ev) => {
-          const t = ev.touches[0];
-          if (!mode) {
-            const dx = Math.abs(t.clientX - sx);
-            const dy = Math.abs(t.clientY - sy);
-            if (dx < 4 && dy < 4) return;
-            // slight preference for horizontal (thumbs don't move in straight lines)
-            mode = dx * 1.2 > dy ? 'x' : 'y';
-          }
-          if (mode === 'x') {
-            lastX = t.clientX;
-            handler(ev);
-          }
-        };
-        const clearDraggingEvent = () => {
-          // Quick, short swipe (flick): advances one card even if it wasn't
-          // dragged half a step
-          const dx = lastX - sx;
-          const step = this.dragStep ? this.dragStep() : 250;
-          if (mode === 'x' && Math.abs(dx) > 20 && Math.abs(dx) < step / 2 && performance.now() - t0 < 350) {
-            handler({ touches: [{ clientX: sx + Math.sign(dx) * step * 0.6, clientY: sy }] });
-          }
-          window.removeEventListener('touchmove', onMove);
-          window.removeEventListener('touchend', clearDraggingEvent);
-          window.removeEventListener('touchcancel', clearDraggingEvent);
-          handler(null);
-        };
-        window.addEventListener('touchmove', onMove, { passive: true });
-        window.addEventListener('touchend', clearDraggingEvent);
-        window.addEventListener('touchcancel', clearDraggingEvent);
-      },
-      { passive: true },
-    );
-  }
-
-  // Calls back with the distance { x, y } dragged since the gesture started
-  // on every move, and with null when it ends
-  getDistance(callback) {
-    const point = (e) => ('touches' in e ? e.touches[0] : e);
-
-    function distanceInit(e1) {
-      const { clientX: startingX, clientY: startingY } = point(e1);
-
-      return function (e2) {
-        if (e2 === null) return callback(null);
-        const { clientX, clientY } = point(e2);
-        return callback({ x: clientX - startingX, y: clientY - startingY });
-      };
-    }
-
-    this.#event(distanceInit);
-  }
-}
-
-class CardCarousel extends DraggingEvent {
+class CardCarousel {
   #container;
   #cards;
   #centerIndex;
@@ -113,22 +32,51 @@ class CardCarousel extends DraggingEvent {
   // updated in
   #xScale = {};
 
-  constructor(container, controller = undefined) {
-    super(container);
+  // Sizes the layout needs (px). Read once when they can change (resize,
+  // start of a gesture, navigation) instead of for every card on every move,
+  // where each read forced a style/layout pass after the previous card's writes
+  #width = 0; // container
+  #cardWidth = 0;
+  #rem = 16;
 
+  // Gesture in progress: { pointerId, touch, startX, startY, lastX, t0, mode }
+  #gesture = null;
+  // Drag distance in steps waiting for the next frame, and that frame
+  #pendingDist = null;
+  #frame = 0;
+  #onMove = (e) => this.#dragMove(e);
+  #onEnd = (e) => this.#dragEnd(e);
+
+  constructor(container, controller = undefined) {
     this.#container = container;
     this.#cards = container.querySelectorAll('.project__card');
     this.#centerIndex = Math.floor((this.#cards.length - 1) / 2);
+    this.#measure();
 
-    window.addEventListener('resize', () => this.#build());
+    // A new container width lays the cards out again (and back in their
+    // initial slots, as on a window resize before). The first card is
+    // observed only to keep its width up to date (it eases on breakpoints).
+    const resizes = new ResizeObserver((entries) => {
+      const width = this.#width;
+      this.#measure();
+      if (entries.some((entry) => entry.target === container) && this.#width !== width) this.#build();
+    });
+    resizes.observe(container);
+    if (this.#cards[0]) resizes.observe(this.#cards[0]);
 
     controller?.addEventListener('keydown', (e) => this.#onKeydown(e));
 
     this.#build();
 
-    this.getDistance((data) => this.#moveCards(data));
+    this.#setupDragging();
 
     this.#setupNavigationButtons();
+  }
+
+  #measure() {
+    this.#width = this.#container.offsetWidth;
+    this.#cardWidth = this.#cards[0]?.offsetWidth ?? 0;
+    this.#rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
   }
 
   // Last slot to the right (the first one to the left is -centerIndex)
@@ -185,7 +133,7 @@ class CardCarousel extends DraggingEvent {
     if (data.leftPos !== undefined) card.dataset.pos = data.leftPos;
     const scale = card.dataset.scale ?? 1;
     const pos = card.dataset.pos ?? 50;
-    const offset = ((pos - 50) / 100) * this.#container.offsetWidth;
+    const offset = ((pos - 50) / 100) * this.#width;
     card.style.transform = `translateX(calc(-50% + ${offset}px)) scale(${scale})`;
     if (data.scale !== undefined) card.style.opacity = data.scale === 0 ? 0 : 1;
 
@@ -197,7 +145,7 @@ class CardCarousel extends DraggingEvent {
 
   // Desktop: there's room to extend the carousel out to the arrows
   #isWide() {
-    return this.#container.offsetWidth >= WIDE_MIN_WIDTH;
+    return this.#width >= WIDE_MIN_WIDTH;
   }
 
   #calcScale(x) {
@@ -229,14 +177,13 @@ class CardCarousel extends DraggingEvent {
     // with respect to x so the drag slides without jumps
     const a = Math.abs(x);
     const sign = Math.sign(x);
-    const W = this.#container.offsetWidth;
+    const W = this.#width;
     if (this.#isWide()) {
       // Desktop: the edge cards reach close to the arrows, which sit at the
       // edges of the content (1024px). The in-between ones, halfway.
-      const cardW = this.#cards[0].offsetWidth;
+      const cardW = this.#cardWidth;
       // margin + arrow + 2rem gap between the arrow and the card
-      const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-      const arrowSpace = 16 + 48 + 2 * rem;
+      const arrowSpace = 16 + 48 + 2 * this.#rem;
       const half = Math.min(W, 1024) / 2 - arrowSpace;
       const outer = half - (cardW * this.#calcScale(2)) / 2;
       const inner = outer * 0.52;
@@ -245,7 +192,7 @@ class CardCarousel extends DraggingEvent {
     }
     // Mobile: the side card peeks out fully in the free space on each side
     // (its outer edge touches the container's edge)
-    const sideW = this.#cards[0].offsetWidth * 0.8;
+    const sideW = this.#cardWidth * 0.8;
     const innerPct = 50 - ((sideW / 2) * 100) / W;
     return 50 + sign * innerPct * a;
   }
@@ -254,6 +201,7 @@ class CardCarousel extends DraggingEvent {
   // wrapping around the ends. Without a direction the cards stay in their
   // slots and only the layout is applied again.
   #navigate(direction) {
+    this.#measure();
     const slots = { ...this.#xScale };
     const maxIndex = this.#maxIndex;
 
@@ -276,64 +224,141 @@ class CardCarousel extends DraggingEvent {
 
   // Drag distance equivalent to one card: 250px on desktop,
   // ~30% of the width on mobile (a short thumb movement is enough).
-  // Public: DraggingEvent reads it to size the flick.
-  dragStep() {
-    return this.#isWide() ? 250 : this.#container.offsetWidth * 0.3;
+  #dragStep() {
+    return this.#isWide() ? 250 : this.#width * 0.3;
   }
 
-  #moveCards(data) {
-    let xDist;
+  // ---- Dragging (Pointer Events)
+  // One gesture at a time. While it lasts its moves and its end are listened
+  // to on the window, so it keeps following the pointer outside the carousel.
+  // (Not with setPointerCapture: the click that ends a press would then go to
+  // the carousel instead of the card's link, and the links stop working.)
+  #setupDragging() {
+    // Mouse: no text selection, native image drag or focus change while
+    // pressing on the carousel
+    this.#container.addEventListener('mousedown', (e) => e.preventDefault());
+    this.#container.addEventListener('pointerdown', (e) => this.#dragStart(e));
+  }
 
-    if (data != null) {
-      // while dragging, no transition: the cards stick to the finger
-      this.#container.classList.add('is-dragging');
-      this.#container.classList.remove('smooth-return');
-      xDist = data.x / this.dragStep();
-    } else {
-      this.#container.classList.remove('is-dragging');
-      this.#container.classList.add('smooth-return');
-      xDist = 0;
+  #dragStart(e) {
+    if (this.#gesture) return;
+    this.#measure();
+    const touch = e.pointerType === 'touch';
+    this.#gesture = {
+      pointerId: e.pointerId,
+      touch,
+      startX: e.clientX,
+      startY: e.clientY,
+      lastX: e.clientX,
+      t0: performance.now(),
+      // null → direction not known yet; 'x' → carousel; 'y' → page scroll.
+      // The mouse and the pen always drag
+      mode: touch ? null : 'x',
+    };
+    window.addEventListener('pointermove', this.#onMove);
+    window.addEventListener('pointerup', this.#onEnd);
+    window.addEventListener('pointercancel', this.#onEnd);
+  }
 
-      for (const [key, card] of Object.entries(this.#xScale)) {
-        const x = Number(key);
-        this.#updateCard(card, {
-          x,
-          zIndex: Math.abs(Math.abs(x) - this.#centerIndex),
-        });
+  #dragMove(e) {
+    const g = this.#gesture;
+    if (!g || e.pointerId !== g.pointerId) return;
+    if (!g.mode) {
+      const dx = Math.abs(e.clientX - g.startX);
+      const dy = Math.abs(e.clientY - g.startY);
+      if (dx < AXIS_SLOP && dy < AXIS_SLOP) return;
+      g.mode = dx * HORIZONTAL_BIAS > dy ? 'x' : 'y';
+    }
+    if (g.mode !== 'x') return;
+    g.lastX = e.clientX;
+    this.#moveCards(e.clientX - g.startX);
+  }
+
+  // Released (or cancelled: the browser took the gesture for the page scroll)
+  #dragEnd(e) {
+    const g = this.#gesture;
+    if (!g || e.pointerId !== g.pointerId) return;
+    window.removeEventListener('pointermove', this.#onMove);
+    window.removeEventListener('pointerup', this.#onEnd);
+    window.removeEventListener('pointercancel', this.#onEnd);
+    this.#gesture = null;
+
+    // Quick, short swipe (flick): advances one card even if it wasn't
+    // dragged half a step
+    if (g.touch && g.mode === 'x') {
+      const dx = g.lastX - g.startX;
+      const step = this.#dragStep();
+      if (Math.abs(dx) > FLICK_MIN_PX && Math.abs(dx) < step / 2 && performance.now() - g.t0 < FLICK_MS) {
+        this.#moveCards(Math.sign(dx) * step * FLICK_ADVANCE);
       }
     }
+    this.#release();
+  }
 
-    for (let i = 0; i < this.#cards.length; i++) {
-      const x = this.#checkOrdering(this.#cards[i], parseInt(this.#cards[i].dataset.x, 10), xDist);
+  // While dragging: the cards follow the pointer, `dx` px from the start of
+  // the gesture. The slots are reassigned right away (the release lands on
+  // them); the styles of every card are written once per frame, for the
+  // latest distance.
+  #moveCards(dx) {
+    const xDist = dx / this.#dragStep();
+    for (const card of this.#cards) this.#reassignSlot(card, xDist);
+    this.#pendingDist = xDist;
+    this.#frame ||= requestAnimationFrame(() => this.#paintDrag());
+  }
+
+  #paintDrag() {
+    this.#frame = 0;
+    const xDist = this.#pendingDist;
+    // while dragging, no transition: the cards stick to the finger
+    this.#container.classList.add('is-dragging');
+    this.#container.classList.remove('smooth-return');
+    for (const card of this.#cards) {
+      const x = this.#slotWhileDragging(card, xDist);
+      this.#updateCard(card, { zIndex: -Math.abs(x + Math.round(xDist)) });
       const { scale, leftPos } = this.#layoutFor(x + xDist);
-
-      this.#updateCard(this.#cards[i], { scale, leftPos });
+      this.#updateCard(card, { scale, leftPos });
     }
   }
 
-  #checkOrdering(card, x, xDist) {
-    const original = parseInt(card.dataset.x, 10);
-    const rounded = Math.round(xDist);
-    const maxIndex = this.#maxIndex;
-    let newX = x;
+  // End of a gesture: every card goes to the slot it was dragged to, with a
+  // transition
+  #release() {
+    cancelAnimationFrame(this.#frame);
+    this.#frame = 0;
+    this.#container.classList.remove('is-dragging');
+    this.#container.classList.add('smooth-return');
 
-    if (x !== x + rounded) {
-      if (x + rounded > original) {
-        if (x + rounded > maxIndex) {
-          newX = x + rounded - 1 - maxIndex - rounded + -this.#centerIndex;
-        }
-      } else if (x + rounded < original) {
-        if (x + rounded < -this.#centerIndex) {
-          newX = x + rounded + 1 + this.#centerIndex - rounded + maxIndex;
-        }
-      }
-
-      this.#xScale[newX + rounded] = card;
+    for (const [key, card] of Object.entries(this.#xScale)) {
+      const x = Number(key);
+      this.#updateCard(card, {
+        x,
+        zIndex: Math.abs(Math.abs(x) - this.#centerIndex),
+      });
     }
 
-    this.#updateCard(card, { zIndex: -Math.abs(newX + rounded) });
+    for (const card of this.#cards) {
+      const x = this.#slotWhileDragging(card, 0);
+      this.#updateCard(card, { zIndex: -Math.abs(x) });
+      const { scale, leftPos } = this.#layoutFor(x);
+      this.#updateCard(card, { scale, leftPos });
+    }
+  }
 
-    return newX;
+  // Slot the card is drawn from while dragged `xDist` steps: its own slot
+  // (data-x), wrapped to the other end when the drag pushes it past the last
+  // slot on one side
+  #slotWhileDragging(card, xDist) {
+    const x = parseInt(card.dataset.x, 10);
+    const rounded = Math.round(xDist);
+    if (rounded > 0 && x + rounded > this.#maxIndex) return x - 1 - this.#maxIndex - this.#centerIndex;
+    if (rounded < 0 && x + rounded < -this.#centerIndex) return x + 1 + this.#centerIndex + this.#maxIndex;
+    return x;
+  }
+
+  // The card's slot once the drag is released: where it's drawn now
+  #reassignSlot(card, xDist) {
+    const rounded = Math.round(xDist);
+    if (rounded !== 0) this.#xScale[this.#slotWhileDragging(card, xDist) + rounded] = card;
   }
 }
 

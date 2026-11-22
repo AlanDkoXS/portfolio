@@ -3,9 +3,8 @@
 // On = dark mode, off = light mode. Visual states:
 //   hover → "over" image · pressing → "clic" (chain pulled) · on → "active"
 // On release the theme is switched using the same checkbox (auto-dark-mode.js).
-import { createTilt } from './tilt.js';
 import { prefersReducedMotion } from './motion.js';
-import { isCoarsePointer, isMobileWidth, trackScrollbarWidth } from './viewport.js';
+import { desktopWidthQuery, isCoarsePointer, isMobileWidth, trackScrollbarWidth } from './viewport.js';
 
 // Gyroscope (touch devices): the lamp hangs like a pendulum, so when the
 // phone is tilted it stays vertical relative to the ground and, on screen,
@@ -16,27 +15,43 @@ const TILT_FACTOR = 0.5; // lamp degrees per degree of tilt
 const MAX_ANGLE = 12; // degrees
 const SPRING = 0.08; // stiffness
 const DAMPING = 0.86; // damping (1 = no loss)
-function lampTilt(button) {
-  if (!isCoarsePointer() || prefersReducedMotion()) return;
-  const tilt = createTilt();
+
+/**
+ * Subscribes the lamp to the shared tilt (tilt.js, only downloaded on touch
+ * devices). It's only drawn while the lamp is visible: always from 600px,
+ * below that only inside the open menu. Hidden, it keeps swinging with the
+ * frames the loop runs for other effects (or replays when it starts again),
+ * but doesn't keep it running.
+ * Returns the function that re-checks the visibility (lamp() calls it when the
+ * menu opens or closes), or null without tilt.
+ */
+async function lampTilt(header) {
+  if (!isCoarsePointer() || prefersReducedMotion()) return null;
+  const { subscribeTilt } = await import('./tilt.js');
   const root = document.documentElement.style;
   let angle = 0;
   let velocity = 0;
   let last = null;
-  const tick = (now) => {
-    const { gamma } = tilt.update(now);
-    const target = Math.max(-MAX_ANGLE, Math.min(MAX_ANGLE, -gamma * TILT_FACTOR));
-    velocity = (velocity + (target - angle) * SPRING) * DAMPING;
-    angle += velocity;
-    // Only writes if the lamp is visible and the value changed (saves style work)
-    const value = Math.abs(angle) < 0.05 ? 0 : Math.round(angle * 10) / 10;
-    if (value !== last && button.checkVisibility?.({ visibilityProperty: true }) !== false) {
-      root.setProperty('--lamp-tilt', `${value}deg`);
-      last = value;
-    }
-    requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
+  const tilt = subscribeTilt(
+    ({ gamma }, _now, visible) => {
+      const target = Math.max(-MAX_ANGLE, Math.min(MAX_ANGLE, -gamma * TILT_FACTOR));
+      velocity = (velocity + (target - angle) * SPRING) * DAMPING;
+      angle += velocity;
+      // Only writes if the lamp is visible and the value changed (saves style work)
+      const value = Math.abs(angle) < 0.05 ? 0 : Math.round(angle * 10) / 10;
+      if (visible && value !== last) {
+        root.setProperty('--lamp-tilt', `${value}deg`);
+        last = value;
+      }
+    },
+    { active: false, follow: true },
+  );
+
+  const wide = desktopWidthQuery();
+  const sync = () => tilt.setActive(wide.matches || Boolean(header?.classList.contains('menu-open')));
+  wide.addEventListener('change', sync);
+  sync();
+  return sync;
 }
 
 export function lamp() {
@@ -61,10 +76,18 @@ export function lamp() {
   const release = () => {
     if (!switching) button.classList.remove('lamp--pulling');
   };
+  // Restarts the swing (lamp-swing, _lamp.css) from its first frame. Already
+  // swinging: the class is toggled as before and the running animation is
+  // rewound with the Web Animations API (getAnimations only updates styles;
+  // the old offsetWidth read forced a whole layout to restart it).
   const swing = () => {
+    const wasSwinging = button.classList.contains('lamp--swing');
     button.classList.remove('lamp--swing');
-    void button.offsetWidth; // restarts the animation
     button.classList.add('lamp--swing');
+    if (!wasSwinging) return;
+    for (const animation of button.getAnimations({ subtree: true })) {
+      if (animation.animationName === 'lamp-swing') animation.currentTime = 0;
+    }
   };
 
   // Mouse/touch: the chain looks pulled while it's held down.
@@ -101,11 +124,14 @@ export function lamp() {
   });
   // Mobile: when the menu opens the lamp drops like a bungee (CSS, 0.25s delay
   // + 1.1s); on reaching the bottom it swings just like when the chain is pulled
+  // The same observer tells the lamp's gyroscope when it's shown or hidden.
   const header = document.querySelector('.header');
+  let tiltVisibility = null;
   if (header) {
     let landTimer;
     let wasOpen = header.classList.contains('menu-open');
     new MutationObserver(() => {
+      tiltVisibility?.();
       const open = header.classList.contains('menu-open');
       if (open === wasOpen) return;
       wasOpen = open;
@@ -124,5 +150,7 @@ export function lamp() {
   new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
   sync();
 
-  lampTilt(button);
+  lampTilt(header)
+    .then((sync) => (tiltVisibility = sync))
+    .catch((error) => console.error('Error in lampTilt:', error));
 }
