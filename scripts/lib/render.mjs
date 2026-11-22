@@ -1,7 +1,7 @@
 // i18n render: fills an HTML page with the texts of one language from
 // assets/js/languages/translations.js.
 //
-// Markup conventions (see switchLanguages.js, which uses the same ones at runtime):
+// Markup conventions (see language-switcher.js, which uses the same ones at runtime):
 //   data-i18n="key.path"            element text is replaced by the translation
 //   data-i18n-attr="attr:key;..."   attribute values are replaced by translations
 // Elements with data-i18n must contain only text (no nested tags of the same name).

@@ -113,4 +113,4 @@ const createSnowEffect = () => {
 };
 
 const snowEffect = createSnowEffect();
-export default snowEffect;
+export { snowEffect };

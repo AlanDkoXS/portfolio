@@ -10,23 +10,23 @@
 import { commonSteps } from './helpers/common.js';
 
 // UI Components
-import loader from './helpers/loader.js';
-import activeMenu from './helpers/activeMenu.js';
-import { cardCarousel } from './helpers/cardCarousel.js';
-import { closeModal } from './helpers/close-modal.js';
-import initObserver from './helpers/observer.js';
-import skillsMarquee from './helpers/skills_marquee.js';
+import { loader } from './helpers/loader.js';
+import { activeMenu } from './helpers/active-menu.js';
+import { cardCarousel } from './helpers/card-carousel.js';
+import { setupContactDialog } from './helpers/contact-dialog.js';
+import { observeProjectCovers } from './helpers/project-covers.js';
+import { skillsMarquee } from './helpers/skills-marquee.js';
 
 // Visual Effects
-import ParallaxEffect from './helpers/parallax.js';
-import profileParallax from './helpers/profile_parallax.js';
-import SnowEffect from './helpers/snow-effect.js';
+import { parallaxEffect } from './helpers/parallax.js';
+import { profileParallax } from './helpers/profile-parallax.js';
+import { snowEffect } from './helpers/snow-effect.js';
 
 // Functionality
 import { displayConsoleLogo } from './helpers/console-logo.js';
-import resetToHome from './helpers/reload_page.js';
-import sendEmail from './helpers/send_form.js';
-// EmailJS is loaded by send_form.js when the form is used
+import { resetToHome } from './helpers/reset-to-home.js';
+import { initContactForm } from './helpers/contact-form.js';
+// EmailJS is loaded by contact-form.js when the form is used
 
 // ---------------------------
 // ERROR HANDLING
@@ -67,17 +67,17 @@ const INIT_GROUPS = [
       resetToHome,
       // UI Components
       cardCarousel,
-      initObserver,
+      observeProjectCovers,
       skillsMarquee,
-      closeModal,
+      setupContactDialog,
     ],
   ],
 
   // Parallax effects, then seasonal effects
-  ['initializeVisualEffects', [() => ParallaxEffect.init(), profileParallax, commonSteps.snow]],
+  ['initializeVisualEffects', [() => parallaxEffect.init(), profileParallax, commonSteps.snow]],
 
   // Footer year and email handling
-  ['initializeFunctionalities', [commonSteps.footerYear, sendEmail]],
+  ['initializeFunctionalities', [commonSteps.footerYear, initContactForm]],
 ];
 
 const runGroup = ([name, steps]) => {
@@ -93,7 +93,7 @@ const runGroup = ([name, steps]) => {
  */
 const setupCleanup = () => {
   window.addEventListener('beforeunload', () => {
-    SnowEffect.destroy();
+    snowEffect.destroy();
   });
 };
 
@@ -131,5 +131,5 @@ const initialize = () => {
 
 // Initialize on DOM content loaded.
 // Responsive home text (home + about merged on desktop) lives in
-// switchLanguages.js so it stays in the selected language.
+// language-switcher.js so it stays in the selected language.
 document.addEventListener('DOMContentLoaded', initialize);

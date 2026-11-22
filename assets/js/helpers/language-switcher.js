@@ -236,4 +236,4 @@ const switchLanguages = () => {
   window.addEventListener('resize', () => handleResponsiveContent(getCurrentLanguage()));
 };
 
-export default switchLanguages;
+export { switchLanguages };

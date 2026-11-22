@@ -39,7 +39,7 @@ function lampTilt(button) {
   requestAnimationFrame(tick);
 }
 
-export default function lamp() {
+export function lamp() {
   // The scrollbar width is needed to center the lamp properly (_lamp.css)
   trackScrollbarWidth();
 

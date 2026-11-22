@@ -4,7 +4,7 @@
 import { prefersReducedMotion, reducedMotionQuery } from './motion.js';
 import { trackScrollbarWidth } from './viewport.js';
 
-export default function skillsMarquee() {
+export function skillsMarquee() {
   // The rows reach exactly from edge to edge (see --scrollbar-w in _skills.css)
   trackScrollbarWidth();
 

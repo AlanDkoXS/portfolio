@@ -40,9 +40,9 @@ const observeSections = (observer) => {
 };
 
 // Improved function to initialize the observer
-const initObserver = () => {
+const observeProjectCovers = () => {
   const observer = createObserver();
   observeSections(observer);
 };
 
-export default initObserver;
+export { observeProjectCovers };

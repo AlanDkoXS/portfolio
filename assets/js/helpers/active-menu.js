@@ -46,4 +46,4 @@ function activeMenu() {
   observeSections();
 }
 
-export default activeMenu;
+export { activeMenu };

@@ -23,7 +23,7 @@ const STRENGTH = {
   },
 };
 
-const ParallaxEffect = {
+const parallaxEffect = {
   config: {
     mobile: {
       autoMovement: {
@@ -170,4 +170,4 @@ const ParallaxEffect = {
   },
 };
 
-export default ParallaxEffect;
+export { parallaxEffect };

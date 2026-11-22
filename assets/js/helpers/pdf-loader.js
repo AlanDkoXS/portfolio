@@ -1,11 +1,11 @@
 // Renders into #pdf-container only the active language's page of
 // /assets/docs/resume.pdf (page 1 = English, page 2 = Spanish) and swaps it
-// when switchLanguages.js dispatches `languageChange`.
+// when language-switcher.js dispatches `languageChange`.
 // It's drawn at the screen's pixel density so it looks sharp on mobile/retina.
 // pdf.js is imported as a module when used (it used to be a sync <script> in the
 // <head> that blocked parsing); resume.html fetches it early with modulepreload.
 // pdf.js wraps the cross-origin worker in a blob, so it works from the CDN.
-import { getCurrentLanguage } from './switchLanguages.js';
+import { getCurrentLanguage } from './language-switcher.js';
 
 const PDFJS_VERSION = '4.10.38';
 const PDFJS_BASE = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}`;

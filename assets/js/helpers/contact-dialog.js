@@ -1,7 +1,7 @@
 // Contact form result modal (index.html)
 import { setupDialog } from './dialog.js';
 
-function closeModal() {
+function setupContactDialog() {
   const modal = document.getElementById('modal');
   if (!modal) return;
 
@@ -14,4 +14,4 @@ function closeModal() {
   }
 }
 
-export { closeModal };
+export { setupContactDialog };

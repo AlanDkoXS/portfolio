@@ -1,5 +1,5 @@
 // EmailJS is only needed to send the contact form: it's downloaded
-// the first time someone interacts with it (see send_form.js), not on
+// the first time someone interacts with it (see contact-form.js), not on
 // page load. The promise is memoized: a single download even if it's
 // called many times; if it fails, the next attempt tries again.
 let emailJsPromise = null;

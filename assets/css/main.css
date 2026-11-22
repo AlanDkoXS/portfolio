@@ -1008,6 +1008,8 @@ body:has(#pdf-container) .header {
 .header .navbar__list {
   flex-direction: column;
   gap: 0.5rem;
+  /* inert today (nothing transforms the list) */
+  transition: transform 0.3s ease;
 }
 
 .header .navbar__link {
@@ -1042,9 +1044,16 @@ body:has(#pdf-container) .header {
     }
   }
 
+  /* Pressed without hover (touch): a zero-size, invisible shadow, all that
+     is left of the old boxed links. Keep it before :hover, which clears it */
+  &:active {
+    box-shadow: 0 0 0 var(--accent-color);
+  }
+
   @media (hover: hover) {
     &:hover {
       opacity: 1;
+      box-shadow: none;
     }
   }
 
@@ -1360,6 +1369,8 @@ body:has(.lamp.lamp--swing) .header .navbar__menu::before {
     }
   }
 
+  /* Every button of the site, not only the header's: sections that need a
+     wider one reset it (max-width: none) */
   .btn {
     max-width: 300px;
   }
@@ -1399,11 +1410,18 @@ body:has(.lamp.lamp--swing) .header .navbar__menu::before {
   filter: saturate(0.35) brightness(0.92);
   opacity: 0.85;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: filter 0.2s, opacity 0.2s;
+
+  /* Pressed without hover (touch): a zero-size, invisible shadow, all that
+     is left of the old boxed button. Keep it before :hover, which clears it */
+  &:active {
+    box-shadow: 0 0 0 var(--accent-color);
+  }
 
   @media (hover: hover) {
     &:hover {
       opacity: 1;
+      box-shadow: none;
     }
   }
 

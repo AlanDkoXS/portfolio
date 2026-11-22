@@ -1,11 +1,11 @@
 // Bootstrap shared by every page (home, resume, project pages): the steps
 // they all run, under one name each, so a page imports a single module.
-import switchLanguages from './switchLanguages.js';
+import { switchLanguages } from './language-switcher.js';
 import { setAutoDarkMode } from './auto-dark-mode.js';
-import lamp from './lamp.js';
-import navMenu from './nav_menu.js';
-import updateDateYear from './date_updater.js';
-import SnowEffect from './snow-effect.js';
+import { lamp } from './lamp.js';
+import { navMenu } from './nav-menu.js';
+import { updateFooterYear } from './footer-year.js';
+import { snowEffect } from './snow-effect.js';
 import { loadGoogleTagManager } from './google-tag-manager.js';
 
 // In their canonical order. Every step tolerates pages without its elements.
@@ -14,8 +14,8 @@ export const commonSteps = {
   theme: setAutoDarkMode, // light/dark theme; must run before the lamp
   lamp, // hanging lamp (theme switch)
   navMenu, // mobile hamburger menu
-  footerYear: updateDateYear,
-  snow: () => SnowEffect.init(), // seasonal
+  footerYear: updateFooterYear,
+  snow: () => snowEffect.init(), // seasonal
   analytics: loadGoogleTagManager, // deferred, never awaited
 };
 

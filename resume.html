@@ -55,8 +55,8 @@
     <!-- Scripts -->
     <!-- Only the modules this page uses (main.js is for index.html) -->
     <script type="module">
-        import { initFab } from '/assets/js/helpers/resume_fab_buttons.js';
-        import { loadPdf } from '/assets/js/helpers/pdf_loader.js';
+        import { initFab } from '/assets/js/helpers/resume-fab.js';
+        import { loadPdf } from '/assets/js/helpers/pdf-loader.js';
         import { initCommon } from '/assets/js/helpers/common.js';
 
         initCommon(['analytics']);
@@ -98,14 +98,14 @@
         });
     </script>
     <!-- The shared helpers hang from common.js: fetched now instead of after it -->
-    <link rel="modulepreload" href="/assets/js/helpers/switchLanguages.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/language-switcher.js" />
     <link rel="modulepreload" href="/assets/js/helpers/auto-dark-mode.js" />
     <link rel="modulepreload" href="/assets/js/helpers/lamp.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/nav_menu.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/date_updater.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/nav-menu.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/footer-year.js" />
     <link rel="modulepreload" href="/assets/js/helpers/snow-effect.js" />
     <link rel="modulepreload" href="/assets/js/helpers/google-tag-manager.js" />
-    <!-- pdf.js (module, imported by pdf_loader.js): the download starts early
+    <!-- pdf.js (module, imported by pdf-loader.js): the download starts early
          without blocking parsing. The version must match PDFJS_VERSION -->
     <link rel="modulepreload" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" crossorigin />
 </head>

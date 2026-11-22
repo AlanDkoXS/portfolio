@@ -2,7 +2,7 @@
 //   assets/docs/[ENG] Alan Quintana.pdf
 //   assets/docs/[ESP] Alan Quintana.pdf
 //   assets/docs/resume.pdf  (page 1 = EN, page 2 = ES; used by /resume)
-// Each CV must fit on ONE Letter page: pdf_loader.js shows page 1
+// Each CV must fit on ONE Letter page: pdf-loader.js shows page 1
 // for English and page 2 for Spanish. The script fails if either overflows.
 
 export const contact = {

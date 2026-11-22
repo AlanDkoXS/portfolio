@@ -6,7 +6,7 @@ import { desktopWidthQuery } from './viewport.js';
  * outside tap or when crossing to desktop. Without JS, the #nav link opens
  * it with :target. Tolerates pages without a menu (early return).
  */
-export default function navMenu() {
+export function navMenu() {
   const header = document.querySelector('.header');
   const burger = header?.querySelector('.navbar__burger');
   const menu = document.getElementById('nav');

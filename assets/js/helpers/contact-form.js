@@ -1,10 +1,10 @@
 // Contact form submission: honeypot, EmailJS and the result dialog.
-// The field rules live in form_validation.js; every text comes from
+// The field rules live in form-validation.js; every text comes from
 // translations.js in the page language (contactForm.*).
 /* global emailjs */
 import { loadEmailJS } from './email-js.js';
-import { FORM_FIELDS, addFieldValidationListeners, validateForm } from './form_validation.js';
-import { t } from './switchLanguages.js';
+import { FORM_FIELDS, addFieldValidationListeners, validateForm } from './form-validation.js';
+import { t } from './language-switcher.js';
 
 const EMAILJS_SERVICE = 'service_hokfs29';
 const EMAILJS_TEMPLATE = 'template_bzic089';
@@ -81,7 +81,7 @@ async function submitForm(e) {
   }
 }
 
-function sendEmail() {
+function initContactForm() {
   if (!formDOM) return;
 
   addFieldValidationListeners();
@@ -96,4 +96,4 @@ function sendEmail() {
   formDOM.addEventListener('submit', submitForm);
 }
 
-export default sendEmail;
+export { initContactForm };

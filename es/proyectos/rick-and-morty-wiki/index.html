@@ -102,20 +102,20 @@
 
     <script type="module">
       import { initCommon } from '/assets/js/helpers/common.js';
-      import ParallaxEffect from '/assets/js/helpers/parallax.js';
+      import { parallaxEffect } from '/assets/js/helpers/parallax.js';
       initCommon(['analytics']);
       document.addEventListener('DOMContentLoaded', () => {
         initCommon(['language', 'theme', 'lamp', 'navMenu']);
-        ParallaxEffect.init();
+        parallaxEffect.init();
         initCommon(['snow', 'footerYear']);
       });
     </script>
     <!-- The shared helpers hang from common.js: fetched now instead of after it -->
-    <link rel="modulepreload" href="/assets/js/helpers/switchLanguages.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/language-switcher.js" />
     <link rel="modulepreload" href="/assets/js/helpers/auto-dark-mode.js" />
     <link rel="modulepreload" href="/assets/js/helpers/lamp.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/nav_menu.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/date_updater.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/nav-menu.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/footer-year.js" />
     <link rel="modulepreload" href="/assets/js/helpers/snow-effect.js" />
     <link rel="modulepreload" href="/assets/js/helpers/google-tag-manager.js" />
   </head>

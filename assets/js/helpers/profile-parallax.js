@@ -39,4 +39,4 @@ function profileParallax() {
   }
 }
 
-export default profileParallax;
+export { profileParallax };

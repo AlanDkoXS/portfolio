@@ -1,6 +1,6 @@
 // Contact form validation: the rules of each field, the message a wrong
 // value gets (translations.js → validation.*) and how it's shown under the field.
-import { t } from './switchLanguages.js';
+import { t } from './language-switcher.js';
 
 export const FORM_FIELDS = ['name', 'email', 'subject', 'message'];
 

@@ -122,4 +122,4 @@ function loader() {
   }
 }
 
-export default loader;
+export { loader };
