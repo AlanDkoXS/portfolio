@@ -12,7 +12,9 @@ section {
    went unnoticed), over a fixed range: the first 240px of their entry,
    whatever their height.
    Content visible by default: without scroll-driven animations support or
-   with "reduce motion" it is simply shown (decorative effect). */
+   with "reduce motion" it is simply shown (decorative effect).
+   The footer is not in the list: it is the end of the page, so it never gets
+   240px into the viewport and its blocks stayed half faded and 2rem low. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
     @keyframes section-enter {
@@ -38,9 +40,7 @@ section {
       .designs__more,
       .contact__info-description,
       .contact__info-item,
-      .contact__form,
-      .footer__info > *,
-      .footer__social-list
+      .contact__form
     ) {
       animation: section-enter linear both;
       animation-timeline: view();

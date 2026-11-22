@@ -7,7 +7,8 @@ const MOBILE_BREAKPOINT = 600;
 // Three ways of asking the same question, each kept where it was already used
 // (they only disagree on fractional widths between 599 and 600):
 export const desktopWidthQuery = () => window.matchMedia(`(min-width: ${MOBILE_BREAKPOINT}px)`);
-export const isMobileWidth = () => window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`).matches;
+export const mobileWidthQuery = () => window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+export const isMobileWidth = () => mobileWidthQuery().matches;
 export const isDesktopViewport = () => window.innerWidth >= MOBILE_BREAKPOINT;
 
 // Touch devices (phones, tablets): they get tilt instead of mouse effects

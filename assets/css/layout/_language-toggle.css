@@ -2,7 +2,8 @@
    Flag button in the menu, matching the subtle links: no outline, as tall as
    a menu letter and always desaturated. It shows the current language;
    hover = preview of the language it will switch to, click = confirmation
-   (that same flag does a "pop" while the other page loads). */
+   (that same flag does a "pop" while the language switches: in place on the
+   home, loading the other page elsewhere). */
 
 .navbar__toggle--language {
   position: relative;
@@ -101,7 +102,7 @@
 }
 
 /* Click (.is-switching, .is-target and .is-current are set by
-   switchLanguages.js): the target language's flag stays and bounces. The
+   language-switcher.js): the target language's flag stays and bounces. The
    input has just changed, so with the pointer still on the button the hover
    preview would swap back to the old flag: !important pins the opacities
    over those more specific rules. */
@@ -130,5 +131,138 @@
   }
   100% {
     scale: 1;
+  }
+}
+
+/* === Mobile flag switch ===
+   In the mobile menu the single flag becomes two ghost buttons, one flag
+   each (4:3, desaturated like the desktop flag), under a "Change language"
+   caption. The current language's button is pressed (sunk onto its shadow)
+   and a bit darker; the other one is raised and switches the language. The
+   checkbox is checked for Spanish (language-switcher.js). The label itself
+   ignores taps, so tapping the current language does nothing: only the
+   other button (pointer-events: auto) toggles the checkbox. Desktop keeps
+   the flag button above. */
+.lang-switch,
+.navbar__toggles-caption {
+  display: none;
+}
+
+@media (width < 600px) {
+  /* "Cambiar idioma" / "Change language" above the flags */
+  .navbar__toggles .navbar__toggles-caption {
+    display: block;
+    font-size: var(--small-font-size);
+    font-weight: var(--font-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--footer-text);
+    opacity: 0.6;
+  }
+
+  .navbar__toggle--language {
+    /* the label is just the row: no box of its own */
+    .navbar__toggle--language-label {
+      height: auto;
+      aspect-ratio: auto;
+      overflow: visible;
+      filter: none;
+      opacity: 1;
+      pointer-events: none;
+
+      .flag-wrapper {
+        display: none;
+      }
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* Same size and 4:3 shape the flag had in the mobile menu (1.15em tall at
+       1.15rem), now as a ghost button. No outline (the accent color stood out
+       too much): just the hard shadow of the primary buttons, in their ink
+       color (the dark-mode background in light mode, darker in dark mode) */
+    .lang-switch__opt {
+      position: relative;
+      isolation: isolate;
+      display: block;
+      font-size: 1.15rem;
+      height: 1.15em;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 2px;
+      box-shadow: 4px 4px 0 var(--btn-ink-color);
+      pointer-events: auto;
+      transition:
+        transform var(--press-duration),
+        box-shadow var(--press-duration);
+
+      /* Ink overlays (shared rule in _background.css), over the flag on a
+         finer 120px tile: ::before, a subtle texture; ::after, dark mode
+         only (below), an inner grain shadow, a bit darker, on the side away
+         from the lamp (bottom left) */
+      &::before,
+      &::after {
+        --grain-z: 1;
+        background-size: 120px;
+      }
+
+      &::before {
+        --grain-opacity: 0.3;
+      }
+
+      &::after {
+        --grain-opacity: 1;
+        display: none;
+        -webkit-mask: var(--grain-mask-hover-left);
+        mask: var(--grain-mask-hover-left);
+        box-shadow: inset 5px -6px 8px -3px rgb(0 0 0 / 0.55);
+      }
+
+      /* press feedback on the other language's button */
+      &:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0 0 0 var(--btn-ink-color);
+      }
+    }
+
+    /* The flag fills the button, desaturated (like the desktop flag). Undoes
+       the label's img rule above (absolute, hidden, zoomed in). */
+    .lang-switch__flag {
+      position: static;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      scale: none;
+      filter: saturate(0.35) brightness(0.92);
+      transition: filter 0.15s;
+    }
+
+    /* while switching (language-switcher.js) the flags change instantly */
+    &.is-switching .lang-switch__flag {
+      transition: none;
+    }
+
+    /* current language: pressed, a bit darker, not tappable */
+    .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label .lang-switch__opt--es,
+    .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label .lang-switch__opt--en {
+      transform: translate(4px, 4px);
+      box-shadow: 0 0 0 var(--btn-ink-color);
+      pointer-events: none;
+
+      .lang-switch__flag {
+        filter: saturate(0.35) brightness(0.6);
+      }
+    }
+  }
+
+  @container style(--color-scheme: dark) {
+    .navbar__toggle--language .lang-switch .lang-switch__opt::after {
+      display: block;
+    }
   }
 }

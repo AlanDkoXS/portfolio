@@ -76,18 +76,19 @@ export function lamp() {
   const release = () => {
     if (!switching) button.classList.remove('lamp--pulling');
   };
-  // Restarts the swing (lamp-swing, _lamp.css) from its first frame. Already
-  // swinging: the class is toggled as before and the running animation is
-  // rewound with the Web Animations API (getAnimations only updates styles;
-  // the old offsetWidth read forced a whole layout to restart it).
+  // Restarts the swing (_lamp.css: lamp-cord-swing on the lamp, lamp-swing on
+  // its image) from its first frame. Already swinging: the class is removed
+  // and getAnimations() brings the styles up to date (style only; the old
+  // offsetWidth read forced a whole layout), which cancels the animations only
+  // the class was running, so adding it back starts them over. Those that
+  // other rules keep running (:hover, the mobile menu's bungee drop) go on,
+  // as with the old reflow.
   const swing = () => {
-    const wasSwinging = button.classList.contains('lamp--swing');
-    button.classList.remove('lamp--swing');
-    button.classList.add('lamp--swing');
-    if (!wasSwinging) return;
-    for (const animation of button.getAnimations({ subtree: true })) {
-      if (animation.animationName === 'lamp-swing') animation.currentTime = 0;
+    if (button.classList.contains('lamp--swing')) {
+      button.classList.remove('lamp--swing');
+      button.getAnimations({ subtree: true });
     }
+    button.classList.add('lamp--swing');
   };
 
   // Mouse/touch: the chain looks pulled while it's held down.
@@ -142,8 +143,10 @@ export function lamp() {
     }).observe(header, { attributes: true, attributeFilter: ['class'] });
   }
 
+  // The swing is two animations (cord from the top, lamp at the joint);
+  // the cord one ends last, so the class is removed when it finishes
   button.addEventListener('animationend', (event) => {
-    if (event.animationName === 'lamp-swing') button.classList.remove('lamp--swing');
+    if (event.animationName === 'lamp-cord-swing') button.classList.remove('lamp--swing');
   });
 
   // The theme can also change via the system or from another tab

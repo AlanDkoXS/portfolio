@@ -141,7 +141,9 @@
 .project__card-front::after,
 .skills__summary.btn::before,
 .skills__grid::after,
-.project-media .project-media__frame::after {
+.project-media .project-media__frame::after,
+.lang-switch__opt::before,
+.lang-switch__opt::after {
   content: '';
   position: absolute;
   inset: 0;

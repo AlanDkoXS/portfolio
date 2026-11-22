@@ -1,7 +1,18 @@
 /* === Resume === */
 
+/* Back button above the CV, below the fixed navbar (same as the case pages).
+   .grid--container in the selector: the base rule (nested in body, more
+   specific) sets this element's margin and padding */
+.resume-back.grid--container {
+  padding-top: calc(var(--header-height) + 1.25rem);
+
+  @media (width < 600px) {
+    padding-top: calc(var(--header-height) + 0.75rem);
+  }
+}
+
 /* The CV section fills the whole visible screen: the footer stays out of
-   the initial view and the PDF sits a bit below the bar */
+   the initial view */
 #pdf-container {
   display: flex;
   flex-direction: column;
@@ -9,7 +20,7 @@
   align-items: center;
   box-sizing: border-box;
   min-height: 100svh;
-  padding: calc(var(--header-height) + 2.5rem) 20px 2.5rem;
+  padding: 1.25rem 20px 2.5rem;
   gap: 20px;
   margin: 0;
 }
@@ -66,6 +77,46 @@
 
     .fab-text {
       display: inline-block;
+    }
+  }
+}
+
+/* Mobile: the CV takes as much of the screen as it can (thin side margins,
+   less space above) and the download FAB floats over the blank bottom-right
+   corner of the CV page. It stays fixed on screen while the CV scrolls under
+   it, rising only to stay above the footer (resume-fab.js sets its top and
+   right). It starts contracted (icon only) and expands with its text once
+   the visitor scrolls down, growing to the left over the blank area. The
+   desktop logic that lifts it over the footer does not run here. */
+@media (width < 600px) {
+  #pdf-container {
+    min-height: 0;
+    padding: 0.75rem 8px 2rem;
+  }
+
+  /* above the CV page but below the header and the mobile menu panel */
+  .fab-container {
+    z-index: var(--z-fixed);
+  }
+
+  .fab {
+    width: 3.25rem;
+    height: 3.25rem;
+    font-size: 1.35rem;
+
+    &.expanded {
+      width: 10.5rem;
+      gap: 0.5rem;
+      padding: 0 1.1rem;
+      font-size: 1rem;
+
+      i {
+        font-size: 1.35rem;
+      }
+
+      .fab-text {
+        margin-left: 0;
+      }
     }
   }
 }

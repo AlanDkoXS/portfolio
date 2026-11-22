@@ -59,17 +59,140 @@
   left: 0;
   z-index: var(--z-fixed);
 
+  /* Look sequence, once the hero is shown (html.hero-ready, after the
+     loader; right away without JS). Frames: 0 original gaze, 1-10 turn to
+     look, 11 looking, 12-16 blink. Timeline: turns at 1s, blinks once at 2s,
+     blinks twice 5s later (7s and 7.35s), turns back 8s after that (15s,
+     turn frames in reverse) to frame 0. Loops forever: each cycle lasts
+     22.45s, so the next turn comes 8s after the gaze is back.
+     step-end holds each keyframe's frame until the next one. */
   @media (prefers-reduced-motion: no-preference) {
-    animation: animateSprite 1s steps(20, jump-none) 2s;
+    :is(html:not(.js), .hero-ready) & {
+      animation: profile-look 22.45s step-end infinite;
+    }
   }
 }
 
-@keyframes animateSprite {
-  from {
+@keyframes profile-look {
+  0.000% {
     background-position: 0% 0;
   }
-  to {
-    background-position: 100% 0;
+  4.454% {
+    background-position: 5.2632% 0;
+  }
+  4.677% {
+    background-position: 10.5263% 0;
+  }
+  4.900% {
+    background-position: 15.7895% 0;
+  }
+  5.122% {
+    background-position: 21.0526% 0;
+  }
+  5.345% {
+    background-position: 26.3158% 0;
+  }
+  5.568% {
+    background-position: 31.5789% 0;
+  }
+  5.791% {
+    background-position: 36.8421% 0;
+  }
+  6.013% {
+    background-position: 42.1053% 0;
+  }
+  6.236% {
+    background-position: 47.3684% 0;
+  }
+  6.459% {
+    background-position: 52.6316% 0;
+  }
+  8.909% {
+    background-position: 63.1579% 0;
+  }
+  9.087% {
+    background-position: 68.4211% 0;
+  }
+  9.265% {
+    background-position: 73.6842% 0;
+  }
+  9.532% {
+    background-position: 78.9474% 0;
+  }
+  9.710% {
+    background-position: 84.2105% 0;
+  }
+  9.889% {
+    background-position: 57.8947% 0;
+  }
+  31.180% {
+    background-position: 63.1579% 0;
+  }
+  31.359% {
+    background-position: 68.4211% 0;
+  }
+  31.537% {
+    background-position: 73.6842% 0;
+  }
+  31.804% {
+    background-position: 78.9474% 0;
+  }
+  31.982% {
+    background-position: 84.2105% 0;
+  }
+  32.160% {
+    background-position: 57.8947% 0;
+  }
+  32.739% {
+    background-position: 63.1579% 0;
+  }
+  32.918% {
+    background-position: 68.4211% 0;
+  }
+  33.096% {
+    background-position: 73.6842% 0;
+  }
+  33.363% {
+    background-position: 78.9474% 0;
+  }
+  33.541% {
+    background-position: 84.2105% 0;
+  }
+  33.719% {
+    background-position: 57.8947% 0;
+  }
+  66.815% {
+    background-position: 47.3684% 0;
+  }
+  67.038% {
+    background-position: 42.1053% 0;
+  }
+  67.261% {
+    background-position: 36.8421% 0;
+  }
+  67.483% {
+    background-position: 31.5789% 0;
+  }
+  67.706% {
+    background-position: 26.3158% 0;
+  }
+  67.929% {
+    background-position: 21.0526% 0;
+  }
+  68.151% {
+    background-position: 15.7895% 0;
+  }
+  68.374% {
+    background-position: 10.5263% 0;
+  }
+  68.597% {
+    background-position: 5.2632% 0;
+  }
+  68.820% {
+    background-position: 0% 0;
+  }
+  100.000% {
+    background-position: 0% 0;
   }
 }
 
@@ -266,7 +389,7 @@ html.js:not(.hero-ready) .home .home__title {
     min-height: 100svh;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    padding: 0.5rem 0 1rem;
+    padding: 0.25rem 0 0.6rem;
 
     .home__container {
       row-gap: 0;
@@ -281,7 +404,7 @@ html.js:not(.hero-ready) .home .home__title {
     .home__image {
       /* height = the free space of its row; width from the 1:1 ratio */
       height: 100%;
-      max-height: min(80vw, 320px);
+      max-height: min(90vw, 370px);
       min-height: 0;
       max-width: 100%;
       margin: 0 auto;
@@ -305,16 +428,16 @@ html.js:not(.hero-ready) .home .home__title {
     }
 
     .home__social-item {
-      margin: 0.4rem 1rem;
+      margin: 0.15rem 1rem;
       /* icons don't grow with the system text (they aren't text) */
       font-size: 34px;
     }
 
     .home__buttons .btn {
-      margin: 0.3rem 0;
+      margin: 0.22rem 0;
       /* button height = the text's + a fixed padding: with large text
          all four still fit on screen */
-      padding-block: min(0.7rem, 11px);
+      padding-block: min(0.55rem, 9px);
     }
   }
 }

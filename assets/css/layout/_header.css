@@ -111,13 +111,15 @@ body:has(#pdf-container) .header {
   height: 2.2rem;
 }
 
+/* The logo name is always Poppins, on every page (the resume names its
+   spans .resume__logo--*, so it is set on the logo link itself too) */
+.header .navbar__logo,
 .header .navbar__logo--name,
 .header .navbar__logo--lastname {
   font-family: var(--brand-font);
 }
 
-/* The resume page names its logo spans .resume__logo--*: same weights,
-   but without the brand font above */
+/* The resume page's logo spans (.resume__logo--*) take the same weights */
 .header .navbar__logo--name,
 .resume__logo--name {
   font-weight: 300;
@@ -131,7 +133,7 @@ body:has(#pdf-container) .header {
 
 /* === Menu panel ===
    Mobile: panel that drops just below the bar, with the same glass and grain
-   as the header. Opened by .navbar__burger (nav_menu.js sets .menu-open on
+   as the header. Opened by .navbar__burger (nav-menu.js sets .menu-open on
    the header); without JS, #nav:target. */
 
 .header .navbar__menu {
@@ -236,15 +238,22 @@ body:has(#pdf-container) .header {
   }
 }
 
-/* === Toggles === */
+/* === Toggles ===
+   Mobile panel: the language switch in a column (caption above the flags,
+   _language-toggle.css), separated from the sections by a line under the
+   last link. Desktop: a row in the bar (see "Desktop" at the end). */
 
 .header .navbar__toggles {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 1.75rem;
-  margin-top: 1.25rem;
+  gap: 0.6rem;
+  width: min(70%, 16rem);
+  margin: 1.25rem auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-color);
 }
 
 /* === Dark Mode Toggle ===
@@ -529,8 +538,12 @@ body:has(.lamp.lamp--swing) .header .navbar__menu::before {
     }
 
     .navbar__toggles {
+      flex-direction: row;
       gap: 1rem;
-      margin-top: 0;
+      width: auto;
+      margin: 0;
+      padding-top: 0;
+      border-top: 0;
     }
 
     .navbar__burger {
