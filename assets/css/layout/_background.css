@@ -126,3 +126,28 @@
     position: absolute;
   }
 }
+
+/* === Ink grain overlay (shared) ===
+   Uniform dark grain (--grain-ink) painted over a surface, behind its
+   content: the host is positioned and isolates its stacking context. Defined
+   once for every surface that carries it; each one tunes it in its own
+   partial, on the pseudo-element itself, with --grain-opacity (default 0.2)
+   and --grain-z (default -1). */
+.header::after,
+.header .navbar__menu::after,
+.footer::after,
+.contact .contact__container .contact__form::after,
+.project-cta::after,
+.project__card-front::after,
+.skills__summary.btn::before,
+.skills__grid::after,
+.project-media .project-media__frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: var(--grain-z, -1);
+  background: var(--grain-ink);
+  background-size: var(--grain-ink-size);
+  opacity: var(--grain-opacity, 0.2);
+  pointer-events: none;
+}

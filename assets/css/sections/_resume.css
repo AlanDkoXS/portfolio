@@ -1,14 +1,5 @@
 /* === Resume === */
 
-.resume__logo--name {
-  font-weight: 300;
-}
-
-.resume__logo--lastname {
-  margin-left: -3.5px;
-  font-weight: 600;
-}
-
 /* The CV section fills the whole visible screen: the footer stays out of
    the initial view and the PDF sits a bit below the bar */
 #pdf-container {
@@ -23,7 +14,7 @@
   margin: 0;
 }
 
-/* <canvas> drawn by pdf_loader.js (it only sets an inline width) */
+/* <canvas> drawn by pdf-loader.js (it only sets an inline width) */
 .resume__page {
   display: block;
   max-width: 100%;
@@ -34,35 +25,21 @@
   outline: 1px solid var(--border-color);
 }
 
-/* === Modal texts (download dialog and the home contact dialog) === */
-
-.modal-content {
-  h2,
-  p {
-    text-align: center;
-  }
-
-  p {
-    margin: 0.25rem 0 1rem;
-    color: var(--text-muted);
-  }
-}
-
 /* === Floating download button === */
 
 .fab-container {
   position: fixed;
   bottom: 4rem;
   right: 2rem;
-  z-index: 1000;
+  z-index: var(--z-fab);
   display: flex;
   flex-direction: column;
-  /* Moved by resume_fab_buttons.js (translate) so it doesn't cover the footer */
+  /* Moved by resume-fab.js (translate) so it doesn't cover the footer */
   transition: translate 0.15s linear;
 }
 
-/* Square with the icon only; resume_fab_buttons.js adds .expanded (icon +
-   text) once the page is scrolled */
+/* Square with the icon only; resume-fab.js adds .expanded (icon + text)
+   once the page is scrolled */
 .fab {
   display: inline-flex;
   align-items: center;

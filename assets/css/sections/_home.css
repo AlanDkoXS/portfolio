@@ -51,7 +51,7 @@
   background-size: 2000% 100%;
   background-position: 0 0;
   max-width: none;
-  filter: drop-shadow(5px -5px 5px rgba(0, 18, 25, 0.5));
+  filter: drop-shadow(5px -5px 5px color-mix(in srgb, var(--teal-950) 50%, transparent));
   width: 100%;
   height: 100%;
   position: absolute;
@@ -126,7 +126,7 @@ html.js:not(.hero-ready) .home .home__title {
   visibility: hidden;
 }
 
-/* === Desktop hero copy (handleResponsiveContent in switchLanguages.js) === */
+/* === Desktop hero copy (handleResponsiveContent in language-switcher.js) === */
 
 .home .home__info .home__description--lines {
   max-width: 62ch;
@@ -248,13 +248,8 @@ html.js:not(.hero-ready) .home .home__title {
   }
 
   /* The about content lives in the hero description: hide the About section
-     and its menu link (kept next to the :has() rule in _header.css for
-     browsers without :has()) */
+     (its menu item is hidden in _header.css) */
   #about.about.section {
-    display: none;
-  }
-
-  .navbar__list .navbar__item a[href$="#about"] {
     display: none;
   }
 }

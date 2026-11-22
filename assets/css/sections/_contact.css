@@ -18,7 +18,7 @@
   .contact__form .contact__form-button {
     width: 100%;
     max-width: none;
-    margin-top: var(--mr-4);
+    margin-top: 0;
     margin-inline: 0;
     text-align: center;
     display: flex;
@@ -56,13 +56,13 @@
     /* On focus, the same gold outline as the buttons
        (.btn:focus-visible) */
     &:focus {
-      outline: 3px solid var(--accent-ink);
+      outline: var(--focus-ring);
       outline-offset: 4px;
     }
   }
 
   /* Message: starts at twice the height of the other fields and grows
-     with the text (field-sizing; send_form.js mimics it in
+     with the text (field-sizing; contact-form.js mimics it in
      browsers without support) up to a cap, then scrolls */
   textarea.contact__form-input {
     resize: none;
@@ -224,27 +224,23 @@
   box-shadow: 0 8px 24px var(--shadow-color);
 }
 
+/* Page grain dots */
 .contact .contact__container .contact__form::before,
-.contact .contact__container .contact__form::after,
-.project-cta::before,
-.project-cta::after {
+.project-cta::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
+  background: url('/assets/img/bgGrain-tile.webp') 0 0 / 256px 256px;
   border-radius: inherit;
+  opacity: 0.1;
   pointer-events: none;
 }
 
-.contact .contact__container .contact__form::before,
-.project-cta::before {
-  background: url('/assets/img/bgGrain-tile.webp') 0 0 / 256px 256px;
-  opacity: 0.1;
-}
-
+/* Dark grain over the dots: the shared ink overlay of _background.css, a
+   bit denser and following the rounded corners */
 .contact .contact__container .contact__form::after,
 .project-cta::after {
-  background: var(--grain-ink);
-  background-size: 140px;
-  opacity: 0.25;
+  --grain-opacity: 0.25;
+  border-radius: inherit;
 }

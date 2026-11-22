@@ -31,7 +31,7 @@
   width: 280px;
   height: 350px;
   transform: translateX(-50%);
-  /* cardCarousel.js moves the cards with inline transform, opacity and
+  /* card-carousel.js moves the cards with inline transform, opacity and
      z-index, and toggles .highlight (filter). `all` on purpose: the size
      (viewport resize, breakpoints) and the inherited color (theme switch)
      ease too */
@@ -46,6 +46,9 @@
      behind, and those behind look slightly dimmer */
   &.highlight {
     filter: brightness(1);
+    /* fallback: card-carousel.js always writes an inline z-index along
+       with the class */
+    z-index: 2;
 
     .project__card-inner {
       box-shadow:
@@ -59,7 +62,7 @@
   }
 }
 
-/* Released (cardCarousel.js sets it when a drag ends): the carousel box
+/* Released (card-carousel.js sets it when a drag ends): the carousel box
    itself eases its size changes */
 .project__card--carousel.smooth-return {
   transition: all 0.2s ease;
@@ -75,7 +78,7 @@
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  border-radius: 1rem;
+  border-radius: var(--border-radius-large);
   /* Shadow cast sideways onto the cards behind */
   box-shadow:
     0 6px 14px rgb(0 0 0 / 0.25),
@@ -102,7 +105,7 @@
   flex-direction: column;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border-radius: 1rem;
+  border-radius: var(--border-radius-large);
   overflow: hidden;
 }
 
@@ -116,19 +119,13 @@
   background-color: var(--teal-800);
 
   /* Grain texture across the whole card, top to bottom (seamless), slightly
-     denser toward the base. Above the screenshot and below the text and
-     icons (z-index 3) */
+     denser toward the base: the shared ink overlay of _background.css, above
+     the screenshot and below the text and icons (z-index 3) */
   &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background: var(--grain-ink);
-    background-size: 140px;
+    --grain-z: 2;
+    --grain-opacity: 0.1;
     -webkit-mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
     mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
-    opacity: 0.1;
-    pointer-events: none;
   }
 }
 
@@ -147,7 +144,9 @@
   );
   border: 1px solid var(--border-color);
 
-  /* Darker toward the base, below the text and the buttons */
+  /* Darker toward the base, below the text and the buttons. The stop is
+     --teal-950 at 60%, written as a literal: a color-mix() stop would switch
+     the gradient to Oklab interpolation */
   &::after {
     content: '';
     position: absolute;
@@ -172,7 +171,8 @@
   scale: 1.1;
 
   /* Dark veil rising from the bottom: dense at the base, lighter toward
-     the top (lets the design show) and still covering the centered text */
+     the top (lets the design show) and still covering the centered text.
+     Stops in --teal-950, as literals (see the back's gradient above) */
   &::after {
     content: '';
     position: absolute;
@@ -188,8 +188,8 @@
   }
 }
 
-/* Cover images: only when #projects gets near the screen (observer.js adds
-   .is-near to it), so they aren't downloaded on page load. Without JS (html
+/* Cover images: only when #projects gets near the screen (project-covers.js
+   adds .is-near to it), so they aren't downloaded on page load. Without JS (html
    without .js) they always show. Every rule, dark ones included, hangs from
    the same prefix so they all share one specificity and the dark version wins
    by order.
@@ -245,7 +245,7 @@
 .project__title,
 .project__subtitle,
 .project__tech-stack {
-  filter: drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
+  filter: drop-shadow(0 2px 3px color-mix(in srgb, var(--teal-950) 80%, transparent));
 }
 
 .project__title,
@@ -257,7 +257,7 @@
 
 .project__title,
 .project__description {
-  text-shadow: 0 2px 6px rgb(0 18 25 / 0.9);
+  text-shadow: 0 2px 6px color-mix(in srgb, var(--teal-950) 90%, transparent);
 }
 
 .project__title {
@@ -299,7 +299,7 @@
   aspect-ratio: 1;
   fill: var(--primary-color);
   /* Grainy inner shadow (--icon-grain filter, like the skills ones) */
-  filter: var(--icon-grain) drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
+  filter: var(--icon-grain) drop-shadow(0 2px 3px color-mix(in srgb, var(--teal-950) 80%, transparent));
   transition: transform 0.3s ease;
 
   &:hover {
@@ -335,7 +335,10 @@
   border: 2px solid var(--teal-950);
   border-radius: var(--border-radius-small);
   box-shadow: 3px 3px 0 #000, var(--grain-inset-shadow);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  transition:
+    transform var(--press-duration) ease,
+    box-shadow var(--press-duration) ease,
+    background-color var(--press-duration) ease;
 
   /* Real pointer only: on touch screens :hover stays "stuck" after a tap */
   @media (hover: hover) {
@@ -351,17 +354,7 @@
     box-shadow: 0 0 0 #000, var(--grain-inset-shadow);
   }
 
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--grain-gold);
-    background-size: 120px;
-    -webkit-mask: var(--grain-mask);
-    mask: var(--grain-mask);
-    pointer-events: none;
-  }
+  /* its grainy inner shadow (::after) is the shared one of _buttons.css */
 
   i {
     font-size: 1.25rem;
@@ -380,34 +373,8 @@
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  /* Same style as the site's outline buttons: gold outline and hard
-     shadow, fills on hover and sinks when pressed */
-  color: var(--accent-color);
-  background-color: var(--bg-color-section);
-  border: 2px solid var(--accent-color);
-  border-radius: var(--border-radius-small);
-  box-shadow: 4px 4px 0 var(--accent-color);
-  cursor: pointer;
-  transition: background-color 0.15s, color 0.15s, translate 0.15s, box-shadow 0.15s;
-
-  @media (hover: hover) {
-    &:hover {
-      color: var(--on-accent-color);
-      background-color: var(--accent-color);
-      translate: -2px -2px;
-      box-shadow: 6px 6px 0 var(--btn-ink-color);
-    }
-  }
-
-  &:active {
-    translate: 4px 4px;
-    box-shadow: 0 0 0 var(--accent-color);
-  }
-
-  &:focus-visible {
-    outline: 3px solid var(--accent-ink);
-    outline-offset: 3px;
-  }
+  /* The look (outline, hard shadow, hover, press, focus) is the "Outlined
+     icon buttons" rule of _buttons.css */
 
   i {
     font-size: 1.5rem;

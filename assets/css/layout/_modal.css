@@ -9,6 +9,17 @@
   box-shadow: 0 12px 32px var(--shadow-color);
   width: 100%;
   position: relative;
+
+  /* Texts of both dialogs (resume download and home contact confirmation) */
+  h2,
+  p {
+    text-align: center;
+  }
+
+  p {
+    margin: 0.25rem 0 1rem;
+    color: var(--text-muted);
+  }
 }
 
 /* X button to close (resume) */
@@ -32,7 +43,7 @@
   }
 
   &:focus-visible {
-    outline: 3px solid var(--accent-ink);
+    outline: var(--focus-ring);
     outline-offset: 2px;
   }
 }

@@ -23,12 +23,11 @@
   --gold-300: #ffd95c;
   --gold-400: #f3ce3a;
   --gold-500: #e4e6e7; /* dark mode: near-white gray (neutral, no yellow) */
+  --gold-700: #b08814; /* dark gold: inner shadows on gold pieces */
 
   /* Theme Colors: both modes are teal with gold text; the dark one is
      deeper (light-dark() follows color-scheme: system or toggle) */
-  /* Main color: gold in light mode, near-white gray in dark mode;
-     the always-dark areas (footer, navbar, cards over photos)
-     use --gold-400 */
+  /* Main color: gold in light mode, near-white gray in dark mode */
   --gold-main: light-dark(var(--gold-400), var(--gold-500));
   /* Emphasis (hero <strong>): one step lighter than --gold-main (white in dark) */
   --gold-emphasis: light-dark(var(--gold-300), #ffffff);
@@ -44,22 +43,30 @@
   --bg-color-section: light-dark(var(--teal-800), var(--teal-deep-800));
   --surface-color: light-dark(var(--teal-700), var(--teal-deep-700));
   --bg-color-buttons: light-dark(var(--teal-600), var(--teal-deep-600)); /* inputs, secondary controls */
-  --border-color: light-dark(rgb(243 206 58 / 0.18), rgb(228 230 231 / 0.18));
+  --border-color: light-dark(
+    color-mix(in srgb, var(--gold-400) 18%, transparent),
+    color-mix(in srgb, var(--gold-500) 18%, transparent)
+  );
   --input-bg: light-dark(var(--teal-900), var(--teal-deep-900)); /* form fields: darker than the background */
   --footer-bg: light-dark(var(--teal-950), #00070a); /* footer and navbar; in dark, slightly darker than the fields */
   --footer-text: #e6eef0;
 
   /* Shadows */
   --shadow-color: rgb(0 0 0 / 0.45);
-  --bg-layer-shadow: rgb(0 18 25 / 1); /* hero layers */
-  --profile-shadow: rgb(0 18 25 / 1);
+  --bg-layer-shadow: var(--teal-950); /* hero layers */
+  --profile-shadow: var(--teal-950); /* hero portrait */
   /* Button outline and hard shadow: on the deeper background black is
      used so the shadow still stands out */
   --btn-ink-color: light-dark(var(--teal-deep-800), #000); /* button shadow/outline; in light, the dark mode background */
 
-  /* Dark gold grain (approx. #a8800f): each dot takes its opacity from the
-     noise. Used as the inner shadow of buttons and tags (see
-     _buttons.css); SVG icons use the #grain-inset filter in index.html */
+  /* Grain
+     ========================================================================== */
+  /* Images (SVG noise as a seamless tile; each dot takes its opacity from
+     the noise). The scheme picks which one is used: see --grain-gold and
+     --btn-grain at the end of this file. */
+  /* Dark gold grain (approx. #a8800f): the grainy inner shadow of buttons,
+     tags and bricks in light mode (shared rule in _buttons.css); SVG icons
+     use the #grain-inset filter in index.html */
   --grain-gold-deep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.2 -1.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Gray grain (#8f969b): near-white gray buttons in dark mode */
   --grain-gold-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .561  0 0 0 0 .588  0 0 0 0 .608  0 0 0 7 -1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -71,10 +78,27 @@
      (more dots, more opaque) than the one on tags and icons */
   --grain-btn-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23  0 0 0 0 .255  0 0 0 0 .275  0 0 0 8 -1.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --grain-btn-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23  0 0 0 0 .255  0 0 0 0 .275  0 0 0 8 -1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  /* Uniform dark grain (ink), as a seamless tile */
+  /* Uniform dark grain (ink): the overlay of the dark surfaces (shared rule
+     in _background.css) */
   --grain-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 .07  0 0 0 0 .1  0 0 0 3.6 -1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  /* Inner shadow: dark gold on gold buttons (light mode); in dark mode
-     (near-white gray buttons) the same gray as the grain */
+  /* Tile size of each grain (the width of its SVG) */
+  --grain-ink-size: 140px;
+  --grain-gold-size: 120px;
+
+  /* Masks of the gold grain: bottom and right edges (the light comes from
+     the top left), further in on hover, or the whole border */
+  --grain-mask: linear-gradient(to top, #000, transparent 55%), linear-gradient(to left, #000, transparent 30%);
+  --grain-mask-hover: linear-gradient(to top, #000, transparent 85%), linear-gradient(to left, #000, transparent 40%);
+  --grain-mask-all: radial-gradient(farthest-side, transparent 50%, #000 100%);
+  /* Same masks mirrored (grain at the bottom left): buttons in dark mode */
+  --grain-mask-left: linear-gradient(to top, #000, transparent 55%), linear-gradient(to right, #000, transparent 30%);
+  --grain-mask-hover-left: linear-gradient(to top, #000, transparent 85%), linear-gradient(to right, #000, transparent 40%);
+
+  /* Inner shadow under the grain: dark gold on gold pieces (light mode); in
+     dark mode (near-white gray pieces) the same gray as the grain.
+     The dark gold of these shadows is --gold-700 at 78%, kept as a literal:
+     they are transitioned (hover, press, theme switch) and a color-mix()
+     colour would interpolate in Oklab instead of sRGB */
   --grain-inset-shadow: inset -5px -6px 8px -2px light-dark(rgb(176 136 20 / 0.78), #8f969b),
     inset -2px -3px 4px -1px light-dark(transparent, #8f969b);
   /* Inner shadow of the buttons. Light: bottom right (light from the top
@@ -83,12 +107,6 @@
      (an offset can't take light-dark()). */
   --btn-inset-shadow-light: inset -5px -6px 8px -2px rgb(176 136 20 / 0.78);
   --btn-inset-shadow-dark: inset 5px -6px 8px -2px #868d92, inset 2px -3px 4px -1px #7c8388;
-  --grain-mask: linear-gradient(to top, #000, transparent 55%), linear-gradient(to left, #000, transparent 30%);
-  --grain-mask-all: radial-gradient(farthest-side, transparent 50%, #000 100%);
-  --grain-mask-hover: linear-gradient(to top, #000, transparent 85%), linear-gradient(to left, #000, transparent 40%);
-  /* Same masks mirrored (grain at the bottom left): buttons in dark mode */
-  --grain-mask-left: linear-gradient(to top, #000, transparent 55%), linear-gradient(to right, #000, transparent 30%);
-  --grain-mask-hover-left: linear-gradient(to top, #000, transparent 85%), linear-gradient(to right, #000, transparent 40%);
 
   /* Typography
      ========================================================================== */
@@ -97,7 +115,6 @@
   --small-font-size: calc(0.9em + 0.2vw);
   --title-font-size: calc(1rem + 0.5vw);
   --title-scale: 1.5; /* all headings (h1–h6) are 1.5× */
-  --icon-font-size: calc(2rem + 0.5vw);
 
   /* Font Weights */
   --font-semibold: 600;
@@ -108,24 +125,27 @@
   --title-font: 'Outfit', var(--primary-font); /* headings */
   --brand-font: 'Poppins', var(--primary-font); /* logo and loader: always Poppins */
 
+  /* Interaction
+     ========================================================================== */
+  /* Keyboard focus ring of buttons, links and fields (each one sets its own
+     outline-offset). Resolved here: it follows the root --accent-ink */
+  --focus-ring: 3px solid var(--accent-ink);
+  /* Buttons lifting on hover and sinking when pressed */
+  --press-duration: 0.15s;
+
   /* Layers
      ========================================================================== */
   --z-fixed: 1;
   --z-lamp: 2; /* lamp: above the content, below the navbar */
   --z-modal: 3; /* header / menu */
   --z-loader: 4;
+  --z-fab: 1000; /* resume download button: above every other layer */
 
   /* Spacing
      ========================================================================== */
   --button-padding: 0.8rem;
-
-  /* Margins */
   --margin-small: 0.5rem;
-  --margin-medium: 1rem;
-
-  /* Gaps */
   --gap-small: 0.5rem;
-  --gap-medium: 1rem;
 
   /* Borders
      ========================================================================== */
@@ -134,10 +154,11 @@
   --border-radius-large: 1rem;
 }
 
-/* Media Queries Adjustments
+/* Desktop Adjustments
    ========================================================================== */
-@media (min-width: 600px) {
+@media (width >= 600px) {
   :root {
+    --header-height: 3.5rem; /* compact desktop bar */
     /* Scales with the width: with zoom or on small laptops it doesn't look huge */
     --normal-font-size: clamp(0.95rem, 0.6rem + 0.8vw, 1.15rem);
     --small-font-size: 1rem;
@@ -156,7 +177,7 @@
      @container style(--color-scheme: light) */
   --color-scheme: light;
   /* Grain of buttons and tags per scheme (an image can't take
-     light-dark()): dark gold in light, emphasis gold in dark */
+     light-dark()): dark gold in light, gray in dark */
   --grain-gold: var(--grain-gold-deep);
   --btn-grain: var(--grain-gold-deep);
   --btn-grain-strong: var(--grain-gold-strong-deep);

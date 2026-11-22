@@ -111,7 +111,7 @@
   gap: 0.75rem 1rem;
   margin-top: 0.5rem;
 
-  /* the desktop header caps .btn at 300px and was cutting the text */
+  /* the desktop cap of .btn (300px, _buttons.css) was cutting the text */
   .btn {
     width: auto;
     max-width: none;
@@ -132,8 +132,9 @@
     justify-items: center;
   }
 
-  /* Screenshot frame: outline, hard shadow and grain texture on top
-     (at 10%, same as the form's but subtler) */
+  /* Screenshot frame: outline, hard shadow and grain texture on top (the
+     shared ink overlay of _background.css at 10%, painted over the image
+     instead of behind the content) */
   .project-media__frame {
     position: relative;
     display: block;
@@ -145,13 +146,8 @@
     background: var(--surface-color);
 
     &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--grain-ink);
-      background-size: 140px;
-      opacity: 0.1;
-      pointer-events: none;
+      --grain-z: auto;
+      --grain-opacity: 0.1;
     }
   }
 
@@ -253,22 +249,10 @@
     border: 2px solid var(--btn-ink-color);
     border-radius: var(--border-radius-small);
     box-shadow: 3px 3px 0 var(--btn-ink-color), var(--grain-inset-shadow);
+    /* host of the grainy inner shadow (::after) shared in _buttons.css */
     position: relative;
     isolation: isolate;
     overflow: hidden;
-
-    /* Same grainy inner shadow as the buttons */
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background: var(--grain-gold);
-      background-size: 120px;
-      -webkit-mask: var(--grain-mask);
-      mask: var(--grain-mask);
-      pointer-events: none;
-    }
   }
 }
 

@@ -10,22 +10,11 @@
   line-height: 1.6;
   color: var(--footer-text);
   background-color: var(--footer-bg);
-
-  /* Uniform dark grain over the background, behind the content */
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--grain-ink);
-    background-size: 140px;
-    opacity: 0.2;
-    pointer-events: none;
-  }
 }
 
-/* Dark mode: the footer keeps its exact background color (no grain on top
-   to alter it) */
+/* Uniform dark grain over the background, behind the content: its ::after is
+   the shared ink overlay of _background.css. Dark mode: the footer keeps its
+   exact background color (no grain on top to alter it) */
 @container style(--color-scheme: dark) {
   .footer::after {
     display: none;

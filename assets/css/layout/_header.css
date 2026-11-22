@@ -34,18 +34,8 @@
   }
 
   /* Uniform grain on top of both glasses (the bgGrain image only has dots at
-     the top) */
-  &::after,
-  .navbar__menu::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--grain-ink);
-    background-size: 140px;
-    opacity: 0.2;
-    pointer-events: none;
-  }
+     the top): ::after of the bar and of the panel, the shared ink overlay of
+     _background.css */
 
   /* Without scroll-driven animation support, the header is simply visible.
      With support: it appears once scrolling starts (out of the way in the hero).
@@ -126,11 +116,15 @@ body:has(#pdf-container) .header {
   font-family: var(--brand-font);
 }
 
-.header .navbar__logo--name {
+/* The resume page names its logo spans .resume__logo--*: same weights,
+   but without the brand font above */
+.header .navbar__logo--name,
+.resume__logo--name {
   font-weight: 300;
 }
 
-.header .navbar__logo--lastname {
+.header .navbar__logo--lastname,
+.resume__logo--lastname {
   margin-left: -3.5px;
   font-weight: 600;
 }
@@ -237,7 +231,7 @@ body:has(#pdf-container) .header {
   }
 
   &:focus-visible {
-    outline: 3px solid var(--accent-ink);
+    outline: var(--focus-ring);
     outline-offset: 3px;
   }
 }
@@ -341,7 +335,7 @@ body:has(#pdf-container) .header {
   }
 
   &:focus-visible {
-    outline: 3px solid var(--accent-ink);
+    outline: var(--focus-ring);
     outline-offset: 2px;
   }
 }
@@ -480,10 +474,6 @@ body:has(.lamp.lamp--swing) .header .navbar__menu::before {
 
 /* === Desktop: compact bar, logo on the left and options on the right === */
 @media (width >= 600px) {
-  :root {
-    --header-height: 3.5rem;
-  }
-
   .header {
     .navbar {
       max-width: none;
@@ -546,11 +536,5 @@ body:has(.lamp.lamp--swing) .header .navbar__menu::before {
     .navbar__burger {
       display: none;
     }
-  }
-
-  /* Every button of the site, not only the header's: sections that need a
-     wider one reset it (max-width: none) */
-  .btn {
-    max-width: 300px;
   }
 }

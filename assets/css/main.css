@@ -288,12 +288,11 @@ section[tabindex='-1']:focus {
   --gold-300: #ffd95c;
   --gold-400: #f3ce3a;
   --gold-500: #e4e6e7; /* dark mode: near-white gray (neutral, no yellow) */
+  --gold-700: #b08814; /* dark gold: inner shadows on gold pieces */
 
   /* Theme Colors: both modes are teal with gold text; the dark one is
      deeper (light-dark() follows color-scheme: system or toggle) */
-  /* Main color: gold in light mode, near-white gray in dark mode;
-     the always-dark areas (footer, navbar, cards over photos)
-     use --gold-400 */
+  /* Main color: gold in light mode, near-white gray in dark mode */
   --gold-main: light-dark(var(--gold-400), var(--gold-500));
   /* Emphasis (hero <strong>): one step lighter than --gold-main (white in dark) */
   --gold-emphasis: light-dark(var(--gold-300), #ffffff);
@@ -309,22 +308,30 @@ section[tabindex='-1']:focus {
   --bg-color-section: light-dark(var(--teal-800), var(--teal-deep-800));
   --surface-color: light-dark(var(--teal-700), var(--teal-deep-700));
   --bg-color-buttons: light-dark(var(--teal-600), var(--teal-deep-600)); /* inputs, secondary controls */
-  --border-color: light-dark(rgb(243 206 58 / 0.18), rgb(228 230 231 / 0.18));
+  --border-color: light-dark(
+    color-mix(in srgb, var(--gold-400) 18%, transparent),
+    color-mix(in srgb, var(--gold-500) 18%, transparent)
+  );
   --input-bg: light-dark(var(--teal-900), var(--teal-deep-900)); /* form fields: darker than the background */
   --footer-bg: light-dark(var(--teal-950), #00070a); /* footer and navbar; in dark, slightly darker than the fields */
   --footer-text: #e6eef0;
 
   /* Shadows */
   --shadow-color: rgb(0 0 0 / 0.45);
-  --bg-layer-shadow: rgb(0 18 25 / 1); /* hero layers */
-  --profile-shadow: rgb(0 18 25 / 1);
+  --bg-layer-shadow: var(--teal-950); /* hero layers */
+  --profile-shadow: var(--teal-950); /* hero portrait */
   /* Button outline and hard shadow: on the deeper background black is
      used so the shadow still stands out */
   --btn-ink-color: light-dark(var(--teal-deep-800), #000); /* button shadow/outline; in light, the dark mode background */
 
-  /* Dark gold grain (approx. #a8800f): each dot takes its opacity from the
-     noise. Used as the inner shadow of buttons and tags (see
-     _buttons.css); SVG icons use the #grain-inset filter in index.html */
+  /* Grain
+     ========================================================================== */
+  /* Images (SVG noise as a seamless tile; each dot takes its opacity from
+     the noise). The scheme picks which one is used: see --grain-gold and
+     --btn-grain at the end of this file. */
+  /* Dark gold grain (approx. #a8800f): the grainy inner shadow of buttons,
+     tags and bricks in light mode (shared rule in _buttons.css); SVG icons
+     use the #grain-inset filter in index.html */
   --grain-gold-deep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.2 -1.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Gray grain (#8f969b): near-white gray buttons in dark mode */
   --grain-gold-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .561  0 0 0 0 .588  0 0 0 0 .608  0 0 0 7 -1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -336,10 +343,27 @@ section[tabindex='-1']:focus {
      (more dots, more opaque) than the one on tags and icons */
   --grain-btn-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23  0 0 0 0 .255  0 0 0 0 .275  0 0 0 8 -1.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --grain-btn-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23  0 0 0 0 .255  0 0 0 0 .275  0 0 0 8 -1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  /* Uniform dark grain (ink), as a seamless tile */
+  /* Uniform dark grain (ink): the overlay of the dark surfaces (shared rule
+     in _background.css) */
   --grain-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 .07  0 0 0 0 .1  0 0 0 3.6 -1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  /* Inner shadow: dark gold on gold buttons (light mode); in dark mode
-     (near-white gray buttons) the same gray as the grain */
+  /* Tile size of each grain (the width of its SVG) */
+  --grain-ink-size: 140px;
+  --grain-gold-size: 120px;
+
+  /* Masks of the gold grain: bottom and right edges (the light comes from
+     the top left), further in on hover, or the whole border */
+  --grain-mask: linear-gradient(to top, #000, transparent 55%), linear-gradient(to left, #000, transparent 30%);
+  --grain-mask-hover: linear-gradient(to top, #000, transparent 85%), linear-gradient(to left, #000, transparent 40%);
+  --grain-mask-all: radial-gradient(farthest-side, transparent 50%, #000 100%);
+  /* Same masks mirrored (grain at the bottom left): buttons in dark mode */
+  --grain-mask-left: linear-gradient(to top, #000, transparent 55%), linear-gradient(to right, #000, transparent 30%);
+  --grain-mask-hover-left: linear-gradient(to top, #000, transparent 85%), linear-gradient(to right, #000, transparent 40%);
+
+  /* Inner shadow under the grain: dark gold on gold pieces (light mode); in
+     dark mode (near-white gray pieces) the same gray as the grain.
+     The dark gold of these shadows is --gold-700 at 78%, kept as a literal:
+     they are transitioned (hover, press, theme switch) and a color-mix()
+     colour would interpolate in Oklab instead of sRGB */
   --grain-inset-shadow: inset -5px -6px 8px -2px light-dark(rgb(176 136 20 / 0.78), #8f969b),
     inset -2px -3px 4px -1px light-dark(transparent, #8f969b);
   /* Inner shadow of the buttons. Light: bottom right (light from the top
@@ -348,12 +372,6 @@ section[tabindex='-1']:focus {
      (an offset can't take light-dark()). */
   --btn-inset-shadow-light: inset -5px -6px 8px -2px rgb(176 136 20 / 0.78);
   --btn-inset-shadow-dark: inset 5px -6px 8px -2px #868d92, inset 2px -3px 4px -1px #7c8388;
-  --grain-mask: linear-gradient(to top, #000, transparent 55%), linear-gradient(to left, #000, transparent 30%);
-  --grain-mask-all: radial-gradient(farthest-side, transparent 50%, #000 100%);
-  --grain-mask-hover: linear-gradient(to top, #000, transparent 85%), linear-gradient(to left, #000, transparent 40%);
-  /* Same masks mirrored (grain at the bottom left): buttons in dark mode */
-  --grain-mask-left: linear-gradient(to top, #000, transparent 55%), linear-gradient(to right, #000, transparent 30%);
-  --grain-mask-hover-left: linear-gradient(to top, #000, transparent 85%), linear-gradient(to right, #000, transparent 40%);
 
   /* Typography
      ========================================================================== */
@@ -362,7 +380,6 @@ section[tabindex='-1']:focus {
   --small-font-size: calc(0.9em + 0.2vw);
   --title-font-size: calc(1rem + 0.5vw);
   --title-scale: 1.5; /* all headings (h1–h6) are 1.5× */
-  --icon-font-size: calc(2rem + 0.5vw);
 
   /* Font Weights */
   --font-semibold: 600;
@@ -373,24 +390,27 @@ section[tabindex='-1']:focus {
   --title-font: 'Outfit', var(--primary-font); /* headings */
   --brand-font: 'Poppins', var(--primary-font); /* logo and loader: always Poppins */
 
+  /* Interaction
+     ========================================================================== */
+  /* Keyboard focus ring of buttons, links and fields (each one sets its own
+     outline-offset). Resolved here: it follows the root --accent-ink */
+  --focus-ring: 3px solid var(--accent-ink);
+  /* Buttons lifting on hover and sinking when pressed */
+  --press-duration: 0.15s;
+
   /* Layers
      ========================================================================== */
   --z-fixed: 1;
   --z-lamp: 2; /* lamp: above the content, below the navbar */
   --z-modal: 3; /* header / menu */
   --z-loader: 4;
+  --z-fab: 1000; /* resume download button: above every other layer */
 
   /* Spacing
      ========================================================================== */
   --button-padding: 0.8rem;
-
-  /* Margins */
   --margin-small: 0.5rem;
-  --margin-medium: 1rem;
-
-  /* Gaps */
   --gap-small: 0.5rem;
-  --gap-medium: 1rem;
 
   /* Borders
      ========================================================================== */
@@ -399,10 +419,11 @@ section[tabindex='-1']:focus {
   --border-radius-large: 1rem;
 }
 
-/* Media Queries Adjustments
+/* Desktop Adjustments
    ========================================================================== */
-@media (min-width: 600px) {
+@media (width >= 600px) {
   :root {
+    --header-height: 3.5rem; /* compact desktop bar */
     /* Scales with the width: with zoom or on small laptops it doesn't look huge */
     --normal-font-size: clamp(0.95rem, 0.6rem + 0.8vw, 1.15rem);
     --small-font-size: 1rem;
@@ -421,7 +442,7 @@ section[tabindex='-1']:focus {
      @container style(--color-scheme: light) */
   --color-scheme: light;
   /* Grain of buttons and tags per scheme (an image can't take
-     light-dark()): dark gold in light, emphasis gold in dark */
+     light-dark()): dark gold in light, gray in dark */
   --grain-gold: var(--grain-gold-deep);
   --btn-grain: var(--grain-gold-deep);
   --btn-grain-strong: var(--grain-gold-strong-deep);
@@ -599,6 +620,31 @@ section[tabindex='-1']:focus {
   }
 }
 
+/* === Ink grain overlay (shared) ===
+   Uniform dark grain (--grain-ink) painted over a surface, behind its
+   content: the host is positioned and isolates its stacking context. Defined
+   once for every surface that carries it; each one tunes it in its own
+   partial, on the pseudo-element itself, with --grain-opacity (default 0.2)
+   and --grain-z (default -1). */
+.header::after,
+.header .navbar__menu::after,
+.footer::after,
+.contact .contact__container .contact__form::after,
+.project-cta::after,
+.project__card-front::after,
+.skills__summary.btn::before,
+.skills__grid::after,
+.project-media .project-media__frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: var(--grain-z, -1);
+  background: var(--grain-ink);
+  background-size: var(--grain-ink-size);
+  opacity: var(--grain-opacity, 0.2);
+  pointer-events: none;
+}
+
 /* --- layout/_buttons.css --- */
 /* === Buttons === */
 
@@ -642,23 +688,17 @@ section[tabindex='-1']:focus {
 
   cursor: pointer;
   transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    background-color 0.15s ease,
-    color 0.15s ease;
+    transform var(--press-duration) ease,
+    box-shadow var(--press-duration) ease,
+    background-color var(--press-duration) ease,
+    color var(--press-duration) ease;
 
-  /* Grainy inner shadow (bottom and right, the light comes from the top left
-     like the hard shadow). It stays behind the text thanks to isolation. */
+  /* Its grainy inner shadow (::after) is defined below, shared with the
+     other gold pieces: here only the buttons' own grain and mask, which
+     change with the scheme (see _variables.css) */
   &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--btn-grain);
-    background-size: 120px;
-    -webkit-mask: var(--btn-grain-mask);
-    mask: var(--btn-grain-mask);
-    pointer-events: none;
+    --inset-grain: var(--btn-grain);
+    --inset-grain-mask: var(--btn-grain-mask);
   }
 
   i {
@@ -672,7 +712,7 @@ section[tabindex='-1']:focus {
   }
 
   &:focus-visible {
-    outline: 3px solid var(--accent-ink);
+    outline: var(--focus-ring);
     outline-offset: 4px;
   }
 
@@ -681,6 +721,36 @@ section[tabindex='-1']:focus {
     opacity: 0.55;
     cursor: not-allowed;
     pointer-events: none;
+  }
+}
+
+/* === Grainy inner shadow (shared) ===
+   Grain at the bottom and right of a gold piece (the light comes from the
+   top left, like the hard shadow); it stays behind the text thanks to the
+   host's isolation. Defined once for the buttons, the card buttons, the
+   tech tags of the case pages and the soft-skill bricks; each one can swap
+   the image (--inset-grain) or the mask (--inset-grain-mask) on the
+   pseudo-element itself. */
+.btn::after,
+.project__button::after,
+.project-stack li::after,
+.skills__tag::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--inset-grain, var(--grain-gold));
+  background-size: var(--grain-gold-size);
+  -webkit-mask: var(--inset-grain-mask, var(--grain-mask));
+  mask: var(--inset-grain-mask, var(--grain-mask));
+  pointer-events: none;
+}
+
+/* Desktop: every button is capped; the ones that need more width reset it
+   (max-width: none) in their own partial */
+@media (width >= 600px) {
+  .btn {
+    max-width: 300px;
   }
 }
 
@@ -706,8 +776,7 @@ section[tabindex='-1']:focus {
 
     /* The grain rises a bit on hover */
     &::after {
-      -webkit-mask: var(--btn-grain-mask-hover);
-      mask: var(--btn-grain-mask-hover);
+      --inset-grain-mask: var(--btn-grain-mask-hover);
     }
 
     i {
@@ -732,10 +801,8 @@ section[tabindex='-1']:focus {
    with larger, denser dots. */
 @media (hover: none), (width < 600px) {
   .btn::after {
-    background: var(--btn-grain-strong);
-    background-size: 120px;
-    -webkit-mask: var(--btn-grain-mask-hover);
-    mask: var(--btn-grain-mask-hover);
+    --inset-grain: var(--btn-grain-strong);
+    --inset-grain-mask: var(--btn-grain-mask-hover);
   }
 }
 
@@ -743,6 +810,48 @@ section[tabindex='-1']:focus {
   .btn,
   .btn i {
     transition: none;
+  }
+}
+
+/* === Outlined icon buttons ===
+   Carousel arrows (.project__nav) and the marquee pause button
+   (.skills__motion-toggle): gold outline and hard shadow on the page
+   background, filled on hover and sunk onto the shadow when pressed. Each one
+   sets its size and position in its partial; --btn-offset is the length of
+   the hard shadow (the pause button shortens it). */
+.project__nav,
+.skills__motion-toggle {
+  --btn-offset: 4px;
+
+  color: var(--accent-color);
+  background-color: var(--bg-color-section);
+  border: 2px solid var(--accent-color);
+  border-radius: var(--border-radius-small);
+  box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--accent-color);
+  cursor: pointer;
+  transition:
+    background-color var(--press-duration),
+    color var(--press-duration),
+    translate var(--press-duration),
+    box-shadow var(--press-duration);
+
+  @media (hover: hover) {
+    &:hover {
+      color: var(--on-accent-color);
+      background-color: var(--accent-color);
+      translate: -2px -2px;
+      box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink-color);
+    }
+  }
+
+  &:active {
+    translate: var(--btn-offset) var(--btn-offset);
+    box-shadow: 0 0 0 var(--accent-color);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 3px;
   }
 }
 
@@ -759,22 +868,11 @@ section[tabindex='-1']:focus {
   line-height: 1.6;
   color: var(--footer-text);
   background-color: var(--footer-bg);
-
-  /* Uniform dark grain over the background, behind the content */
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--grain-ink);
-    background-size: 140px;
-    opacity: 0.2;
-    pointer-events: none;
-  }
 }
 
-/* Dark mode: the footer keeps its exact background color (no grain on top
-   to alter it) */
+/* Uniform dark grain over the background, behind the content: its ::after is
+   the shared ink overlay of _background.css. Dark mode: the footer keeps its
+   exact background color (no grain on top to alter it) */
 @container style(--color-scheme: dark) {
   .footer::after {
     display: none;
@@ -855,18 +953,8 @@ section[tabindex='-1']:focus {
   }
 
   /* Uniform grain on top of both glasses (the bgGrain image only has dots at
-     the top) */
-  &::after,
-  .navbar__menu::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--grain-ink);
-    background-size: 140px;
-    opacity: 0.2;
-    pointer-events: none;
-  }
+     the top): ::after of the bar and of the panel, the shared ink overlay of
+     _background.css */
 
   /* Without scroll-driven animation support, the header is simply visible.
      With support: it appears once scrolling starts (out of the way in the hero).
@@ -947,11 +1035,15 @@ body:has(#pdf-container) .header {
   font-family: var(--brand-font);
 }
 
-.header .navbar__logo--name {
+/* The resume page names its logo spans .resume__logo--*: same weights,
+   but without the brand font above */
+.header .navbar__logo--name,
+.resume__logo--name {
   font-weight: 300;
 }
 
-.header .navbar__logo--lastname {
+.header .navbar__logo--lastname,
+.resume__logo--lastname {
   margin-left: -3.5px;
   font-weight: 600;
 }
@@ -1058,7 +1150,7 @@ body:has(#pdf-container) .header {
   }
 
   &:focus-visible {
-    outline: 3px solid var(--accent-ink);
+    outline: var(--focus-ring);
     outline-offset: 3px;
   }
 }
@@ -1162,7 +1254,7 @@ body:has(#pdf-container) .header {
   }
 
   &:focus-visible {
-    outline: 3px solid var(--accent-ink);
+    outline: var(--focus-ring);
     outline-offset: 2px;
   }
 }
@@ -1301,10 +1393,6 @@ body:has(.lamp.lamp--swing) .header .navbar__menu::before {
 
 /* === Desktop: compact bar, logo on the left and options on the right === */
 @media (width >= 600px) {
-  :root {
-    --header-height: 3.5rem;
-  }
-
   .header {
     .navbar {
       max-width: none;
@@ -1367,12 +1455,6 @@ body:has(.lamp.lamp--swing) .header .navbar__menu::before {
     .navbar__burger {
       display: none;
     }
-  }
-
-  /* Every button of the site, not only the header's: sections that need a
-     wider one reset it (max-width: none) */
-  .btn {
-    max-width: 300px;
   }
 }
 
@@ -1897,6 +1979,17 @@ body:has(.lamp.lamp--swing) .header .navbar__menu::before {
   box-shadow: 0 12px 32px var(--shadow-color);
   width: 100%;
   position: relative;
+
+  /* Texts of both dialogs (resume download and home contact confirmation) */
+  h2,
+  p {
+    text-align: center;
+  }
+
+  p {
+    margin: 0.25rem 0 1rem;
+    color: var(--text-muted);
+  }
 }
 
 /* X button to close (resume) */
@@ -1920,7 +2013,7 @@ body:has(.lamp.lamp--swing) .header .navbar__menu::before {
   }
 
   &:focus-visible {
-    outline: 3px solid var(--accent-ink);
+    outline: var(--focus-ring);
     outline-offset: 2px;
   }
 }
@@ -2074,7 +2167,7 @@ section.section {
   background-size: 2000% 100%;
   background-position: 0 0;
   max-width: none;
-  filter: drop-shadow(5px -5px 5px rgba(0, 18, 25, 0.5));
+  filter: drop-shadow(5px -5px 5px color-mix(in srgb, var(--teal-950) 50%, transparent));
   width: 100%;
   height: 100%;
   position: absolute;
@@ -2149,7 +2242,7 @@ html.js:not(.hero-ready) .home .home__title {
   visibility: hidden;
 }
 
-/* === Desktop hero copy (handleResponsiveContent in switchLanguages.js) === */
+/* === Desktop hero copy (handleResponsiveContent in language-switcher.js) === */
 
 .home .home__info .home__description--lines {
   max-width: 62ch;
@@ -2271,13 +2364,8 @@ html.js:not(.hero-ready) .home .home__title {
   }
 
   /* The about content lives in the hero description: hide the About section
-     and its menu link (kept next to the :has() rule in _header.css for
-     browsers without :has()) */
+     (its menu item is hidden in _header.css) */
   #about.about.section {
-    display: none;
-  }
-
-  .navbar__list .navbar__item a[href$="#about"] {
     display: none;
   }
 }
@@ -2424,7 +2512,7 @@ html.js:not(.hero-ready) .home .home__title {
   .contact__form .contact__form-button {
     width: 100%;
     max-width: none;
-    margin-top: var(--mr-4);
+    margin-top: 0;
     margin-inline: 0;
     text-align: center;
     display: flex;
@@ -2462,13 +2550,13 @@ html.js:not(.hero-ready) .home .home__title {
     /* On focus, the same gold outline as the buttons
        (.btn:focus-visible) */
     &:focus {
-      outline: 3px solid var(--accent-ink);
+      outline: var(--focus-ring);
       outline-offset: 4px;
     }
   }
 
   /* Message: starts at twice the height of the other fields and grows
-     with the text (field-sizing; send_form.js mimics it in
+     with the text (field-sizing; contact-form.js mimics it in
      browsers without support) up to a cap, then scrolls */
   textarea.contact__form-input {
     resize: none;
@@ -2630,29 +2718,25 @@ html.js:not(.hero-ready) .home .home__title {
   box-shadow: 0 8px 24px var(--shadow-color);
 }
 
+/* Page grain dots */
 .contact .contact__container .contact__form::before,
-.contact .contact__container .contact__form::after,
-.project-cta::before,
-.project-cta::after {
+.project-cta::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
+  background: url('/assets/img/bgGrain-tile.webp') 0 0 / 256px 256px;
   border-radius: inherit;
+  opacity: 0.1;
   pointer-events: none;
 }
 
-.contact .contact__container .contact__form::before,
-.project-cta::before {
-  background: url('/assets/img/bgGrain-tile.webp') 0 0 / 256px 256px;
-  opacity: 0.1;
-}
-
+/* Dark grain over the dots: the shared ink overlay of _background.css, a
+   bit denser and following the rounded corners */
 .contact .contact__container .contact__form::after,
 .project-cta::after {
-  background: var(--grain-ink);
-  background-size: 140px;
-  opacity: 0.25;
+  --grain-opacity: 0.25;
+  border-radius: inherit;
 }
 
 /* --- sections/_projects.css --- */
@@ -2689,7 +2773,7 @@ html.js:not(.hero-ready) .home .home__title {
   width: 280px;
   height: 350px;
   transform: translateX(-50%);
-  /* cardCarousel.js moves the cards with inline transform, opacity and
+  /* card-carousel.js moves the cards with inline transform, opacity and
      z-index, and toggles .highlight (filter). `all` on purpose: the size
      (viewport resize, breakpoints) and the inherited color (theme switch)
      ease too */
@@ -2704,6 +2788,9 @@ html.js:not(.hero-ready) .home .home__title {
      behind, and those behind look slightly dimmer */
   &.highlight {
     filter: brightness(1);
+    /* fallback: card-carousel.js always writes an inline z-index along
+       with the class */
+    z-index: 2;
 
     .project__card-inner {
       box-shadow:
@@ -2717,7 +2804,7 @@ html.js:not(.hero-ready) .home .home__title {
   }
 }
 
-/* Released (cardCarousel.js sets it when a drag ends): the carousel box
+/* Released (card-carousel.js sets it when a drag ends): the carousel box
    itself eases its size changes */
 .project__card--carousel.smooth-return {
   transition: all 0.2s ease;
@@ -2733,7 +2820,7 @@ html.js:not(.hero-ready) .home .home__title {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  border-radius: 1rem;
+  border-radius: var(--border-radius-large);
   /* Shadow cast sideways onto the cards behind */
   box-shadow:
     0 6px 14px rgb(0 0 0 / 0.25),
@@ -2760,7 +2847,7 @@ html.js:not(.hero-ready) .home .home__title {
   flex-direction: column;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border-radius: 1rem;
+  border-radius: var(--border-radius-large);
   overflow: hidden;
 }
 
@@ -2774,19 +2861,13 @@ html.js:not(.hero-ready) .home .home__title {
   background-color: var(--teal-800);
 
   /* Grain texture across the whole card, top to bottom (seamless), slightly
-     denser toward the base. Above the screenshot and below the text and
-     icons (z-index 3) */
+     denser toward the base: the shared ink overlay of _background.css, above
+     the screenshot and below the text and icons (z-index 3) */
   &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background: var(--grain-ink);
-    background-size: 140px;
+    --grain-z: 2;
+    --grain-opacity: 0.1;
     -webkit-mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
     mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
-    opacity: 0.1;
-    pointer-events: none;
   }
 }
 
@@ -2805,7 +2886,9 @@ html.js:not(.hero-ready) .home .home__title {
   );
   border: 1px solid var(--border-color);
 
-  /* Darker toward the base, below the text and the buttons */
+  /* Darker toward the base, below the text and the buttons. The stop is
+     --teal-950 at 60%, written as a literal: a color-mix() stop would switch
+     the gradient to Oklab interpolation */
   &::after {
     content: '';
     position: absolute;
@@ -2830,7 +2913,8 @@ html.js:not(.hero-ready) .home .home__title {
   scale: 1.1;
 
   /* Dark veil rising from the bottom: dense at the base, lighter toward
-     the top (lets the design show) and still covering the centered text */
+     the top (lets the design show) and still covering the centered text.
+     Stops in --teal-950, as literals (see the back's gradient above) */
   &::after {
     content: '';
     position: absolute;
@@ -2846,8 +2930,8 @@ html.js:not(.hero-ready) .home .home__title {
   }
 }
 
-/* Cover images: only when #projects gets near the screen (observer.js adds
-   .is-near to it), so they aren't downloaded on page load. Without JS (html
+/* Cover images: only when #projects gets near the screen (project-covers.js
+   adds .is-near to it), so they aren't downloaded on page load. Without JS (html
    without .js) they always show. Every rule, dark ones included, hangs from
    the same prefix so they all share one specificity and the dark version wins
    by order.
@@ -2903,7 +2987,7 @@ html.js:not(.hero-ready) .home .home__title {
 .project__title,
 .project__subtitle,
 .project__tech-stack {
-  filter: drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
+  filter: drop-shadow(0 2px 3px color-mix(in srgb, var(--teal-950) 80%, transparent));
 }
 
 .project__title,
@@ -2915,7 +2999,7 @@ html.js:not(.hero-ready) .home .home__title {
 
 .project__title,
 .project__description {
-  text-shadow: 0 2px 6px rgb(0 18 25 / 0.9);
+  text-shadow: 0 2px 6px color-mix(in srgb, var(--teal-950) 90%, transparent);
 }
 
 .project__title {
@@ -2957,7 +3041,7 @@ html.js:not(.hero-ready) .home .home__title {
   aspect-ratio: 1;
   fill: var(--primary-color);
   /* Grainy inner shadow (--icon-grain filter, like the skills ones) */
-  filter: var(--icon-grain) drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
+  filter: var(--icon-grain) drop-shadow(0 2px 3px color-mix(in srgb, var(--teal-950) 80%, transparent));
   transition: transform 0.3s ease;
 
   &:hover {
@@ -2993,7 +3077,10 @@ html.js:not(.hero-ready) .home .home__title {
   border: 2px solid var(--teal-950);
   border-radius: var(--border-radius-small);
   box-shadow: 3px 3px 0 #000, var(--grain-inset-shadow);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  transition:
+    transform var(--press-duration) ease,
+    box-shadow var(--press-duration) ease,
+    background-color var(--press-duration) ease;
 
   /* Real pointer only: on touch screens :hover stays "stuck" after a tap */
   @media (hover: hover) {
@@ -3009,17 +3096,7 @@ html.js:not(.hero-ready) .home .home__title {
     box-shadow: 0 0 0 #000, var(--grain-inset-shadow);
   }
 
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--grain-gold);
-    background-size: 120px;
-    -webkit-mask: var(--grain-mask);
-    mask: var(--grain-mask);
-    pointer-events: none;
-  }
+  /* its grainy inner shadow (::after) is the shared one of _buttons.css */
 
   i {
     font-size: 1.25rem;
@@ -3038,34 +3115,8 @@ html.js:not(.hero-ready) .home .home__title {
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  /* Same style as the site's outline buttons: gold outline and hard
-     shadow, fills on hover and sinks when pressed */
-  color: var(--accent-color);
-  background-color: var(--bg-color-section);
-  border: 2px solid var(--accent-color);
-  border-radius: var(--border-radius-small);
-  box-shadow: 4px 4px 0 var(--accent-color);
-  cursor: pointer;
-  transition: background-color 0.15s, color 0.15s, translate 0.15s, box-shadow 0.15s;
-
-  @media (hover: hover) {
-    &:hover {
-      color: var(--on-accent-color);
-      background-color: var(--accent-color);
-      translate: -2px -2px;
-      box-shadow: 6px 6px 0 var(--btn-ink-color);
-    }
-  }
-
-  &:active {
-    translate: 4px 4px;
-    box-shadow: 0 0 0 var(--accent-color);
-  }
-
-  &:focus-visible {
-    outline: 3px solid var(--accent-ink);
-    outline-offset: 3px;
-  }
+  /* The look (outline, hard shadow, hover, press, focus) is the "Outlined
+     icon buttons" rule of _buttons.css */
 
   i {
     font-size: 1.5rem;
@@ -3179,7 +3230,7 @@ html.js:not(.hero-ready) .home .home__title {
   text-decoration: none;
   background: var(--surface-color);
   border: 1px solid var(--border-color);
-  border-radius: 1rem;
+  border-radius: var(--border-radius-large);
   box-shadow: 0 6px 14px var(--shadow-color);
 
   &:focus-visible {
@@ -3325,9 +3376,12 @@ html.js:not(.hero-ready) .home .home__title {
   margin-block: 2rem 1.25rem;
 }
 
-/* Pause / resume button: same style as the site's outline
-   buttons (gold outline and hard shadow) */
+/* Pause / resume button: the look (outline, hard shadow, hover, press,
+   focus) is the "Outlined icon buttons" rule of _buttons.css, with a
+   shorter shadow */
 .skills__motion-toggle {
+  --btn-offset: 3px;
+
   flex: none;
   display: inline-grid;
   place-items: center;
@@ -3336,32 +3390,6 @@ html.js:not(.hero-ready) .home .home__title {
   padding: 0;
   font: inherit;
   font-size: 1.25rem;
-  color: var(--accent-color);
-  background: var(--bg-color-section);
-  border: 2px solid var(--accent-color);
-  border-radius: var(--border-radius-small);
-  box-shadow: 3px 3px 0 var(--accent-color);
-  cursor: pointer;
-  transition: background-color 0.15s, color 0.15s, translate 0.15s, box-shadow 0.15s;
-
-  @media (hover: hover) {
-    &:hover {
-      color: var(--on-accent-color);
-      background: var(--accent-color);
-      translate: -2px -2px;
-      box-shadow: 5px 5px 0 var(--btn-ink-color);
-    }
-  }
-
-  &:active {
-    translate: 3px 3px;
-    box-shadow: 0 0 0 var(--accent-color);
-  }
-
-  &:focus-visible {
-    outline: 3px solid var(--accent-ink);
-    outline-offset: 3px;
-  }
 
   &[hidden] {
     display: none;
@@ -3502,7 +3530,7 @@ html.js:not(.hero-ready) .home .home__title {
   justify-content: space-between;
   /* 4px less: its shadow ends where the panel box's does */
   width: calc(100% - 4px);
-  max-width: none; /* the desktop header caps .btn at 300px */
+  max-width: none; /* .btn is capped at 300px on desktop (_buttons.css) */
   margin: 0;
   list-style: none;
   text-align: start;
@@ -3512,21 +3540,11 @@ html.js:not(.hero-ready) .home .home__title {
   }
 
   /* Same background as the panel box: the footer's (darker than the
-     page) with its own grain. On hover it fills with gold like
-     any ghost button. */
+     page) with its own grain (::before, the shared ink overlay of
+     _background.css; ::after is the button grain). On hover it fills with
+     gold like any ghost button and the ink grain goes away. */
   &:not(:hover) {
     background-color: var(--footer-bg);
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--grain-ink);
-    background-size: 140px;
-    opacity: 0.2;
-    pointer-events: none;
   }
 
   &:hover::before {
@@ -3568,7 +3586,8 @@ html.js:not(.hero-ready) .home .home__title {
   border: 2px solid var(--accent-ink);
   border-radius: var(--border-radius-small);
   box-shadow: 4px 4px 0 var(--accent-color);
-  /* footer background (darker than the page) with its own grain */
+  /* footer background (darker than the page) with its own grain (::after,
+     the shared ink overlay of _background.css) */
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -3577,17 +3596,6 @@ html.js:not(.hero-ready) .home .home__title {
   @media (width >= 600px) {
     grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
     padding: 1.5rem;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--grain-ink);
-    background-size: 140px;
-    opacity: 0.2;
-    pointer-events: none;
   }
 
   .skills__icon {
@@ -3646,7 +3654,7 @@ html.js:not(.hero-ready) .home .home__title {
 .skills__brick-half {
   border-radius: 3px;
   background: var(--primary-color);
-  box-shadow: inset 0 0 14px rgb(176 136 20 / 0.62);
+  box-shadow: inset 0 0 14px color-mix(in srgb, var(--gold-700) 62%, transparent);
   opacity: 0.55;
 }
 
@@ -3676,7 +3684,7 @@ html.js:not(.hero-ready) .home .home__title {
   overflow: hidden;
   /* brick face: darker inner border and a bit of relief */
   box-shadow:
-    inset 0 0 14px rgb(176 136 20 / 0.62),
+    inset 0 0 14px color-mix(in srgb, var(--gold-700) 62%, transparent),
     inset 0 -3px 0 rgb(120 90 10 / 0.35);
 
   /* 1st course (offset by half a brick) */
@@ -3690,31 +3698,15 @@ html.js:not(.hero-ready) .home .home__title {
   &:nth-child(6) { grid-area: 3 / 2 / auto / span 2; }
   &:nth-child(7) { grid-area: 3 / 4 / auto / span 2; }
 
-  /* Dark gold grain coming in from the whole border toward the center */
+  /* Dark gold grain coming in from the whole border toward the center:
+     the shared grainy inner shadow of _buttons.css with a radial mask */
   &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--grain-gold);
-    background-size: 120px;
-    -webkit-mask: var(--grain-mask-all);
-    mask: var(--grain-mask-all);
-    pointer-events: none;
+    --inset-grain-mask: var(--grain-mask-all);
   }
 }
 
 /* --- sections/_resume.css --- */
 /* === Resume === */
-
-.resume__logo--name {
-  font-weight: 300;
-}
-
-.resume__logo--lastname {
-  margin-left: -3.5px;
-  font-weight: 600;
-}
 
 /* The CV section fills the whole visible screen: the footer stays out of
    the initial view and the PDF sits a bit below the bar */
@@ -3730,7 +3722,7 @@ html.js:not(.hero-ready) .home .home__title {
   margin: 0;
 }
 
-/* <canvas> drawn by pdf_loader.js (it only sets an inline width) */
+/* <canvas> drawn by pdf-loader.js (it only sets an inline width) */
 .resume__page {
   display: block;
   max-width: 100%;
@@ -3741,35 +3733,21 @@ html.js:not(.hero-ready) .home .home__title {
   outline: 1px solid var(--border-color);
 }
 
-/* === Modal texts (download dialog and the home contact dialog) === */
-
-.modal-content {
-  h2,
-  p {
-    text-align: center;
-  }
-
-  p {
-    margin: 0.25rem 0 1rem;
-    color: var(--text-muted);
-  }
-}
-
 /* === Floating download button === */
 
 .fab-container {
   position: fixed;
   bottom: 4rem;
   right: 2rem;
-  z-index: 1000;
+  z-index: var(--z-fab);
   display: flex;
   flex-direction: column;
-  /* Moved by resume_fab_buttons.js (translate) so it doesn't cover the footer */
+  /* Moved by resume-fab.js (translate) so it doesn't cover the footer */
   transition: translate 0.15s linear;
 }
 
-/* Square with the icon only; resume_fab_buttons.js adds .expanded (icon +
-   text) once the page is scrolled */
+/* Square with the icon only; resume-fab.js adds .expanded (icon + text)
+   once the page is scrolled */
 .fab {
   display: inline-flex;
   align-items: center;
@@ -3914,7 +3892,7 @@ html.js:not(.hero-ready) .home .home__title {
   gap: 0.75rem 1rem;
   margin-top: 0.5rem;
 
-  /* the desktop header caps .btn at 300px and was cutting the text */
+  /* the desktop cap of .btn (300px, _buttons.css) was cutting the text */
   .btn {
     width: auto;
     max-width: none;
@@ -3935,8 +3913,9 @@ html.js:not(.hero-ready) .home .home__title {
     justify-items: center;
   }
 
-  /* Screenshot frame: outline, hard shadow and grain texture on top
-     (at 10%, same as the form's but subtler) */
+  /* Screenshot frame: outline, hard shadow and grain texture on top (the
+     shared ink overlay of _background.css at 10%, painted over the image
+     instead of behind the content) */
   .project-media__frame {
     position: relative;
     display: block;
@@ -3948,13 +3927,8 @@ html.js:not(.hero-ready) .home .home__title {
     background: var(--surface-color);
 
     &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--grain-ink);
-      background-size: 140px;
-      opacity: 0.1;
-      pointer-events: none;
+      --grain-z: auto;
+      --grain-opacity: 0.1;
     }
   }
 
@@ -4056,22 +4030,10 @@ html.js:not(.hero-ready) .home .home__title {
     border: 2px solid var(--btn-ink-color);
     border-radius: var(--border-radius-small);
     box-shadow: 3px 3px 0 var(--btn-ink-color), var(--grain-inset-shadow);
+    /* host of the grainy inner shadow (::after) shared in _buttons.css */
     position: relative;
     isolation: isolate;
     overflow: hidden;
-
-    /* Same grainy inner shadow as the buttons */
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background: var(--grain-gold);
-      background-size: 120px;
-      -webkit-mask: var(--grain-mask);
-      mask: var(--grain-mask);
-      pointer-events: none;
-    }
   }
 }
 

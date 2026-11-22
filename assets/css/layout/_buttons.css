@@ -40,23 +40,17 @@
 
   cursor: pointer;
   transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    background-color 0.15s ease,
-    color 0.15s ease;
+    transform var(--press-duration) ease,
+    box-shadow var(--press-duration) ease,
+    background-color var(--press-duration) ease,
+    color var(--press-duration) ease;
 
-  /* Grainy inner shadow (bottom and right, the light comes from the top left
-     like the hard shadow). It stays behind the text thanks to isolation. */
+  /* Its grainy inner shadow (::after) is defined below, shared with the
+     other gold pieces: here only the buttons' own grain and mask, which
+     change with the scheme (see _variables.css) */
   &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--btn-grain);
-    background-size: 120px;
-    -webkit-mask: var(--btn-grain-mask);
-    mask: var(--btn-grain-mask);
-    pointer-events: none;
+    --inset-grain: var(--btn-grain);
+    --inset-grain-mask: var(--btn-grain-mask);
   }
 
   i {
@@ -70,7 +64,7 @@
   }
 
   &:focus-visible {
-    outline: 3px solid var(--accent-ink);
+    outline: var(--focus-ring);
     outline-offset: 4px;
   }
 
@@ -79,6 +73,36 @@
     opacity: 0.55;
     cursor: not-allowed;
     pointer-events: none;
+  }
+}
+
+/* === Grainy inner shadow (shared) ===
+   Grain at the bottom and right of a gold piece (the light comes from the
+   top left, like the hard shadow); it stays behind the text thanks to the
+   host's isolation. Defined once for the buttons, the card buttons, the
+   tech tags of the case pages and the soft-skill bricks; each one can swap
+   the image (--inset-grain) or the mask (--inset-grain-mask) on the
+   pseudo-element itself. */
+.btn::after,
+.project__button::after,
+.project-stack li::after,
+.skills__tag::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--inset-grain, var(--grain-gold));
+  background-size: var(--grain-gold-size);
+  -webkit-mask: var(--inset-grain-mask, var(--grain-mask));
+  mask: var(--inset-grain-mask, var(--grain-mask));
+  pointer-events: none;
+}
+
+/* Desktop: every button is capped; the ones that need more width reset it
+   (max-width: none) in their own partial */
+@media (width >= 600px) {
+  .btn {
+    max-width: 300px;
   }
 }
 
@@ -104,8 +128,7 @@
 
     /* The grain rises a bit on hover */
     &::after {
-      -webkit-mask: var(--btn-grain-mask-hover);
-      mask: var(--btn-grain-mask-hover);
+      --inset-grain-mask: var(--btn-grain-mask-hover);
     }
 
     i {
@@ -130,10 +153,8 @@
    with larger, denser dots. */
 @media (hover: none), (width < 600px) {
   .btn::after {
-    background: var(--btn-grain-strong);
-    background-size: 120px;
-    -webkit-mask: var(--btn-grain-mask-hover);
-    mask: var(--btn-grain-mask-hover);
+    --inset-grain: var(--btn-grain-strong);
+    --inset-grain-mask: var(--btn-grain-mask-hover);
   }
 }
 
@@ -141,5 +162,47 @@
   .btn,
   .btn i {
     transition: none;
+  }
+}
+
+/* === Outlined icon buttons ===
+   Carousel arrows (.project__nav) and the marquee pause button
+   (.skills__motion-toggle): gold outline and hard shadow on the page
+   background, filled on hover and sunk onto the shadow when pressed. Each one
+   sets its size and position in its partial; --btn-offset is the length of
+   the hard shadow (the pause button shortens it). */
+.project__nav,
+.skills__motion-toggle {
+  --btn-offset: 4px;
+
+  color: var(--accent-color);
+  background-color: var(--bg-color-section);
+  border: 2px solid var(--accent-color);
+  border-radius: var(--border-radius-small);
+  box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--accent-color);
+  cursor: pointer;
+  transition:
+    background-color var(--press-duration),
+    color var(--press-duration),
+    translate var(--press-duration),
+    box-shadow var(--press-duration);
+
+  @media (hover: hover) {
+    &:hover {
+      color: var(--on-accent-color);
+      background-color: var(--accent-color);
+      translate: -2px -2px;
+      box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink-color);
+    }
+  }
+
+  &:active {
+    translate: var(--btn-offset) var(--btn-offset);
+    box-shadow: 0 0 0 var(--accent-color);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 3px;
   }
 }
