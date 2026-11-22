@@ -1,16 +1,6 @@
 /* === Skills Section === */
 
-.skills__wrapper .skills__icon-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: var(--small-font-size);
-  margin: var(--margin-small);
-}
-
-.skills__wrapper .skills__icons {
+.skills__icons {
   display: grid;
   /* minmax(0, …) and min-width: 0: the looping row is very wide (max-content)
      and without this it would widen the column and the whole page */
@@ -19,15 +9,19 @@
   min-width: 0;
 }
 
-.skills__group,
-.skills__marquee {
+.skills__group {
   min-width: 0;
 }
 
-.skills__wrapper .skills__icons .skills__title {
-  text-align: start;
-  position: relative;
-  gap: var(--gap-small);
+/* === Tech icon (looping row and accordion grids) === */
+
+.skills__icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: var(--small-font-size);
 }
 
 .skills__icon {
@@ -37,6 +31,11 @@
   fill: var(--primary-color);
   /* Grainy inner shadow, like the buttons (#grain-inset filter in index.html) */
   filter: var(--icon-grain);
+
+  @media (width >= 600px) {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .skills__icon-title {
@@ -44,104 +43,20 @@
   white-space: nowrap;
 }
 
-.skills__tags {
+/* === Development: title + pause button === */
+
+/* Title on the left and the pause button at the right edge */
+.skills__group-header {
   display: flex;
-  flex-direction: column;
-  /* Separated from the tech rows above */
-  margin-top: clamp(2.5rem, 6vw, 4rem);
-}
-
-.skills__tags .skills__tags-title {
-  align-self: stretch; /* on the left, even though .flex--container centers */
-  margin-bottom: 0.25rem;
-}
-
-.skills__tags .skills__tags-container {
-  /* see "brick wall" at the end */
-  margin-top: 0.75rem;
-}
-
-/* ============= Infinite looping rows (one per stack) =============
-   Each row has 4 copies of the list (the 1st is the accessible one; the rest
-   aria-hidden) and moves left to right by half its width,
-   so the loop has no jumps. Each row defines --marquee-duration. */
-.skills__marquee {
-  --marquee-gap: 1.25rem;
-  /* Decorative: can't be tapped, selected or dragged */
-  pointer-events: none;
-  /* Edge to edge of the browser, even if the section has margins
-     (body already has overflow-x: hidden, so no sideways scroll appears) */
-  --viewport-w: calc(100vw - var(--scrollbar-w, 0px));
-  width: var(--viewport-w);
-  margin-inline: calc(50% - var(--viewport-w) / 2);
-  overflow: hidden;
-}
-
-.skills__track {
-  display: flex;
-  width: max-content;
-}
-
-.skills__list {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--marquee-gap);
-  /* the gap between copies = the gap between icons: exact period */
-  padding-inline-end: var(--marquee-gap);
-}
-
-.skills__wrapper .skills__list .skills__icon-container {
-  margin: 0;
-  min-width: 96px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .skills__track {
-    animation: skills-marquee var(--marquee-duration, 40s) linear infinite;
-    will-change: transform;
-  }
-
-  /* Only stops with the pause button (not on hover) */
-  .skills__icons.is-paused .skills__track {
-    animation-play-state: paused;
-  }
-}
-
-/* Frontend and Development run in the opposite direction */
-.skills__marquee--reverse .skills__track {
-  animation-direction: reverse;
-}
-
-@keyframes skills-marquee {
-  from {
-    translate: -50% 0;
-  }
-  to {
-    translate: 0 0;
-  }
-}
-
-/* With "reduce motion": no loop, a single copy in centered rows */
-@media (prefers-reduced-motion: reduce) {
-  .skills__track {
-    width: auto;
-  }
-
-  .skills__list {
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0;
-
-    &[aria-hidden='true'] {
-      display: none;
-    }
-  }
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-block: 2rem 1.25rem;
 }
 
 /* Pause / resume button: same style as the site's outline
    buttons (gold outline and hard shadow) */
 .skills__motion-toggle {
-  /* to the right of the Development title (see .skills__group-header) */
   flex: none;
   display: inline-grid;
   place-items: center;
@@ -180,20 +95,20 @@
   &[hidden] {
     display: none;
   }
-}
 
-.skills__motion-toggle i {
-  font-size: 1.6rem;
-}
+  i {
+    font-size: 1.6rem;
+  }
 
-/* Icon only: the text is left for screen readers */
-.skills__motion-toggle span {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+  /* Icon only: the text is left for screen readers */
+  span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 
 .skills__motion-play,
@@ -205,38 +120,110 @@
   display: inline;
 }
 
-/* === Skills min width 600px === */
-@media (min-width: 600px) {
-  .skills .skills__wrapper .skills__icon {
-    width: 100px;
-    height: 100px;
-  }
+/* === Development: infinite looping row === */
+
+/* The row has 4 copies of the list (the 1st is the accessible one; the rest
+   aria-hidden) and moves by half its width, so the loop has no jumps.
+   The row defines --marquee-duration inline. */
+.skills__marquee {
+  --marquee-gap: 1.25rem;
+  /* Edge to edge of the browser, even if the section has margins
+     (body already has overflow-x: hidden, so no sideways scroll appears) */
+  --viewport-w: calc(100vw - var(--scrollbar-w, 0px));
+  width: var(--viewport-w);
+  min-width: 0;
+  margin-inline: calc(50% - var(--viewport-w) / 2);
+  overflow: hidden;
+  /* Decorative: can't be tapped, selected or dragged */
+  pointer-events: none;
 }
 
-
-
-/* ============= Development: title + pause button =============
-   Title on the left and the pause button at the right edge */
-.skills__group-header {
+.skills__track {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-block: 2rem 1.25rem;
+  width: max-content;
 
-  .skills__title {
-    margin: 0;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: skills-marquee var(--marquee-duration, 40s) linear infinite;
+    will-change: transform;
+  }
+
+  /* With "reduce motion": no loop, a single copy in centered rows */
+  @media (prefers-reduced-motion: reduce) {
+    width: auto;
   }
 }
 
-/* ============= Design, Frontend and Backend: accordions =============
-   Native <details> (opens/closes without JS). The header uses the outline
+/* Only stops with the pause button (not on hover) */
+@media (prefers-reduced-motion: no-preference) {
+  .skills__icons.is-paused .skills__track {
+    animation-play-state: paused;
+  }
+}
+
+/* Rows with --reverse run in the opposite direction */
+.skills__marquee--reverse .skills__track {
+  animation-direction: reverse;
+}
+
+@keyframes skills-marquee {
+  from {
+    translate: -50% 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+.skills__list {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--marquee-gap);
+  /* the gap between copies = the gap between icons: exact period */
+  padding-inline-end: var(--marquee-gap);
+
+  .skills__icon-container {
+    min-width: 96px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+
+    &[aria-hidden='true'] {
+      display: none;
+    }
+  }
+}
+
+/* === Design, Frontend and Backend: accordions === */
+
+/* Native <details> (opens/closes without JS). The header uses the outline
    button style (.btn .btn--ghost) and the panel is a box with the same
    outline and hard shadow. */
 .skills__accordions {
   display: grid;
   gap: 1.25rem;
   margin-top: 1.5rem;
+}
+
+/* Open/close with a height transition where animating to auto is possible */
+@media (prefers-reduced-motion: no-preference) {
+  .skills__accordion {
+    interpolate-size: allow-keywords;
+
+    &::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition:
+        block-size 0.3s ease,
+        content-visibility 0.3s allow-discrete;
+    }
+
+    &[open]::details-content {
+      block-size: auto;
+    }
+  }
 }
 
 .skills__summary.btn {
@@ -253,32 +240,27 @@
     display: none;
   }
 
-  &:focus-visible {
-    outline: 3px solid var(--accent-ink);
-    outline-offset: 4px;
+  /* Same background as the panel box: the footer's (darker than the
+     page) with its own grain. On hover it fills with gold like
+     any ghost button. */
+  &:not(:hover) {
+    background-color: var(--footer-bg);
   }
-}
 
-/* Same background as the panel box: the footer's (darker than the
-   page) with its own grain. On hover it fills with gold like
-   any ghost button. */
-.skills__summary.btn:not(:hover) {
-  background-color: var(--footer-bg);
-}
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--grain-ink);
+    background-size: 140px;
+    opacity: 0.2;
+    pointer-events: none;
+  }
 
-.skills__summary.btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--grain-ink);
-  background-size: 140px;
-  opacity: 0.2;
-  pointer-events: none;
-}
-
-.skills__summary.btn:hover::before {
-  opacity: 0;
+  &:hover::before {
+    opacity: 0;
+  }
 }
 
 /* the title inherits the button style (uppercase, color, size) */
@@ -321,6 +303,11 @@
   overflow: hidden;
   background-color: var(--footer-bg);
 
+  @media (width >= 600px) {
+    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+    padding: 1.5rem;
+  }
+
   &::after {
     content: '';
     position: absolute;
@@ -332,13 +319,14 @@
     pointer-events: none;
   }
 
-  .skills__icon-container {
-    margin: 0;
-  }
-
   .skills__icon {
     width: 56px;
     height: 56px;
+
+    @media (width >= 600px) {
+      width: 72px;
+      height: 72px;
+    }
   }
 
   /* the name scales with the box width (cqi): with large system
@@ -348,56 +336,40 @@
   }
 }
 
-@media (min-width: 600px) {
-  .skills .skills__wrapper .skills__grid .skills__icon {
-    width: 72px;
-    height: 72px;
-  }
+/* === Soft skills: brick wall === */
 
-  .skills__grid {
-    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
-    padding: 1.5rem;
+.skills__tags {
+  display: flex;
+  flex-direction: column;
+  /* Separated from the tech rows above */
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+
+  /* 6 columns; each brick spans 2. Three alternating courses like a
+     real bond: 1st and 3rd with 2 bricks offset by half a brick (with
+     decorative half bricks at the edges) and the 2nd with 3 bricks.
+     The gap is the mortar joint. The text scales with the brick
+     width (cqi of the wall) so long words don't overflow.
+     (.skills__tags prefix: it has to beat .flex--container) */
+  .skills__tags-container {
+    container-type: inline-size;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: minmax(3.25rem, auto);
+    gap: 6px;
+    /* .flex--container centers: here each brick fills its cell */
+    align-items: stretch;
+    justify-items: stretch;
+    justify-content: normal;
+    width: 100%;
+    max-width: 44rem;
+    margin-top: 0.75rem;
+    align-self: flex-start;
   }
 }
 
-/* Open/close with a height transition where animating to auto is possible */
-@media (prefers-reduced-motion: no-preference) {
-  .skills__accordion {
-    interpolate-size: allow-keywords;
-  }
-
-  .skills__accordion::details-content {
-    block-size: 0;
-    overflow: clip;
-    transition:
-      block-size 0.3s ease,
-      content-visibility 0.3s allow-discrete;
-  }
-
-  .skills__accordion[open]::details-content {
-    block-size: auto;
-  }
-}
-
-/* ============= Soft skills: brick wall =============
-   6 columns; each brick spans 2. Three alternating courses like a
-   real bond: 1st and 3rd with 2 bricks offset by half a brick (with
-   decorative half bricks at the edges) and the 2nd with 3 bricks.
-   The gap is the mortar joint. The text scales with the brick
-   width (cqi of the wall) so long words don't overflow. */
-.skills__tags .skills__tags-container {
-  container-type: inline-size;
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-auto-rows: minmax(3.25rem, auto);
-  gap: 6px;
-  /* .flex--container centers: here each brick fills its cell */
-  align-items: stretch;
-  justify-items: stretch;
-  justify-content: normal;
-  width: 100%;
-  max-width: 44rem;
-  align-self: flex-start;
+.skills__tags-title {
+  align-self: stretch; /* on the left, even though .flex--container centers */
+  margin-bottom: 0.25rem;
 }
 
 .skills__brick-half {
@@ -412,7 +384,7 @@
 .skills__brick-half--r3-start { grid-area: 3 / 1; }
 .skills__brick-half--r3-end { grid-area: 3 / 6; }
 
-.skills__tags .skills__tag {
+.skills__tag {
   display: grid;
   place-items: center;
   min-width: 0;
@@ -435,28 +407,28 @@
   box-shadow:
     inset 0 0 14px rgb(176 136 20 / 0.62),
     inset 0 -3px 0 rgb(120 90 10 / 0.35);
-}
 
-/* 1st course (offset by half a brick) */
-.skills__tags .skills__tag:nth-child(1) { grid-area: 1 / 2 / auto / span 2; }
-.skills__tags .skills__tag:nth-child(2) { grid-area: 1 / 4 / auto / span 2; }
-/* 2nd course: 3 full bricks */
-.skills__tags .skills__tag:nth-child(3) { grid-area: 2 / 1 / auto / span 2; }
-.skills__tags .skills__tag:nth-child(4) { grid-area: 2 / 3 / auto / span 2; }
-.skills__tags .skills__tag:nth-child(5) { grid-area: 2 / 5 / auto / span 2; }
-/* 3rd course (offset by half a brick) */
-.skills__tags .skills__tag:nth-child(6) { grid-area: 3 / 2 / auto / span 2; }
-.skills__tags .skills__tag:nth-child(7) { grid-area: 3 / 4 / auto / span 2; }
+  /* 1st course (offset by half a brick) */
+  &:nth-child(1) { grid-area: 1 / 2 / auto / span 2; }
+  &:nth-child(2) { grid-area: 1 / 4 / auto / span 2; }
+  /* 2nd course: 3 full bricks */
+  &:nth-child(3) { grid-area: 2 / 1 / auto / span 2; }
+  &:nth-child(4) { grid-area: 2 / 3 / auto / span 2; }
+  &:nth-child(5) { grid-area: 2 / 5 / auto / span 2; }
+  /* 3rd course (offset by half a brick) */
+  &:nth-child(6) { grid-area: 3 / 2 / auto / span 2; }
+  &:nth-child(7) { grid-area: 3 / 4 / auto / span 2; }
 
-/* Dark gold grain coming in from the whole border toward the center */
-.skills__tags .skills__tag::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--grain-gold);
-  background-size: 120px;
-  -webkit-mask: var(--grain-mask-all);
-  mask: var(--grain-mask-all);
-  pointer-events: none;
+  /* Dark gold grain coming in from the whole border toward the center */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--grain-gold);
+    background-size: 120px;
+    -webkit-mask: var(--grain-mask-all);
+    mask: var(--grain-mask-all);
+    pointer-events: none;
+  }
 }

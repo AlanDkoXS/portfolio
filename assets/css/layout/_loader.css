@@ -2,42 +2,43 @@
 
 .loader {
   position: fixed;
+  inset: 0;
+  z-index: var(--z-loader);
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   background-color: var(--bg-color-section);
-  z-index: var(--z-loader);
-  opacity: 1;
-  visibility: visible;
   transition: opacity 0.4s, visibility 0.4s;
 
   .loader__logo {
     fill: var(--primary-color);
     width: 3rem;
     height: 3rem;
+
     @media (prefers-reduced-motion: no-preference) {
       animation: jump 1.1s infinite linear;
     }
   }
+
   .loader__name {
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .loader__name--light {
-    font-family: var(--brand-font);
-    font-weight: 200;
-    font-size: 1rem;
-  }
+
+  .loader__name--light,
   .loader__name--semibold {
     font-family: var(--brand-font);
-    font-weight: 500;
     font-size: 1rem;
+  }
+
+  .loader__name--light {
+    font-weight: 200;
+  }
+
+  .loader__name--semibold {
+    font-weight: 500;
   }
 }
 
@@ -53,7 +54,7 @@
   visibility: hidden;
 }
 
-/* ============= Animated loader (loader.js, first load of the session) =============
+/* === Animated loader (loader.js, first load of the session) ===
    Code symbols fall and settle as "alanquintana"; on hide,
    the letters scatter toward the background. */
 .loader--animated {
@@ -73,10 +74,13 @@
   }
 
   .loader__name {
-    display: flex;
     flex-direction: row;
     font-size: var(--loader-size);
     line-height: 1;
+  }
+
+  &.loader--hidden .loader__char {
+    animation: loader-char-scatter 0.7s cubic-bezier(0.55, 0, 0.75, 0.2) calc(var(--i) * 18ms) forwards;
   }
 }
 
@@ -95,10 +99,6 @@
 
 .loader__char--semibold {
   font-weight: 600;
-}
-
-.loader--animated.loader--hidden .loader__char {
-  animation: loader-char-scatter 0.7s cubic-bezier(0.55, 0, 0.75, 0.2) calc(var(--i) * 18ms) forwards;
 }
 
 @keyframes loader-char-fall {

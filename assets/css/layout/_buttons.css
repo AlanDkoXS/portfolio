@@ -44,43 +44,42 @@
     box-shadow 0.15s ease,
     background-color 0.15s ease,
     color 0.15s ease;
-}
 
-/* Grainy inner shadow (bottom and right, the light comes from the top left
-   like the hard shadow). It stays behind the text thanks to isolation. */
-.btn::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--btn-grain);
-  background-size: 120px;
-  -webkit-mask: var(--btn-grain-mask);
-  mask: var(--btn-grain-mask);
-  pointer-events: none;
-}
+  /* Grainy inner shadow (bottom and right, the light comes from the top left
+     like the hard shadow). It stays behind the text thanks to isolation. */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--btn-grain);
+    background-size: 120px;
+    -webkit-mask: var(--btn-grain-mask);
+    mask: var(--btn-grain-mask);
+    pointer-events: none;
+  }
 
-.btn i {
-  font-size: 1.25em;
-  transition: transform 0.2s ease;
-}
+  i {
+    font-size: 1.25em;
+    transition: transform 0.2s ease;
+  }
 
+  &:active {
+    transform: translate(var(--btn-offset), var(--btn-offset));
+    box-shadow: 0 0 0 var(--btn-ink), var(--btn-inset-shadow);
+  }
 
-.btn:active {
-  transform: translate(var(--btn-offset), var(--btn-offset));
-  box-shadow: 0 0 0 var(--btn-ink), var(--btn-inset-shadow);
-}
+  &:focus-visible {
+    outline: 3px solid var(--accent-ink);
+    outline-offset: 4px;
+  }
 
-.btn:focus-visible {
-  outline: 3px solid var(--accent-ink);
-  outline-offset: 4px;
-}
-
-.btn:disabled,
-.btn[aria-disabled='true'] {
-  opacity: 0.55;
-  cursor: not-allowed;
-  pointer-events: none;
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 }
 
 /* Secondary: same outline and shadow, no fill; it fills on hover */
@@ -89,11 +88,11 @@
   background: transparent;
   border-color: var(--accent-ink); /* ink in light, gold in dark */
   box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--accent-color);
-}
 
-/* Without a fill there is no inner shadow; it appears when filled on hover */
-.btn--ghost::after {
-  opacity: 0;
+  /* Without a fill there is no inner shadow; it appears when filled on hover */
+  &::after {
+    opacity: 0;
+  }
 }
 
 /* Hover only with a real pointer: on touch screens it stays "stuck" after a tap */
@@ -102,26 +101,26 @@
     background: var(--btn-hover-bg);
     transform: translate(-2px, -2px);
     box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--btn-inset-shadow);
+
+    /* The grain rises a bit on hover */
+    &::after {
+      -webkit-mask: var(--btn-grain-mask-hover);
+      mask: var(--btn-grain-mask-hover);
+    }
+
+    i {
+      transform: translateX(2px);
+    }
   }
 
-  /* The grain rises a bit on hover */
-  .btn:hover::after {
-    -webkit-mask: var(--btn-grain-mask-hover);
-    mask: var(--btn-grain-mask-hover);
-  }
-
-  .btn:hover i {
-    transform: translateX(2px);
-  }
-
+  /* The lifted shadow comes from .btn:hover */
   .btn--ghost:hover {
     color: var(--on-accent-color);
     background: var(--accent-color);
-    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--btn-inset-shadow);
-  }
 
-  .btn--ghost:hover::after {
-    opacity: 1;
+    &::after {
+      opacity: 1;
+    }
   }
 }
 
@@ -129,7 +128,7 @@
    on high-density screens, the noise dots come out so fine they're barely
    visible. Here it spreads further (the hover mask) and uses the variant
    with larger, denser dots. */
-@media (hover: none), (max-width: 599px) {
+@media (hover: none), (width < 600px) {
   .btn::after {
     background: var(--btn-grain-strong);
     background-size: 120px;

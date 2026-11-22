@@ -28,10 +28,12 @@
   object-fit: cover;
 }
 
-/* Mobile: the section fits in one screen and is vertically centered under
-   the bar, even with large system text: the portrait shrinks with the
-   available height and the gaps don't grow with the text */
-@media (max-width: 599px) {
+/* === About: width < 600px ===
+   The section fits in one screen and is vertically centered under the bar,
+   even with large system text: the portrait shrinks with the available
+   height and the gaps don't grow with the text */
+
+@media (width < 600px) {
   .about.section {
     padding-block: 12px;
   }

@@ -1,19 +1,20 @@
-/* ============= Hanging lamp =============
-   Hangs from the top right edge, below the menu, and switches the theme:
-   lit = dark mode, unlit = light mode (see helpers/lamp.js).
+/* === Hanging lamp ===
+   Hangs below the menu and switches the theme: lit = dark mode, unlit =
+   light mode (see helpers/lamp.js).
    States: idle (off) · hover (over) · pressing (pull) · lit (on)
-   - Desktop: replaces the menu's moon/sun button.
-   - Mobile: centered between the edge and the portrait; it retracts on scroll
-     and comes back after 3 s. With the menu open it appears over the panel
-     (instead of the moon/sun button, which is hidden on mobile). */
+   - Desktop: centered in the right margin.
+   - Mobile: only inside the open hamburger menu, left of the close X.
+   It replaces the menu's moon/sun button at every width. */
+.header .navbar .navbar__toggle--darkmode {
+  display: none;
+}
+
 .lamp {
-  --lamp-width: 84px;
-  /* cable visible below the menu: the lamp hangs, it isn't stuck to the bar */
-  --lamp-drop: 1.25rem;
+  /* --lamp-width and --lamp-drop (cable visible below the menu: the lamp
+     hangs, it isn't stuck to the bar) are set per breakpoint below */
   --lamp-top: calc(var(--header-height) + var(--lamp-drop));
   position: fixed;
   top: 0;
-  right: 3.4rem;
   z-index: var(--z-lamp);
   display: block;
   width: var(--lamp-width);
@@ -80,13 +81,10 @@
   }
 }
 
-/* Mobile: the lamp only appears inside the open hamburger menu
-   (replaces the moon/sun button); closed, it stays retracted behind the bar */
-@media (max-width: 599px) {
-  .header .navbar .navbar__toggle--darkmode {
-    display: none;
-  }
-
+/* === Mobile ===
+   The lamp only appears inside the open hamburger menu; closed, it stays
+   retracted behind the bar */
+@media (width < 600px) {
   .lamp {
     --lamp-width: clamp(96px, 27vw, 118px);
     --lamp-drop: 0.25rem;
@@ -104,10 +102,8 @@
     translate: 0 0;
     visibility: visible;
     transition: visibility 0s 0.25s;
-  }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .header.menu-open ~ .lamp {
+    @media (prefers-reduced-motion: no-preference) {
       animation: lamp-bungee 1.1s 0.25s both;
     }
   }
@@ -139,12 +135,9 @@
   }
 }
 
-/* Desktop: larger, almost at the edge, and without the moon/sun button */
-@media (min-width: 600px) {
-  .header .navbar .navbar__toggle--darkmode {
-    display: none;
-  }
-
+/* === Desktop ===
+   Larger and centered in the right margin */
+@media (width >= 600px) {
   .lamp {
     --lamp-drop: 2.75rem;
     /* Centered in the right margin (space between the 1024px content and the
@@ -156,7 +149,8 @@
   }
 }
 
-/* States. Priority order: pressing > lit > hover > idle */
+/* === States ===
+   Priority order: pressing > lit > hover > idle */
 .lamp[aria-pressed='true'] .lamp__on {
   opacity: 1;
 }
@@ -187,28 +181,35 @@
   }
 }
 
-/* Pressing: only the pulled-chain image is visible. Uses !important
-   because it must beat the hover (which has higher specificity). */
-.lamp.lamp--pulling img {
-  opacity: 0 !important;
-  animation: none !important;
-  transition: none !important;
-}
+/* Pressing: only the pulled-chain image is visible. These rules win by
+   order, not !important: keep them after the hover and swing rules (same
+   specificity) */
+.lamp.lamp--pulling {
+  img {
+    animation: none;
+    transition: none;
+  }
 
-.lamp.lamp--pulling .lamp__pull {
-  opacity: 1 !important;
-}
+  .lamp__off {
+    opacity: 0;
+  }
 
-/* Lit and pressing: the pulled-chain image has no light, so it looked like
-   it turned off when touched (and then turned off for real). The light stays
-   on, it just drops a little as if pulled, and turns off only once. */
-.lamp[aria-pressed='true'].lamp--pulling .lamp__on {
-  opacity: 1 !important;
-  translate: 0 3px;
-}
+  &:not([aria-pressed='true']) {
+    .lamp__over {
+      opacity: 0;
+    }
 
-.lamp[aria-pressed='true'].lamp--pulling .lamp__pull {
-  opacity: 0 !important;
+    .lamp__pull {
+      opacity: 1;
+    }
+  }
+
+  /* Lit and pressing: the pulled-chain image has no light, so it looked like
+     it turned off when touched (and then turned off for real). The light stays
+     on, it just drops a little as if pulled, and turns off only once. */
+  &[aria-pressed='true'] .lamp__on {
+    translate: 0 3px;
+  }
 }
 
 @keyframes lamp-swing {

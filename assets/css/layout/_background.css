@@ -1,5 +1,7 @@
 /* === Background === */
 
+/* Shared box of the grain, the layers wrapper and each SVG layer (they all
+   carry this class): top left corner, full width, behind the content */
 .background-container {
   position: absolute;
   top: 0;
@@ -13,50 +15,14 @@
   overflow: hidden;
 }
 
-.bgGrain {
-  /* Grain: a small repeated tile (9 KB instead of a full-screen
-     image). The top-to-bottom density falloff comes from the
-     mask, which already includes how the original image faded out */
-  /* Fixed from the top of the screen: when the navbar is hidden (in the hero)
-     no grainless band is left; it fades out with a long, soft gradient
-     from the top edge. No opaque stretch at navbar height: with the
-     navbar hidden it looked like a darker band with a hard edge */
-  --grain-fade: linear-gradient(
-    to bottom,
-    #000 0,
-    rgb(0 0 0 / 0.82) 12%,
-    rgb(0 0 0 / 0.6) 25%,
-    rgb(0 0 0 / 0.4) 40%,
-    rgb(0 0 0 / 0.22) 55%,
-    rgb(0 0 0 / 0.1) 70%,
-    rgb(0 0 0 / 0.03) 85%,
-    transparent 100%
-  );
-  -webkit-mask: var(--grain-fade);
-  mask: var(--grain-fade);
-  position: fixed;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0;
-  transform: none !important;
-  /* Seamless grain tile (each dot is random and independent, with the
-     same density as the original grain). It runs at 1 image px per CSS
-     px so the grain stays visible on high-density screens */
-  background-image: url('/assets/img/bgGrain-tile.webp');
-  background-size: 256px 256px;
-  background-repeat: repeat;
-  width: 100% !important;
-  height: calc(75svh + var(--header-height)) !important;
-  opacity: 0.6;
-}
-
+/* === Layers (hero SVG letters) === */
 .bgBack,
 .bgMiddle,
 .bgFront {
-  position: absolute;
   top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: transform 0.5s ease-in-out;
 }
 
 .bgBack {
@@ -74,54 +40,37 @@
   filter: blur(0.5px) brightness(1) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
 }
 
-/* Hover effects (only without a reduced-motion preference) */
+/* Hover drift (only without a reduced-motion preference) */
 @media (prefers-reduced-motion: no-preference) {
-  .background-container:hover .bgBack {
-    transform: translate(-50%, -50%) translate(-40px, 20px);
-  }
+  .background-container:hover {
+    .bgBack {
+      transform: translate(-50%, -50%) translate(-40px, 20px);
+    }
 
-  .background-container:hover .bgMiddle {
-    transform: translate(-50%, -50%) translate(-30px, -15px);
-  }
+    .bgMiddle {
+      transform: translate(-50%, -50%) translate(-30px, -15px);
+    }
 
-  .background-container:hover .bgFront {
-    transform: translate(-50%, -50%) translate(40px, -10px);
+    .bgFront {
+      transform: translate(-50%, -50%) translate(40px, -10px);
+    }
   }
 }
 
-.bgBack,
-.bgMiddle,
-.bgFront {
-  transition: transform 0.5s ease-in-out;
-}
-
-/* === Background MIN WIDTH 600px === */
-@media (min-width: 600px) {
+/* === Desktop ===
+   Taller and dimmed; the layers take the container width (no sideways
+   overflow), sit lower and are blurrier and translucent */
+@media (width >= 600px) {
   .background-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
     height: 180vh;
-    z-index: -1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
     opacity: 0.3;
-  }
-
-  .bgGrain {
-    opacity: 0.6;
   }
 
   .bgBack,
   .bgMiddle,
   .bgFront {
-    position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 100%;
   }
 
   .bgBack {
@@ -138,24 +87,42 @@
     filter: blur(1px) brightness(1) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
     opacity: 0.7;
   }
+}
 
-  @media (prefers-reduced-motion: no-preference) {
-    .background-container:hover .bgBack {
-      transform: translate(-50%, -50%) translate(-40px, 20px);
-    }
+/* === Grain ===
+   A small repeated tile (9 KB instead of a full-screen image) on the
+   .background-container box. Keep this rule after the container rules: same
+   specificity, and the grain's own position, height and opacity must win. */
+.bgGrain {
+  /* The top-to-bottom density falloff comes from the mask: a long, soft
+     gradient from the top edge. No opaque stretch at navbar height: with the
+     navbar hidden it looked like a darker band with a hard edge */
+  --grain-fade: linear-gradient(
+    to bottom,
+    #000 0,
+    rgb(0 0 0 / 0.82) 12%,
+    rgb(0 0 0 / 0.6) 25%,
+    rgb(0 0 0 / 0.4) 40%,
+    rgb(0 0 0 / 0.22) 55%,
+    rgb(0 0 0 / 0.1) 70%,
+    rgb(0 0 0 / 0.03) 85%,
+    transparent 100%
+  );
+  -webkit-mask: var(--grain-fade);
+  mask: var(--grain-fade);
+  /* Fixed from the top of the screen: when the navbar is hidden (in the hero)
+     no grainless band is left */
+  position: fixed;
+  height: calc(75svh + var(--header-height));
+  /* Seamless grain tile (each dot is random and independent, with the
+     same density as the original grain). It runs at 1 image px per CSS
+     px so the grain stays visible on high-density screens */
+  background-image: url('/assets/img/bgGrain-tile.webp');
+  background-size: 256px 256px;
+  opacity: 0.6;
 
-    .background-container:hover .bgMiddle {
-      transform: translate(-50%, -50%) translate(-30px, -15px);
-    }
-
-    .background-container:hover .bgFront {
-      transform: translate(-50%, -50%) translate(40px, -10px);
-    }
-  }
-
-  .bgBack,
-  .bgMiddle,
-  .bgFront {
-    transition: transform 0.5s ease-in-out;
+  /* Desktop: it scrolls away with the page, like the rest of the background */
+  @media (width >= 600px) {
+    position: absolute;
   }
 }

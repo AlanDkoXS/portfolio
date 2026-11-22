@@ -23,26 +23,32 @@
   margin: 0;
 }
 
+/* <canvas> drawn by pdf_loader.js (it only sets an inline width) */
 .resume__page {
   display: block;
   max-width: 100%;
-  height: auto !important;
+  height: auto;
   margin: 0 auto;
   border-radius: var(--border-radius-small);
   box-shadow: 0 10px 30px var(--shadow-color);
   outline: 1px solid var(--border-color);
 }
 
-/* Download modal */
-.modal-content h2,
-.modal-content p {
-  text-align: center;
+/* === Modal texts (download dialog and the home contact dialog) === */
+
+.modal-content {
+  h2,
+  p {
+    text-align: center;
+  }
+
+  p {
+    margin: 0.25rem 0 1rem;
+    color: var(--text-muted);
+  }
 }
 
-.modal-content p {
-  margin: 0.25rem 0 1rem;
-  color: var(--text-muted);
-}
+/* === Floating download button === */
 
 .fab-container {
   position: fixed;
@@ -55,6 +61,8 @@
   transition: translate 0.15s linear;
 }
 
+/* Square with the icon only; resume_fab_buttons.js adds .expanded (icon +
+   text) once the page is scrolled */
 .fab {
   display: inline-flex;
   align-items: center;
@@ -66,25 +74,20 @@
   transition: width 0.3s, height 0.3s, font-size 0.3s, padding 0.3s, transform 0.25s, box-shadow 0.3s;
   text-decoration: none;
   overflow: hidden;
-}
 
-.fab-text {
-  transition: margin-left 0.3s;
-}
+  .fab-text {
+    display: none;
+    white-space: nowrap;
+    margin-left: 0.2rem;
+  }
 
-.fab .fab-text {
-  display: none;
-  white-space: nowrap;
-  margin-left: 0.2rem;
-}
+  &.expanded {
+    width: 10rem;
+    font-size: 1rem;
+    padding: 20px;
 
-.fab.expanded {
-  width: 10rem;
-  height: 4rem;
-  font-size: 1rem;
-  padding: 20px;
-}
-
-.fab.expanded .fab-text {
-  display: inline-block;
+    .fab-text {
+      display: inline-block;
+    }
+  }
 }

@@ -1,0 +1,127 @@
+/* === Language Toggle ===
+   Flag button in the menu, matching the subtle links: no outline, as tall as
+   a menu letter and always desaturated. It shows the current language;
+   hover = preview of the language it will switch to, click = confirmation
+   (that same flag does a "pop" while the other page loads). */
+
+.navbar__toggle--language {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.navbar__toggle--language-input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.navbar__toggle--language-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.15em;
+  aspect-ratio: 4 / 3;
+  /* same size as the menu links (_header.css) */
+  font-size: 1.15rem;
+  border-radius: 2px;
+  overflow: hidden;
+  /* still desaturated on hover; it only brightens a little */
+  filter: saturate(0.35) brightness(0.92);
+  opacity: 0.85;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (width >= 600px) {
+    font-size: 0.95rem;
+  }
+
+  /* The flags fill the whole button, one on top of the other */
+  .flag-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Flag swap with zoom: the outgoing one grows and fades out, the incoming
+     one shrinks from large to its size. Neither goes below its full size, so
+     the button is always covered (the background never shows). Hidden is
+     the default; the rules below pick the visible flag. */
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    scale: 1.4;
+    transition:
+      opacity 0.3s ease,
+      scale 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* Visible flag: the current language (input checked = Spanish) */
+.navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label .navbar__toggle--language-en,
+.navbar__toggle--language-input:checked ~ .navbar__toggle--language-label .navbar__toggle--language-es {
+  opacity: 1;
+  scale: 1;
+}
+
+/* Hover: the two flags trade places to preview the other language */
+@media (hover: hover) {
+  .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label:hover .navbar__toggle--language-en,
+  .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label:hover .navbar__toggle--language-es {
+    opacity: 0;
+    scale: 1.4;
+  }
+
+  .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label:hover .navbar__toggle--language-es,
+  .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label:hover .navbar__toggle--language-en {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* Click (.is-switching, .is-target and .is-current are set by
+   switchLanguages.js): the target language's flag stays and bounces. The
+   input has just changed, so with the pointer still on the button the hover
+   preview would swap back to the old flag: !important pins the opacities
+   over those more specific rules. */
+.navbar__toggle--language.is-switching {
+  .is-target {
+    opacity: 1 !important;
+  }
+
+  .is-current {
+    opacity: 0 !important;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .is-target {
+      animation: lang-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+  }
+}
+
+@keyframes lang-pop {
+  0% {
+    scale: 1;
+  }
+  40% {
+    scale: 1.3;
+  }
+  100% {
+    scale: 1;
+  }
+}

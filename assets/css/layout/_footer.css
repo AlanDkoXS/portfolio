@@ -1,31 +1,31 @@
 /* === Footer === */
+
+/* Always dark: the same color the navbar uses */
 .footer {
-  /* Dark footer background (the same color the navbar uses) */
   position: relative;
   isolation: isolate;
-  background-color: var(--footer-bg);
-  color: var(--footer-text);
-  /* headings and icons: gold in light, near-white gray in dark (like the page) */
   /* space between the top edge and the first heading */
-  padding: 2.5rem 0 2rem !important;
-  bottom: 0;
+  padding: 2.5rem 0 2rem;
   font-size: 0.85rem;
   line-height: 1.6;
+  color: var(--footer-text);
+  background-color: var(--footer-bg);
+
+  /* Uniform dark grain over the background, behind the content */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--grain-ink);
+    background-size: 140px;
+    opacity: 0.2;
+    pointer-events: none;
+  }
 }
 
-.footer::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--grain-ink);
-  background-size: 140px;
-  opacity: 0.2;
-  pointer-events: none;
-}
-
-/* Dark mode: the footer is exactly the color of the form fields
-   (no grain on top to alter it) */
+/* Dark mode: the footer keeps its exact background color (no grain on top
+   to alter it) */
 @container style(--color-scheme: dark) {
   .footer::after {
     display: none;
@@ -35,9 +35,13 @@
 .footer__container {
   display: grid;
   gap: 1rem;
+
+  @media (width >= 600px) {
+    grid-template-columns: repeat(2, 2fr);
+  }
 }
 
-.footer .footer__title {
+.footer__title {
   font-size: calc(var(--title-scale) * 1.1rem);
   margin: 0 0 0.35rem;
 }
@@ -46,7 +50,7 @@
   margin-top: 0.75rem;
 }
 
-.footer__social .footer__social-list {
+.footer__social-list {
   display: flex;
   gap: 1rem;
   margin-top: 0.4rem;
@@ -57,20 +61,10 @@
   display: inline-flex;
   color: var(--primary-color);
   transition: transform 0.2s ease;
-}
 
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .footer__social-link:hover {
-    transform: scale(1.15);
-  }
-}
-
-/* === Media Queries MIN WIDTH (600px) === */
-
-@media (min-width: 600px) {
-  .footer {
-    .footer__container {
-      grid-template-columns: repeat(2, 2fr);
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    &:hover {
+      transform: scale(1.15);
     }
   }
 }

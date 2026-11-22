@@ -8,11 +8,15 @@
   text-align: center;
 }
 
+/* The section already has its width and side margin: the title adds no more */
+.designs .section__title {
+  padding-inline: 0;
+}
+
 .designs__description {
   max-width: 60ch;
   justify-self: center;
   margin: 0 0 1.5rem;
-  text-align: center;
 }
 
 .designs__grid {
@@ -32,11 +36,11 @@
   border: 1px solid var(--border-color);
   border-radius: 1rem;
   box-shadow: 0 6px 14px var(--shadow-color);
-}
 
-.designs__link:focus-visible {
-  outline: 2px solid var(--accent-color);
-  outline-offset: 3px;
+  &:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
+  }
 }
 
 .designs__img {
@@ -74,11 +78,13 @@
   margin-top: 1.5rem;
 }
 
-/* Mobile: shots slide sideways (one row with horizontal scroll and
+/* === Mobile === */
+
+/* Shots slide sideways (one row with horizontal scroll and
    snap) instead of stacking in a long column. The next card peeks in
    from the edge to hint there are more. Spans the full screen
    width (breaks out of the section padding) */
-@media (max-width: 599px) {
+@media (width < 600px) {
   .designs .designs__grid {
     grid-template-columns: none;
     grid-auto-flow: column;
@@ -109,9 +115,4 @@
   .designs__grid:has(> .designs__item:only-child) {
     justify-content: center;
   }
-}
-
-/* The section already has its width and side margin: the title adds no more */
-.designs .section__title {
-  padding-inline: 0;
 }

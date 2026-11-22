@@ -1,9 +1,5 @@
 /* === Home Section === */
 
-#home {
-  opacity: 1;
-}
-
 .home {
   position: relative;
 }
@@ -13,17 +9,14 @@
   position: relative;
   justify-content: center;
   align-items: center;
-  row-gap: 0.1rem;
   padding: 0;
   width: 100%;
   height: 100%;
-  transform: translateY(-90px);
 
   .home__social-item {
-    margin: var(--margin-medium);
-    font-size: var(--icon-font-size);
     font-weight: var(--font-semibold);
     transition: transform 0.3s ease-in-out;
+
     &:hover {
       transform: scale(1.2);
     }
@@ -31,13 +24,12 @@
 }
 
 .home__image {
-  width: clamp(100px, 100%, 300px);
   height: auto;
   margin: 0;
   position: relative;
   aspect-ratio: 1/1;
   overflow: hidden;
-  transform: translateX(30px) translateY(30px) scale(0.85);
+  justify-self: center;
 }
 
 .home__image--background {
@@ -72,17 +64,21 @@
   }
 }
 
-.home__info {
-  .home__title,
-  .home__description {
-    /* no side padding: the text uses the same width as the buttons */
-    padding: 0.5rem 0;
-    text-align: center;
+@keyframes animateSprite {
+  from {
+    background-position: 0% 0;
   }
+  to {
+    background-position: 100% 0;
+  }
+}
 
-  /* title and intro on the left */
+.home__info {
+  /* title and intro on the left; no side padding: the text uses the same
+     width as the buttons */
   .home__title,
   .home__description {
+    padding: 0.5rem 0;
     text-align: start;
   }
 
@@ -118,12 +114,9 @@
   }
 }
 
-@keyframes animateSprite {
-  from {
-    background-position: 0% 0;
-  }
-  to {
-    background-position: 100% 0;
+@keyframes caret {
+  50% {
+    opacity: 0;
   }
 }
 
@@ -133,136 +126,142 @@ html.js:not(.hero-ready) .home .home__title {
   visibility: hidden;
 }
 
-@keyframes caret {
-  50% {
-    opacity: 0;
+/* === Desktop hero copy (handleResponsiveContent in switchLanguages.js) === */
+
+.home .home__info .home__description--lines {
+  max-width: 62ch;
+}
+
+.home__description--lines {
+  /* The 7 phrases of 7 words read as a normal paragraph (not one row
+     per phrase), so it sounds like conversation rather than a poem */
+  .home__line {
+    display: inline;
+
+    & + .home__line::before {
+      content: ' ';
+    }
+  }
+
+  /* Intro as a normal paragraph, separated from the 7 lines by a blank line */
+  .home__intro {
+    display: block;
+    margin-bottom: 1lh;
   }
 }
 
-/* === Home min width 600px === */
+/* Emphasis in the intro (*…* in translations.js) */
+.home__description strong {
+  font-weight: var(--font-semibold);
+  color: var(--gold-emphasis);
+}
 
-@media (min-width: 600px) {
-  /* Modified home structure */
-  .home .home__container {
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      "image title"
-      "image description"
-      "image resume-button";
-    gap: 0.75rem 2.5rem;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    min-height: 100svh;
-    /* The menu isn't visible on load: the hero fills the whole first screen,
-       vertically centered, without reserving space for the header */
-    padding: 1.5rem 2rem 1.5rem 4.5rem;
-    transform: none;
-  }
+/* === Home: width >= 600px === */
 
-  .home.home {
+@media (width >= 600px) {
+  .home {
     padding: 0;
+
+    .home__container {
+      grid-template-columns: 1fr 2fr;
+      grid-template-rows: auto auto auto;
+      grid-template-areas:
+        "image title"
+        "image description"
+        "image resume-button";
+      gap: 0.75rem 2.5rem;
+      align-content: center;
+      min-height: 100svh;
+      /* The menu isn't visible on load: the hero fills the whole first screen,
+         vertically centered, without reserving space for the header */
+      padding: 1.5rem 2rem 1.5rem 4.5rem;
+      /* The social links are positioned relative to the section (full width),
+         not the centered container: they sit flush with the left edge */
+      position: static;
+    }
+
+    .home__image {
+      grid-area: image;
+      width: clamp(200px, 30vw, 400px);
+      max-width: 58svh;
+      align-self: center;
+    }
+
+    .home__info {
+      grid-area: title;
+      align-self: end;
+      text-align: left;
+
+      .home__title {
+        text-align: left;
+        margin: 0 0 0.75rem;
+        font-size: calc(var(--title-scale) * clamp(1.25rem, 0.5rem + 2.6svh + 0.4vw, 2.2rem));
+      }
+
+      /* Merged description (includes the about content). Its size depends
+         mostly on the screen height, so the whole hero fits in the first
+         screen without being cut off. */
+      .home__description {
+        text-align: left;
+        max-width: 62ch;
+        margin-bottom: 0.5rem;
+        font-size: clamp(0.8rem, 0.25rem + 1.6svh + 0.2vw, 1.15rem);
+        line-height: 1.5;
+      }
+    }
+
+    /* Only the resume button is shown, full width of its column */
+    .home__buttons {
+      grid-area: resume-button;
+      display: flex;
+      align-self: start;
+      justify-content: flex-start;
+
+      a {
+        display: none;
+      }
+
+      a#resume-btn {
+        display: flex;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: none;
+      }
+    }
+
+    /* Inside the hero (not fixed to the window: doesn't follow the scroll) */
+    .home__social {
+      position: absolute;
+      top: 50%;
+      left: 0.5rem;
+      transform: translateY(-50%);
+      flex-direction: column;
+      z-index: var(--z-fixed);
+    }
+
+    .home__social-item {
+      margin: 0.5rem 0;
+      font-size: 1.5rem;
+    }
   }
 
-  /* The social links are positioned relative to the section (full width), not
-     the centered container: they sit flush with the left edge */
-  .home .home__container {
-    position: static;
-  }
-
-  /* Image adjustments */
-  .home .home__image {
-    grid-area: image;
-    width: clamp(200px, 30vw, 400px);
-    max-width: 58svh;
-    transform: none;
-    justify-self: center;
-    align-self: center;
-  }
-
-  /* Title adjustments */
-  .home .home__info {
-    grid-area: title;
-    text-align: left;
-  }
-
-  .home .home__info {
-    align-self: end;
-  }
-
-  .home .home__info .home__title {
-    text-align: left;
-    margin: 0 0 0.75rem;
-    font-size: calc(var(--title-scale) * clamp(1.25rem, 0.5rem + 2.6svh + 0.4vw, 2.2rem));
-  }
-
-  /* Merged description (includes the about content). Its size depends on the
-     screen height and width so the hero fits without being cut off. */
-  .home .home__info .home__description {
-    text-align: left;
-    max-width: 62ch;
-    margin-bottom: 0.5rem;
-    /* Depends mostly on the height: the whole hero fits in the first screen */
-    font-size: clamp(0.8rem, 0.25rem + 1.6svh + 0.2vw, 1.15rem);
-    line-height: 1.5;
-  }
-
-  .home .home__buttons {
-    align-self: start;
-    justify-content: flex-start !important;
-  }
-
-  /* Hide buttons except resume */
-  .home .home__buttons {
-    grid-area: resume-button;
-    display: flex;
-    justify-content: center;
-  }
-
-  .home .home__buttons a {
-    display: none;
-  }
-
-  .home .home__buttons a#resume-btn {
-    display: flex;
-  }
-
-  /* Hide the about section */
+  /* The about content lives in the hero description: hide the About section
+     and its menu link */
   #about.about.section {
     display: none;
   }
 
-  /* Navigation menu adjustment */
   .navbar__list .navbar__item a[href$="#about"] {
     display: none;
   }
-
-  /* Show only the resume button */
-  .home .home__buttons .btn {
-    width: 100%;
-    max-width: none;
-  }
-
-  /* Inside the hero (not fixed to the window: doesn't follow the scroll) */
-  .home .home__social {
-    position: absolute;
-    top: 50%;
-    left: 0.5rem;
-    transform: translateY(-50%);
-    flex-direction: column;
-    z-index: var(--z-fixed);
-  }
-
-  .home .home__social-item {
-    margin: 0.5rem 0;
-    font-size: 1.5rem;
-  }
 }
 
-/* HOME MAX WIDTH 599px: the whole hero fits on screen, centered ======
+/* === Home: width < 600px (the whole hero fits on screen, centered) ===
    svh = visible height with the browser bar expanded */
-@media (max-width: 599px) {
+
+@media (width < 600px) {
   /* The hero takes one screen: the text (which follows the system font
      size) takes what it needs and the portrait shrinks to fill only the
      leftover space. minmax(0, 1fr) keeps the content from
@@ -272,85 +271,53 @@ html.js:not(.hero-ready) .home .home__title {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     padding: 0.5rem 0 1rem;
+
+    .home__container {
+      min-height: 0;
+      grid-template-columns: minmax(0, 1fr);
+      /* with huge text (that wouldn't fit even without the portrait) the
+         portrait keeps a minimum size and the section grows with scroll */
+      grid-template-rows: minmax(7rem, 1fr) auto;
+      align-content: stretch;
+    }
+
+    .home__image {
+      /* height = the free space of its row; width from the 1:1 ratio */
+      height: 100%;
+      max-height: min(80vw, 320px);
+      min-height: 0;
+      max-width: 100%;
+      margin: 0 auto;
+      align-self: end;
+    }
+
+    .home__info {
+      min-width: 0;
+      /* separates the text from the social icons (the portrait shrinks to
+         make room, so the text moves up) */
+      margin-bottom: 1.5rem;
+
+      .home__description {
+        padding-block: 0.25rem;
+      }
+    }
+
+    .home__social {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .home__social-item {
+      margin: 0.4rem 1rem;
+      /* icons don't grow with the system text (they aren't text) */
+      font-size: 34px;
+    }
+
+    .home__buttons .btn {
+      margin: 0.3rem 0;
+      /* button height = the text's + a fixed padding: with large text
+         all four still fit on screen */
+      padding-block: min(0.7rem, 11px);
+    }
   }
-
-  .home .home__container {
-    transform: none;
-    row-gap: 0;
-    min-height: 0;
-    grid-template-columns: minmax(0, 1fr);
-    /* with huge text (that wouldn't fit even without the portrait) the
-       portrait keeps a minimum size and the section grows with scroll */
-    grid-template-rows: minmax(7rem, 1fr) auto;
-    align-content: stretch;
-  }
-
-  .home .home__image {
-    /* height = the free space of its row; width from the 1:1 ratio */
-    height: 100%;
-    max-height: min(80vw, 320px);
-    min-height: 0;
-    width: auto;
-    max-width: 100%;
-    margin: 0 auto;
-    justify-self: center;
-    align-self: end;
-    transform: none;
-  }
-
-  .home .home__info {
-    min-width: 0;
-    /* separates the text from the social icons (the portrait shrinks to
-       make room, so the text moves up) */
-    margin-bottom: 1.5rem;
-  }
-
-  .home .home__info .home__description {
-    padding-block: 0.25rem;
-  }
-
-  .home .home__social {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .home .home__social-item {
-    margin: 0.4rem 1rem;
-    /* icons don't grow with the system text (they aren't text) */
-    font-size: 34px;
-  }
-
-  .home .home__buttons .btn {
-    margin: 0.3rem 0;
-    /* button height = the text's + a fixed padding: with large text
-       all four still fit on screen */
-    padding-block: min(0.7rem, 11px);
-  }
-}
-
-/* Desktop hero: each of the 7 lines on its own row */
-.home .home__info .home__description--lines {
-  max-width: 62ch;
-}
-
-/* The 7 phrases of 7 words read as a normal paragraph (not one row
-   per phrase), so it sounds like conversation rather than a poem */
-.home__description--lines .home__line {
-  display: inline;
-}
-
-.home__description--lines .home__line + .home__line::before {
-  content: ' ';
-}
-
-/* Intro as a normal paragraph, separated from the 7 lines by a blank line */
-.home__description--lines .home__intro {
-  display: block;
-  margin-bottom: 1lh;
-}
-
-/* Emphasis in the intro (*…* in translations.js) */
-.home__description strong {
-  font-weight: var(--font-semibold);
-  color: var(--gold-emphasis);
 }
