@@ -243,15 +243,15 @@
           <feMergeNode in="grainEdge" />
         </feMerge>
       </filter>
-      <!-- Mismo grano en gris (#8f969b, igual que el de los botones):
+      <!-- Same grain in warm gray (#a09367, like the tags):
            íconos gris casi blanco del modo oscuro (ver --icon-grain en _variables.css) -->
       <filter id="grain-inset-bright" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
         <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="blur" />
         <feComposite in="SourceAlpha" in2="blur" operator="out" result="edge" />
         <feTurbulence type="fractalNoise" baseFrequency="1.15" numOctaves="2" stitchTiles="stitch" result="noise" />
-        <feColorMatrix in="noise" values="0 0 0 0 .561  0 0 0 0 .588  0 0 0 0 .608  0 0 0 4.2 -1.35" result="grain" />
+        <feColorMatrix in="noise" values="0 0 0 0 .62  0 0 0 0 .575  0 0 0 0 .32  0 0 0 4.2 -1.35" result="grain" />
         <feComposite in="grain" in2="edge" operator="in" result="grainEdge" />
-        <feFlood flood-color="#8f969b" flood-opacity="0.55" />
+        <feFlood flood-color="#a09367" flood-opacity="0.55" />
         <feComposite in2="edge" operator="in" result="tint" />
         <feMerge>
           <feMergeNode in="SourceGraphic" />
@@ -346,6 +346,8 @@
                 </div>
               </label>
             </div>
+            <!-- Mobile menu only: caption above the language switch -->
+            <span class="navbar__toggles-caption" data-i18n="navLanguage">Cambiar idioma</span>
             <div class="navbar__toggle--language flex--container">
               <input
                 type="checkbox"
@@ -375,6 +377,11 @@
                     aria-hidden="true"
                   />
                 </div>
+                <!-- Mobile menu: two flag ghost buttons, the current language pressed (replaces the single flag) -->
+                <span class="lang-switch" aria-hidden="true"
+                  ><span class="lang-switch__opt lang-switch__opt--es"><img class="lang-switch__flag" src="/assets/img/flag-es.svg" alt="" width="18" height="18" loading="lazy" /></span
+                  ><span class="lang-switch__opt lang-switch__opt--en"><img class="lang-switch__flag" src="/assets/img/flag-en.svg" alt="" width="18" height="18" loading="lazy" /></span></span
+                >
               </label>
             </div>
           </div>
@@ -413,7 +420,7 @@
           </div>
           <div class="home__info">
             <h1 data-i18n="homeTitle" class="home__title">¡Hola!</h1>
-            <p data-i18n="homeDescription" class="home__description">Soy Alán, <strong>mitad diseñador, mitad programador</strong>, y completamente obsesionado con los detalles.</p>
+            <p data-i18n="homeDescription" class="home__description">Soy Alán, <strong>mitad diseñador, mitad programador</strong>, hago sitios que da gusto usar, fan de que las cosas se vean bien y funcionen.</p>
           </div>
           <ul class="home__social flex--container">
             <li class="home__social-item">
@@ -504,7 +511,7 @@
                 />
               </div>
             </div>
-            <p data-i18n="aboutDescription" class="about__description">Vengo del diseño gráfico y hoy desarrollo de principio a fin: diseño en Figma, Photoshop e Illustrator y programo con React, JavaScript y Node.js, así que cada proyecto pasa de la idea al código sin perder el cuidado visual. Creo aplicaciones web modernas, responsivas y rápidas, adaptadas a las necesidades de tu negocio, donde el diseño atractivo va de la mano de una experiencia intuitiva y fácil de usar. Me importan los detalles: tipografía, color, accesibilidad y rendimiento.</p>
+            <p data-i18n="aboutDescription" class="about__description">Vengo del diseño gráfico y hoy desarrollo de principio a fin: diseño en Photoshop e Illustrator y programo con Astro, React y JavaScript, sobre Node.js y Bun. Cada proyecto pasa de la idea al código sin perder el cuidado visual. Creo aplicaciones web modernas, responsivas y rápidas, adaptadas a las necesidades de tu negocio, donde el diseño atractivo va de la mano de una experiencia intuitiva y fácil de usar. Me importan los detalles: tipografía, color, accesibilidad y rendimiento.</p>
           </div>
         </a>
       </section>

@@ -65,6 +65,10 @@ const translations = {
     en: 'Contact',
     es: 'Contacto',
   },
+  navLanguage: {
+    en: 'Change language',
+    es: 'Cambiar idioma',
+  },
   navMenu: {
     en: 'Menu',
     es: 'Menú',
@@ -75,8 +79,8 @@ const translations = {
     es: '¡Hola!',
   },
   homeDescription: {
-    en: "I'm Alan, *half designer, half developer*, fully obsessed with the details.",
-    es: 'Soy Alán, *mitad diseñador, mitad programador*, y completamente obsesionado con los detalles.',
+    en: "I'm Alan, *half designer, half developer*, I build sites that are a joy to use, a fan of things that look good and work.",
+    es: 'Soy Alán, *mitad diseñador, mitad programador*, hago sitios que da gusto usar, fan de que las cosas se vean bien y funcionen.',
   },
   /* <-- Home Buttons --> */
   aboutButton: {
@@ -162,8 +166,8 @@ const translations = {
     ],
   },
   aboutDescription: {
-    en: "I come from graphic design and now build from start to finish: I design in Figma, Photoshop and Illustrator and code with React, JavaScript and Node.js, so every project goes from idea to code without losing its visual care. I create modern, responsive and fast web applications tailored to your business, where appealing design goes hand in hand with an intuitive, easy-to-use experience. I care about the details: typography, color, accessibility and performance.",
-    es: 'Vengo del diseño gráfico y hoy desarrollo de principio a fin: diseño en Figma, Photoshop e Illustrator y programo con React, JavaScript y Node.js, así que cada proyecto pasa de la idea al código sin perder el cuidado visual. Creo aplicaciones web modernas, responsivas y rápidas, adaptadas a las necesidades de tu negocio, donde el diseño atractivo va de la mano de una experiencia intuitiva y fácil de usar. Me importan los detalles: tipografía, color, accesibilidad y rendimiento.',
+    en: "I come from graphic design and now build from start to finish: I design in Photoshop and Illustrator and code with Astro, React and JavaScript, on Node.js and Bun. Every project goes from idea to code without losing its visual care. I create modern, responsive and fast web applications tailored to your business, where appealing design goes hand in hand with an intuitive, easy-to-use experience. I care about the details: typography, color, accessibility and performance.",
+    es: 'Vengo del diseño gráfico y hoy desarrollo de principio a fin: diseño en Photoshop e Illustrator y programo con Astro, React y JavaScript, sobre Node.js y Bun. Cada proyecto pasa de la idea al código sin perder el cuidado visual. Creo aplicaciones web modernas, responsivas y rápidas, adaptadas a las necesidades de tu negocio, donde el diseño atractivo va de la mano de una experiencia intuitiva y fácil de usar. Me importan los detalles: tipografía, color, accesibilidad y rendimiento.',
   },
 
   /* <-- Skills Section --> */
@@ -337,8 +341,13 @@ const translations = {
   // Resume Page
   resumePage: {
     en: {
-      homeLink: 'Home',
       homeHref: '/',
+      aboutHref: '/#about',
+      skillsHref: '/#skills',
+      projectsHref: '/#projects',
+      designsHref: '/#designs',
+      contactHref: '/#contact',
+      back: 'Back to home',
       downloadButton: 'Download it',
       selectLanguage: 'Pick a language',
       english: 'English',
@@ -348,8 +357,13 @@ const translations = {
       footerCopyright: 'All rights reserved',
     },
     es: {
-      homeLink: 'Inicio',
       homeHref: '/es/',
+      aboutHref: '/es/#about',
+      skillsHref: '/es/#skills',
+      projectsHref: '/es/#projects',
+      designsHref: '/es/#designs',
+      contactHref: '/es/#contact',
+      back: 'Volver al inicio',
       downloadButton: 'Descárgalo',
       selectLanguage: 'Elige el idioma',
       english: 'English',

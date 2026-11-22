@@ -298,7 +298,7 @@ section[tabindex='-1']:focus {
   --teal-deep-900: #000d12; /* footer del modo oscuro */
   --gold-300: #ffd95c;
   --gold-400: #f3ce3a;
-  --gold-500: #e4e6e7; /* modo oscuro: gris casi blanco (neutro, sin amarillo) */
+  --gold-500: #f2e2a0; /* dark mode: near-white gray with a very subtle warm/yellow touch */
 
   /* Theme Colors: ambos modos son turquesa con texto dorado; el oscuro es
      más profundo (light-dark() sigue a color-scheme: sistema o botón) */
@@ -309,20 +309,20 @@ section[tabindex='-1']:focus {
   /* Énfasis (<strong> del hero): un paso más claro que --gold-main (blanco en oscuro) */
   --gold-emphasis: light-dark(var(--gold-300), #ffffff);
   --primary-color: var(--gold-main); /* texto, títulos, íconos */
-  --text-muted: light-dark(#c9b25a, #a9aeb1);
+  --text-muted: light-dark(#c9b25a, #b9ad82);
   --accent-color: var(--gold-main); /* rellenos, sombras, subrayados */
   --accent-ink: var(--gold-main); /* líneas/íconos que necesitan contraste */
   --link-hover: light-dark(var(--gold-300), #ffffff);
   /* Fondo de los botones al pasar el mouse: dorado más claro / blanco */
   --btn-hover-bg: light-dark(var(--gold-300), #ffffff);
-  --accent-glow: light-dark(rgb(243 206 58 / 0.45), rgb(228 230 231 / 0.35));
+  --accent-glow: light-dark(rgb(243 206 58 / 0.45), rgb(242 226 160 / 0.35));
   --on-accent-color: light-dark(var(--teal-deep-800), var(--teal-950)); /* texto sobre dorado; en claro, el fondo del modo oscuro */
 
   /* Background Colors */
   --bg-color-section: light-dark(var(--teal-800), var(--teal-deep-800));
   --surface-color: light-dark(var(--teal-700), var(--teal-deep-700));
   --bg-color-buttons: light-dark(var(--teal-600), var(--teal-deep-600)); /* inputs, controles secundarios */
-  --border-color: light-dark(rgb(243 206 58 / 0.18), rgb(228 230 231 / 0.18));
+  --border-color: light-dark(rgb(243 206 58 / 0.18), rgb(242 226 160 / 0.18));
   --input-bg: light-dark(var(--teal-900), var(--teal-deep-900)); /* campos del formulario: más oscuros que el fondo */
   --footer-bg: light-dark(var(--teal-950), #00070a); /* footer y barra del menú; en oscuro, un poco más que los campos */ /* footer y barra del menú: más oscuros que la página */
   --footer-text: #e6eef0;
@@ -339,29 +339,29 @@ section[tabindex='-1']:focus {
      ruido. Se usa como sombra interna de botones y etiquetas (ver
      _buttons.css); los íconos SVG usan el filtro #grain-inset de index.html */
   --grain-gold-deep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.2 -1.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  /* Grano gris (#8f969b): botones gris casi blanco del modo oscuro */
-  --grain-gold-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .561  0 0 0 0 .588  0 0 0 0 .608  0 0 0 7 -1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Warm gray grain (#a09367): tags and labels in dark mode */
+  --grain-gold-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .62  0 0 0 0 .575  0 0 0 0 .32  0 0 0 7 -1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Variante para móvil/táctil: puntos más grandes (frecuencia menor) y más
      densos (más puntos pasan el umbral de opacidad); ver _buttons.css */
   --grain-gold-strong-deep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.6 -1.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --grain-gold-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .561  0 0 0 0 .588  0 0 0 0 .608  0 0 0 7 -1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  /* Solo botones (.btn) en modo oscuro: grano gris oscuro (≈ #848b90; el
+  --grain-gold-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .62  0 0 0 0 .575  0 0 0 0 .32  0 0 0 7 -1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Solo botones (.btn) en modo oscuro: grano gris oscuro (≈ #95885e, warm gray; el
      filtro mezcla en linearRGB, por eso los valores son bajos) y más intenso
      (más puntos y más opacos) que el de etiquetas e íconos */
-  --grain-btn-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23  0 0 0 0 .255  0 0 0 0 .275  0 0 0 8 -1.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --grain-btn-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23  0 0 0 0 .255  0 0 0 0 .275  0 0 0 8 -1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-btn-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .29  0 0 0 0 .25  0 0 0 0 .11  0 0 0 8 -1.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-btn-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .29  0 0 0 0 .25  0 0 0 0 .11  0 0 0 8 -1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Grano oscuro uniforme (tinta), en mosaico sin cortes */
   --grain-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 .07  0 0 0 0 .1  0 0 0 3.6 -1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Sombra interna: dorado oscuro sobre botones dorados (modo claro); en el
      oscuro (botones gris casi blanco) el mismo gris del grano */
-  --grain-inset-shadow: inset -5px -6px 8px -2px light-dark(rgb(176 136 20 / 0.78), #8f969b),
-    inset -2px -3px 4px -1px light-dark(transparent, #8f969b);
+  --grain-inset-shadow: inset -5px -6px 8px -2px light-dark(rgb(176 136 20 / 0.78), #a09367),
+    inset -2px -3px 4px -1px light-dark(transparent, #a09367);
   /* Sombra interna de los botones. Claro: abajo a la derecha (luz de arriba a
      la izquierda). Oscuro: la luz es la lámpara, arriba a la derecha, así que
      la sombra va abajo a la izquierda, gris y más marcada. Se elige por
      esquema abajo (un desplazamiento no admite light-dark()). */
   --btn-inset-shadow-light: inset -5px -6px 8px -2px rgb(176 136 20 / 0.78);
-  --btn-inset-shadow-dark: inset 5px -6px 8px -2px #868d92, inset 2px -3px 4px -1px #7c8388;
+  --btn-inset-shadow-dark: inset 5px -6px 8px -2px #978a5e, inset 2px -3px 4px -1px #8d8054;
   --grain-mask: linear-gradient(to top, #000, transparent 55%), linear-gradient(to left, #000, transparent 30%);
   --grain-mask-all: radial-gradient(farthest-side, transparent 50%, #000 100%);
   --grain-mask-hover: linear-gradient(to top, #000, transparent 85%), linear-gradient(to left, #000, transparent 40%);
@@ -900,20 +900,30 @@ section[tabindex='-1']:focus {
   gap: 1rem;
 }
 
+/* Consistent rhythm: every title sits the same distance above its content
+   (0.3rem) and the text lines share one line-height; the description gets
+   its own line, with the year and copyright together on the next one. */
 .footer .footer__title {
   font-size: calc(var(--title-scale) * 1.1rem);
-  margin: 0 0 0.35rem;
+  line-height: 1.3;
+  margin: 0 0 0.3rem;
+}
+
+.footer__description {
+  display: block;
 }
 
 .footer__social {
-  margin-top: 0.75rem;
+  margin-top: 1.25rem;
 }
 
 .footer__social .footer__social-list {
   display: flex;
   gap: 1rem;
-  margin-top: 0.4rem;
+  margin: 0;
+  padding: 0;
   font-size: 1.4rem;
+  line-height: 1;
 }
 
 .footer__social-link {
@@ -1273,6 +1283,9 @@ section[tabindex='-1']:focus {
     height: 2.2rem;
   }
 
+  /* The logo name is always Poppins, on every page (the resume uses its own
+     inner classes, so it is set on the logo link itself) */
+  .navbar__logo,
   .navbar__logo--name,
   .navbar__logo--lastname {
     font-family: var(--brand-font);
@@ -1841,6 +1854,13 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
+/* Flag switch and its caption: only in the mobile menu (desktop keeps the
+   flag button) */
+.lang-switch,
+.navbar__toggles-caption {
+  display: none;
+}
+
 /* Panel móvil: mismas opciones que en escritorio, en columna y más grandes
    para tocarlas con el dedo; luna/sol a juego (atenuado como las opciones) */
 @media (max-width: 599px) {
@@ -1854,9 +1874,26 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
       }
     }
 
+    /* A line under the last section link separates the sections from the
+       language switch */
     .navbar__toggles {
-      gap: 1.75rem;
-      margin-top: 1.25rem;
+      flex-direction: column;
+      gap: 0.6rem;
+      width: min(70%, 16rem);
+      margin: 1.25rem auto 0;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* "Cambiar idioma" / "Change language" above the flags */
+    .navbar__toggles-caption {
+      display: block;
+      font-size: var(--small-font-size);
+      font-weight: var(--font-semibold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--footer-text);
+      opacity: 0.6;
     }
 
     .navbar__toggle--darkmode i {
@@ -1867,6 +1904,129 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
 
     .navbar__toggle--language .navbar__toggle--language-label {
       font-size: 1.15rem;
+    }
+  }
+}
+
+/* Mobile menu: two ghost buttons, one flag each (4:3, desaturated like the
+   desktop flag button). The current language's button is pressed (sunk onto
+   its shadow) and a bit darker; the other one is raised and switches the
+   language. The checkbox is checked for Spanish (switchLanguages.js). The
+   label itself ignores taps, so tapping the current language does nothing:
+   only the other button (pointer-events: auto) toggles the checkbox. */
+@media (max-width: 599px) {
+  .header .navbar .navbar__toggle--language {
+    /* the label is just the row: no box of its own */
+    .navbar__toggle--language-label {
+      height: auto;
+      aspect-ratio: auto;
+      overflow: visible;
+      border: 0;
+      box-shadow: none;
+      background: none;
+      filter: none;
+      opacity: 1;
+      transform: none;
+      pointer-events: none;
+    }
+
+    .flag-wrapper {
+      display: none;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* same size and 4:3 shape the flag had in the mobile menu (1.15em tall at
+       1.15rem), now as a ghost button */
+    /* No outline (the accent color stood out too much): just the hard shadow
+       of the primary buttons, in their dark ink color */
+    .lang-switch__opt {
+      position: relative;
+      isolation: isolate;
+      display: block;
+      font-size: 1.15rem;
+      height: 1.15em;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 2px;
+      /* same outer shadow as the primary buttons (offset and ink color:
+         the dark-mode background in light mode, darker in dark mode) */
+      box-shadow: 4px 4px 0 var(--btn-ink-color);
+      pointer-events: auto;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    /* subtle texture over the flag */
+    .lang-switch__opt::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: var(--grain-ink);
+      background-size: 120px;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    /* dark mode only (below): inner grain shadow, a bit darker, on the side
+       away from the lamp (bottom-left) */
+    .lang-switch__opt::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: none;
+      background: var(--grain-ink);
+      background-size: 120px;
+      -webkit-mask: var(--grain-mask-hover-left);
+      mask: var(--grain-mask-hover-left);
+      box-shadow: inset 5px -6px 8px -3px rgb(0 0 0 / 0.55);
+      pointer-events: none;
+    }
+
+    /* the flag fills the button, desaturated (like the desktop flag button).
+       (The base language toggle rule positions every img absolutely: undo it.) */
+    .lang-switch .lang-switch__flag {
+      position: static;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0;
+      box-shadow: none;
+      transform: none;
+      opacity: 0.85;
+      filter: saturate(0.35) brightness(0.92);
+      transition: filter 0.15s;
+    }
+
+    /* press feedback on the other language's button */
+    .lang-switch__opt:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0 0 0 var(--btn-ink-color);
+    }
+
+    /* current language: pressed, a bit darker, not tappable */
+    .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label .lang-switch__opt--es,
+    .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label .lang-switch__opt--en {
+      transform: translate(4px, 4px);
+      box-shadow: 0 0 0 var(--btn-ink-color);
+      pointer-events: none;
+
+      .lang-switch__flag {
+        filter: saturate(0.35) brightness(0.6);
+      }
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  @container style(--color-scheme: dark) {
+    .header .navbar .navbar__toggle--language .lang-switch__opt::after {
+      display: block;
     }
   }
 }
@@ -1899,6 +2059,11 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   /* el cono de luz no bloquea clics del contenido */
   pointer-events: none;
   -webkit-tap-highlight-color: transparent;
+  /* Double pendulum, first axis: the whole cord and lamp hang from the top
+     of the screen and sway together (subtle). The second axis is the joint
+     between cord and lamp (img below). Gyroscope: half of --lamp-tilt here. */
+  transform-origin: 50% 0;
+  rotate: calc(var(--lamp-tilt, 0deg) * 0.5);
 
   &::before {
     content: '';
@@ -1919,9 +2084,10 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
     user-select: none;
     /* gira desde donde se une con el cable */
     transform-origin: 50% 0;
-    /* giroscopio (lamp.js): péndulo que se queda vertical al inclinar el
-       teléfono. Propiedad aparte de transform: se suma al balanceo */
-    rotate: var(--lamp-tilt, 0deg);
+    /* Second axis (cord-lamp joint): with the gyroscope it turns a bit more
+       than the cord, on top of the cord's own rotation. Separate property
+       from transform, so it adds to the swing animation. */
+    rotate: calc(var(--lamp-tilt, 0deg) * 0.6);
     transition: filter 0.2s ease;
   }
 
@@ -1984,6 +2150,13 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   @media (prefers-reduced-motion: no-preference) {
     .header.menu-open ~ .lamp {
       animation: lamp-bungee 1.1s 0.25s both;
+    }
+
+    /* the cord also swings when it lands, without restarting the bungee */
+    .header.menu-open ~ .lamp.lamp--swing {
+      animation:
+        lamp-bungee 1.1s 0.25s both,
+        lamp-cord-swing 1.6s ease-in-out;
     }
   }
 }
@@ -2049,16 +2222,27 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
-/* Balanceo: al pasar el mouse (escritorio) o después de tocarla (móvil) */
+/* Balanceo: al pasar el mouse (escritorio) o después de tocarla (móvil).
+   Double pendulum: the whole cord sways gently from the top (lamp-cord-swing)
+   and the lamp swings a bit more at the joint, slightly behind (delay), so
+   the motion reads as natural instead of a stiff turn. */
 @media (prefers-reduced-motion: no-preference) {
   @media (hover: hover) {
+    .lamp:hover {
+      animation: lamp-cord-swing 1.6s ease-in-out;
+    }
+
     .lamp:hover img {
-      animation: lamp-swing 1.4s ease-in-out;
+      animation: lamp-swing 1.4s ease-in-out 0.12s;
     }
   }
 
+  .lamp.lamp--swing {
+    animation: lamp-cord-swing 1.6s ease-in-out;
+  }
+
   .lamp.lamp--swing img {
-    animation: lamp-swing 1.4s ease-in-out;
+    animation: lamp-swing 1.4s ease-in-out 0.12s;
   }
 }
 
@@ -2084,6 +2268,23 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
 
 .lamp[aria-pressed='true'].lamp--pulling .lamp__pull {
   opacity: 0 !important;
+}
+
+/* First axis: the whole cord, from the top of the screen (small angles: the
+   cord is long, so the lamp still travels a few pixels) */
+@keyframes lamp-cord-swing {
+  20% {
+    transform: rotate(1.6deg);
+  }
+  45% {
+    transform: rotate(-1.2deg);
+  }
+  70% {
+    transform: rotate(0.6deg);
+  }
+  90% {
+    transform: rotate(-0.2deg);
+  }
 }
 
 @keyframes lamp-swing {
@@ -2311,7 +2512,9 @@ section {
    el efecto a veces no se notaba. Ahora se animan bloques pequeños y el
    tramo es fijo (los primeros 240px de su entrada), sin importar su alto.
    Contenido visible por defecto: sin soporte de scroll-driven animations o
-   con "reducir movimiento" simplemente se muestra (efecto decorativo). */
+   con "reducir movimiento" simplemente se muestra (efecto decorativo).
+   The footer is not in the list: it is the end of the page, so it never gets
+   240px into the viewport and its blocks stayed half faded and 2rem low. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
     @keyframes section-enter {
@@ -2337,9 +2540,7 @@ section {
       .designs__more,
       .contact__info-description,
       .contact__info-item,
-      .contact__form,
-      .footer__info > *,
-      .footer__social-list
+      .contact__form
     ) {
       animation: section-enter linear both;
       animation-timeline: view();
@@ -2464,8 +2665,18 @@ section.section > * {
   left: 0;
   z-index: var(--z-fixed);
 
-  @media (prefers-reduced-motion: no-preference) {
-    animation: animateSprite 1s steps(20, jump-none) 2s;
+}
+
+/* Look sequence, once the hero is shown (html.hero-ready, after the loader;
+   right away without JS). Frames: 0 original gaze, 1-10 turn to look,
+   11 looking, 12-16 blink. Timeline: turns at 1s, blinks once at 2s, blinks
+   twice 5s later (7s and 7.35s), turns back 8s after that (15s, turn frames
+   in reverse) to frame 0. Loops forever: each cycle lasts 22.45s, so the next
+   turn comes 8s after the gaze is back.
+   step-end holds each keyframe's frame until the next one. */
+@media (prefers-reduced-motion: no-preference) {
+  :is(html:not(.js), .hero-ready) .home__image--sprite {
+    animation: profile-look 22.45s step-end infinite;
   }
 }
 
@@ -2515,12 +2726,126 @@ section.section > * {
   }
 }
 
-@keyframes animateSprite {
-  from {
+@keyframes profile-look {
+  0.000% {
     background-position: 0% 0;
   }
-  to {
-    background-position: 100% 0;
+  4.454% {
+    background-position: 5.2632% 0;
+  }
+  4.677% {
+    background-position: 10.5263% 0;
+  }
+  4.900% {
+    background-position: 15.7895% 0;
+  }
+  5.122% {
+    background-position: 21.0526% 0;
+  }
+  5.345% {
+    background-position: 26.3158% 0;
+  }
+  5.568% {
+    background-position: 31.5789% 0;
+  }
+  5.791% {
+    background-position: 36.8421% 0;
+  }
+  6.013% {
+    background-position: 42.1053% 0;
+  }
+  6.236% {
+    background-position: 47.3684% 0;
+  }
+  6.459% {
+    background-position: 52.6316% 0;
+  }
+  8.909% {
+    background-position: 63.1579% 0;
+  }
+  9.087% {
+    background-position: 68.4211% 0;
+  }
+  9.265% {
+    background-position: 73.6842% 0;
+  }
+  9.532% {
+    background-position: 78.9474% 0;
+  }
+  9.710% {
+    background-position: 84.2105% 0;
+  }
+  9.889% {
+    background-position: 57.8947% 0;
+  }
+  31.180% {
+    background-position: 63.1579% 0;
+  }
+  31.359% {
+    background-position: 68.4211% 0;
+  }
+  31.537% {
+    background-position: 73.6842% 0;
+  }
+  31.804% {
+    background-position: 78.9474% 0;
+  }
+  31.982% {
+    background-position: 84.2105% 0;
+  }
+  32.160% {
+    background-position: 57.8947% 0;
+  }
+  32.739% {
+    background-position: 63.1579% 0;
+  }
+  32.918% {
+    background-position: 68.4211% 0;
+  }
+  33.096% {
+    background-position: 73.6842% 0;
+  }
+  33.363% {
+    background-position: 78.9474% 0;
+  }
+  33.541% {
+    background-position: 84.2105% 0;
+  }
+  33.719% {
+    background-position: 57.8947% 0;
+  }
+  66.815% {
+    background-position: 47.3684% 0;
+  }
+  67.038% {
+    background-position: 42.1053% 0;
+  }
+  67.261% {
+    background-position: 36.8421% 0;
+  }
+  67.483% {
+    background-position: 31.5789% 0;
+  }
+  67.706% {
+    background-position: 26.3158% 0;
+  }
+  67.929% {
+    background-position: 21.0526% 0;
+  }
+  68.151% {
+    background-position: 15.7895% 0;
+  }
+  68.374% {
+    background-position: 10.5263% 0;
+  }
+  68.597% {
+    background-position: 5.2632% 0;
+  }
+  68.820% {
+    background-position: 0% 0;
+  }
+  100.000% {
+    background-position: 0% 0;
   }
 }
 
@@ -2677,7 +3002,7 @@ html.js:not(.hero-ready) .home .home__title {
     min-height: 100svh;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    padding: 0.5rem 0 1rem;
+    padding: 0.25rem 0 0.6rem;
   }
 
   .home .home__container {
@@ -2694,7 +3019,7 @@ html.js:not(.hero-ready) .home .home__title {
   .home .home__image {
     /* alto = el espacio libre de su fila; ancho por la proporción 1:1 */
     height: 100%;
-    max-height: min(80vw, 320px);
+    max-height: min(90vw, 370px);
     min-height: 0;
     width: auto;
     max-width: 100%;
@@ -2721,16 +3046,16 @@ html.js:not(.hero-ready) .home .home__title {
   }
 
   .home .home__social-item {
-    margin: 0.4rem 1rem;
+    margin: 0.15rem 1rem;
     /* los íconos no crecen con el texto del sistema (no son texto) */
     font-size: 34px;
   }
 
   .home .home__buttons .btn {
-    margin: 0.3rem 0;
+    margin: 0.22rem 0;
     /* alto del botón = el del texto + un relleno fijo: con texto grande
        los cuatro siguen cabiendo en la pantalla */
-    padding-block: min(0.7rem, 11px);
+    padding-block: min(0.55rem, 9px);
   }
 }
 
@@ -4211,6 +4536,13 @@ html.js:not(.hero-ready) .home .home__title {
 
 /* La sección del CV ocupa toda la pantalla visible: el footer queda fuera de
    la vista inicial y el PDF baja un poco respecto a la barra */
+/* Back button above the CV, below the fixed navbar (same as the case pages) */
+/* .grid--container in the selector: the base rule (nested in body, more
+   specific) sets this element's margin and padding */
+.resume-back.grid--container {
+  padding-top: calc(var(--header-height) + 1.25rem);
+}
+
 #pdf-container {
   display: flex;
   flex-direction: column;
@@ -4218,7 +4550,7 @@ html.js:not(.hero-ready) .home .home__title {
   align-items: center;
   box-sizing: border-box;
   min-height: 100svh;
-  padding: calc(var(--header-height) + 2.5rem) 20px 2.5rem;
+  padding: 1.25rem 20px 2.5rem;
   gap: 20px;
   margin: 0;
 }
@@ -4287,6 +4619,52 @@ html.js:not(.hero-ready) .home .home__title {
 
 .fab.expanded .fab-text {
   display: inline-block;
+}
+
+/* Mobile: the CV takes as much of the screen as it can (thin side margins,
+   less space above) and the download FAB floats over the blank bottom-right
+   corner of the CV page. It stays fixed on screen while the CV scrolls under
+   it, rising only to stay above the footer (resume_fab_buttons.js). It starts contracted (icon only) and expands with its text once
+   the visitor scrolls down, growing to the left over the blank area. The
+   desktop logic that lifts it over the footer does not run here. */
+@media (max-width: 599px) {
+  .resume-back.grid--container {
+    padding-top: calc(var(--header-height) + 0.75rem);
+  }
+
+  #pdf-container {
+    min-height: 0;
+    padding: 0.75rem 8px 2rem;
+  }
+
+  /* fixed on screen (top/right set by resume_fab_buttons.js); above the CV
+     page but below the header and the mobile menu panel */
+  .fab-container {
+    position: fixed;
+    z-index: 1;
+  }
+
+  .fab {
+    width: 3.25rem;
+    height: 3.25rem;
+    font-size: 1.35rem;
+  }
+
+  .fab.expanded {
+    width: 10.5rem;
+    height: 3.25rem;
+    gap: 0.5rem;
+    padding: 0 1.1rem;
+    font-size: 1rem;
+  }
+
+  .fab.expanded i {
+    font-size: 1.35rem;
+  }
+
+  .fab.expanded .fab-text {
+    margin-left: 0;
+  }
 }
 
 /* --- sections/_project-page.css --- */
@@ -4361,7 +4739,7 @@ html.js:not(.hero-ready) .home .home__title {
 .project-back__link {
   width: auto;
   margin: 0;
-  padding: 0.5rem 1rem 0.5rem 0.7rem;
+  padding: 0.5rem 1rem;
   font-size: var(--small-font-size);
   gap: 0.25rem;
 }

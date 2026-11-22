@@ -121,8 +121,10 @@ export default function lamp() {
     }).observe(header, { attributes: true, attributeFilter: ['class'] });
   }
 
+  // The swing is two animations (cord from the top, lamp at the joint);
+  // the cord one ends last, so the class is removed when it finishes
   button.addEventListener('animationend', (event) => {
-    if (event.animationName === 'lamp-swing') button.classList.remove('lamp--swing');
+    if (event.animationName === 'lamp-cord-swing') button.classList.remove('lamp--swing');
   });
 
 

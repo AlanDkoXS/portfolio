@@ -207,6 +207,8 @@
                 </div>
               </label>
             </div>
+            <!-- Mobile menu only: caption above the language switch -->
+            <span class="navbar__toggles-caption" data-i18n="navLanguage">Change language</span>
             <div class="navbar__toggle--language flex--container">
               <input
                 type="checkbox"
@@ -236,6 +238,11 @@
                     aria-hidden="true"
                   />
                 </div>
+                <!-- Mobile menu: two flag ghost buttons, the current language pressed (replaces the single flag) -->
+                <span class="lang-switch" aria-hidden="true"
+                  ><span class="lang-switch__opt lang-switch__opt--es"><img class="lang-switch__flag" src="/assets/img/flag-es.svg" alt="" width="18" height="18" loading="lazy" /></span
+                  ><span class="lang-switch__opt lang-switch__opt--en"><img class="lang-switch__flag" src="/assets/img/flag-en.svg" alt="" width="18" height="18" loading="lazy" /></span></span
+                >
               </label>
             </div>
           </div>

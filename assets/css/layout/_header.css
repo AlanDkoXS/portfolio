@@ -328,6 +328,9 @@
     height: 2.2rem;
   }
 
+  /* The logo name is always Poppins, on every page (the resume uses its own
+     inner classes, so it is set on the logo link itself) */
+  .navbar__logo,
   .navbar__logo--name,
   .navbar__logo--lastname {
     font-family: var(--brand-font);
@@ -896,6 +899,13 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
+/* Flag switch and its caption: only in the mobile menu (desktop keeps the
+   flag button) */
+.lang-switch,
+.navbar__toggles-caption {
+  display: none;
+}
+
 /* Panel móvil: mismas opciones que en escritorio, en columna y más grandes
    para tocarlas con el dedo; luna/sol a juego (atenuado como las opciones) */
 @media (max-width: 599px) {
@@ -909,9 +919,26 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
       }
     }
 
+    /* A line under the last section link separates the sections from the
+       language switch */
     .navbar__toggles {
-      gap: 1.75rem;
-      margin-top: 1.25rem;
+      flex-direction: column;
+      gap: 0.6rem;
+      width: min(70%, 16rem);
+      margin: 1.25rem auto 0;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* "Cambiar idioma" / "Change language" above the flags */
+    .navbar__toggles-caption {
+      display: block;
+      font-size: var(--small-font-size);
+      font-weight: var(--font-semibold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--footer-text);
+      opacity: 0.6;
     }
 
     .navbar__toggle--darkmode i {
@@ -922,6 +949,129 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
 
     .navbar__toggle--language .navbar__toggle--language-label {
       font-size: 1.15rem;
+    }
+  }
+}
+
+/* Mobile menu: two ghost buttons, one flag each (4:3, desaturated like the
+   desktop flag button). The current language's button is pressed (sunk onto
+   its shadow) and a bit darker; the other one is raised and switches the
+   language. The checkbox is checked for Spanish (switchLanguages.js). The
+   label itself ignores taps, so tapping the current language does nothing:
+   only the other button (pointer-events: auto) toggles the checkbox. */
+@media (max-width: 599px) {
+  .header .navbar .navbar__toggle--language {
+    /* the label is just the row: no box of its own */
+    .navbar__toggle--language-label {
+      height: auto;
+      aspect-ratio: auto;
+      overflow: visible;
+      border: 0;
+      box-shadow: none;
+      background: none;
+      filter: none;
+      opacity: 1;
+      transform: none;
+      pointer-events: none;
+    }
+
+    .flag-wrapper {
+      display: none;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* same size and 4:3 shape the flag had in the mobile menu (1.15em tall at
+       1.15rem), now as a ghost button */
+    /* No outline (the accent color stood out too much): just the hard shadow
+       of the primary buttons, in their dark ink color */
+    .lang-switch__opt {
+      position: relative;
+      isolation: isolate;
+      display: block;
+      font-size: 1.15rem;
+      height: 1.15em;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 2px;
+      /* same outer shadow as the primary buttons (offset and ink color:
+         the dark-mode background in light mode, darker in dark mode) */
+      box-shadow: 4px 4px 0 var(--btn-ink-color);
+      pointer-events: auto;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    /* subtle texture over the flag */
+    .lang-switch__opt::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: var(--grain-ink);
+      background-size: 120px;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    /* dark mode only (below): inner grain shadow, a bit darker, on the side
+       away from the lamp (bottom-left) */
+    .lang-switch__opt::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: none;
+      background: var(--grain-ink);
+      background-size: 120px;
+      -webkit-mask: var(--grain-mask-hover-left);
+      mask: var(--grain-mask-hover-left);
+      box-shadow: inset 5px -6px 8px -3px rgb(0 0 0 / 0.55);
+      pointer-events: none;
+    }
+
+    /* the flag fills the button, desaturated (like the desktop flag button).
+       (The base language toggle rule positions every img absolutely: undo it.) */
+    .lang-switch .lang-switch__flag {
+      position: static;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0;
+      box-shadow: none;
+      transform: none;
+      opacity: 0.85;
+      filter: saturate(0.35) brightness(0.92);
+      transition: filter 0.15s;
+    }
+
+    /* press feedback on the other language's button */
+    .lang-switch__opt:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0 0 0 var(--btn-ink-color);
+    }
+
+    /* current language: pressed, a bit darker, not tappable */
+    .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label .lang-switch__opt--es,
+    .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label .lang-switch__opt--en {
+      transform: translate(4px, 4px);
+      box-shadow: 0 0 0 var(--btn-ink-color);
+      pointer-events: none;
+
+      .lang-switch__flag {
+        filter: saturate(0.35) brightness(0.6);
+      }
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  @container style(--color-scheme: dark) {
+    .header .navbar .navbar__toggle--language .lang-switch__opt::after {
+      display: block;
     }
   }
 }

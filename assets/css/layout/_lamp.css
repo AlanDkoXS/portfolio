@@ -25,6 +25,11 @@
   /* el cono de luz no bloquea clics del contenido */
   pointer-events: none;
   -webkit-tap-highlight-color: transparent;
+  /* Double pendulum, first axis: the whole cord and lamp hang from the top
+     of the screen and sway together (subtle). The second axis is the joint
+     between cord and lamp (img below). Gyroscope: half of --lamp-tilt here. */
+  transform-origin: 50% 0;
+  rotate: calc(var(--lamp-tilt, 0deg) * 0.5);
 
   &::before {
     content: '';
@@ -45,9 +50,10 @@
     user-select: none;
     /* gira desde donde se une con el cable */
     transform-origin: 50% 0;
-    /* giroscopio (lamp.js): péndulo que se queda vertical al inclinar el
-       teléfono. Propiedad aparte de transform: se suma al balanceo */
-    rotate: var(--lamp-tilt, 0deg);
+    /* Second axis (cord-lamp joint): with the gyroscope it turns a bit more
+       than the cord, on top of the cord's own rotation. Separate property
+       from transform, so it adds to the swing animation. */
+    rotate: calc(var(--lamp-tilt, 0deg) * 0.6);
     transition: filter 0.2s ease;
   }
 
@@ -110,6 +116,13 @@
   @media (prefers-reduced-motion: no-preference) {
     .header.menu-open ~ .lamp {
       animation: lamp-bungee 1.1s 0.25s both;
+    }
+
+    /* the cord also swings when it lands, without restarting the bungee */
+    .header.menu-open ~ .lamp.lamp--swing {
+      animation:
+        lamp-bungee 1.1s 0.25s both,
+        lamp-cord-swing 1.6s ease-in-out;
     }
   }
 }
@@ -175,16 +188,27 @@
   }
 }
 
-/* Balanceo: al pasar el mouse (escritorio) o después de tocarla (móvil) */
+/* Balanceo: al pasar el mouse (escritorio) o después de tocarla (móvil).
+   Double pendulum: the whole cord sways gently from the top (lamp-cord-swing)
+   and the lamp swings a bit more at the joint, slightly behind (delay), so
+   the motion reads as natural instead of a stiff turn. */
 @media (prefers-reduced-motion: no-preference) {
   @media (hover: hover) {
+    .lamp:hover {
+      animation: lamp-cord-swing 1.6s ease-in-out;
+    }
+
     .lamp:hover img {
-      animation: lamp-swing 1.4s ease-in-out;
+      animation: lamp-swing 1.4s ease-in-out 0.12s;
     }
   }
 
+  .lamp.lamp--swing {
+    animation: lamp-cord-swing 1.6s ease-in-out;
+  }
+
   .lamp.lamp--swing img {
-    animation: lamp-swing 1.4s ease-in-out;
+    animation: lamp-swing 1.4s ease-in-out 0.12s;
   }
 }
 
@@ -210,6 +234,23 @@
 
 .lamp[aria-pressed='true'].lamp--pulling .lamp__pull {
   opacity: 0 !important;
+}
+
+/* First axis: the whole cord, from the top of the screen (small angles: the
+   cord is long, so the lamp still travels a few pixels) */
+@keyframes lamp-cord-swing {
+  20% {
+    transform: rotate(1.6deg);
+  }
+  45% {
+    transform: rotate(-1.2deg);
+  }
+  70% {
+    transform: rotate(0.6deg);
+  }
+  90% {
+    transform: rotate(-0.2deg);
+  }
 }
 
 @keyframes lamp-swing {

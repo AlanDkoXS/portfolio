@@ -12,7 +12,9 @@ section {
    el efecto a veces no se notaba. Ahora se animan bloques pequeños y el
    tramo es fijo (los primeros 240px de su entrada), sin importar su alto.
    Contenido visible por defecto: sin soporte de scroll-driven animations o
-   con "reducir movimiento" simplemente se muestra (efecto decorativo). */
+   con "reducir movimiento" simplemente se muestra (efecto decorativo).
+   The footer is not in the list: it is the end of the page, so it never gets
+   240px into the viewport and its blocks stayed half faded and 2rem low. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
     @keyframes section-enter {
@@ -38,9 +40,7 @@ section {
       .designs__more,
       .contact__info-description,
       .contact__info-item,
-      .contact__form,
-      .footer__info > *,
-      .footer__social-list
+      .contact__form
     ) {
       animation: section-enter linear both;
       animation-timeline: view();

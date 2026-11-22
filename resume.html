@@ -118,9 +118,25 @@
             </a>
             <!-- Toggles -->
             <div id="nav" class="navbar__menu">
+                <!-- Same items as the home navbar; none is marked active (this is another page) -->
                 <ul class="navbar__list flex--container">
                     <li class="navbar__item">
-                        <a class="navbar__link active" href="/" data-i18n="resumePage.homeLink" data-i18n-attr="href:resumePage.homeHref">Home</a>
+                        <a class="navbar__link" href="/" data-i18n="navHome" data-i18n-attr="href:resumePage.homeHref">Home</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="/#about" data-i18n="navAbout" data-i18n-attr="href:resumePage.aboutHref">About</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="/#skills" data-i18n="navSkills" data-i18n-attr="href:resumePage.skillsHref">Skills</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="/#projects" data-i18n="navProjects" data-i18n-attr="href:resumePage.projectsHref">Projects</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="/#designs" data-i18n="navDesigns" data-i18n-attr="href:resumePage.designsHref">Designs</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="/#contact" data-i18n="navContact" data-i18n-attr="href:resumePage.contactHref">Contact</a>
                     </li>
                 </ul>
                 <div class="navbar__toggles flex--container">
@@ -134,6 +150,8 @@
                             </div>
                         </label>
                     </div>
+                    <!-- Mobile menu only: caption above the language switch -->
+                    <span class="navbar__toggles-caption" data-i18n="navLanguage">Change language</span>
                     <div class="navbar__toggle--language flex--container">
                         <input type="checkbox" name="language-toggle" id="language-toggle"
                             class="navbar__toggle--language-input" title="Select Language"
@@ -145,6 +163,8 @@
                                 <img src="/assets/img/flag-es.svg" class="navbar__toggle--language-es" lang="es" alt="Español"
                                     loading="lazy" aria-hidden="true">
                             </div>
+                            <!-- Mobile menu: two flag ghost buttons, the current language pressed (replaces the single flag) -->
+                            <span class="lang-switch" aria-hidden="true"><span class="lang-switch__opt lang-switch__opt--es"><img class="lang-switch__flag" src="/assets/img/flag-es.svg" alt="" width="18" height="18" loading="lazy" /></span><span class="lang-switch__opt lang-switch__opt--en"><img class="lang-switch__flag" src="/assets/img/flag-en.svg" alt="" width="18" height="18" loading="lazy" /></span></span>
                         </label>
                     </div>
                 </div>
@@ -171,6 +191,14 @@
       <img class="lamp__on" src="/assets/img/lamp_button/button-lamp_lamp_active.webp" alt="" width="300" height="401" />
     </button>
     <!-- Buttons -->
+    <!-- Back to the home page, same button as the case pages -->
+    <div class="project-back resume-back grid--container">
+        <a class="btn btn--ghost project-back__link" href="/" data-i18n-attr="href:resumePage.homeHref">
+            <i class="bx bx-chevron-left" aria-hidden="true"></i> <span data-i18n="resumePage.back">Back to home</span>
+        </a>
+    </div>
+    <div id="pdf-container"></div>
+    <!-- Download: fixed bottom right on desktop; on mobile it sits right below the CV -->
     <div class="fab-container">
         <a href="#" class="fab btn btn--primary" id="btn-download" onclick="openModal(); return false;">
             <i class="bx bxs-download"></i>
@@ -197,7 +225,6 @@
             </div>
         </dialog>
     </div>
-    <div id="pdf-container"></div>
 
     <footer class="footer section">
         <div class="footer__container grid--container">

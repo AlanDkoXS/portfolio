@@ -22,7 +22,7 @@
   --teal-deep-900: #000d12; /* footer del modo oscuro */
   --gold-300: #ffd95c;
   --gold-400: #f3ce3a;
-  --gold-500: #e4e6e7; /* modo oscuro: gris casi blanco (neutro, sin amarillo) */
+  --gold-500: #f2e2a0; /* dark mode: near-white gray with a very subtle warm/yellow touch */
 
   /* Theme Colors: ambos modos son turquesa con texto dorado; el oscuro es
      más profundo (light-dark() sigue a color-scheme: sistema o botón) */
@@ -33,20 +33,20 @@
   /* Énfasis (<strong> del hero): un paso más claro que --gold-main (blanco en oscuro) */
   --gold-emphasis: light-dark(var(--gold-300), #ffffff);
   --primary-color: var(--gold-main); /* texto, títulos, íconos */
-  --text-muted: light-dark(#c9b25a, #a9aeb1);
+  --text-muted: light-dark(#c9b25a, #b9ad82);
   --accent-color: var(--gold-main); /* rellenos, sombras, subrayados */
   --accent-ink: var(--gold-main); /* líneas/íconos que necesitan contraste */
   --link-hover: light-dark(var(--gold-300), #ffffff);
   /* Fondo de los botones al pasar el mouse: dorado más claro / blanco */
   --btn-hover-bg: light-dark(var(--gold-300), #ffffff);
-  --accent-glow: light-dark(rgb(243 206 58 / 0.45), rgb(228 230 231 / 0.35));
+  --accent-glow: light-dark(rgb(243 206 58 / 0.45), rgb(242 226 160 / 0.35));
   --on-accent-color: light-dark(var(--teal-deep-800), var(--teal-950)); /* texto sobre dorado; en claro, el fondo del modo oscuro */
 
   /* Background Colors */
   --bg-color-section: light-dark(var(--teal-800), var(--teal-deep-800));
   --surface-color: light-dark(var(--teal-700), var(--teal-deep-700));
   --bg-color-buttons: light-dark(var(--teal-600), var(--teal-deep-600)); /* inputs, controles secundarios */
-  --border-color: light-dark(rgb(243 206 58 / 0.18), rgb(228 230 231 / 0.18));
+  --border-color: light-dark(rgb(243 206 58 / 0.18), rgb(242 226 160 / 0.18));
   --input-bg: light-dark(var(--teal-900), var(--teal-deep-900)); /* campos del formulario: más oscuros que el fondo */
   --footer-bg: light-dark(var(--teal-950), #00070a); /* footer y barra del menú; en oscuro, un poco más que los campos */ /* footer y barra del menú: más oscuros que la página */
   --footer-text: #e6eef0;
@@ -63,29 +63,29 @@
      ruido. Se usa como sombra interna de botones y etiquetas (ver
      _buttons.css); los íconos SVG usan el filtro #grain-inset de index.html */
   --grain-gold-deep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.2 -1.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  /* Grano gris (#8f969b): botones gris casi blanco del modo oscuro */
-  --grain-gold-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .561  0 0 0 0 .588  0 0 0 0 .608  0 0 0 7 -1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Warm gray grain (#a09367): tags and labels in dark mode */
+  --grain-gold-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .62  0 0 0 0 .575  0 0 0 0 .32  0 0 0 7 -1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Variante para móvil/táctil: puntos más grandes (frecuencia menor) y más
      densos (más puntos pasan el umbral de opacidad); ver _buttons.css */
   --grain-gold-strong-deep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6  0 0 0 0 .44  0 0 0 0 .04  0 0 0 4.6 -1.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --grain-gold-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .561  0 0 0 0 .588  0 0 0 0 .608  0 0 0 7 -1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  /* Solo botones (.btn) en modo oscuro: grano gris oscuro (≈ #848b90; el
+  --grain-gold-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .62  0 0 0 0 .575  0 0 0 0 .32  0 0 0 7 -1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Solo botones (.btn) en modo oscuro: grano gris oscuro (≈ #95885e, warm gray; el
      filtro mezcla en linearRGB, por eso los valores son bajos) y más intenso
      (más puntos y más opacos) que el de etiquetas e íconos */
-  --grain-btn-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23  0 0 0 0 .255  0 0 0 0 .275  0 0 0 8 -1.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --grain-btn-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23  0 0 0 0 .255  0 0 0 0 .275  0 0 0 8 -1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-btn-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .29  0 0 0 0 .25  0 0 0 0 .11  0 0 0 8 -1.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-btn-strong-bright: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .29  0 0 0 0 .25  0 0 0 0 .11  0 0 0 8 -1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Grano oscuro uniforme (tinta), en mosaico sin cortes */
   --grain-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 .07  0 0 0 0 .1  0 0 0 3.6 -1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Sombra interna: dorado oscuro sobre botones dorados (modo claro); en el
      oscuro (botones gris casi blanco) el mismo gris del grano */
-  --grain-inset-shadow: inset -5px -6px 8px -2px light-dark(rgb(176 136 20 / 0.78), #8f969b),
-    inset -2px -3px 4px -1px light-dark(transparent, #8f969b);
+  --grain-inset-shadow: inset -5px -6px 8px -2px light-dark(rgb(176 136 20 / 0.78), #a09367),
+    inset -2px -3px 4px -1px light-dark(transparent, #a09367);
   /* Sombra interna de los botones. Claro: abajo a la derecha (luz de arriba a
      la izquierda). Oscuro: la luz es la lámpara, arriba a la derecha, así que
      la sombra va abajo a la izquierda, gris y más marcada. Se elige por
      esquema abajo (un desplazamiento no admite light-dark()). */
   --btn-inset-shadow-light: inset -5px -6px 8px -2px rgb(176 136 20 / 0.78);
-  --btn-inset-shadow-dark: inset 5px -6px 8px -2px #868d92, inset 2px -3px 4px -1px #7c8388;
+  --btn-inset-shadow-dark: inset 5px -6px 8px -2px #978a5e, inset 2px -3px 4px -1px #8d8054;
   --grain-mask: linear-gradient(to top, #000, transparent 55%), linear-gradient(to left, #000, transparent 30%);
   --grain-mask-all: radial-gradient(farthest-side, transparent 50%, #000 100%);
   --grain-mask-hover: linear-gradient(to top, #000, transparent 85%), linear-gradient(to left, #000, transparent 40%);
