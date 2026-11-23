@@ -1,6 +1,6 @@
 /* === Modal === */
 
-.modal-content {
+.modal__content {
   color: var(--primary-color);
   background-color: var(--surface-color);
   padding: 2rem;
@@ -48,7 +48,7 @@
   }
 }
 
-.resume__modal-content {
+.modal__actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

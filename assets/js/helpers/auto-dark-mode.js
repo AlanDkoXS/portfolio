@@ -84,7 +84,7 @@ const sync = (toggle) => {
 };
 
 export function setAutoDarkMode() {
-  const toggle = document.querySelector('.navbar__toggle--darkmode-input');
+  const toggle = document.querySelector('.navbar__darkmode-input');
   setOverride(readOverride());
   sync(toggle);
 

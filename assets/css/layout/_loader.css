@@ -30,17 +30,17 @@
     align-items: center;
   }
 
-  .loader__name--light,
-  .loader__name--semibold {
+  .loader__name-light,
+  .loader__name-semibold {
     font-family: var(--brand-font);
     font-size: 1rem;
   }
 
-  .loader__name--light {
+  .loader__name-light {
     font-weight: 200;
   }
 
-  .loader__name--semibold {
+  .loader__name-semibold {
     font-weight: 500;
   }
 }

@@ -11,7 +11,7 @@
   overflow-y: visible;
 }
 
-.project__card--carousel {
+.project__carousel {
   /* the horizontal gesture belongs to the carousel; the vertical one, to the page scroll */
   touch-action: pan-y;
   position: relative;
@@ -64,12 +64,12 @@
 
 /* Released (card-carousel.js sets it when a drag ends): the carousel box
    itself eases its size changes */
-.project__card--carousel.smooth-return {
+.project__carousel.smooth-return {
   transition: all 0.2s ease;
 }
 
 /* Dragging: no transition, the cards follow the finger with no lag */
-.project__card--carousel.is-dragging .project__card {
+.project__carousel.is-dragging .project__card {
   transition: none;
 }
 
@@ -162,7 +162,7 @@
 
 /* The project screenshot shows as a blurred background (scale keeps the
    blur from leaving transparent borders at the edges) */
-.project__image--container {
+.project__image-container {
   position: absolute;
   inset: 0;
   background-size: cover;
@@ -197,11 +197,11 @@
    Traktl). They follow the effective theme (system or button) via
    --color-scheme; only the image that wins the cascade is downloaded. */
 :is(html:not(.js), .projects.is-near) .project__card {
-  &:nth-of-type(1) .project__image--container {
+  &:nth-of-type(1) .project__image-container {
     background-image: url("/assets/img/project_img/marvel.webp");
   }
 
-  &:nth-of-type(2) .project__image--container {
+  &:nth-of-type(2) .project__image-container {
     background-image: url("/assets/img/project_img/CRUD.webp");
 
     @container style(--color-scheme: dark) {
@@ -209,19 +209,19 @@
     }
   }
 
-  &:nth-of-type(3) .project__image--container {
+  &:nth-of-type(3) .project__image-container {
     background-image: url("/assets/img/project_img/rick.webp");
   }
 
-  &:nth-of-type(4) .project__image--container {
+  &:nth-of-type(4) .project__image-container {
     background-image: url("/assets/img/project_img/weather.webp");
   }
 
-  &:nth-of-type(5) .project__image--container {
+  &:nth-of-type(5) .project__image-container {
     background-image: url("/assets/img/project_img/cookie.webp");
   }
 
-  &:nth-of-type(6) .project__image--container {
+  &:nth-of-type(6) .project__image-container {
     background-image: url("/assets/img/project_img/traktl.webp");
 
     @container style(--color-scheme: dark) {
@@ -394,7 +394,7 @@
 /* === Utils === */
 
 /* Keyboard controller of the carousel (focusable, not shown) */
-.visuallyhidden {
+.visually-hidden {
   position: absolute;
   z-index: -1;
   right: 0;
@@ -433,7 +433,7 @@
     margin-top: 0.75rem;
   }
 
-  .project__card--carousel,
+  .project__carousel,
   .project__card {
     height: var(--card-h);
   }

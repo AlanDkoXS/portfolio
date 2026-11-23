@@ -7,7 +7,7 @@ function setupContactDialog() {
 
   setupDialog(modal);
 
-  const btnClose = document.getElementById('btn_close-modal');
+  const btnClose = document.getElementById('close-modal-button');
   if (btnClose && !btnClose.dataset.bound) {
     btnClose.dataset.bound = 'true';
     btnClose.addEventListener('click', () => modal.close());

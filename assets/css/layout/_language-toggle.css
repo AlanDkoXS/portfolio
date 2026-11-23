@@ -5,7 +5,7 @@
    (that same flag does a "pop" while the language switches: in place on the
    home, loading the other page elsewhere). */
 
-.navbar__toggle--language {
+.navbar__language-toggle {
   position: relative;
   display: flex;
   align-items: center;
@@ -13,12 +13,12 @@
   cursor: pointer;
 }
 
-.navbar__toggle--language-input {
+.navbar__language-input {
   position: absolute;
   visibility: hidden;
 }
 
-.navbar__toggle--language-label {
+.navbar__language-label {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,7 +52,7 @@
   }
 
   /* The flags fill the whole button, one on top of the other */
-  .flag-wrapper {
+  .navbar__language-flags {
     position: relative;
     display: flex;
     align-items: center;
@@ -80,22 +80,22 @@
 }
 
 /* Visible flag: the current language (input checked = Spanish) */
-.navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label .navbar__toggle--language-en,
-.navbar__toggle--language-input:checked ~ .navbar__toggle--language-label .navbar__toggle--language-es {
+.navbar__language-input:not(:checked) ~ .navbar__language-label .navbar__language-en,
+.navbar__language-input:checked ~ .navbar__language-label .navbar__language-es {
   opacity: 1;
   scale: 1;
 }
 
 /* Hover: the two flags trade places to preview the other language */
 @media (hover: hover) {
-  .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label:hover .navbar__toggle--language-en,
-  .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label:hover .navbar__toggle--language-es {
+  .navbar__language-input:not(:checked) ~ .navbar__language-label:hover .navbar__language-en,
+  .navbar__language-input:checked ~ .navbar__language-label:hover .navbar__language-es {
     opacity: 0;
     scale: 1.4;
   }
 
-  .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label:hover .navbar__toggle--language-es,
-  .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label:hover .navbar__toggle--language-en {
+  .navbar__language-input:not(:checked) ~ .navbar__language-label:hover .navbar__language-es,
+  .navbar__language-input:checked ~ .navbar__language-label:hover .navbar__language-en {
     opacity: 1;
     scale: 1;
   }
@@ -106,7 +106,7 @@
    input has just changed, so with the pointer still on the button the hover
    preview would swap back to the old flag: !important pins the opacities
    over those more specific rules. */
-.navbar__toggle--language.is-switching {
+.navbar__language-toggle.is-switching {
   .is-target {
     opacity: 1 !important;
   }
@@ -160,9 +160,9 @@
     opacity: 0.6;
   }
 
-  .navbar__toggle--language {
+  .navbar__language-toggle {
     /* the label is just the row: no box of its own */
-    .navbar__toggle--language-label {
+    .navbar__language-label {
       height: auto;
       aspect-ratio: auto;
       overflow: visible;
@@ -170,7 +170,7 @@
       opacity: 1;
       pointer-events: none;
 
-      .flag-wrapper {
+      .navbar__language-flags {
         display: none;
       }
     }
@@ -248,8 +248,8 @@
     }
 
     /* current language: pressed, a bit darker, not tappable */
-    .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label .lang-switch__opt--es,
-    .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label .lang-switch__opt--en {
+    .navbar__language-input:checked ~ .navbar__language-label .lang-switch__opt--es,
+    .navbar__language-input:not(:checked) ~ .navbar__language-label .lang-switch__opt--en {
       transform: translate(4px, 4px);
       box-shadow: 0 0 0 var(--btn-ink-color);
       pointer-events: none;
@@ -261,7 +261,7 @@
   }
 
   @container style(--color-scheme: dark) {
-    .navbar__toggle--language .lang-switch .lang-switch__opt::after {
+    .navbar__language-toggle .lang-switch .lang-switch__opt::after {
       display: block;
     }
   }

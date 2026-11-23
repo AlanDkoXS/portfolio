@@ -26,7 +26,7 @@ section {
 
     :is(
       .section__title,
-      .about__img--container,
+      .about__img-container,
       .about__description,
       .skills__description,
       .skills__group-header,
@@ -49,7 +49,7 @@ section {
   }
 }
 
-/* The title sits outside .grid--container: same max width and side padding
+/* The title sits outside .grid-container: same max width and side padding
    as the content so it aligns with its left edge */
 .section__title {
   box-sizing: border-box;

@@ -131,10 +131,10 @@ function placeFab() {
 function initFab() {
   setupDialog(document.getElementById('modal'));
 
-  container = document.querySelector('.fab-container');
+  container = document.querySelector('.resume-fab');
   footer = document.querySelector('.footer');
   downloadButton = document.getElementById('btn-download');
-  fabButtons = [...document.querySelectorAll('.fab')];
+  fabButtons = [...document.querySelectorAll('.resume-fab__button')];
   // Check that the elements exist
   if (!downloadButton || fabButtons.length === 0) return;
 

@@ -59,7 +59,7 @@ export function lamp() {
   trackScrollbarWidth();
 
   const button = document.querySelector('.lamp');
-  const toggle = document.querySelector('.navbar__toggle--darkmode-input');
+  const toggle = document.querySelector('.navbar__darkmode-input');
   if (!button || !toggle || button.dataset.bound) return;
   button.dataset.bound = 'true';
 

@@ -2,7 +2,7 @@
 
 /* Shared box of the grain, the layers wrapper and each SVG layer (they all
    carry this class): top left corner, full width, behind the content */
-.background-container {
+.background {
   position: absolute;
   top: 0;
   left: 0;
@@ -16,42 +16,42 @@
 }
 
 /* === Layers (hero SVG letters) === */
-.bgBack,
-.bgMiddle,
-.bgFront {
+.background--back,
+.background--middle,
+.background--front {
   top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
   transition: transform 0.5s ease-in-out;
 }
 
-.bgBack {
+.background--back {
   width: 160%;
   filter: blur(2px) brightness(0.5);
 }
 
-.bgMiddle {
+.background--middle {
   width: 155%;
   filter: blur(1px) brightness(0.9) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
 }
 
-.bgFront {
+.background--front {
   width: 150%;
   filter: blur(0.5px) brightness(1) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
 }
 
 /* Hover drift (only without a reduced-motion preference) */
 @media (prefers-reduced-motion: no-preference) {
-  .background-container:hover {
-    .bgBack {
+  .background:hover {
+    .background--back {
       transform: translate(-50%, -50%) translate(-40px, 20px);
     }
 
-    .bgMiddle {
+    .background--middle {
       transform: translate(-50%, -50%) translate(-30px, -15px);
     }
 
-    .bgFront {
+    .background--front {
       transform: translate(-50%, -50%) translate(40px, -10px);
     }
   }
@@ -61,29 +61,29 @@
    Taller and dimmed; the layers take the container width (no sideways
    overflow), sit lower and are blurrier and translucent */
 @media (width >= 600px) {
-  .background-container {
+  .background {
     height: 180vh;
     opacity: 0.3;
   }
 
-  .bgBack,
-  .bgMiddle,
-  .bgFront {
+  .background--back,
+  .background--middle,
+  .background--front {
     top: 50%;
     width: 100%;
   }
 
-  .bgBack {
+  .background--back {
     filter: blur(5px) brightness(0.5);
     opacity: 0.5;
   }
 
-  .bgMiddle {
+  .background--middle {
     filter: blur(3px) brightness(0.9) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
     opacity: 0.6;
   }
 
-  .bgFront {
+  .background--front {
     filter: blur(1px) brightness(1) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
     opacity: 0.7;
   }
@@ -91,9 +91,9 @@
 
 /* === Grain ===
    A small repeated tile (9 KB instead of a full-screen image) on the
-   .background-container box. Keep this rule after the container rules: same
+   .background box. Keep this rule after the container rules: same
    specificity, and the grain's own position, height and opacity must win. */
-.bgGrain {
+.background--grain {
   /* The top-to-bottom density falloff comes from the mask: a long, soft
      gradient from the top edge. No opaque stretch at navbar height: with the
      navbar hidden it looked like a darker band with a hard edge */

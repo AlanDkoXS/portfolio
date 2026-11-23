@@ -120,20 +120,20 @@
 
 <body>
     <!-- Background grain (same as the home page), fixed below the navbar -->
-    <div class="background-container bgGrain" aria-hidden="true"></div>
+    <div class="background background--grain" aria-hidden="true"></div>
     <header class="header">
-        <nav class="navbar grid--container flex--container">
-            <a class="navbar__logo flex--container" href="/" data-i18n-attr="href:resumePage.homeHref">
-                <svg class="logo">
+        <nav class="navbar grid-container flex-container">
+            <a class="navbar__logo flex-container" href="/" data-i18n-attr="href:resumePage.homeHref">
+                <svg class="navbar__logo-icon">
                     <use href="/assets/img/logo.svg#logo"></use>
                 </svg>
-                <span class="resume__logo--name">alan</span>
-                <span class="resume__logo--lastname">quintana</span>
+                <span class="resume__logo-name">alan</span>
+                <span class="resume__logo-lastname">quintana</span>
             </a>
             <!-- Toggles -->
             <div id="nav" class="navbar__menu">
                 <!-- Same items as the home navbar; none is marked active (this is another page) -->
-                <ul class="navbar__list flex--container">
+                <ul class="navbar__list flex-container">
                     <li class="navbar__item">
                         <a class="navbar__link" href="/" data-i18n="navHome" data-i18n-attr="href:resumePage.homeHref">Home</a>
                     </li>
@@ -153,27 +153,27 @@
                         <a class="navbar__link" href="/#contact" data-i18n="navContact" data-i18n-attr="href:resumePage.contactHref">Contact</a>
                     </li>
                 </ul>
-                <div class="navbar__toggles flex--container">
-                    <div class="navbar__toggle--darkmode flex--container">
+                <div class="navbar__toggles flex-container">
+                    <div class="navbar__darkmode-toggle flex-container">
                         <input type="checkbox" name="theme" id="darkmode-toggle"
-                            class="navbar__toggle--darkmode-input" title="Dark Mode" />
-                        <label for="darkmode-toggle" class="navbar__toggle--darkmode-label">
-                            <div class="icon-wrapper">
-                                <i class="bx bx-sun navbar__toggle--darkmode-sun" aria-hidden="true"></i>
-                                <i class="bx bx-moon navbar__toggle--darkmode-moon" aria-hidden="true"></i>
+                            class="navbar__darkmode-input" title="Dark Mode" />
+                        <label for="darkmode-toggle" class="navbar__darkmode-label">
+                            <div class="navbar__darkmode-icons">
+                                <i class="bx bx-sun navbar__darkmode-sun" aria-hidden="true"></i>
+                                <i class="bx bx-moon navbar__darkmode-moon" aria-hidden="true"></i>
                             </div>
                         </label>
                     </div>
                     <!-- Mobile menu only: caption above the language switch -->
                     <span class="navbar__toggles-caption" data-i18n="navLanguage">Change language</span>
-                    <div class="navbar__toggle--language flex--container">
+                    <div class="navbar__language-toggle flex-container">
                         <input type="checkbox" name="language-toggle" id="language-toggle"
-                            class="navbar__toggle--language-input" title="Select Language"
+                            class="navbar__language-input" title="Select Language"
                             aria-label="Select Language" />
-                        <label for="language-toggle" class="navbar__toggle--language-label">
-                            <div class="flag-wrapper">
-                                <img src="/assets/img/flag-en.svg" class="navbar__toggle--language-en" lang="en" alt="English" aria-hidden="true">
-                                <img src="/assets/img/flag-es.svg" class="navbar__toggle--language-es" lang="es" alt="Español" aria-hidden="true">
+                        <label for="language-toggle" class="navbar__language-label">
+                            <div class="navbar__language-flags">
+                                <img src="/assets/img/flag-en.svg" class="navbar__language-en" lang="en" alt="English" aria-hidden="true">
+                                <img src="/assets/img/flag-es.svg" class="navbar__language-es" lang="es" alt="Español" aria-hidden="true">
                             </div>
                             <!-- Mobile menu: two flag ghost buttons, the current language pressed (replaces the single flag) -->
                             <span class="lang-switch" aria-hidden="true"><span class="lang-switch__opt lang-switch__opt--es"><img class="lang-switch__flag" src="/assets/img/flag-es.svg" alt="" width="18" height="18" /></span><span class="lang-switch__opt lang-switch__opt--en"><img class="lang-switch__flag" src="/assets/img/flag-en.svg" alt="" width="18" height="18" /></span></span>
@@ -204,21 +204,21 @@
     </button>
     <!-- Buttons -->
     <!-- Back to the home page, same button as the case pages -->
-    <div class="project-back resume-back grid--container">
+    <div class="project-back resume-back grid-container">
         <a class="btn btn--ghost project-back__link" href="/" data-i18n-attr="href:resumePage.homeHref">
             <i class="bx bx-chevron-left" aria-hidden="true"></i> <span data-i18n="resumePage.back">Back to home</span>
         </a>
     </div>
     <div id="pdf-container"></div>
     <!-- Download: fixed bottom right on desktop; on mobile it floats over the CV's blank bottom-right corner -->
-    <div class="fab-container">
-        <a href="#" class="fab btn btn--primary" id="btn-download">
+    <div class="resume-fab">
+        <a href="#" class="resume-fab__button btn btn--primary" id="btn-download">
             <i class="bx bxs-download"></i>
-            <span class="fab-text" data-i18n="resumePage.downloadButton">Download</span>
+            <span class="resume-fab__text" data-i18n="resumePage.downloadButton">Download</span>
         </a>
 
         <dialog id="modal" closedby="any" aria-labelledby="download-title">
-            <div class="modal-content">
+            <div class="modal__content">
                 <form method="dialog">
                     <button class="modal__close" aria-label="Close" data-i18n-attr="aria-label:resumePage.close">
                         <i class="bx bx-x" aria-hidden="true"></i>
@@ -226,7 +226,7 @@
                 </form>
                 <h2 id="download-title" data-i18n="resumePage.downloadButton">Download</h2>
                 <p data-i18n="resumePage.selectLanguage">Select language</p>
-                <div class="resume__modal-content">
+                <div class="modal__actions">
                     <button class="btn btn--primary" data-cv="ENG" autofocus>
                         <strong lang="en" data-i18n="resumePage.english">English</strong>
                     </button>
@@ -239,7 +239,7 @@
     </div>
 
     <footer class="footer section">
-        <div class="footer__container grid--container">
+        <div class="footer__container grid-container">
             <div class="footer__info">
                 <h3 class="footer__title">Alan Quintana</h3>
                 <span class="footer__description" data-i18n="resumePage.footerDescription">

@@ -32,7 +32,7 @@
   justify-self: center;
 }
 
-.home__image--background {
+.home__image-background {
   background-image: url("/assets/img/profile_bg.svg");
   background-size: cover;
   background-position: center;
@@ -45,7 +45,7 @@
   filter: drop-shadow(2px -2px 10px var(--profile-shadow));
 }
 
-.home__image--sprite {
+.home__image-sprite {
   background-image: url("/assets/img/profile_sprite.webp");
   /* 20 frames: each frame is exactly the box width at any size */
   background-size: 2000% 100%;

@@ -3,8 +3,8 @@ import { isCoarsePointer } from './viewport.js';
 
 function profileParallax() {
   const container = document.querySelector('.home__image');
-  const background = document.querySelector('.home__image--background');
-  const sprite = document.querySelector('.home__image--sprite');
+  const background = document.querySelector('.home__image-background');
+  const sprite = document.querySelector('.home__image-sprite');
 
   if (!container || !background || !sprite) return;
   if (prefersReducedMotion()) return;

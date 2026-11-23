@@ -4,9 +4,9 @@
 .project-page {
   /* Mobile: only the background grain; the letters clashed with the text */
   @media (width < 600px) {
-    .bgBack,
-    .bgMiddle,
-    .bgFront {
+    .background--back,
+    .background--middle,
+    .background--front {
       display: none;
     }
   }
@@ -36,7 +36,7 @@
     margin-top: 0.85rem;
   }
 
-  /* .grid--container brings margin: 0 auto with higher specificity (nested in
+  /* .grid-container brings margin: 0 auto with higher specificity (nested in
      html); the vertical margins of each block are set here */
   .project-back {
     margin-block: 0.75rem 0;
@@ -182,16 +182,16 @@
 
 /* Dark version of the screenshots: non-critical override (without style queries
    the light one shows). The hidden image is lazy, so it isn't downloaded. */
-.project-media .if-dark {
+.project-media .project-media__img-dark {
   display: none;
 }
 
 @container style(--color-scheme: dark) {
-  .project-media .has-dark .if-light {
+  .project-media .has-dark .project-media__img-light {
     display: none;
   }
 
-  .project-media .has-dark .if-dark {
+  .project-media .has-dark .project-media__img-dark {
     display: block;
   }
 }

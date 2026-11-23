@@ -2,8 +2,8 @@
 // (slot 0, negative to the left). It moves with the arrow buttons, the
 // keyboard (arrow keys on the controller link) and by dragging (Pointer
 // Events: mouse, touch or pen).
-const cardsContainer = document.querySelector('.project__card--carousel');
-const cardsController = document.querySelector('.project__card--controller');
+const cardsContainer = document.querySelector('.project__carousel');
+const cardsController = document.querySelector('.project__carousel-controller');
 
 // Slots further than this from the center are hidden: scale 0, parked at the
 // center and sent far back in z-index

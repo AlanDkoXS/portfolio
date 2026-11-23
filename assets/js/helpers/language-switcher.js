@@ -22,10 +22,10 @@ import { isDesktopViewport } from './viewport.js';
 const STORAGE_KEY = 'lang';
 const HASH_KEY = 'aq-hash'; // section to go back to after switching language
 const SUPPORTED = ['en', 'es'];
-const FLAG_WRAPPER = '.navbar__toggle--language';
+const FLAG_WRAPPER = '.navbar__language-toggle';
 // Only the desktop flag animates: the mobile flag buttons (.lang-switch,
 // inside the same label) must stay visible while the page switches
-const ANIMATED_FLAGS = '.flag-wrapper img';
+const ANIMATED_FLAGS = '.navbar__language-flags img';
 
 const getStoredLanguage = () => {
   const lang = localStore.get(STORAGE_KEY);
@@ -210,7 +210,7 @@ const prefetchLikelyPages = () => {
 const startFlagAnimation = (wrapper, lang) => {
   if (!wrapper) return;
   wrapper.querySelectorAll(ANIMATED_FLAGS).forEach((img) => {
-    const isTarget = img.classList.contains(`navbar__toggle--language-${lang}`);
+    const isTarget = img.classList.contains(`navbar__language-${lang}`);
     img.classList.toggle('is-target', isTarget);
     img.classList.toggle('is-current', !isTarget);
   });

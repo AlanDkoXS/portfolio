@@ -5,7 +5,7 @@
    - Desktop: centered in the right margin.
    - Mobile: only inside the open hamburger menu, left of the close X.
    It replaces the menu's moon/sun button at every width. */
-.header .navbar .navbar__toggle--darkmode {
+.header .navbar .navbar__darkmode-toggle {
   display: none;
 }
 

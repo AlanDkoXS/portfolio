@@ -1,9 +1,9 @@
 /* === Resume === */
 
 /* Back button above the CV, below the fixed navbar (same as the case pages).
-   .grid--container in the selector: the base rule (nested in body, more
+   .grid-container in the selector: the base rule (nested in body, more
    specific) sets this element's margin and padding */
-.resume-back.grid--container {
+.resume-back.grid-container {
   padding-top: calc(var(--header-height) + 1.25rem);
 
   @media (width < 600px) {
@@ -38,7 +38,7 @@
 
 /* === Floating download button === */
 
-.fab-container {
+.resume-fab {
   position: fixed;
   bottom: 4rem;
   right: 2rem;
@@ -51,7 +51,7 @@
 
 /* Square with the icon only; resume-fab.js adds .expanded (icon + text)
    once the page is scrolled */
-.fab {
+.resume-fab__button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -63,7 +63,7 @@
   text-decoration: none;
   overflow: hidden;
 
-  .fab-text {
+  .resume-fab__text {
     display: none;
     white-space: nowrap;
     margin-left: 0.2rem;
@@ -75,7 +75,7 @@
     font-size: 1rem;
     padding: 20px;
 
-    .fab-text {
+    .resume-fab__text {
       display: inline-block;
     }
   }
@@ -95,11 +95,11 @@
   }
 
   /* above the CV page but below the header and the mobile menu panel */
-  .fab-container {
+  .resume-fab {
     z-index: var(--z-fixed);
   }
 
-  .fab {
+  .resume-fab__button {
     width: 3.25rem;
     height: 3.25rem;
     font-size: 1.35rem;
@@ -114,7 +114,7 @@
         font-size: 1.35rem;
       }
 
-      .fab-text {
+      .resume-fab__text {
         margin-left: 0;
       }
     }

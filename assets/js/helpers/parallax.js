@@ -61,9 +61,9 @@ const parallaxEffect = {
     if (prefersReducedMotion()) return; // the background stays still
 
     this.elements = {
-      back: document.querySelector('.bgBack'),
-      middle: document.querySelector('.bgMiddle'),
-      front: document.querySelector('.bgFront'),
+      back: document.querySelector('.background--back'),
+      middle: document.querySelector('.background--middle'),
+      front: document.querySelector('.background--front'),
     };
 
     if (!this.elements.back || !this.elements.middle || !this.elements.front) {

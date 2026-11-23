@@ -93,7 +93,7 @@ export function homeChrome(homeHtml) {
 export function adaptHeader(header, lang) {
   const home = homePath(lang);
   return header
-    .replace('class="navbar__logo flex--container" href="#"', `class="navbar__logo flex--container" href="${home}"`)
+    .replace('class="navbar__logo flex-container" href="#"', `class="navbar__logo flex-container" href="${home}"`)
     .replace(/class="navbar__link( active)?" href="#(\w+)"/g, (_m, _a, id) =>
       `class="navbar__link" href="${home}${id === 'home' ? '' : `#${id}`}"`,
     );
@@ -241,21 +241,21 @@ const head = (ctx, themeHead) =>
 // ---------------------------------------------------------------------------
 
 const BACKGROUND = `    <!-- Background: same textures as the home page (grain + parallax layers) -->
-    <div class="background-container bgGrain"></div>
-    <div class="background-container">
-      <svg class="background-container bgBack" aria-hidden="true">
+    <div class="background background--grain"></div>
+    <div class="background">
+      <svg class="background background--back" aria-hidden="true">
         <use href="/assets/img/bgBack.svg#bgBack"></use>
       </svg>
-      <svg class="background-container bgMiddle" aria-hidden="true">
+      <svg class="background background--middle" aria-hidden="true">
         <use href="/assets/img/bgMiddle.svg#bgMiddle"></use>
       </svg>
-      <svg class="background-container bgFront" aria-hidden="true">
+      <svg class="background background--front" aria-hidden="true">
         <use href="/assets/img/bgFront.svg#bgFront"></use>
       </svg>
     </div>`;
 
 function backLink({ ui, home }) {
-  return `      <div class="project-back grid--container">
+  return `      <div class="project-back grid-container">
         <a class="btn btn--ghost project-back__link" href="${home}#projects">
           <i class="bx bx-chevron-left" aria-hidden="true"></i> ${ui.back}
         </a>
@@ -263,7 +263,7 @@ function backLink({ ui, home }) {
 }
 
 function hero({ p, c, ui }) {
-  return `        <header class="project-hero grid--container">
+  return `        <header class="project-hero grid-container">
           <p class="project-hero__kind">${escapeAttr(c.kind)} · ${p.year}</p>
           <h1 class="project-hero__title">${escapeAttr(c.title)}</h1>
           <p class="project-hero__tagline">${escapeAttr(c.tagline)}</p>
@@ -284,7 +284,7 @@ function screenshots({ p, ui }) {
     const dir = kind === 'desktop' ? 'desktop/' : 'mobile/';
     const [w, h] = kind === 'desktop' ? [1280, 800] : [390, 844];
     const file = `${p.image}${dark ? '-dark' : ''}.webp`;
-    return `<img class="${dark ? 'if-dark' : 'if-light'}" src="/assets/img/project_img/${dir}${file}" alt="${escapeAttr(ui.alt(p, kind) + (dark ? ui.dark : ''))}" width="${w}" height="${h}" ${attrs} />`;
+    return `<img class="${dark ? 'project-media__img-dark' : 'project-media__img-light'}" src="/assets/img/project_img/${dir}${file}" alt="${escapeAttr(ui.alt(p, kind) + (dark ? ui.dark : ''))}" width="${w}" height="${h}" ${attrs} />`;
   };
   const figure = (kind) => {
     const first = kind === 'desktop' ? 'fetchpriority="high"' : 'loading="lazy"';
@@ -297,14 +297,14 @@ function screenshots({ p, ui }) {
   <figcaption>${ui[kind]}</figcaption>
 </figure>`;
   };
-  return `<div class="project-media grid--container" role="group" aria-label="${ui.screenshots}">
+  return `<div class="project-media grid-container" role="group" aria-label="${ui.screenshots}">
 ${indent(figure('desktop'), 2)}
 ${indent(figure('mobile'), 2)}
 </div>`;
 }
 
 function body({ p, c, ui }) {
-  return `        <div class="project-body grid--container">
+  return `        <div class="project-body grid-container">
           <section class="project-body__block">
             <h2>${ui.overview}</h2>
 ${list(c.overview, 'p', 12)}
@@ -344,14 +344,14 @@ function pagerLink({ lang, ui }, q, rel) {
 }
 
 function pager(ctx, prev, next) {
-  return `      <nav class="project-pager grid--container" aria-label="${ctx.ui.pager}">
+  return `      <nav class="project-pager grid-container" aria-label="${ctx.ui.pager}">
 ${indent(pagerLink(ctx, prev, 'prev'), 8)}
 ${indent(pagerLink(ctx, next, 'next'), 8)}
       </nav>`;
 }
 
 function cta({ ui, home }) {
-  return `      <section class="project-cta grid--container">
+  return `      <section class="project-cta grid-container">
         <h2>${ui.ctaTitle}</h2>
         <p>${ui.ctaText}</p>
         <a class="btn btn--primary" href="${home}#contact">${ui.ctaButton}</a>

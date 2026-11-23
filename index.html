@@ -280,42 +280,42 @@
     </svg>
 
     <!-- Loader -->
-    <div class="loader flex--container">
+    <div class="loader flex-container">
       <svg class="loader__logo">
         <use href="/assets/img/logo.svg#logo"></use>
       </svg>
       <span class="loader__name"
-        ><span class="loader__name--light">alan</span
-        ><span class="loader__name--semibold">quintana</span></span
+        ><span class="loader__name-light">alan</span
+        ><span class="loader__name-semibold">quintana</span></span
       >
     </div>
 
     <!-- Background -->
-    <div class="background-container bgGrain"></div>
-    <div class="background-container">
-      <svg class="background-container bgBack">
+    <div class="background background--grain"></div>
+    <div class="background">
+      <svg class="background background--back">
         <use href="/assets/img/bgBack.svg#bgBack"></use>
       </svg>
-      <svg class="background-container bgMiddle">
+      <svg class="background background--middle">
         <use href="/assets/img/bgMiddle.svg#bgMiddle"></use>
       </svg>
-      <svg class="background-container bgFront">
+      <svg class="background background--front">
         <use href="/assets/img/bgFront.svg#bgFront"></use>
       </svg>
     </div>
 
     <header class="header">
-      <nav class="navbar grid--container flex--container">
-        <a class="navbar__logo flex--container" href="#">
-          <svg class="logo">
+      <nav class="navbar grid-container flex-container">
+        <a class="navbar__logo flex-container" href="#">
+          <svg class="navbar__logo-icon">
             <use href="/assets/img/logo.svg#logo"></use>
           </svg>
-          <span class="navbar__logo--name">alan</span>
-          <span class="navbar__logo--lastname">quintana</span>
+          <span class="navbar__logo-name">alan</span>
+          <span class="navbar__logo-lastname">quintana</span>
         </a>
         <!-- Menu Nav -->
         <div id="nav" class="navbar__menu">
-          <ul class="navbar__list flex--container">
+          <ul class="navbar__list flex-container">
             <li class="navbar__item">
               <a data-i18n="navHome" class="navbar__link active" href="#home">Home</a>
             </li>
@@ -335,27 +335,27 @@
               <a data-i18n="navContact" class="navbar__link" href="#contact">Contact</a>
             </li>
           </ul>
-          <div class="navbar__toggles flex--container">
-            <div class="navbar__toggle--darkmode flex--container">
+          <div class="navbar__toggles flex-container">
+            <div class="navbar__darkmode-toggle flex-container">
               <input
                 type="checkbox"
                 name="theme"
                 id="darkmode-toggle"
-                class="navbar__toggle--darkmode-input"
+                class="navbar__darkmode-input"
                 title="Dark Mode"
                 aria-label="Dark Mode"
               />
               <label
                 for="darkmode-toggle"
-                class="navbar__toggle--darkmode-label"
+                class="navbar__darkmode-label"
               >
-                <div class="icon-wrapper">
+                <div class="navbar__darkmode-icons">
                   <i
-                    class="bx bx-sun navbar__toggle--darkmode-sun"
+                    class="bx bx-sun navbar__darkmode-sun"
                     aria-hidden="true"
                   ></i>
                   <i
-                    class="bx bx-moon navbar__toggle--darkmode-moon"
+                    class="bx bx-moon navbar__darkmode-moon"
                     aria-hidden="true"
                   ></i>
                 </div>
@@ -363,29 +363,29 @@
             </div>
             <!-- Mobile menu only: caption above the language switch -->
             <span class="navbar__toggles-caption" data-i18n="navLanguage">Change language</span>
-            <div class="navbar__toggle--language flex--container">
+            <div class="navbar__language-toggle flex-container">
               <input
                 type="checkbox"
                 name="language-toggle"
                 id="language-toggle"
-                class="navbar__toggle--language-input"
+                class="navbar__language-input"
                 title="Select Language"
                 aria-label="Select Language"
               />
               <label
                 for="language-toggle"
-                class="navbar__toggle--language-label"
+                class="navbar__language-label"
               >
-                <div class="flag-wrapper">
+                <div class="navbar__language-flags">
                   <img
                     src="/assets/img/flag-en.svg"
-                    class="navbar__toggle--language-en" lang="en"
+                    class="navbar__language-en" lang="en"
                     alt="English"
                     aria-hidden="true"
                   />
                   <img
                     src="/assets/img/flag-es.svg"
-                    class="navbar__toggle--language-es" lang="es"
+                    class="navbar__language-es" lang="es"
                     alt="Español"
                     aria-hidden="true"
                   />
@@ -426,16 +426,16 @@
     <main>
       <!-- Home -->
       <section id="home" tabindex="-1" class="home">
-        <div class="home__container grid--container">
+        <div class="home__container grid-container">
           <div class="home__image">
-            <div class="home__image--background"></div>
-            <div class="home__image--sprite"></div>
+            <div class="home__image-background"></div>
+            <div class="home__image-sprite"></div>
           </div>
           <div class="home__info">
             <h1 data-i18n="homeTitle" class="home__title">Hi there!</h1>
             <p data-i18n="homeDescription" class="home__description">I'm Alan, <strong>half designer, half developer</strong>, I build sites that are a joy to use, a fan of things that look good and work.</p>
           </div>
-          <ul class="home__social flex--container">
+          <ul class="home__social flex-container">
             <li class="home__social-item">
               <a
                 class="home__social-link"
@@ -510,8 +510,8 @@
       <section id="about" tabindex="-1" class="about section">
         <a href="#skills">
           <h2 data-i18n="aboutTitle" class="section__title">About me</h2>
-          <div class="about__container grid--container">
-            <div class="about__img--container">
+          <div class="about__container grid-container">
+            <div class="about__img-container">
               <div class="about__img">
                 <img
                   src="/assets/img/aboutme.webp"
@@ -531,7 +531,7 @@
       <!-- Skills -->
       <section id="skills" tabindex="-1" class="skills section">
         <h2 data-i18n="skillsTitle" class="section__title">Skills</h2>
-        <div class="grid--container">
+        <div class="grid-container">
           <p data-i18n="skillsDescription" class="skills__description">I build scalable and efficient solutions, from interactive interfaces to complete backend systems. My goal is to create digital tools that streamline processes, enhance user engagement, and add value to your business.</p>
           <div class="skills__wrapper">
             <div class="skills__icons">
@@ -655,9 +655,9 @@
               </div>
             </div>
           </div>
-          <div class="skills__tags flex--container">
+          <div class="skills__tags flex-container">
             <h3 data-i18n="skillsTagsTitle" class="skills__tags-title">Soft Skills</h3>
-            <div class="skills__tags-container flex--container">
+            <div class="skills__tags-container flex-container">
               <span data-i18n="skillsTags.0" class="skills__tag">Responsible</span>
               <span data-i18n="skillsTags.1" class="skills__tag">Teamwork</span>
               <span data-i18n="skillsTags.2" class="skills__tag">Creative</span>
@@ -686,13 +686,13 @@
             <i class="bx bx-chevron-left"></i>
           </button>
 
-          <div class="project__card--carousel">
+          <div class="project__carousel">
             <!-- Marvel Project Card -->
             <div class="project__card">
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle1" class="project__title">Marvel Wiki</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
@@ -768,7 +768,7 @@
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle2" class="project__title">CRUD Users</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
@@ -844,7 +844,7 @@
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle3" class="project__title">Rick and Morty Wiki</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
@@ -919,7 +919,7 @@
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle4" class="project__title">Weather App</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
@@ -994,7 +994,7 @@
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle5" class="project__title">Fortune Cookie App</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
@@ -1070,7 +1070,7 @@
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle6" class="project__title">Traktl</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
@@ -1148,7 +1148,7 @@
           >
             <i class="bx bx-chevron-right"></i>
           </button>
-          <a href="#" class="visuallyhidden project__card--controller"
+          <a href="#" class="visually-hidden project__carousel-controller"
             >Carousel controller</a
           >
         </div>
@@ -1183,7 +1183,7 @@
       <section id="contact" tabindex="-1" class="contact section">
         <h2 data-i18n="contactTitle" class="section__title">Contact</h2>
 
-        <div class="contact__container grid--container">
+        <div class="contact__container grid-container">
           <div class="contact__info">
             <p data-i18n="contactInfoDescription" class="contact__info-description">Write me 👨🏻‍💻</p>
 
@@ -1286,12 +1286,12 @@
               </div>
 
               <dialog id="modal" closedby="any" aria-labelledby="modal-message">
-                <div class="modal-content">
+                <div class="modal__content">
                   <p id="modal-message" data-i18n="contactForm.formSuccess">Done! I got your message.</p>
-                  <div class="resume__modal-content">
+                  <div class="modal__actions">
                     <button
                       type="button"
-                      id="btn_close-modal"
+                      id="close-modal-button"
                       class="btn btn--primary"
                       autofocus
                     >
@@ -1311,7 +1311,7 @@
     </main>
 
     <footer class="footer section">
-      <div class="footer__container grid--container">
+      <div class="footer__container grid-container">
         <div class="footer__info">
           <h3 class="footer__title">Alan Quintana</h3>
           <span data-i18n="footerDescription" class="footer__description">Made with ❤️ and ☕. Thanks to my tutor Alejandra Olazagasti</span>
