@@ -93,7 +93,9 @@ const args = [
 ];
 try {
   execFileSync('uvx', ['--from', 'fonttools[woff]', 'pyftsubset', ...args], { stdio: 'inherit' });
-} catch {
+} catch (error) {
+  // Only without uvx; if uvx ran and pyftsubset failed, that's the real error
+  if (error.code !== 'ENOENT') throw error;
   execFileSync('pyftsubset', args, { stdio: 'inherit' });
 }
 
