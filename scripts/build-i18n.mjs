@@ -25,6 +25,7 @@
 // This file only orchestrates: each step lives in scripts/lib/ (the i18n markup
 // conventions, data-i18n and data-i18n-attr, are described in lib/render.mjs).
 
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import cv from './cv/data.mjs';
@@ -141,10 +142,33 @@ function buildProjectPages(homeHtml, themeHead) {
   failOnMissing();
 }
 
-/** Sitemap entries for the project pages (with hreflang alternates) */
-function buildSitemap() {
+/**
+ * YYYY-MM-DD of the last commit that changed `files`: a stable date, so a build
+ * on another day doesn't rewrite the sitemap when nothing changed. Today when
+ * they have uncommitted changes (they are being edited) or git isn't available.
+ */
+function lastChanged(files) {
   const today = new Date().toISOString().slice(0, 10);
-  write('sitemap.xml', withProjectEntries(read('sitemap.xml'), projects, today));
+  const git = (...args) =>
+    execFileSync('git', ['-C', ROOT, ...args, '--', ...files], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+  try {
+    if (git('status', '--porcelain')) return today;
+    return git('log', '-1', '--format=%cs') || today;
+  } catch {
+    return today;
+  }
+}
+
+/**
+ * Sitemap entries for the project pages (with hreflang alternates). Their
+ * <lastmod> is the last change to the files the pages are made from.
+ */
+function buildSitemap() {
+  const lastmod = lastChanged(['scripts/data/projects.mjs', 'scripts/lib/project-page.mjs']);
+  write('sitemap.xml', withProjectEntries(read('sitemap.xml'), projects, lastmod));
 }
 
 /** llms.txt / llms-full.txt (AI search engines and agents) */
