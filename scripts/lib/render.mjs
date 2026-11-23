@@ -52,7 +52,8 @@ export function render(html, lang) {
       const value = t(key, lang);
       if (value === null) continue;
       const attrRe = new RegExp(`(\\s${attr}=")[^"]*(")`);
-      tag = tag.replace(attrRe, `$1${escapeAttr(value)}$2`);
+      // a function, so a "$" in the translation is taken literally
+      tag = tag.replace(attrRe, (_m, start, end) => `${start}${escapeAttr(value)}${end}`);
     }
     return tag;
   });
