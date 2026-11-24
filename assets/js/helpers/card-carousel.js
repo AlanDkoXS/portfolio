@@ -53,13 +53,14 @@ class CardCarousel {
     this.#centerIndex = Math.floor((this.#cards.length - 1) / 2);
     this.#measure();
 
-    // A new container width lays the cards out again (and back in their
-    // initial slots, as on a window resize before). The first card is
-    // observed only to keep its width up to date (it eases on breakpoints).
+    // A new container width lays the cards out again, each one in the slot
+    // it's in (a resize, e.g. turning the phone, doesn't send the carousel
+    // back to the first project). The first card is observed only to keep
+    // its width up to date (it eases on breakpoints).
     const resizes = new ResizeObserver((entries) => {
       const width = this.#width;
       this.#measure();
-      if (entries.some((entry) => entry.target === container) && this.#width !== width) this.#build();
+      if (entries.some((entry) => entry.target === container) && this.#width !== width) this.#navigate();
     });
     resizes.observe(container);
     if (this.#cards[0]) resizes.observe(this.#cards[0]);
