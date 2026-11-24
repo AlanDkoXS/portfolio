@@ -17,7 +17,9 @@ const modalDOM = document.querySelector('#modal');
 // Result dialog. showModal(): real modal (top layer, trapped focus, native
 // Esc). The Close button has autofocus.
 function showResult(message) {
-  modalDOM.querySelector('p').textContent = message;
+  if (!modalDOM) return;
+  const text = modalDOM.querySelector('#modal-message');
+  if (text) text.textContent = message;
   if (!modalDOM.open) modalDOM.showModal();
 }
 
@@ -56,6 +58,10 @@ async function submitForm(e) {
   const params = readFields();
   if (!validateForm(params).isValid) return;
 
+  // Its content (<strong data-i18n>) is put back as it was after sending, so
+  // an in-place language switch keeps translating it
+  const idleContent = [...submitButton.childNodes];
+
   try {
     submitButton.disabled = true;
     submitButton.innerHTML = `<i class="bx bx-loader-alt bx-spin"></i> ${t('contactForm.sending')}`;
@@ -79,7 +85,12 @@ async function submitForm(e) {
     showResult(t('contactForm.formError'));
   } finally {
     submitButton.disabled = false;
-    submitButton.innerHTML = `<strong>${t('contactForm.send')}</strong>`;
+    submitButton.replaceChildren(...idleContent);
+    // In the current language, in case it changed while sending (the switch
+    // didn't reach these nodes: they were out of the page)
+    submitButton.querySelectorAll('[data-i18n]').forEach((el) => {
+      el.textContent = t(el.dataset.i18n);
+    });
   }
 }
 

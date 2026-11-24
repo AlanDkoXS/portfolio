@@ -48,16 +48,20 @@ function showFieldError(fieldId, error) {
   const field = document.getElementById(fieldId);
   if (!field) return;
 
-  let errorDiv = field.nextElementSibling;
+  // Its own error box (#<field>-error, referenced by aria-describedby), not
+  // whatever element happens to follow the field; created the first time
+  const errorId = `${fieldId}-error`;
+  let errorDiv = document.getElementById(errorId);
   if (!errorDiv) {
     errorDiv = document.createElement('div');
     errorDiv.className = 'field-error';
-    errorDiv.id = `${fieldId}-error`;
+    errorDiv.id = errorId;
     // Announced when it appears and tied to the field for screen readers
     errorDiv.setAttribute('aria-live', 'polite');
-    field.setAttribute('aria-describedby', errorDiv.id);
     field.after(errorDiv);
   }
+  const describedBy = (field.getAttribute('aria-describedby') ?? '').split(/\s+/).filter(Boolean);
+  if (!describedBy.includes(errorId)) field.setAttribute('aria-describedby', [...describedBy, errorId].join(' '));
 
   errorDiv.textContent = error;
   field.classList.toggle('invalid', Boolean(error));
