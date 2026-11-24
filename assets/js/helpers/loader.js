@@ -120,13 +120,14 @@ function loader() {
   };
 
   // main.js runs this at DOMContentLoaded, but with a warm cache `load`
-  // may already have fired; in that case hide right away.
+  // may already have fired; in that case don't wait for it.
   if (document.readyState === 'complete') {
     hideAfterMinimum();
   } else {
     window.addEventListener('load', hideAfterMinimum, { once: true });
-    setTimeout(hide, MAX_WAIT_MS);
   }
+  // Either way, never longer than MAX_WAIT_MS (e.g. if the name never forms)
+  setTimeout(hide, MAX_WAIT_MS);
 }
 
 export { loader };
