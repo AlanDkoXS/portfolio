@@ -29,5 +29,8 @@ export function skillsMarquee() {
     sync();
   });
   reducedMotionQuery().addEventListener('change', sync);
+  // An in-place language switch writes the markup's title (the "pause"
+  // text, data-i18n-attr) back: set the one for the current state again
+  window.addEventListener('languageChange', sync);
   sync();
 }
