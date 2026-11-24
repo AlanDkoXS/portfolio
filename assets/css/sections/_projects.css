@@ -393,12 +393,26 @@
 
 /* === Utils === */
 
-/* Keyboard controller of the carousel (focusable, not shown) */
+/* Keyboard controller of the carousel (focusable, not shown). With keyboard
+   focus it shows how to use it, at the bottom right of the carousel */
 .visually-hidden {
   position: absolute;
   z-index: -1;
   right: 0;
   opacity: 0;
+
+  &:focus-visible {
+    z-index: var(--z-fixed);
+    right: max(1rem, (100% - 1024px) / 2 + 1rem);
+    bottom: 0;
+    padding: 0.25rem 0.75rem;
+    opacity: 1;
+    color: var(--primary-color);
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-small);
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
 }
 
 /* === Responsive === */

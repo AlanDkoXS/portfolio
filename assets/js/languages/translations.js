@@ -221,6 +221,12 @@ const translations = {
     en: 'Projects',
     es: 'Proyectos',
   },
+  // Carousel controls: arrow buttons and the keyboard controller link
+  // (hidden until it gets keyboard focus)
+  projectsCarousel: {
+    en: { prev: 'Previous project', next: 'Next project', keyboard: 'Browse the projects with the arrow keys' },
+    es: { prev: 'Proyecto anterior', next: 'Siguiente proyecto', keyboard: 'Recorre los proyectos con las flechas del teclado' },
+  },
   projectSubtitle: {
     en: 'Tech Stack',
     es: 'Tecnologías',

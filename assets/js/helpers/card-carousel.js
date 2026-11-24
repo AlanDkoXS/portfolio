@@ -66,6 +66,9 @@ class CardCarousel {
     if (this.#cards[0]) resizes.observe(this.#cards[0]);
 
     controller?.addEventListener('keydown', (e) => this.#onKeydown(e));
+    // It's a link only to be focusable: Enter must not follow its href="#"
+    // (it jumped to the top of the page)
+    controller?.addEventListener('click', (e) => e.preventDefault());
 
     this.#build();
 

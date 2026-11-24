@@ -680,9 +680,10 @@
         <div class="project__container">
           <button
             class="project__nav project__nav--prev"
+            data-i18n-attr="aria-label:projectsCarousel.prev"
             aria-label="Proyecto anterior"
           >
-            <i class="bx bx-chevron-left"></i>
+            <i class="bx bx-chevron-left" aria-hidden="true"></i>
           </button>
 
           <div class="project__carousel">
@@ -1143,13 +1144,13 @@
 
           <button
             class="project__nav project__nav--next"
+            data-i18n-attr="aria-label:projectsCarousel.next"
             aria-label="Siguiente proyecto"
           >
-            <i class="bx bx-chevron-right"></i>
+            <i class="bx bx-chevron-right" aria-hidden="true"></i>
           </button>
-          <a href="#" class="visually-hidden project__carousel-controller"
-            >Carousel controller</a
-          >
+          <a href="#" class="visually-hidden project__carousel-controller" data-i18n="projectsCarousel.keyboard"
+            >Recorre los proyectos con las flechas del teclado</a>
         </div>
       </section>
 
