@@ -15,10 +15,14 @@
 
   .home__social-item {
     font-weight: var(--font-semibold);
-    transition: transform 0.3s ease-in-out;
 
     &:hover {
       transform: scale(1.2);
+    }
+
+    /* the growth eases only without "reduce motion" */
+    @media (prefers-reduced-motion: no-preference) {
+      transition: transform 0.3s ease-in-out;
     }
   }
 }

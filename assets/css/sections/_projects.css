@@ -300,10 +300,14 @@
   fill: var(--primary-color);
   /* Grainy inner shadow (--icon-grain filter, like the skills ones) */
   filter: var(--icon-grain) drop-shadow(0 2px 3px color-mix(in srgb, var(--teal-950) 80%, transparent));
-  transition: transform 0.3s ease;
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  /* the growth eases only without "reduce motion" */
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform 0.3s ease;
   }
 }
 

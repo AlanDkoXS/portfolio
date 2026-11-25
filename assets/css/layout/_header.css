@@ -476,6 +476,9 @@ body:has(.lamp.lamp--swing) .header .navbar__menu::before {
 /* === Reduced motion === */
 @media (prefers-reduced-motion: reduce) {
   .header .navbar__menu,
+  /* the open state sets its own transition (more specific): drop it too */
+  .header.menu-open .navbar__menu,
+  .header .navbar__menu:target,
   .header .navbar__burger i {
     transition: none;
   }
