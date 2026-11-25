@@ -281,8 +281,8 @@
   max-width: none;
   margin: 0;
   white-space: normal;
-  /* more room between the text and the border */
-  padding: 0.85rem 1.75rem;
+  /* the padding is .btn's: same height and edge clearance as the other
+     buttons of the page */
 }
 
 /* The chevron moves toward where the link leads */
