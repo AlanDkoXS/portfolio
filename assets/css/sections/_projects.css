@@ -420,7 +420,7 @@
     background-color: var(--surface-color);
     border-radius: var(--border-radius-small);
     outline: var(--focus-ring);
-    outline-offset: 2px;
+    outline-offset: var(--focus-offset-flat);
   }
 }
 

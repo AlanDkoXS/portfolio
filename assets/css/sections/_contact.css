@@ -58,7 +58,7 @@
        (.btn:focus-visible) */
     &:focus {
       outline: var(--focus-ring);
-      outline-offset: 4px;
+      outline-offset: var(--focus-offset);
     }
   }
 

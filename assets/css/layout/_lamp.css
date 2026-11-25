@@ -80,8 +80,8 @@
     outline: none;
 
     .lamp__hit {
-      outline: 3px solid var(--accent-color);
-      outline-offset: 2px;
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-offset-flat);
       border-radius: 6px;
     }
   }

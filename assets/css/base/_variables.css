@@ -141,9 +141,13 @@
 
   /* Interaction
      ========================================================================== */
-  /* Keyboard focus ring of buttons, links and fields (each one sets its own
-     outline-offset). Resolved here: it follows the root --accent-ink */
+  /* Keyboard focus ring of buttons, links and fields. Resolved here: it
+     follows the root --accent-ink */
   --focus-ring: 3px solid var(--accent-ink);
+  /* Ring gap: clear of the hard shadow on shadowed buttons (and the fields),
+     closer on flat ones */
+  --focus-offset: 4px;
+  --focus-offset-flat: 2px;
   /* Buttons lifting on hover and sinking when pressed */
   --press-duration: 0.15s;
 

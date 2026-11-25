@@ -65,7 +65,7 @@
 
   &:focus-visible {
     outline: var(--focus-ring);
-    outline-offset: 4px;
+    outline-offset: var(--focus-offset);
   }
 
   &:disabled,
@@ -203,6 +203,6 @@
 
   &:focus-visible {
     outline: var(--focus-ring);
-    outline-offset: 3px;
+    outline-offset: var(--focus-offset);
   }
 }
