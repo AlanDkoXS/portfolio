@@ -182,6 +182,8 @@
      one touch-sized square and glyph, capped so they don't grow with text */
   --icon-btn-size: min(2.75rem, 44px);
   --icon-btn-glyph: min(1.5rem, 24px);
+  /* Social links: desktop hero and footer (the mobile hero has its own) */
+  --social-icon-size: 1.5rem;
   --space-title: var(--space-3); /* from a heading to its content */
   --surface-padding: var(--space-12) var(--space-6); /* contact form (mobile) and case page CTA */
   --margin-small: var(--space-2);

@@ -380,7 +380,7 @@ html.js:not(.hero-ready) .home .home__title {
 
     .home__social-item {
       margin: 0.5rem 0;
-      font-size: 1.5rem;
+      font-size: var(--social-icon-size);
     }
   }
 
