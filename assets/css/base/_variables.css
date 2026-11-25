@@ -51,6 +51,13 @@
     color-mix(in srgb, var(--gold-400) 18%, transparent),
     color-mix(in srgb, var(--gold-500) 18%, transparent)
   );
+  /* Two surface levels, by elevation. Raised: a block standing out from the
+     page (contact form, case page CTA), lighter fill, no border, soft-md
+     shadow. Card: a box laid over the page (dialogs, Dribbble cards), the
+     surface fill with a hairline border */
+  --surface-raised-bg: var(--bg-color-buttons);
+  --surface-card-bg: var(--surface-color);
+  --surface-card-border: 1px solid var(--border-color);
   --input-bg: light-dark(var(--teal-900), var(--teal-deep-900)); /* form fields: darker than the background */
   --footer-bg: light-dark(var(--teal-950), #00070a); /* footer and navbar; in dark, slightly darker than the fields */
   --footer-text: #e6eef0;

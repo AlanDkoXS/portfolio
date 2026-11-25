@@ -215,7 +215,7 @@
 .project-cta {
   position: relative;
   isolation: isolate;
-  background-color: var(--bg-color-buttons);
+  background-color: var(--surface-raised-bg);
   border-radius: var(--border-radius-large);
   box-shadow: var(--shadow-soft-md);
 }

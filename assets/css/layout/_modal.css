@@ -2,9 +2,9 @@
 
 .modal__content {
   color: var(--primary-color);
-  background-color: var(--surface-color);
+  background-color: var(--surface-card-bg);
   padding: 2rem;
-  border: 1px solid var(--border-color);
+  border: var(--surface-card-border);
   border-radius: var(--border-radius-large);
   box-shadow: var(--shadow-soft-lg);
   width: 100%;

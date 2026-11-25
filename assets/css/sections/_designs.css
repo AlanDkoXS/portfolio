@@ -31,8 +31,8 @@
   overflow: hidden;
   color: var(--primary-color);
   text-decoration: none;
-  background: var(--surface-color);
-  border: 1px solid var(--border-color);
+  background: var(--surface-card-bg);
+  border: var(--surface-card-border);
   border-radius: var(--border-radius-large);
   box-shadow: var(--shadow-soft-sm);
 
