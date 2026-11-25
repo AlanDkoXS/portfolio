@@ -207,9 +207,9 @@
     font-size: calc(var(--title-scale) * var(--title-font-size));
   }
 
+  /* the site's h3 (_base.css), separated from the list above it */
   h3 {
-    margin: 1.5rem 0 var(--space-title);
-    font-size: calc(var(--title-scale) * 1.1rem);
+    margin-block-start: var(--space-6);
   }
 }
 

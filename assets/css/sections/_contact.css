@@ -124,11 +124,6 @@
     font-size: 1rem;
   }
 
-  .contact__form-title {
-    font-size: calc(var(--title-scale) * clamp(1rem, 0.6rem + 1.2vw, 1.3rem));
-    margin-bottom: 0.25rem;
-  }
-
   #contact .contact__container .contact__form {
     padding: clamp(1rem, 3svh, 1.75rem) 1.5rem;
   }

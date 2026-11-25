@@ -13,10 +13,12 @@
   min-width: 0;
 }
 
-/* Group title ("Development Tools"): a positioned box */
+/* Group title ("Development Tools"): a positioned box. Its header carries
+   the h3's bottom margin, so the pause button stays centred on the title */
 .skills__title {
   position: relative;
   gap: var(--gap-small);
+  margin-block-end: 0;
 }
 
 /* === Tech icon (looping row and accordion grids) === */
@@ -57,7 +59,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-block: 2rem 1.25rem;
+  margin-block: 2rem var(--space-title);
 }
 
 /* Pause / resume button: the look (outline, hard shadow, hover, press,
@@ -323,14 +325,12 @@
     justify-content: normal;
     width: 100%;
     max-width: 44rem;
-    margin-top: 0.75rem;
     align-self: flex-start;
   }
 }
 
 .skills__tags-title {
   align-self: stretch; /* on the left, even though .flex-container centers */
-  margin-bottom: 0.25rem;
 }
 
 .skills__brick-half {

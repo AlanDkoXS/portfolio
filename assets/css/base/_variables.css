@@ -127,7 +127,12 @@
   --normal-font-size: calc(0.8rem + 0.5vw);
   --small-font-size: calc(0.9em + 0.2vw);
   --title-font-size: calc(1rem + 0.5vw);
-  --title-scale: 1.5; /* all headings (h1–h6) are 1.5× */
+  --title-scale: 1.5; /* headings are 1.5× (h3: --h3-size) */
+  /* h3 (Skills groups, contact form, footer columns, case pages): one step
+     (÷1.2) below h2 on the same scale, 22.4px on phones and 29px at 1440.
+     Resolved here, so it's the same on every page (the case pages' main
+     has its own --title-font-size for its h2s) */
+  --h3-size: calc(1.25 * var(--title-font-size));
   --line-height-body: 1.5; /* running text */
   /* Buttons have their own size (not each page's reading scale): 14.4px
      on phones, up to 16.8px on desktop */
