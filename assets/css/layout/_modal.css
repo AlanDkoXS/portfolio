@@ -38,8 +38,11 @@
   border-radius: var(--border-radius-small);
   cursor: pointer;
 
-  &:hover {
-    background: var(--bg-color-buttons);
+  /* Real pointer only: on touch screens :hover stays "stuck" after a tap */
+  @media (hover: hover) {
+    &:hover {
+      background: var(--bg-color-buttons);
+    }
   }
 
   &:focus-visible {
