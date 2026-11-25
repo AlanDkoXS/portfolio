@@ -2,6 +2,10 @@
 
 .home {
   position: relative;
+  /* The hero keeps the font's line height (not --line-height-body): the
+     mobile first screen is tuned to it, with no slack at 360x640. The
+     desktop description sets its own (below) */
+  line-height: normal;
 }
 
 .home__container {

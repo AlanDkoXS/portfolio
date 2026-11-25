@@ -20,6 +20,8 @@
 
   font-family: inherit;
   font-size: inherit;
+  /* height = one line + the padding: the font's own line, not the body's */
+  line-height: normal;
   font-weight: var(--font-bold);
   letter-spacing: 0.06em;
   text-transform: uppercase;

@@ -243,6 +243,7 @@
 
   li {
     padding: 0.4rem 0.8rem;
+    line-height: normal; /* a tag, sized like the buttons */
     font-size: var(--small-font-size);
     font-weight: var(--font-semibold);
     color: var(--on-accent-color);

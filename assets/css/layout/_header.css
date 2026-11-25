@@ -9,6 +9,9 @@
   left: 0;
   width: 100%;
   height: var(--header-height);
+  /* navigation, not running text: the font's line height (--line-height-body
+     would space out the menu links) */
+  line-height: normal;
   align-content: center;
   isolation: isolate;
   z-index: var(--z-modal);

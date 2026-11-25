@@ -36,6 +36,9 @@
 @media (width < 600px) {
   .about.section {
     padding-block: 12px;
+    /* the font's line height, not --line-height-body: like the hero, it
+       must fit one screen (at 360x640 with 130% text it already doesn't) */
+    line-height: normal;
   }
 
   /* without the title's top margin the block is exactly centered */

@@ -128,6 +128,7 @@
   --small-font-size: calc(0.9em + 0.2vw);
   --title-font-size: calc(1rem + 0.5vw);
   --title-scale: 1.5; /* all headings (h1–h6) are 1.5× */
+  --line-height-body: 1.5; /* running text */
   --btn-small-font-size: 0.875rem; /* compact buttons (Back) */
 
   /* Font Weights */

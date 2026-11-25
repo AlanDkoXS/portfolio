@@ -32,6 +32,7 @@ html {
     /* long words (email, URLs) break rather than overflow */
     overflow-wrap: break-word;
     font-size: var(--normal-font-size);
+    line-height: var(--line-height-body);
     color: var(--primary-color);
     background-color: var(--bg-color-section);
     overflow-x: hidden;
@@ -61,6 +62,8 @@ html {
   h6 {
     font-family: var(--title-font);
     font-size: calc(var(--title-scale) * var(--title-font-size));
+    /* headings keep the font's own spacing (--line-height-body is for running text) */
+    line-height: normal;
     text-align: start;
     font-weight: var(--font-bold);
     color: var(--primary-color);

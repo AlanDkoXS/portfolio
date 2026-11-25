@@ -10,6 +10,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* the name's lines keep the font's spacing (not --line-height-body) */
+  line-height: normal;
   background-color: var(--bg-color-section);
   transition: opacity 0.4s, visibility 0.4s;
 
