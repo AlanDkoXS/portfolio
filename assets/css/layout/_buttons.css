@@ -5,7 +5,7 @@
    button "sinks" onto its shadow. */
 .btn {
   --btn-ink: var(--btn-ink-color);
-  --btn-offset: 4px;
+  --btn-offset: var(--hard-offset);
 
   position: relative;
   isolation: isolate;
@@ -173,7 +173,7 @@
    the hard shadow (the pause button shortens it). */
 .project__nav,
 .skills__motion-toggle {
-  --btn-offset: 4px;
+  --btn-offset: var(--hard-offset);
 
   color: var(--accent-color);
   background-color: var(--bg-color-section);

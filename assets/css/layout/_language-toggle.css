@@ -193,7 +193,7 @@
       aspect-ratio: 4 / 3;
       overflow: hidden;
       border-radius: 2px;
-      box-shadow: 4px 4px 0 var(--btn-ink-color);
+      box-shadow: var(--hard-offset) var(--hard-offset) 0 var(--btn-ink-color);
       pointer-events: auto;
       transition:
         transform var(--press-duration),
@@ -223,7 +223,7 @@
 
       /* press feedback on the other language's button */
       &:active {
-        transform: translate(4px, 4px);
+        transform: translate(var(--hard-offset), var(--hard-offset));
         box-shadow: 0 0 0 var(--btn-ink-color);
       }
     }
@@ -250,7 +250,7 @@
     /* current language: pressed, a bit darker, not tappable */
     .navbar__language-input:checked ~ .navbar__language-label .lang-switch__opt--es,
     .navbar__language-input:not(:checked) ~ .navbar__language-label .lang-switch__opt--en {
-      transform: translate(4px, 4px);
+      transform: translate(var(--hard-offset), var(--hard-offset));
       box-shadow: 0 0 0 var(--btn-ink-color);
       pointer-events: none;
 

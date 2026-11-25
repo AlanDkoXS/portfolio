@@ -141,9 +141,9 @@
     display: block;
     width: 100%;
     overflow: hidden;
-    border: 2px solid var(--teal-950);
+    border: 2px solid var(--btn-ink-color);
     border-radius: var(--border-radius-default);
-    box-shadow: 6px 6px 0 var(--btn-ink-color);
+    box-shadow: var(--hard-offset-lg) var(--hard-offset-lg) 0 var(--btn-ink-color);
     background: var(--surface-color);
 
     &::after {
@@ -249,7 +249,7 @@
     background: var(--accent-color);
     border: 2px solid var(--btn-ink-color);
     border-radius: var(--border-radius-small);
-    box-shadow: 3px 3px 0 var(--btn-ink-color), var(--grain-inset-shadow);
+    box-shadow: var(--hard-offset-sm) var(--hard-offset-sm) 0 var(--btn-ink-color), var(--grain-inset-shadow);
     /* host of the grainy inner shadow (::after) shared in _buttons.css */
     position: relative;
     isolation: isolate;

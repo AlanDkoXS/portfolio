@@ -324,7 +324,7 @@
 
 .project__button {
   /* a shorter hard shadow than .btn: small buttons on the card */
-  --btn-offset: 3px;
+  --btn-offset: var(--hard-offset-sm);
 
   position: relative;
   isolation: isolate;
