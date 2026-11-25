@@ -286,7 +286,7 @@
 .project__tech-stack {
   display: flex;
   flex-wrap: nowrap;
-  gap: 0.6rem;
+  gap: var(--space-2);
   justify-content: center;
   align-items: center;
 }
@@ -317,7 +317,7 @@
   position: relative;
   z-index: 2; /* above the back's ::after gradient */
   display: flex;
-  gap: 0.6rem;
+  gap: var(--space-2);
   justify-content: center;
   margin-top: auto;
 }

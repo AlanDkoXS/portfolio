@@ -162,11 +162,23 @@
 
   /* Spacing
      ========================================================================== */
-  --button-padding: 0.8rem;
-  --space-title: 0.75rem; /* from a heading to its content */
-  --surface-padding: 3rem 1.5rem; /* contact form (mobile) and case page CTA */
-  --margin-small: 0.5rem;
-  --gap-small: 0.5rem;
+  /* Scale (rem, so it follows the system text size): gaps, margins and
+     paddings take a step of it instead of a loose value */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem; /* icon rows (icon + icon, icon + text) */
+  --space-3: 0.75rem; /* lists, paragraphs */
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --button-padding: 0.8rem; /* buttons keep their own (between steps 3 and 4) */
+  --space-title: var(--space-3); /* from a heading to its content */
+  --surface-padding: var(--space-12) var(--space-6); /* contact form (mobile) and case page CTA */
+  --margin-small: var(--space-2);
+  --gap-small: var(--space-2);
 
   /* Borders
      ========================================================================== */

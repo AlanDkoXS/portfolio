@@ -51,7 +51,7 @@
 
 .designs__caption {
   display: block;
-  padding: 0.6rem 0.8rem;
+  padding: var(--space-2) var(--space-3);
   font-size: var(--small-font-size);
   text-align: start;
   white-space: nowrap;

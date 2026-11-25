@@ -33,7 +33,7 @@
   }
 
   p + p {
-    margin-top: 0.85rem;
+    margin-top: var(--space-3);
   }
 
   /* .grid-container brings margin: 0 auto with higher specificity (nested in
@@ -215,7 +215,7 @@
 
 .project-list {
   display: grid;
-  gap: 0.6rem;
+  gap: var(--space-3);
 
   li {
     position: relative;
@@ -239,10 +239,10 @@
 .project-stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: var(--space-3);
 
   li {
-    padding: 0.4rem 0.8rem;
+    padding: 0.4rem var(--space-3);
     line-height: normal; /* a tag, sized like the buttons */
     font-size: var(--small-font-size);
     font-weight: var(--font-semibold);
@@ -268,7 +268,7 @@
 .project-pager__item {
   display: grid;
   align-content: start;
-  gap: 0.6rem;
+  gap: var(--space-3);
   min-width: 0;
 }
 
