@@ -222,7 +222,7 @@
   isolation: isolate;
   background-color: var(--bg-color-buttons);
   border-radius: var(--border-radius-large);
-  box-shadow: 0 8px 24px var(--shadow-color);
+  box-shadow: var(--shadow-soft-md);
 }
 
 /* Page grain dots */

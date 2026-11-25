@@ -6,7 +6,7 @@
   padding: 2rem;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-large);
-  box-shadow: 0 12px 32px var(--shadow-color);
+  box-shadow: var(--shadow-soft-lg);
   width: 100%;
   position: relative;
 

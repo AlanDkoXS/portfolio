@@ -33,7 +33,7 @@
   height: auto;
   margin: 0 auto;
   border-radius: var(--border-radius-small);
-  box-shadow: 0 10px 30px var(--shadow-color);
+  box-shadow: var(--shadow-soft-lg);
   outline: 1px solid var(--border-color);
 }
 

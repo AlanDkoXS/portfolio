@@ -56,6 +56,10 @@
 
   /* Shadows */
   --shadow-color: rgb(0 0 0 / 0.45);
+  /* Soft (blurred) shadows of the raised surfaces, by elevation */
+  --shadow-soft-sm: 0 6px 14px var(--shadow-color); /* Dribbble cards */
+  --shadow-soft-md: 0 8px 24px var(--shadow-color); /* contact form, case CTA, a hovered card */
+  --shadow-soft-lg: 0 12px 32px var(--shadow-color); /* dialogs, the CV page */
   --bg-layer-shadow: var(--teal-950); /* hero layers */
   --profile-shadow: var(--teal-950); /* hero portrait */
   /* Button outline and hard shadow: on the deeper background black is

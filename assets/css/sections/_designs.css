@@ -35,7 +35,7 @@
   background: var(--surface-color);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-large);
-  box-shadow: 0 6px 14px var(--shadow-color);
+  box-shadow: var(--shadow-soft-sm);
 
   &:focus-visible {
     outline: 2px solid var(--accent-color);
@@ -67,7 +67,7 @@
   /* only when it's a link (disabled while the Dribbble account isn't Pro) */
   a.designs__link:hover {
     translate: 0 -4px;
-    box-shadow: 0 10px 20px var(--shadow-color);
+    box-shadow: var(--shadow-soft-md);
   }
 }
 
