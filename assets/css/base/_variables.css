@@ -6,7 +6,7 @@
   /* Layout
      ========================================================================== */
   --header-height: 60px;
-  --container-width: 900px;
+  --container-width: 1024px; /* every block's max width, side padding included */
   /* Top of the first block below the fixed navbar (the Back button of the
      case pages and the resume) */
   --page-top-offset: calc(var(--header-height) + 1.75rem);

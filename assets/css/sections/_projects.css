@@ -390,13 +390,13 @@
 }
 
 /* Arrows at the edges of the section content (same max width
-   as the other sections, 1024px), not at the browser edges */
+   as the other sections, --container-width), not at the browser edges */
 .project__nav--prev {
-  left: max(1rem, (100% - 1024px) / 2 + 1rem);
+  left: max(1rem, (100% - var(--container-width)) / 2 + 1rem);
 }
 
 .project__nav--next {
-  right: max(1rem, (100% - 1024px) / 2 + 1rem);
+  right: max(1rem, (100% - var(--container-width)) / 2 + 1rem);
 }
 
 /* === Utils === */
@@ -412,7 +412,7 @@
   /* only with JS: without it the arrow keys don't move the carousel */
   .js &:focus-visible {
     z-index: var(--z-fixed);
-    right: max(1rem, (100% - 1024px) / 2 + 1rem);
+    right: max(1rem, (100% - var(--container-width)) / 2 + 1rem);
     bottom: 0;
     padding: 0.25rem 0.75rem;
     opacity: 1;

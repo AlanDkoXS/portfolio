@@ -41,7 +41,7 @@ html {
   }
 
   .grid-container {
-    max-width: 1024px;
+    max-width: var(--container-width);
     display: grid;
     margin: 0 auto;
     padding: 0 1rem;

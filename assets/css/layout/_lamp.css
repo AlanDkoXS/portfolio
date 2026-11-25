@@ -153,10 +153,10 @@
 @media (width >= 600px) {
   .lamp {
     --lamp-drop: 2.75rem;
-    /* Centered in the right margin (space between the 1024px content and the
+    /* Centered in the right margin (space between the content and the
        edge). The width adapts to the margin (150–230px) so it fits
        centered; without enough margin it sits flush against the edge. */
-    --lamp-margin: max(0px, (100vw - var(--scrollbar-w, 0px) - 1024px) / 2);
+    --lamp-margin: max(0px, (100vw - var(--scrollbar-w, 0px) - var(--container-width)) / 2);
     --lamp-width: clamp(150px, var(--lamp-margin) - 0.75rem, 230px);
     right: max(0px, var(--lamp-margin) / 2 - var(--lamp-width) / 2);
   }

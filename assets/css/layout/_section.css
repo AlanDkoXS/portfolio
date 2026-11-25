@@ -53,7 +53,7 @@ section {
    as the content so it aligns with its left edge */
 .section__title {
   box-sizing: border-box;
-  max-width: 1024px;
+  max-width: var(--container-width);
   margin: var(--space-title) auto;
   padding-inline: 1rem;
   text-align: start;

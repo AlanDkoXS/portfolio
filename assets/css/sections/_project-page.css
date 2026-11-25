@@ -54,8 +54,8 @@
 
   /* .project-page section (padding: 0) was beating the CTA padding */
   .project-cta {
-    /* same width as the content of the other blocks (1024px - padding) */
-    width: min(100% - 2rem, 1024px - 2rem);
+    /* same width as the content of the other blocks (max width - padding) */
+    width: min(100% - 2rem, var(--container-width) - 2rem);
     margin-block: 0 4rem;
     padding: 3rem 1.5rem;
   }
