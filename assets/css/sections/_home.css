@@ -51,6 +51,12 @@
 
 .home__image-sprite {
   background-image: url("/assets/img/profile_sprite.webp");
+  /* 1x screens get the half-size strip (375px frames, ~1/3 of the bytes);
+     2x and up the full one (750px frames) */
+  background-image: image-set(
+    url("/assets/img/profile_sprite-1x.webp") 1x,
+    url("/assets/img/profile_sprite.webp") 2x
+  );
   /* 20 frames: each frame is exactly the box width at any size */
   background-size: 2000% 100%;
   background-position: 0 0;
