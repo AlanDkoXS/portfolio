@@ -107,6 +107,8 @@
   backface-visibility: hidden;
   border-radius: var(--border-radius-large);
   overflow: hidden;
+  /* same padding on both faces */
+  padding: var(--space-5);
 }
 
 .project__card-front {
@@ -115,7 +117,6 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  padding: 1.25rem 1rem;
   background-color: var(--teal-800);
 
   /* Grain texture across the whole card, top to bottom (seamless), slightly
@@ -134,7 +135,6 @@
   transform: rotateY(180deg);
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.25rem;
   /* Teal gradient; in dark, with the mode's deep teals */
   background: linear-gradient(
     160deg,
