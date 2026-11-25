@@ -148,7 +148,12 @@ function buildProjectPages(homeHtml, themeHead) {
  * they have uncommitted changes (they are being edited) or git isn't available.
  */
 function lastChanged(files) {
-  const today = new Date().toISOString().slice(0, 10);
+  // Local date, like git's %cs (the commit's own time zone): toISOString() is
+  // UTC, a day ahead in the evening west of Greenwich, so an edit built then
+  // and committed the same evening would get two different dates
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  const today = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
   const git = (...args) =>
     execFileSync('git', ['-C', ROOT, ...args, '--', ...files], {
       encoding: 'utf8',
