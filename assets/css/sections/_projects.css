@@ -3,8 +3,8 @@
 .project__container {
   position: relative;
   /* height = card + padding: the arrows (top: 50%) sit at the center of the cards */
+  /* no top margin: title -> cards is the title's margin + this padding */
   padding: 20px;
-  margin-top: 1.5rem;
   /* Clips only the sides (off-screen cards); top and bottom let
      the card shadows show */
   overflow-x: clip;
@@ -452,8 +452,9 @@
     margin-block: 0;
   }
 
+  /* the title has no margin here: the same gap comes from the container */
   .project__container {
-    margin-top: 0.75rem;
+    margin-top: var(--space-title);
   }
 
   .project__carousel,

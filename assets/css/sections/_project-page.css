@@ -203,12 +203,12 @@
   gap: 2.5rem;
 
   h2 {
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--space-title);
     font-size: calc(var(--title-scale) * var(--title-font-size));
   }
 
   h3 {
-    margin: 1.5rem 0 0.75rem;
+    margin: 1.5rem 0 var(--space-title);
     font-size: calc(var(--title-scale) * 1.1rem);
   }
 }

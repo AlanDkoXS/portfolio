@@ -109,7 +109,7 @@
     }
 
     .section__title {
-      margin-block: 0 0.75rem;
+      margin-block: 0 var(--space-title);
     }
 
     .contact__container {

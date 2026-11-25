@@ -327,7 +327,7 @@ html.js:not(.hero-ready) .home .home__title {
 
       .home__title {
         text-align: left;
-        margin: 0 0 0.75rem;
+        margin: 0 0 var(--space-title);
         font-size: calc(var(--title-scale) * clamp(1.25rem, 0.5rem + 2.6svh + 0.4vw, 2.2rem));
       }
 

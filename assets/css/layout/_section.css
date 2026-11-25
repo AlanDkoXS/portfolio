@@ -54,7 +54,7 @@ section {
 .section__title {
   box-sizing: border-box;
   max-width: 1024px;
-  margin: 0.8rem auto;
+  margin: var(--space-title) auto;
   padding-inline: 1rem;
   text-align: start;
 }
