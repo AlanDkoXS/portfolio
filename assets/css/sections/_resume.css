@@ -45,6 +45,8 @@
   z-index: var(--z-fab);
   display: flex;
   flex-direction: column;
+  /* the button is anchored by its right side: it grows to the left */
+  align-items: flex-end;
   /* Moved by resume-fab.js (translate) so it doesn't cover the footer;
      it glides only without "reduce motion" */
   @media (prefers-reduced-motion: no-preference) {
@@ -52,42 +54,55 @@
   }
 }
 
-/* Square with the icon only; resume-fab.js adds .expanded (icon + text)
-   once the page is scrolled */
+/* A regular .btn (same font size, icon, gap, padding and height as the other
+   buttons), square with the icon only; resume-fab.js adds .expanded (icon +
+   text) once the page is scrolled. Collapsed and expanded share one height:
+   that of a .btn with text (its line + the padding + the border) */
 .resume-fab__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  border-radius: var(--border-radius-small);
-  font-size: 1.5rem;
-  text-decoration: none;
-  overflow: hidden;
+  --fab-size: calc(1lh + 2 * var(--button-padding) + 4px);
 
-  /* Expanding/contracting eases only without "reduce motion" (otherwise
-     this list would replace the transition: none of .btn) */
+  width: var(--fab-size);
+  min-block-size: var(--fab-size);
+  /* no .btn margin: the inset resume-fab.js leaves (14px on mobile) is the
+     visible gap on both edges of the CV corner */
+  margin: 0;
+  padding: var(--button-padding);
+  /* while the width eases, the content overflows: it stays at the start
+     instead of spilling to both sides */
+  justify-content: safe center;
+
+  /* Expanding/contracting eases only without "reduce motion" and where auto
+     can be animated (elsewhere it's instant). The list repeats .btn's, which
+     it replaces */
   @media (prefers-reduced-motion: no-preference) {
-    transition: width 0.3s, height 0.3s, font-size 0.3s, padding 0.3s, transform 0.25s, box-shadow 0.3s;
+    interpolate-size: allow-keywords;
+    transition:
+      width 0.3s ease,
+      padding 0.3s ease,
+      transform var(--press-duration) ease,
+      box-shadow var(--press-duration) ease,
+      background-color var(--press-duration) ease,
+      color var(--press-duration) ease;
   }
 
   .resume-fab__text {
     display: none;
     white-space: nowrap;
-    margin-left: 0.2rem;
 
+    /* when contracting, it stays until the width has eased (clipped by
+       the button's overflow) */
     @media (prefers-reduced-motion: no-preference) {
-      transition: margin-left 0.3s;
+      transition: display 0.3s allow-discrete;
     }
   }
 
+  /* same side padding as any .btn */
   &.expanded {
-    width: 10rem;
-    font-size: 1rem;
-    padding: 20px;
+    width: auto;
+    padding-inline: 1.4rem;
 
     .resume-fab__text {
-      display: inline-block;
+      display: inline;
     }
   }
 }
@@ -108,26 +123,5 @@
   /* above the CV page but below the header and the mobile menu panel */
   .resume-fab {
     z-index: var(--z-fixed);
-  }
-
-  .resume-fab__button {
-    width: 3.25rem;
-    height: 3.25rem;
-    font-size: 1.35rem;
-
-    &.expanded {
-      width: 10.5rem;
-      gap: 0.5rem;
-      padding: 0 1.1rem;
-      font-size: 1rem;
-
-      i {
-        font-size: 1.35rem;
-      }
-
-      .resume-fab__text {
-        margin-left: 0;
-      }
-    }
   }
 }
