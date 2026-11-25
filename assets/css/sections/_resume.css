@@ -1,10 +1,11 @@
 /* === Resume === */
 
-/* Back button above the CV, below the fixed navbar (same as the case pages).
+/* Back button above the CV, below the fixed navbar (same as the case pages;
+   on mobile closer to the bar, leaving the CV more room).
    .grid-container in the selector: the base rule (nested in body, more
    specific) sets this element's margin and padding */
 .resume-back.grid-container {
-  padding-top: calc(var(--header-height) + 1.25rem);
+  padding-top: var(--page-top-offset);
 
   @media (width < 600px) {
     padding-top: calc(var(--header-height) + 0.75rem);
