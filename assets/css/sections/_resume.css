@@ -1,23 +1,14 @@
-/* ============= Resume  ============= */
+/* === Resume === */
 
-.resume__logo--name {
-  font-weight: 300;
-}
-
-.resume__logo--lastname {
-  margin-left: -3.5px;
-  font-weight: 600;
-}
-
-/* La sección del CV ocupa toda la pantalla visible: el footer queda fuera de
-   la vista inicial y el PDF baja un poco respecto a la barra */
-/* Back button above the CV, below the fixed navbar (same as the case pages) */
-/* .grid--container in the selector: the base rule (nested in body, more
+/* Back button above the CV, below the fixed navbar (same as the case pages).
+   .grid-container in the selector: the base rule (nested in body, more
    specific) sets this element's margin and padding */
-.resume-back.grid--container {
-  padding-top: calc(var(--header-height) + 1.25rem);
+.resume-back.grid-container {
+  padding-top: var(--page-top-offset);
 }
 
+/* The CV section fills the whole visible screen: the footer stays out of
+   the initial view */
 #pdf-container {
   display: flex;
   flex-direction: column;
@@ -30,114 +21,103 @@
   margin: 0;
 }
 
+/* <canvas> drawn by pdf-loader.js (it only sets an inline width) */
 .resume__page {
   display: block;
   max-width: 100%;
-  height: auto !important;
+  height: auto;
   margin: 0 auto;
   border-radius: var(--border-radius-small);
-  box-shadow: 0 10px 30px var(--shadow-color);
+  box-shadow: var(--shadow-soft-lg);
   outline: 1px solid var(--border-color);
 }
 
-/* Modal de descarga */
-.modal-content h2,
-.modal-content p {
-  text-align: center;
-}
+/* === Floating download button === */
 
-.modal-content p {
-  margin: 0.25rem 0 1rem;
-  color: var(--text-muted);
-}
-
-.fab-container {
+.resume-fab {
   position: fixed;
   bottom: 4rem;
   right: 2rem;
-  z-index: 1000;
+  z-index: var(--z-fab);
   display: flex;
   flex-direction: column;
-  /* Lo mueve resume_fab_buttons.js (translate) para no tapar el footer */
-  transition: translate 0.15s linear;
+  /* the button is anchored by its right side: it grows to the left */
+  align-items: flex-end;
+  /* Moved by resume-fab.js (translate) so it doesn't cover the footer;
+     it glides only without "reduce motion" */
+  @media (prefers-reduced-motion: no-preference) {
+    transition: translate 0.15s linear;
+  }
 }
 
-.fab {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  border-radius: var(--border-radius-small);
-  font-size: 1.5rem;
-  transition: width 0.3s, height 0.3s, font-size 0.3s, padding 0.3s, transform 0.25s, box-shadow 0.3s;
-  text-decoration: none;
-  overflow: hidden;
-}
+/* A regular .btn (same font size, icon, gap, padding and height as the other
+   buttons), square with the icon only; resume-fab.js adds .expanded (icon +
+   text) once the page is scrolled. Collapsed and expanded share one height:
+   that of a .btn with text (its line + the padding + the border) */
+.resume-fab__button {
+  --fab-size: calc(1lh + 2 * var(--button-padding) + 4px);
 
-.fab-text {
-  transition: margin-left 0.3s;
-}
+  width: var(--fab-size);
+  min-block-size: var(--fab-size);
+  /* no .btn margin: the inset resume-fab.js leaves (14px on mobile) is the
+     visible gap on both edges of the CV corner */
+  margin: 0;
+  padding: var(--button-padding);
+  /* while the width eases, the content overflows: it stays at the start
+     instead of spilling to both sides */
+  justify-content: safe center;
 
-.fab .fab-text {
-  display: none;
-  white-space: nowrap;
-  margin-left: 0.2rem;
-}
+  /* Expanding/contracting eases only without "reduce motion" and where auto
+     can be animated (elsewhere it's instant). The list repeats .btn's, which
+     it replaces */
+  @media (prefers-reduced-motion: no-preference) {
+    interpolate-size: allow-keywords;
+    transition:
+      width 0.3s ease,
+      padding 0.3s ease,
+      transform var(--press-duration) ease,
+      box-shadow var(--press-duration) ease,
+      background-color var(--press-duration) ease,
+      color var(--press-duration) ease;
+  }
 
-.fab.expanded {
-  width: 10rem;
-  height: 4rem;
-  font-size: 1rem;
-  padding: 20px;
-}
+  .resume-fab__text {
+    display: none;
+    white-space: nowrap;
 
-.fab.expanded .fab-text {
-  display: inline-block;
+    /* when contracting, it stays until the width has eased (clipped by
+       the button's overflow) */
+    @media (prefers-reduced-motion: no-preference) {
+      transition: display 0.3s allow-discrete;
+    }
+  }
+
+  /* same side padding as any .btn */
+  &.expanded {
+    width: auto;
+    padding-inline: 1.4rem;
+
+    .resume-fab__text {
+      display: inline;
+    }
+  }
 }
 
 /* Mobile: the CV takes as much of the screen as it can (thin side margins,
    less space above) and the download FAB floats over the blank bottom-right
    corner of the CV page. It stays fixed on screen while the CV scrolls under
-   it, rising only to stay above the footer (resume_fab_buttons.js). It starts contracted (icon only) and expands with its text once
+   it, rising only to stay above the footer (resume-fab.js sets its top and
+   right). It starts contracted (icon only) and expands with its text once
    the visitor scrolls down, growing to the left over the blank area. The
    desktop logic that lifts it over the footer does not run here. */
-@media (max-width: 599px) {
-  .resume-back.grid--container {
-    padding-top: calc(var(--header-height) + 0.75rem);
-  }
-
+@media (width < 600px) {
   #pdf-container {
     min-height: 0;
     padding: 0.75rem 8px 2rem;
   }
 
-  /* fixed on screen (top/right set by resume_fab_buttons.js); above the CV
-     page but below the header and the mobile menu panel */
-  .fab-container {
-    position: fixed;
-    z-index: 1;
-  }
-
-  .fab {
-    width: 3.25rem;
-    height: 3.25rem;
-    font-size: 1.35rem;
-  }
-
-  .fab.expanded {
-    width: 10.5rem;
-    height: 3.25rem;
-    gap: 0.5rem;
-    padding: 0 1.1rem;
-    font-size: 1rem;
-  }
-
-  .fab.expanded i {
-    font-size: 1.35rem;
-  }
-
-  .fab.expanded .fab-text {
-    margin-left: 0;
+  /* above the CV page but below the header and the mobile menu panel */
+  .resume-fab {
+    z-index: var(--z-fixed);
   }
 }

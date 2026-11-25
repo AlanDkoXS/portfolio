@@ -1,4 +1,7 @@
-/* ============== Header & Nav Bar ================= */
+/* === Header & Nav Bar ===
+   Mobile first: the menu is a panel that drops below the bar; from 600px on
+   it sits in the bar itself (see "Desktop" at the end). The language button
+   lives in _language-toggle.css. */
 
 .header {
   position: fixed;
@@ -6,44 +9,42 @@
   left: 0;
   width: 100%;
   height: var(--header-height);
+  /* navigation, not running text: the font's line height (--line-height-body
+     would space out the menu links) */
+  line-height: normal;
   align-content: center;
-  /* Vidrio con el color del footer al 90%, desenfoque detrás y textura de
-     grano encima */
   isolation: isolate;
   z-index: var(--z-modal);
 
-  /* El vidrio va en una capa interna (no en el header): así el panel del menú
-     móvil, que es hijo del header, también puede desenfocar la página */
+  /* The glass lives in an inner layer (not on the header): that way the mobile
+     menu panel, a child of the header, can blur the page too */
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: -2;
+    pointer-events: none;
+  }
+
+  /* Glass of the bar and of the mobile menu panel: footer color at 70%, blur
+     behind and the same shadow (the panel covers the bar's when open) */
+  &::before,
+  .navbar__menu {
     background-color: color-mix(in srgb, var(--footer-bg) 70%, transparent);
     -webkit-backdrop-filter: blur(16px) saturate(1.3);
     backdrop-filter: blur(16px) saturate(1.3);
-    /* misma sombra que el panel del menú móvil (el panel la tapa al abrirse) */
     box-shadow: 0 14px 24px var(--shadow-color);
-    pointer-events: none;
   }
 
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    /* grano uniforme (la imagen bgGrain solo tiene puntos arriba) */
-    background: var(--grain-ink);
-    background-size: 140px;
-    opacity: 0.2;
-    pointer-events: none;
-  }
+  /* Uniform grain on top of both glasses (the .background--grain image only
+     has dots at the top): ::after of the bar and of the panel, the shared ink
+     overlay of _background.css */
 
-  /* Sin soporte de animaciones ligadas al scroll, el header simplemente se ve.
-     Con soporte: aparece al empezar a hacer scroll (en el hero no estorba).
-     El fundido va en las piezas y no en el header: un padre con opacidad
-     animada corta el backdrop-filter (el vidrio no vería la página). El panel
-     móvil no se anima (tiene su propio mostrar/ocultar), sí su contenido. */
+  /* Without scroll-driven animation support, the header is simply visible.
+     With support: it appears once scrolling starts (out of the way in the hero).
+     The fade goes on the pieces and not on the header: a parent with animated
+     opacity cuts off backdrop-filter (the glass wouldn't see the page). The
+     mobile panel isn't animated (it has its own show/hide), its content is. */
   @supports (animation-timeline: scroll()) {
     &::before,
     &::after,
@@ -55,7 +56,7 @@
       animation-range: 0 100px;
     }
 
-    /* el grano termina en su opacidad de siempre (0.2), no en 1 */
+    /* the grain ends at its usual opacity (0.2), not at 1 */
     &::after {
       animation-name: animation-nav-grain;
     }
@@ -63,293 +64,24 @@
 
   .navbar {
     justify-content: space-between;
-
-    .navbar__logo {
-      display: flex;
-      align-items: center;
-      column-gap: 0.25rem;
-      color: var(--primary-color);
-      fill: var(--primary-color);
-    }
-
-    /* Móvil: panel que baja justo debajo de la barra, con el mismo vidrio
-       oscuro y grano que el header. Lo abre .navbar__burger (nav_menu.js
-       pone .menu-open en el header); sin JS, #nav:target. */
-    .navbar__menu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      isolation: isolate;
-      /* mismo vidrio que la barra: translúcido, desenfoque y grano */
-      background-color: color-mix(in srgb, var(--footer-bg) 70%, transparent);
-      -webkit-backdrop-filter: blur(16px) saturate(1.3);
-      backdrop-filter: blur(16px) saturate(1.3);
-      box-shadow: 0 14px 24px var(--shadow-color);
-      padding: 1.25rem 0 1.5rem;
-      z-index: var(--z-modal);
-      visibility: hidden;
-      opacity: 0;
-      translate: 0 -0.75rem;
-      transition:
-        opacity 0.25s ease,
-        translate 0.25s ease,
-        visibility 0s 0.25s;
-
-      &::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        background: var(--grain-ink);
-        background-size: 140px;
-        opacity: 0.2;
-        pointer-events: none;
-      }
-
-      .navbar__list {
-        flex-direction: column;
-        gap: 20px;
-        transition: transform 0.3s ease;
-
-        .navbar__item {
-          .navbar__link {
-            display: inline-block;
-            color: var(--primary-color);
-            font-size: 1.1rem;
-            font-weight: 600;
-            /* Mismo estilo que el botón de contorno ("Envía tu mensaje"):
-               contorno y sombra dura dorados */
-            padding: 0.2rem 0.65rem;
-            border: 2px solid var(--accent-color);
-            border-radius: var(--border-radius-small);
-            box-shadow: 3px 3px 0 var(--accent-color);
-            transition: color 0.15s, background-color 0.15s, transform 0.15s, box-shadow 0.15s;
-
-            @media (hover: hover) {
-              &:hover {
-                color: var(--on-accent-color);
-                background-color: var(--accent-color);
-                box-shadow: 3px 3px 0 var(--btn-ink-color);
-              }
-            }
-
-            &:active {
-              transform: translate(3px, 3px);
-              box-shadow: 0 0 0 var(--accent-color);
-            }
-
-            &:focus-visible {
-              outline: 3px solid var(--accent-ink);
-              outline-offset: 3px;
-            }
-          }
-
-          /* Sección activa: rellena de dorado con texto en tinta, como el
-             botón de contorno cuando se activa */
-          .active {
-            color: var(--on-accent-color);
-            background-color: var(--accent-color);
-            box-shadow: 3px 3px 0 var(--btn-ink-color);
-            opacity: 1;
-          }
-        }
-      }
-    }
-
-    /* Toggles ====================================*/
-    .navbar__toggles {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    /* Dark mode and language toggles - Base styles */
-    .navbar__toggle--darkmode,
-    .navbar__toggle--language {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 42px;
-      cursor: pointer;
-    }
-
-    /* Dark Mode Toggle ====================================*/
-    .navbar__toggle--darkmode {
-      .navbar__toggle--darkmode-input {
-        visibility: hidden;
-        position: absolute;
-      }
-
-      .navbar__toggle--darkmode-label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .icon-wrapper {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      i {
-        font-size: 2rem;
-        color: var(--primary-color);
-        position: absolute;
-        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-          opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-
-      .navbar__toggle--darkmode-moon {
-        opacity: 0;
-        transform: rotate(-180deg) scale(0);
-      }
-
-      .navbar__toggle--darkmode-sun {
-        opacity: 1;
-        transform: rotate(0) scale(1);
-      }
-
-      .navbar__toggle--darkmode-input:checked ~ .navbar__toggle--darkmode-label {
-        .navbar__toggle--darkmode-sun {
-          opacity: 0;
-          transform: rotate(180deg) scale(0);
-        }
-
-        .navbar__toggle--darkmode-moon {
-          opacity: 1;
-          transform: rotate(0) scale(1);
-        }
-      }
-    }
-
-    /* Language Toggle ====================================*/
-    .navbar__toggle--language {
-      .navbar__toggle--language-input {
-        visibility: hidden;
-        position: absolute;
-      }
-
-      .navbar__toggle--language-label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-      }
-
-      .flag-wrapper {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 42px;
-        height: 42px;
-      }
-
-      img {
-        width: 24px;
-        height: 24px;
-        position: absolute;
-        border-radius: 50%;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-          opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-
-      .navbar__toggle--language-es {
-        opacity: 0;
-        transform: rotate(-180deg) scale(0);
-      }
-
-      .navbar__toggle--language-en {
-        opacity: 1;
-        transform: rotate(0) scale(1);
-      }
-
-      .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label {
-        .navbar__toggle--language-en {
-          opacity: 0;
-          transform: rotate(180deg) scale(0);
-        }
-
-        .navbar__toggle--language-es {
-          opacity: 1;
-          transform: rotate(0) scale(1);
-        }
-      }
-    }
   }
-
-  .navbar__logo i {
-    font-size: var(--icon-font-size);
-    color: var(--primary-color);
-  }
-
-  /* Hamburguesa → X (las dos íconos encimados, se cruzan girando) */
-  .navbar__burger {
-    position: relative;
-    display: grid;
-    place-items: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    color: var(--primary-color);
-    border-radius: var(--border-radius-small);
-    -webkit-tap-highlight-color: transparent;
-
-    i {
-      grid-area: 1 / 1;
-      font-size: 2.25rem;
-      transition:
-        opacity 0.2s ease,
-        rotate 0.3s ease,
-        scale 0.3s ease;
-    }
-
-    .navbar__burger-close {
-      opacity: 0;
-      rotate: -90deg;
-      scale: 0.6;
-    }
-
-    &:focus-visible {
-      outline: 3px solid var(--accent-ink);
-      outline-offset: 2px;
-    }
-  }
-
-  .logo {
-    width: 2.2rem;
-    height: 2.2rem;
-  }
-
-  /* The logo name is always Poppins, on every page (the resume uses its own
-     inner classes, so it is set on the logo link itself) */
-  .navbar__logo,
-  .navbar__logo--name,
-  .navbar__logo--lastname {
-    font-family: var(--brand-font);
-  }
-
-  .navbar__logo--name {
-    font-weight: 300;
-  }
-
-  .navbar__logo--lastname {
-    margin-left: -3.5px;
-    font-weight: 600;
-  }
-
 }
 
-/* Header siempre visible (sin el fundido del hero): con el menú abierto
-   (aunque en el hero del home todavía esté oculto), en el resume y en las
-   páginas de proyecto. */
+@keyframes animation-nav {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes animation-nav-grain {
+  to {
+    opacity: 0.2;
+  }
+}
+
+/* Header always visible (without the hero fade): with the menu open
+   (even if it is still hidden in the home hero), on the resume and on the
+   project pages. */
 .header.menu-open,
 .header:has(.navbar__menu:target),
 .project-page .header,
@@ -367,10 +99,66 @@ body:has(#pdf-container) .header {
   }
 }
 
-/* Menú abierto: el panel baja y la hamburguesa se vuelve X. */
+/* === Logo === */
 
-.header.menu-open .navbar .navbar__menu,
-.header .navbar .navbar__menu:target {
+.header .navbar__logo {
+  display: flex;
+  align-items: center;
+  column-gap: 0.25rem;
+  color: var(--primary-color);
+  fill: var(--primary-color);
+}
+
+.header .navbar__logo-icon {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+/* The logo name is always Poppins, on every page (the resume names its
+   spans .resume__logo-*, so it is set on the logo link itself too) */
+.header .navbar__logo,
+.header .navbar__logo-name,
+.header .navbar__logo-lastname {
+  font-family: var(--brand-font);
+}
+
+/* The resume page's logo spans (.resume__logo-*) take the same weights */
+.header .navbar__logo-name,
+.resume__logo-name {
+  font-weight: 300;
+}
+
+.header .navbar__logo-lastname,
+.resume__logo-lastname {
+  margin-left: -3.5px;
+  font-weight: 600;
+}
+
+/* === Menu panel ===
+   Mobile: panel that drops just below the bar, with the same glass and grain
+   as the header. Opened by .navbar__burger (nav-menu.js sets .menu-open on
+   the header); without JS, #nav:target. */
+
+.header .navbar__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  isolation: isolate;
+  padding: 1.25rem 0 1.5rem;
+  z-index: var(--z-modal);
+  visibility: hidden;
+  opacity: 0;
+  translate: 0 -0.75rem;
+  transition:
+    opacity 0.25s ease,
+    translate 0.25s ease,
+    visibility 0s 0.25s;
+}
+
+/* Menu open: the panel drops and the hamburger becomes an X. */
+.header.menu-open .navbar__menu,
+.header .navbar__menu:target {
   visibility: visible;
   opacity: 1;
   translate: 0 0;
@@ -379,15 +167,189 @@ body:has(#pdf-container) .header {
     translate 0.25s ease;
 }
 
-/* Menú abierto: barra y panel se ven como una sola superficie. Algo más
-   opacos y con más desenfoque para que el texto dorado de detrás no tiña el
-   panel de otro color que la barra (y los enlaces se lean bien) */
+/* Menu open: bar and panel look like a single surface. Slightly more
+   opaque and with more blur so the gold text behind doesn't tint the panel
+   a different color than the bar (and the links stay readable) */
 .header.menu-open::before,
-.header.menu-open .navbar .navbar__menu,
-.header .navbar .navbar__menu:target {
+.header.menu-open .navbar__menu,
+.header .navbar__menu:target {
   background-color: color-mix(in srgb, var(--footer-bg) 82%, transparent);
   -webkit-backdrop-filter: blur(24px) saturate(1.2);
   backdrop-filter: blur(24px) saturate(1.2);
+}
+
+/* === Menu links ===
+   Options as dimmed light text; the active one at full brightness with a
+   short gold stroke below (the menu's only touch of color). On the mobile
+   panel they go in a column and are larger, for tapping with a finger. */
+
+.header .navbar__list {
+  flex-direction: column;
+  gap: 0.5rem;
+  /* inert today (nothing transforms the list) */
+  transition: transform 0.3s ease;
+}
+
+.header .navbar__link {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  color: var(--footer-text);
+  font-size: 1.15rem;
+  font-weight: 600;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -0.1rem;
+    width: 1.1rem;
+    height: 2px;
+    translate: -50% 0;
+    background: var(--accent-color);
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  &.active {
+    opacity: 1;
+
+    &::after {
+      opacity: 0.9;
+    }
+  }
+
+  /* Pressed without hover (touch): a zero-size, invisible shadow, all that
+     is left of the old boxed links. Keep it before :hover, which clears it */
+  &:active {
+    box-shadow: 0 0 0 var(--accent-color);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 1;
+      box-shadow: none;
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 3px;
+  }
+}
+
+/* === Toggles ===
+   Mobile panel: the language switch in a column (caption above the flags,
+   _language-toggle.css), separated from the sections by a line under the
+   last link. Desktop: a row in the bar (see "Desktop" at the end). */
+
+.header .navbar__toggles {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: min(70%, 16rem);
+  margin: 1.25rem auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* === Dark Mode Toggle ===
+   Moon/sun switch. _lamp.css hides it at every width (the hanging lamp
+   replaces it). */
+
+.header .navbar__darkmode-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  cursor: pointer;
+
+  .navbar__darkmode-input {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  .navbar__darkmode-label,
+  .navbar__darkmode-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar__darkmode-icons {
+    position: relative;
+  }
+
+  i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    position: absolute;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .navbar__darkmode-moon {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0);
+  }
+
+  .navbar__darkmode-sun {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  .navbar__darkmode-input:checked ~ .navbar__darkmode-label {
+    .navbar__darkmode-sun {
+      opacity: 0;
+      transform: rotate(180deg) scale(0);
+    }
+
+    .navbar__darkmode-moon {
+      opacity: 1;
+      transform: rotate(0) scale(1);
+    }
+  }
+}
+
+/* === Hamburger ===
+   Hamburger → X (the two icons stacked, cross-fading as they rotate) */
+
+.header .navbar__burger {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
+  color: var(--primary-color);
+  border-radius: var(--border-radius-small);
+  -webkit-tap-highlight-color: transparent;
+
+  i {
+    grid-area: 1 / 1;
+    font-size: var(--icon-btn-glyph);
+    transition:
+      opacity 0.2s ease,
+      rotate 0.3s ease,
+      scale 0.3s ease;
+  }
+
+  .navbar__burger-close {
+    opacity: 0;
+    rotate: -90deg;
+    scale: 0.6;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset-flat);
+  }
 }
 
 .header.menu-open .navbar__burger {
@@ -404,60 +366,60 @@ body:has(#pdf-container) .header {
   }
 }
 
-/* Móvil, modo oscuro (lámpara encendida): la lámpara cuelga sobre el panel,
-   arriba a la derecha (su centro a 92px de la orilla, ver _lamp.css), y su
-   luz aclara el menú con un halo cenital del mismo color que la luz
-   (rgb(255 250 134), de la imagen encendida). Se enciende y apaga al mismo
-   tiempo que la lámpara. */
-@media (max-width: 599px) {
-  /* el halo se mueve (rebote, balanceo): que no se salga del panel */
-  .header .navbar .navbar__menu {
+/* === Lamp halo (mobile, dark mode) ===
+   Lamp lit: the lamp hangs over the panel, at the top right (its center 92px
+   from the edge, see _lamp.css), and its light brightens the menu with an
+   overhead halo in the same color as the light (rgb(255 250 134), from the
+   lit image). It turns on and off at the same time as the lamp. */
+@media (width < 600px) {
+  .header .navbar__menu {
+    /* the halo moves (bounce, swing): keep it from spilling out of the panel */
     overflow: clip;
-  }
 
-  .header .navbar .navbar__menu::before {
-    content: '';
-    position: absolute;
-    /* más grande que el panel (que lo recorta): al girar no se ven sus orillas */
-    inset: -200px;
-    z-index: -1;
-    background: radial-gradient(
-      ellipse 330px 550px at calc(100% - 292px) 200px,
-      rgb(255 250 134 / 0.26),
-      rgb(255 250 134 / 0.12) 40%,
-      transparent 78%
-    );
-    /* gira con la lámpara (giroscopio, --lamp-tilt de lamp.js) desde su
-       punto de luz (a 92px de la orilla, arriba del panel), como el cono de
-       luz de un péndulo */
-    transform-origin: calc(100% - 292px) 200px;
-    rotate: var(--lamp-tilt, 0deg);
-    opacity: 0;
-    /* se apaga junto con la lámpara (al instante) */
-    transition: none;
-    pointer-events: none;
+    &::before {
+      content: '';
+      position: absolute;
+      /* larger than the panel (which clips it): its edges don't show when it rotates */
+      inset: -200px;
+      z-index: -1;
+      background: radial-gradient(
+        ellipse 330px 550px at calc(100% - 292px) 200px,
+        rgb(255 250 134 / 0.26),
+        rgb(255 250 134 / 0.12) 40%,
+        transparent 78%
+      );
+      /* rotates with the lamp (gyroscope, --lamp-tilt from lamp.js) from its
+         light point (92px from the edge, above the panel), like the light
+         cone of a pendulum */
+      transform-origin: calc(100% - 292px) 200px;
+      rotate: var(--lamp-tilt, 0deg);
+      opacity: 0;
+      /* turns off together with the lamp (instantly) */
+      transition: none;
+      pointer-events: none;
+    }
   }
 
   @container style(--color-scheme: dark) {
-    /* Al abrir el menú, la lámpara (ya encendida) aparece a los 0.25s
-       (_lamp.css): el halo se enciende en ese mismo momento. Ya encendido
-       queda un poco más tenue (0.8). */
-    .header.menu-open .navbar .navbar__menu::before {
+    /* When the menu opens, the lamp (already lit) appears after 0.25s
+       (_lamp.css): the halo turns on at that same moment. Once lit it
+       stays slightly dimmer (0.8). */
+    .header.menu-open .navbar__menu::before {
       opacity: 0.8;
       transition: opacity 0.12s ease-out 0.25s;
     }
 
-    /* Sigue a la lámpara: baja y rebota con ella (mismo ritmo que
-       lamp-bungee), con un destello al llegar que se asienta en 0.8 */
+    /* Follows the lamp: drops and bounces with it (same rhythm as
+       lamp-bungee), with a flash on arrival that settles at 0.8 */
     @media (prefers-reduced-motion: no-preference) {
-      .header.menu-open .navbar .navbar__menu::before {
+      .header.menu-open .navbar__menu::before {
         transition: none;
         animation: halo-bungee 1.1s 0.25s backwards;
       }
 
-      /* La lámpara se balancea (al aterrizar o al jalar la cadena): el halo
-         se mece al compás. Se añade a la lista sin reiniciar halo-bungee. */
-      body:has(.lamp.lamp--swing) .header.menu-open .navbar .navbar__menu::before {
+      /* The lamp swings (on landing or when the chain is pulled): the halo
+         sways in time. Added to the list without restarting halo-bungee. */
+      body:has(.lamp.lamp--swing) .header.menu-open .navbar__menu::before {
         animation:
           halo-bungee 1.1s 0.25s backwards,
           halo-swing 1.4s ease-in-out;
@@ -466,9 +428,9 @@ body:has(#pdf-container) .header {
   }
 }
 
-/* Con el menú abierto, al jalar la cadena la luz cambia al instante (la
-   lámpara recibe .lamp--swing justo al cambiar el tema): el halo también */
-body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
+/* With the menu open, pulling the chain changes the light instantly (the
+   lamp gets .lamp--swing right when the theme changes): so does the halo */
+body:has(.lamp.lamp--swing) .header .navbar__menu::before {
   transition: none;
 }
 
@@ -497,8 +459,8 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
-/* La lámpara gira desde el cable (lamp-swing): cuando su base va a un lado,
-   la luz que proyecta se mueve hacia ese lado */
+/* The lamp rotates from the cable (lamp-swing): when its base goes to one
+   side, the light it casts moves toward that side */
 @keyframes halo-swing {
   20% {
     transform: translateX(-10px);
@@ -514,564 +476,84 @@ body:has(.lamp.lamp--swing) .header .navbar .navbar__menu::before {
   }
 }
 
+/* === Reduced motion === */
 @media (prefers-reduced-motion: reduce) {
-  .header .navbar .navbar__menu,
+  .header .navbar__menu,
+  /* the open state sets its own transition (more specific): drop it too */
+  .header.menu-open .navbar__menu,
+  .header .navbar__menu:target,
   .header .navbar__burger i {
     transition: none;
   }
 }
 
-@keyframes animation-nav {
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes animation-nav-grain {
-  to {
-    opacity: 0.2;
-  }
-}
-
-/* ============= Media Queries MIN WIDTH (600px)============= */
-@media (min-width: 600px) {
+/* === Desktop: compact bar, logo on the left and options on the right === */
+@media (width >= 600px) {
   .header {
     .navbar {
-      .navbar__menu {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
-        position: static;
-        border-radius: 0;
-        background-color: transparent;
-        /* sin el vidrio del panel móvil: en escritorio el vidrio es el de la
-           barra (que se funde con el scroll); si no, queda una franja borrosa
-           en el hero que tapa el cable de la lámpara */
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
-        box-shadow: none;
-        visibility: visible;
-        opacity: 1;
-        translate: none;
-        transition: none;
-
-        &::after {
-          content: none;
-        }
-
-        .navbar__list {
-          flex-direction: row;
-        }
-      }
-
-      .navbar__toggles {
-        margin-top: 0;
-      }
+      max-width: none;
+      padding-inline: clamp(1rem, 3vw, 2.5rem);
     }
-
-    .navbar__burger {
-      display: none;
-    }
-  }
-
-  .btn {
-    max-width: 300px;
-  }
-
-  .logo {
-    width: 2.6rem !important;
-    height: 2.6rem !important;
-  }
-
-  .navbar__logo {
-    font-size: 1.15rem;
-  }
-  .navbar__logo--name,
-  .navbar__logo--lastname {
-    display: visible;
-  }
-}
-
-/* ============= Escritorio: barra compacta, logo a la izquierda y opciones a la derecha ============= */
-@media (min-width: 600px) {
-  :root {
-    --header-height: 3.5rem;
-  }
-
-  .header .navbar {
-    max-width: none;
-    padding-inline: clamp(1rem, 3vw, 2.5rem);
 
     .navbar__logo {
       font-size: 1rem;
     }
 
+    .navbar__logo-icon {
+      width: 2.1rem;
+      height: 2.1rem;
+    }
+
+    /* The menu sits in the bar, without the mobile panel glass: on desktop
+       the glass is the bar's (which fades in with scroll); otherwise a
+       blurry strip is left in the hero covering the lamp cable */
     .navbar__menu {
+      position: static;
+      display: flex;
       justify-content: flex-end;
       align-items: center;
       gap: 1.25rem;
       padding: 0;
-
-      .navbar__list {
-        gap: clamp(0.6rem, 1.4vw, 1.25rem);
-
-        /* "Sobre mí" no se muestra en escritorio: que tampoco deje su hueco */
-        .navbar__item:has(> a[href$='#about']) {
-          display: none;
-        }
-
-        .navbar__item .navbar__link {
-          font-size: 0.95rem;
-        }
-      }
-    }
-
-    .navbar__toggles {
-      gap: 1rem;
-    }
-
-    .navbar__toggle--darkmode,
-    .navbar__toggle--language {
-      height: 32px;
-    }
-
-    .navbar__toggle--darkmode i {
-      font-size: 1.4rem;
-    }
-
-
-  }
-
-  .header .logo {
-    width: 2.1rem !important;
-    height: 2.1rem !important;
-  }
-}
-
-/* ============= Botón de idioma: hover = vista previa, clic = confirmación =============
-   Al pasar el mouse la bandera gira y muestra el idioma al que se cambiará.
-   Al hacer clic esa misma bandera da un "pop" (no vuelve a girar) mientras
-   carga la otra página. El estado .is-switching lo pone switchLanguages.js. */
-/* Mismo prefijo que las reglas base del botón (.header .navbar …) para
-   ganarles en especificidad */
-@media (hover: hover) {
-  .header .navbar .navbar__toggle--language {
-    .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label:hover {
-      .navbar__toggle--language-en {
-        opacity: 0;
-        transform: rotate(180deg) scale(0);
-      }
-
-      .navbar__toggle--language-es {
-        opacity: 1;
-        transform: rotate(0) scale(1);
-      }
-    }
-
-    .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label:hover {
-      .navbar__toggle--language-es {
-        opacity: 0;
-        transform: rotate(-180deg) scale(0);
-      }
-
-      .navbar__toggle--language-en {
-        opacity: 1;
-        transform: rotate(0) scale(1);
-      }
-    }
-  }
-}
-
-/* Al hacer clic se queda la bandera del hover (el idioma destino) y rebota */
-.header .navbar .navbar__toggle--language.is-switching {
-  img {
-    transition: none !important;
-  }
-
-  .is-target {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .is-current {
-    opacity: 0 !important;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .is-target {
-      animation: lang-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both !important;
-    }
-  }
-}
-
-@keyframes lang-pop {
-  0% {
-    scale: 1;
-  }
-  40% {
-    scale: 1.3;
-  }
-  100% {
-    scale: 1;
-  }
-}
-
-/* Botón de idioma con el mismo estilo y la misma altura que las opciones del
-   menú: caja con contorno y sombra dura dorados, bandera al centro */
-.header .navbar .navbar__toggle--language {
-  height: auto;
-
-  .navbar__toggle--language-label {
-    box-sizing: border-box;
-    height: calc(1.5em + 0.4rem + 4px);
-    aspect-ratio: 1;
-    font-size: 0.95rem;
-    border: 2px solid var(--accent-color);
-    border-radius: var(--border-radius-small);
-    box-shadow: 3px 3px 0 var(--accent-color);
-    transition: box-shadow 0.15s, transform 0.15s, background-color 0.15s;
-  }
-
-  /* La bandera llena todo el botón (cuadrada, no circular) */
-  .navbar__toggle--language-label {
-    overflow: hidden;
-  }
-
-  .flag-wrapper {
-    width: 100%;
-    height: 100%;
-  }
-
-  /* (.flag-wrapper img para ganarle a las reglas anteriores del botón) */
-  .flag-wrapper img {
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  /* Cambio de bandera con zoom (sin giro): la que sale crece y se desvanece,
-     la que entra llega desde grande a su tamaño. Ninguna baja de su tamaño
-     completo, así que el botón siempre queda cubierto (no se ve el fondo). */
-  .flag-wrapper img {
-    transform: none !important;
-    scale: 1.4;
-    transition:
-      opacity 0.3s ease,
-      scale 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
-  }
-
-  .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label .navbar__toggle--language-en,
-  .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label .navbar__toggle--language-es {
-    scale: 1;
-  }
-
-  .navbar__toggle--language-label:active {
-    transform: translate(3px, 3px);
-    box-shadow: 0 0 0 var(--accent-color);
-  }
-}
-
-@media (hover: hover) {
-  .header .navbar .navbar__toggle--language .navbar__toggle--language-label:hover {
-    background-color: var(--accent-color);
-    box-shadow: 3px 3px 0 var(--btn-ink-color);
-  }
-}
-
-@media (max-width: 599px) {
-  .header .navbar .navbar__toggle--language .navbar__toggle--language-label {
-    font-size: 1.1rem;
-  }
-}
-
-/* Hover: la vista previa del otro idioma también entra con zoom */
-@media (hover: hover) {
-  .header .navbar .navbar__toggle--language {
-    .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label:hover {
-      .navbar__toggle--language-en {
-        scale: 1.4;
-      }
-
-      .navbar__toggle--language-es {
-        scale: 1;
-      }
-    }
-
-    .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label:hover {
-      .navbar__toggle--language-es {
-        scale: 1.4;
-      }
-
-      .navbar__toggle--language-en {
-        scale: 1;
-      }
-    }
-  }
-}
-
-/* ============= Menú sutil (escritorio y panel móvil) =============
-   Opciones como texto claro atenuado; la activa a brillo completo con un
-   trazo dorado corto debajo (el único toque de color del menú). */
-@media all {
-  .header .navbar .navbar__menu .navbar__list {
-    gap: 0.25rem;
-
-    .navbar__item .navbar__link {
-      position: relative;
-      padding: 0.25rem 0.7rem;
-      border: 0;
-      border-radius: 0;
+      background-color: transparent;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
       box-shadow: none;
-      background: none;
-      color: var(--footer-text);
-      opacity: 0.6;
-      transition: opacity 0.15s;
+      visibility: visible;
+      opacity: 1;
+      translate: none;
+      transition: none;
 
       &::after {
-        content: '';
-        position: absolute;
-        left: 50%;
-        bottom: -0.1rem;
-        width: 1.1rem;
-        height: 2px;
-        translate: -50% 0;
-        background: var(--accent-color);
-        border-radius: 2px;
-        opacity: 0;
-        transition: opacity 0.15s;
-      }
-
-      &:active {
-        transform: none;
+        content: none;
       }
     }
 
-    .navbar__item .active {
-      color: var(--footer-text);
-      background: none;
-      box-shadow: none;
-      opacity: 1;
-
-      &::after {
-        opacity: 0.9;
-      }
-    }
-  }
-
-  @media (hover: hover) {
-    .header .navbar .navbar__menu .navbar__list .navbar__item .navbar__link:hover {
-      color: var(--footer-text);
-      background: none;
-      box-shadow: none;
-      opacity: 1;
-    }
-  }
-
-  /* Botón de idioma a juego: sin contorno ni sombra, del alto de una letra
-     del menú, con la bandera siempre desaturada (también en hover) */
-  .header .navbar .navbar__toggle--language .navbar__toggle--language-label {
-    height: 1.15em;
-    font-size: 0.95rem;
-    aspect-ratio: 4 / 3;
-    border: 0;
-    border-radius: 2px;
-    box-shadow: none;
-    background: none;
-    filter: saturate(0.35) brightness(0.92);
-    opacity: 0.85;
-    transition: filter 0.2s, opacity 0.2s;
-  }
-
-  @media (hover: hover) {
-    .header .navbar .navbar__toggle--language .navbar__toggle--language-label:hover {
-      background: none;
-      box-shadow: none;
-      /* sigue desaturada; solo se aclara un poco */
-      opacity: 1;
-    }
-  }
-
-  .header .navbar .navbar__toggle--language .navbar__toggle--language-label:active {
-    transform: none;
-  }
-}
-
-/* Flag switch and its caption: only in the mobile menu (desktop keeps the
-   flag button) */
-.lang-switch,
-.navbar__toggles-caption {
-  display: none;
-}
-
-/* Panel móvil: mismas opciones que en escritorio, en columna y más grandes
-   para tocarlas con el dedo; luna/sol a juego (atenuado como las opciones) */
-@media (max-width: 599px) {
-  .header .navbar .navbar__menu {
     .navbar__list {
-      gap: 0.5rem;
-
-      .navbar__item .navbar__link {
-        padding: 0.5rem 1rem;
-        font-size: 1.15rem;
-      }
+      flex-direction: row;
+      gap: 0.25rem;
     }
 
-    /* A line under the last section link separates the sections from the
-       language switch */
+    /* "About me" isn't shown on desktop: don't leave its gap either */
+    .navbar__item:has(> a[href$='#about']) {
+      display: none;
+    }
+
+    .navbar__link {
+      padding: 0.25rem 0.7rem;
+      font-size: 0.95rem;
+    }
+
     .navbar__toggles {
-      flex-direction: column;
-      gap: 0.6rem;
-      width: min(70%, 16rem);
-      margin: 1.25rem auto 0;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--border-color);
-    }
-
-    /* "Cambiar idioma" / "Change language" above the flags */
-    .navbar__toggles-caption {
-      display: block;
-      font-size: var(--small-font-size);
-      font-weight: var(--font-semibold);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--footer-text);
-      opacity: 0.6;
-    }
-
-    .navbar__toggle--darkmode i {
-      font-size: 1.6rem;
-      color: var(--footer-text);
-      opacity: 0.6;
-    }
-
-    .navbar__toggle--language .navbar__toggle--language-label {
-      font-size: 1.15rem;
-    }
-  }
-}
-
-/* Mobile menu: two ghost buttons, one flag each (4:3, desaturated like the
-   desktop flag button). The current language's button is pressed (sunk onto
-   its shadow) and a bit darker; the other one is raised and switches the
-   language. The checkbox is checked for Spanish (switchLanguages.js). The
-   label itself ignores taps, so tapping the current language does nothing:
-   only the other button (pointer-events: auto) toggles the checkbox. */
-@media (max-width: 599px) {
-  .header .navbar .navbar__toggle--language {
-    /* the label is just the row: no box of its own */
-    .navbar__toggle--language-label {
-      height: auto;
-      aspect-ratio: auto;
-      overflow: visible;
-      border: 0;
-      box-shadow: none;
-      background: none;
-      filter: none;
-      opacity: 1;
-      transform: none;
-      pointer-events: none;
-    }
-
-    .flag-wrapper {
-      display: none;
-    }
-
-    .lang-switch {
-      display: flex;
+      flex-direction: row;
       gap: 1rem;
+      width: auto;
+      margin: 0;
+      padding-top: 0;
+      border-top: 0;
     }
 
-    /* same size and 4:3 shape the flag had in the mobile menu (1.15em tall at
-       1.15rem), now as a ghost button */
-    /* No outline (the accent color stood out too much): just the hard shadow
-       of the primary buttons, in their dark ink color */
-    .lang-switch__opt {
-      position: relative;
-      isolation: isolate;
-      display: block;
-      font-size: 1.15rem;
-      height: 1.15em;
-      aspect-ratio: 4 / 3;
-      overflow: hidden;
-      border-radius: 2px;
-      /* same outer shadow as the primary buttons (offset and ink color:
-         the dark-mode background in light mode, darker in dark mode) */
-      box-shadow: 4px 4px 0 var(--btn-ink-color);
-      pointer-events: auto;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-
-    /* subtle texture over the flag */
-    .lang-switch__opt::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: var(--grain-ink);
-      background-size: 120px;
-      opacity: 0.3;
-      pointer-events: none;
-    }
-
-    /* dark mode only (below): inner grain shadow, a bit darker, on the side
-       away from the lamp (bottom-left) */
-    .lang-switch__opt::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 1;
+    .navbar__burger {
       display: none;
-      background: var(--grain-ink);
-      background-size: 120px;
-      -webkit-mask: var(--grain-mask-hover-left);
-      mask: var(--grain-mask-hover-left);
-      box-shadow: inset 5px -6px 8px -3px rgb(0 0 0 / 0.55);
-      pointer-events: none;
-    }
-
-    /* the flag fills the button, desaturated (like the desktop flag button).
-       (The base language toggle rule positions every img absolutely: undo it.) */
-    .lang-switch .lang-switch__flag {
-      position: static;
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 0;
-      box-shadow: none;
-      transform: none;
-      opacity: 0.85;
-      filter: saturate(0.35) brightness(0.92);
-      transition: filter 0.15s;
-    }
-
-    /* press feedback on the other language's button */
-    .lang-switch__opt:active {
-      transform: translate(4px, 4px);
-      box-shadow: 0 0 0 var(--btn-ink-color);
-    }
-
-    /* current language: pressed, a bit darker, not tappable */
-    .navbar__toggle--language-input:checked ~ .navbar__toggle--language-label .lang-switch__opt--es,
-    .navbar__toggle--language-input:not(:checked) ~ .navbar__toggle--language-label .lang-switch__opt--en {
-      transform: translate(4px, 4px);
-      box-shadow: 0 0 0 var(--btn-ink-color);
-      pointer-events: none;
-
-      .lang-switch__flag {
-        filter: saturate(0.35) brightness(0.6);
-      }
-    }
-  }
-}
-
-@media (max-width: 599px) {
-  @container style(--color-scheme: dark) {
-    .header .navbar .navbar__toggle--language .lang-switch__opt::after {
-      display: block;
     }
   }
 }

@@ -4,19 +4,14 @@
 //   en → /projects/<slug>/index.html
 //   es → /es/proyectos/<slug>/index.html
 
-export const SITE = 'https://alanquintana.pro';
+import { escapeAttr } from './html.mjs';
+import { t } from './render.mjs';
+import { SITE, fail, homePath, projectPath } from './site.mjs';
 
-export const homePath = (lang) => (lang === 'en' ? '/' : '/es/');
-export const projectPath = (project, lang) =>
-  lang === 'en' ? `/projects/${project.slug}/` : `/es/proyectos/${project.slug}/`;
-
-const UI = {
+// Texts that only exist on the project pages
+const TEXTS = {
   en: {
-    home: 'Home',
-    projects: 'Projects',
     back: 'Back to projects',
-    demo: 'See the demo',
-    code: 'Check out the code',
     screenshots: 'Screenshots',
     desktop: 'Desktop',
     mobile: 'Mobile',
@@ -30,17 +25,12 @@ const UI = {
     ctaTitle: 'Have a project in mind?',
     ctaText: 'I design and build web applications that look good and are easy to use. Let’s talk about yours.',
     ctaButton: 'Write to me',
-    by: 'by Alan Quintana',
     descriptionWith: (p) => `${p.en.tagline} ${p.en.kind} by Alan Quintana, built with ${p.stack.slice(0, 3).join(', ')}.`,
     alt: (p, kind) => `${p.en.title} on ${kind === 'desktop' ? 'desktop' : 'mobile'}`,
     dark: ' (dark mode)',
   },
   es: {
-    home: 'Inicio',
-    projects: 'Proyectos',
     back: 'Volver a proyectos',
-    demo: 'Mira la demo',
-    code: 'Revisa el código',
     screenshots: 'Capturas',
     desktop: 'Escritorio',
     mobile: 'Móvil',
@@ -54,15 +44,21 @@ const UI = {
     ctaTitle: '¿Tienes un proyecto en mente?',
     ctaText: 'Diseño y desarrollo aplicaciones web que se ven bien y son fáciles de usar. Platiquemos del tuyo.',
     ctaButton: 'Escríbeme',
-    by: 'de Alan Quintana',
     descriptionWith: (p) => `${p.es.tagline} ${p.es.kind} de Alan Quintana, hecha con ${p.stack.slice(0, 3).join(', ')}.`,
     alt: (p, kind) => `${p.es.title} en ${kind === 'desktop' ? 'escritorio' : 'móvil'}`,
     dark: ' (modo oscuro)',
   },
 };
 
-const esc = (s) =>
-  String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+// Texts shared with the home page come from translations.js (a missing key
+// is reported by failOnMissing() like any other translation)
+const uiTexts = (lang) => ({
+  ...TEXTS[lang],
+  home: t('navHome', lang),
+  projects: t('navProjects', lang),
+  demo: t('projectLinks.demo', lang),
+  code: t('projectLinks.code', lang),
+});
 
 const indent = (html, n) =>
   html
@@ -70,43 +66,98 @@ const indent = (html, n) =>
     .map((l) => (l ? ' '.repeat(n) + l : l))
     .join('\n');
 
+// Every value goes through escapeAttr, text nodes included (they get &quot;
+// too): the committed pages were generated that way
+/** One `<tag>item</tag>` line per item, indented n spaces */
+const list = (items, tag, n) =>
+  items.map((item) => `${' '.repeat(n)}<${tag}>${escapeAttr(item)}</${tag}>`).join('\n');
+
+/** Joins blocks with line breaks, leaving out the ones that are null */
+const blocks = (...parts) => parts.filter((part) => part !== null).join('\n');
+
+/**
+ * Header (with the hanging lamp, which goes right after it) and footer of the
+ * home page, shared by every project page.
+ */
+export function homeChrome(homeHtml) {
+  const header = homeHtml.match(/ {4}<header class="header">[\s\S]*?<\/header>\n(?: {4}<!-- Hanging lamp[\s\S]*?<\/button>)?/)?.[0];
+  const footer = homeHtml.match(/ {4}<footer class="footer section">[\s\S]*?<\/footer>/)?.[0];
+  if (!header || !footer) fail('Could not find the header/footer in index.html');
+  if (!header.includes('class="lamp"')) {
+    fail('Could not find the hanging lamp (class="lamp") right after the header in index.html');
+  }
+  return { header, footer };
+}
+
 // Header of the home page adapted to a subpage: section links point to the home.
 export function adaptHeader(header, lang) {
   const home = homePath(lang);
   return header
-    .replace('class="navbar__logo flex--container" href="#"', `class="navbar__logo flex--container" href="${home}"`)
+    .replace('class="navbar__logo flex-container" href="#"', `class="navbar__logo flex-container" href="${home}"`)
     .replace(/class="navbar__link( active)?" href="#(\w+)"/g, (_m, _a, id) =>
       `class="navbar__link" href="${home}${id === 'home' ? '' : `#${id}`}"`,
     );
 }
 
-function screenshots(p, lang, ui) {
-  const img = (kind, dark, attrs) => {
-    // móvil: captura de teléfono completa (390×844), no la 4:5 de las tarjetas del home
-    const dir = kind === 'desktop' ? 'desktop/' : 'mobile/';
-    const [w, h] = kind === 'desktop' ? [1280, 800] : [390, 844];
-    const file = `${p.image}${dark ? '-dark' : ''}.webp`;
-    return `<img class="${dark ? 'if-dark' : 'if-light'}" src="/assets/img/project_img/${dir}${file}" alt="${esc(ui.alt(p, kind) + (dark ? ui.dark : ''))}" width="${w}" height="${h}" ${attrs} />`;
-  };
-  const figure = (kind) => {
-    const first = kind === 'desktop' ? 'fetchpriority="high"' : 'loading="lazy"';
-    const imgs = [img(kind, false, first)];
-    if (p.dark) imgs.push(img(kind, true, 'loading="lazy"'));
-    return `<figure class="project-media__${kind}${p.dark ? ' has-dark' : ''}">
-  <span class="project-media__frame">
-    ${imgs.join('\n    ')}
-  </span>
-  <figcaption>${ui[kind]}</figcaption>
-</figure>`;
-  };
-  return `<div class="project-media grid--container" role="group" aria-label="${ui.screenshots}">
-${indent(figure('desktop'), 2)}
-${indent(figure('mobile'), 2)}
-</div>`;
+// ---------------------------------------------------------------------------
+// <head>
+// ---------------------------------------------------------------------------
+
+const HEAD_BASE = `    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Respects the system text size: Android/Chrome applies it to the base
+         size (rem) instead of zooming the whole page -->
+    <meta name="text-scale" content="scale" />
+    <!-- Theme: dark if the system is in dark mode; otherwise time-based (dark from
+         18:00 to 6:00, local time). The toggle stores an override until the next
+         switch (localStorage.theme / themeUntil).
+         Applied before first paint; without JS the system scheme is used. -->`;
+
+// Only on the English page (there is no redirect back from Spanish)
+function spanishRedirect({ p, lang }) {
+  if (lang !== 'en') return null;
+  return `    <script>
+      // Same as the home page: Spanish browser (no choice stored in
+      // localStorage "lang") → Spanish version of this project
+      try {
+        const pref = localStorage.getItem('lang');
+        const langs = navigator.languages || [navigator.language || ''];
+        const wantsEs = pref ? pref === 'es' : langs.some((l) => /^es\\b/i.test(l));
+        if (wantsEs) location.replace('${projectPath(p, 'es')}' + location.hash);
+      } catch {}
+    </script>`;
 }
 
-function jsonLd(p, lang, ui) {
-  const c = p[lang];
+function headMeta({ p, lang, c, ui }) {
+  const url = SITE + projectPath(p, lang);
+  const urlEn = SITE + projectPath(p, 'en');
+  const urlEs = SITE + projectPath(p, 'es');
+  const title = `${c.title} · ${c.kind} | Alan Quintana`;
+  // Google cuts at ~160 characters: the technologies sentence only if it fits
+  const full = ui.descriptionWith(p);
+  const description = full.length <= 160 ? full : c.tagline;
+  const ogImage = `${SITE}/assets/img/project_img/og/${p.image}.jpg`;
+  return `    <title>${escapeAttr(title)}</title>
+    <meta name="description" content="${escapeAttr(description)}" />
+    <meta name="author" content="Alan Quintana" />
+    <link rel="canonical" href="${url}" />
+    <link rel="alternate" hreflang="en" href="${urlEn}" />
+    <link rel="alternate" hreflang="es" href="${urlEs}" />
+    <link rel="alternate" hreflang="x-default" href="${urlEn}" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="${url}" />
+    <meta property="og:title" content="${escapeAttr(title)}" />
+    <meta property="og:description" content="${escapeAttr(description)}" />
+    <meta property="og:image" content="${ogImage}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="${lang === 'en' ? 'en_US' : 'es_MX'}" />
+    <meta name="twitter:card" content="summary_large_image" />`;
+}
+
+function jsonLd({ p, lang, c, ui }) {
   const pageUrl = SITE + projectPath(p, lang);
   const data = {
     '@context': 'https://schema.org',
@@ -138,145 +189,84 @@ function jsonLd(p, lang, ui) {
   return JSON.stringify(data, null, 2).replace(/</g, '\\u003c');
 }
 
-export function projectPage({ project: p, lang, prev, next, header, footer }) {
-  const ui = UI[lang];
-  const c = p[lang];
-  const home = homePath(lang);
-  const url = SITE + projectPath(p, lang);
-  const urlEn = SITE + projectPath(p, 'en');
-  const urlEs = SITE + projectPath(p, 'es');
-  const title = `${c.title} · ${c.kind} | Alan Quintana`;
-  // Google corta ~160 caracteres: la frase de tecnologías solo si cabe
-  const full = ui.descriptionWith(p);
-  const description = full.length <= 160 ? full : c.tagline;
-  const ogImage = `${SITE}/assets/img/project_img/og/${p.image}.jpg`;
-  // Botón solo con "Anterior/Siguiente"; el nombre del proyecto va
-  // debajo en texto pequeño (y el lector de pantalla lo lee como descripción)
-  const pagerLink = (q, rel) =>
-    `<div class="project-pager__item project-pager__item--${rel}">
-  <a class="btn btn--ghost project-pager__link" href="${projectPath(q, lang)}" rel="${rel}" aria-describedby="pager-${rel}">${rel === 'prev' ? '<i class="bx bx-chevron-left" aria-hidden="true"></i> ' + ui.prev : ui.next + ' <i class="bx bx-chevron-right" aria-hidden="true"></i>'}</a>
-  <p class="project-pager__title" id="pager-${rel}">${esc(q[lang].title)}</p>
-</div>`;
+function structuredData(ctx) {
+  return `    <script type="application/ld+json">
+${indent(jsonLd(ctx), 6)}
+    </script>`;
+}
 
-  return `<!DOCTYPE html>
-<html lang="${lang}">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Respeta el tamaño de texto del sistema: Android/Chrome lo aplica al tamaño
-         base (rem) en vez de hacer zoom a toda la página -->
-    <meta name="text-scale" content="scale" />
-    <!-- Tema: oscuro si el sistema está en modo oscuro; si no, por horario (oscuro de
-         18:00 a 6:00, hora local). El botón guarda una excepción hasta el siguiente
-         cambio (localStorage.theme / themeUntil).
-         Se aplica antes de pintar; sin JS se sigue al sistema. -->
-    <meta name="color-scheme" content="light dark" />
-    <script>
-      {
-        const h = new Date().getHours();
-        let t = matchMedia('(prefers-color-scheme: dark)').matches || h >= 18 || h < 6 ? 'dark' : 'light';
-        try {
-          const o = localStorage.getItem('theme');
-          if ((o === 'light' || o === 'dark') && Date.now() < Number(localStorage.getItem('themeUntil'))) t = o;
-        } catch {}
-        document.querySelector('meta[name="color-scheme"]').content = t;
-      }
-    </script>${
-      lang === 'en'
-        ? `
-    <script>
-      // Igual que el home: navegador en español (sin elección guardada en
-      // localStorage "lang") → versión en español de este proyecto
-      try {
-        const pref = localStorage.getItem('lang');
-        const langs = navigator.languages || [navigator.language || ''];
-        const wantsEs = pref ? pref === 'es' : langs.some((l) => /^es\\b/i.test(l));
-        if (wantsEs) location.replace('${projectPath(p, 'es')}' + location.hash);
-      } catch {}
-    </script>`
-        : ''
-    }
-    <title>${esc(title)}</title>
-    <meta name="description" content="${esc(description)}" />
-    <meta name="author" content="Alan Quintana" />
-    <link rel="canonical" href="${url}" />
-    <link rel="alternate" hreflang="en" href="${urlEn}" />
-    <link rel="alternate" hreflang="es" href="${urlEs}" />
-    <link rel="alternate" hreflang="x-default" href="${urlEn}" />
-
-    <!-- Open Graph / Twitter -->
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="${url}" />
-    <meta property="og:title" content="${esc(title)}" />
-    <meta property="og:description" content="${esc(description)}" />
-    <meta property="og:image" content="${ogImage}" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="${lang === 'en' ? 'en_US' : 'es_MX'}" />
-    <meta name="twitter:card" content="summary_large_image" />
-
-    <script type="application/ld+json">
-${indent(jsonLd(p, lang, ui), 6)}
-    </script>
-
-    <link rel="stylesheet" href="/assets/css/main.css" />
+// Fonts: everything the first screen shows (DM Sans, the hero's Outfit title,
+// the logo's two Poppins weights, the Boxicons icons) is preloaded
+const HEAD_ASSETS = `    <link rel="stylesheet" href="/assets/css/main.css" />
     <link rel="preload" href="/assets/fonts/dm-sans/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/outfit/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/poppins/poppins-600-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/boxicons/boxicons.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon.png" />
 
     <script type="module">
-      import switchLanguages from '/assets/js/helpers/switchLanguages.js';
-      import { setAutoDarkMode } from '/assets/js/helpers/auto-dark-mode.js';
-      import lamp from '/assets/js/helpers/lamp.js';
-      import navMenu from '/assets/js/helpers/nav_menu.js';
-      import ParallaxEffect from '/assets/js/helpers/parallax.js';
-      import SnowEffect from '/assets/js/helpers/snow-effect.js';
-      import updateDateYear from '/assets/js/helpers/date_updater.js';
-      import { loadGoogleTagManager } from '/assets/js/helpers/google-tag-manager.js';
-      loadGoogleTagManager();
+      import { initCommon } from '/assets/js/helpers/common.js';
+      import { parallaxEffect } from '/assets/js/helpers/parallax.js';
+      initCommon(['analytics']);
       document.addEventListener('DOMContentLoaded', () => {
-        switchLanguages();
-        setAutoDarkMode();
-        lamp();
-        navMenu();
-        ParallaxEffect.init();
-        SnowEffect.init();
-        updateDateYear();
+        initCommon(['language', 'theme', 'lamp', 'navMenu']);
+        parallaxEffect.init();
+        initCommon(['snow', 'footerYear']);
       });
     </script>
-  </head>
+    <!-- Every module common.js and parallax.js bring in: fetched now instead of
+         one level at a time after them. Imported on demand: snow-effect.js
+         (only in season) and tilt.js (only on touch devices) -->
+    <link rel="modulepreload" href="/assets/js/helpers/language-switcher.js" />
+    <link rel="modulepreload" href="/assets/js/languages/translations.js" />
+    <link rel="modulepreload" href="/assets/js/languages/translate.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/storage.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/viewport.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/auto-dark-mode.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lamp.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/motion.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/nav-menu.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/footer-year.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/google-tag-manager.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lazy.js" />`;
 
-  <body class="project-page">
-    <!-- Fondo: mismas texturas que el home (grano + capas con parallax) -->
-    <div class="background-container bgGrain"></div>
-    <div class="background-container">
-      <svg class="background-container bgBack" aria-hidden="true">
+// themeHead: color-scheme meta + pre-paint theme script of the home page
+// (lib/theme-head.mjs); it goes right after the comment that ends HEAD_BASE
+const head = (ctx, themeHead) =>
+  blocks(HEAD_BASE, themeHead, spanishRedirect(ctx), headMeta(ctx), '', structuredData(ctx), '', HEAD_ASSETS);
+
+// ---------------------------------------------------------------------------
+// <body>
+// ---------------------------------------------------------------------------
+
+const BACKGROUND = `    <!-- Background: same textures as the home page (grain + parallax layers) -->
+    <div class="background background--grain"></div>
+    <div class="background">
+      <svg class="background background--back" aria-hidden="true">
         <use href="/assets/img/bgBack.svg#bgBack"></use>
       </svg>
-      <svg class="background-container bgMiddle" aria-hidden="true">
+      <svg class="background background--middle" aria-hidden="true">
         <use href="/assets/img/bgMiddle.svg#bgMiddle"></use>
       </svg>
-      <svg class="background-container bgFront" aria-hidden="true">
+      <svg class="background background--front" aria-hidden="true">
         <use href="/assets/img/bgFront.svg#bgFront"></use>
       </svg>
-    </div>
+    </div>`;
 
-${header}
-
-    <main>
-      <div class="project-back grid--container">
+function backLink({ ui, home }) {
+  return `      <div class="project-back grid-container">
         <a class="btn btn--ghost project-back__link" href="${home}#projects">
           <i class="bx bx-chevron-left" aria-hidden="true"></i> ${ui.back}
         </a>
-      </div>
+      </div>`;
+}
 
-      <article>
-        <header class="project-hero grid--container">
-          <p class="project-hero__kind">${esc(c.kind)} · ${p.year}</p>
-          <h1 class="project-hero__title">${esc(c.title)}</h1>
-          <p class="project-hero__tagline">${esc(c.tagline)}</p>
+function hero({ p, c, ui }) {
+  return `        <header class="project-hero grid-container">
+          <p class="project-hero__kind">${escapeAttr(c.kind)} · ${p.year}</p>
+          <h1 class="project-hero__title">${escapeAttr(c.title)}</h1>
+          <p class="project-hero__tagline">${escapeAttr(c.tagline)}</p>
           <div class="project-hero__actions">
             <a class="btn btn--primary" href="${p.demo}" target="_blank" rel="noopener">
               <i class="bx bx-link-external" aria-hidden="true"></i> ${ui.demo}
@@ -285,46 +275,120 @@ ${header}
               <i class="bx bxl-github" aria-hidden="true"></i> ${ui.code}
             </a>
           </div>
-        </header>
+        </header>`;
+}
 
-${indent(screenshots(p, lang, ui), 8)}
+function screenshots({ p, ui }) {
+  const img = (kind, dark, attrs) => {
+    // mobile: full phone screenshot (390×844), not the 4:5 one of the home cards
+    const dir = kind === 'desktop' ? 'desktop/' : 'mobile/';
+    const [w, h] = kind === 'desktop' ? [1280, 800] : [390, 844];
+    const file = `${p.image}${dark ? '-dark' : ''}.webp`;
+    return `<img class="${dark ? 'project-media__img-dark' : 'project-media__img-light'}" src="/assets/img/project_img/${dir}${file}" alt="${escapeAttr(ui.alt(p, kind) + (dark ? ui.dark : ''))}" width="${w}" height="${h}" ${attrs} />`;
+  };
+  const figure = (kind) => {
+    const first = kind === 'desktop' ? 'fetchpriority="high"' : 'loading="lazy"';
+    const imgs = [img(kind, false, first)];
+    if (p.dark) imgs.push(img(kind, true, 'loading="lazy"'));
+    return `<figure class="project-media__${kind}${p.dark ? ' has-dark' : ''}">
+  <span class="project-media__frame">
+    ${imgs.join('\n    ')}
+  </span>
+  <figcaption>${ui[kind]}</figcaption>
+</figure>`;
+  };
+  return `<div class="project-media grid-container" role="group" aria-label="${ui.screenshots}">
+${indent(figure('desktop'), 2)}
+${indent(figure('mobile'), 2)}
+</div>`;
+}
 
-        <div class="project-body grid--container">
+function body({ p, c, ui }) {
+  return `        <div class="project-body grid-container">
           <section class="project-body__block">
             <h2>${ui.overview}</h2>
-${c.overview.map((t) => `            <p>${esc(t)}</p>`).join('\n')}
+${list(c.overview, 'p', 12)}
           </section>
 
           <section class="project-body__block">
             <h2>${ui.features}</h2>
             <ul class="project-list">
-${c.features.map((t) => `              <li>${esc(t)}</li>`).join('\n')}
+${list(c.features, 'li', 14)}
             </ul>
           </section>
 
           <section class="project-body__block">
             <h2>${ui.built}</h2>
             <ul class="project-list">
-${c.highlights.map((t) => `              <li>${esc(t)}</li>`).join('\n')}
+${list(c.highlights, 'li', 14)}
             </ul>
             <h3>${ui.stack}</h3>
             <ul class="project-stack">
-${p.stack.map((t) => `              <li>${esc(t)}</li>`).join('\n')}
+${list(p.stack, 'li', 14)}
             </ul>
           </section>
-        </div>
-      </article>
+        </div>`;
+}
 
-      <nav class="project-pager grid--container" aria-label="${ui.pager}">
-${indent(pagerLink(prev, 'prev'), 8)}
-${indent(pagerLink(next, 'next'), 8)}
-      </nav>
+// Button with just "Previous/Next"; the project name goes below
+// in small text (and the screen reader reads it as the description)
+function pagerLink({ lang, ui }, q, rel) {
+  const label =
+    rel === 'prev'
+      ? '<i class="bx bx-chevron-left" aria-hidden="true"></i> ' + ui.prev
+      : ui.next + ' <i class="bx bx-chevron-right" aria-hidden="true"></i>';
+  return `<div class="project-pager__item project-pager__item--${rel}">
+  <a class="btn btn--ghost project-pager__link" href="${projectPath(q, lang)}" rel="${rel}" aria-describedby="pager-${rel}">${label}</a>
+  <p class="project-pager__title" id="pager-${rel}">${escapeAttr(q[lang].title)}</p>
+</div>`;
+}
 
-      <section class="project-cta grid--container">
+function pager(ctx, prev, next) {
+  return `      <nav class="project-pager grid-container" aria-label="${ctx.ui.pager}">
+${indent(pagerLink(ctx, prev, 'prev'), 8)}
+${indent(pagerLink(ctx, next, 'next'), 8)}
+      </nav>`;
+}
+
+function cta({ ui, home }) {
+  return `      <section class="project-cta grid-container">
         <h2>${ui.ctaTitle}</h2>
         <p>${ui.ctaText}</p>
         <a class="btn btn--primary" href="${home}#contact">${ui.ctaButton}</a>
-      </section>
+      </section>`;
+}
+
+// ---------------------------------------------------------------------------
+// Page
+// ---------------------------------------------------------------------------
+
+export function projectPage({ project: p, lang, prev, next, header, footer, themeHead }) {
+  const ctx = { p, lang, c: p[lang], ui: uiTexts(lang), home: homePath(lang) };
+  return `<!DOCTYPE html>
+<html lang="${lang}">
+  <head>
+${head(ctx, themeHead)}
+  </head>
+
+  <body class="project-page">
+${BACKGROUND}
+
+${header}
+
+    <main>
+${backLink(ctx)}
+
+      <article>
+${hero(ctx)}
+
+${indent(screenshots(ctx), 8)}
+
+${body(ctx)}
+      </article>
+
+${pager(ctx, prev, next)}
+
+${cta(ctx)}
     </main>
 
 ${footer}

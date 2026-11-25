@@ -1,17 +1,17 @@
-// Modal de resultado del formulario de contacto (index.html)
+// Contact form result modal (index.html)
 import { setupDialog } from './dialog.js';
 
-function closeModal() {
+function setupContactDialog() {
   const modal = document.getElementById('modal');
   if (!modal) return;
 
   setupDialog(modal);
 
-  const btnClose = document.getElementById('btn_close-modal');
+  const btnClose = document.getElementById('close-modal-button');
   if (btnClose && !btnClose.dataset.bound) {
     btnClose.dataset.bound = 'true';
     btnClose.addEventListener('click', () => modal.close());
   }
 }
 
-export { closeModal };
+export { setupContactDialog };

@@ -1,6 +1,8 @@
-/* ============= Background ============= */
+/* === Background === */
 
-.background-container {
+/* Shared box of the grain, the layers wrapper and each SVG layer (they all
+   carry this class): top left corner, full width, behind the content */
+.background {
   position: absolute;
   top: 0;
   left: 0;
@@ -13,14 +15,88 @@
   overflow: hidden;
 }
 
-.bgGrain {
-  /* Grano: un mosaico pequeño repetido (9 KB en vez de una imagen de
-     pantalla completa). La caída de densidad de arriba hacia abajo la da la
-     máscara, que ya incluye cómo se desvanecía la imagen original */
-  /* Fijo desde arriba de la pantalla: cuando la barra está oculta (en el hero)
-     no queda una franja sin grano; se desvanece con un degradado largo y suave
-     desde el borde superior. Sin tramo opaco a la altura de la barra: con la
-     barra oculta se veía como una franja más oscura con un corte */
+/* === Layers (hero SVG letters) === */
+.background--back,
+.background--middle,
+.background--front {
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.5s ease-in-out;
+}
+
+.background--back {
+  width: 160%;
+  filter: blur(2px) brightness(0.5);
+}
+
+.background--middle {
+  width: 155%;
+  filter: blur(1px) brightness(0.9) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
+}
+
+.background--front {
+  width: 150%;
+  filter: blur(0.5px) brightness(1) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
+}
+
+/* Hover drift (only without a reduced-motion preference) */
+@media (prefers-reduced-motion: no-preference) {
+  .background:hover {
+    .background--back {
+      transform: translate(-50%, -50%) translate(-40px, 20px);
+    }
+
+    .background--middle {
+      transform: translate(-50%, -50%) translate(-30px, -15px);
+    }
+
+    .background--front {
+      transform: translate(-50%, -50%) translate(40px, -10px);
+    }
+  }
+}
+
+/* === Desktop ===
+   Taller and dimmed; the layers take the container width (no sideways
+   overflow), sit lower and are blurrier and translucent */
+@media (width >= 600px) {
+  .background {
+    height: 180vh;
+    opacity: 0.3;
+  }
+
+  .background--back,
+  .background--middle,
+  .background--front {
+    top: 50%;
+    width: 100%;
+  }
+
+  .background--back {
+    filter: blur(5px) brightness(0.5);
+    opacity: 0.5;
+  }
+
+  .background--middle {
+    filter: blur(3px) brightness(0.9) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
+    opacity: 0.6;
+  }
+
+  .background--front {
+    filter: blur(1px) brightness(1) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
+    opacity: 0.7;
+  }
+}
+
+/* === Grain ===
+   A small repeated tile (9 KB instead of a full-screen image) on the
+   .background box. Keep this rule after the container rules: same
+   specificity, and the grain's own position, height and opacity must win. */
+.background--grain {
+  /* The top-to-bottom density falloff comes from the mask: a long, soft
+     gradient from the top edge. No opaque stretch at navbar height: with the
+     navbar hidden it looked like a darker band with a hard edge */
   --grain-fade: linear-gradient(
     to bottom,
     #000 0,
@@ -34,128 +110,46 @@
   );
   -webkit-mask: var(--grain-fade);
   mask: var(--grain-fade);
+  /* Fixed from the top of the screen: when the navbar is hidden (in the hero)
+     no grainless band is left */
   position: fixed;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0;
-  transform: none !important;
-  /* Mosaico de grano sin costuras (cada punto es aleatorio e independiente,
-     con la misma densidad que el grano original). Va a 1px de imagen por px
-     de CSS para que en pantallas de alta densidad el grano siga visible */
+  height: calc(75svh + var(--header-height));
+  /* Seamless grain tile (each dot is random and independent, with the
+     same density as the original grain). It runs at 1 image px per CSS
+     px so the grain stays visible on high-density screens */
   background-image: url('/assets/img/bgGrain-tile.webp');
   background-size: 256px 256px;
-  background-repeat: repeat;
-  width: 100% !important;
-  height: calc(75svh + var(--header-height)) !important;
   opacity: 0.6;
+
+  /* Desktop: it scrolls away with the page, like the rest of the background */
+  @media (width >= 600px) {
+    position: absolute;
+  }
 }
 
-.bgBack,
-.bgMiddle,
-.bgFront {
+/* === Ink grain overlay (shared) ===
+   Uniform dark grain (--grain-ink) painted over a surface, behind its
+   content: the host is positioned and isolates its stacking context. Defined
+   once for every surface that carries it; each one tunes it in its own
+   partial, on the pseudo-element itself, with --grain-opacity (default 0.2)
+   and --grain-z (default -1). */
+.header::after,
+.header .navbar__menu::after,
+.footer::after,
+.contact .contact__container .contact__form::after,
+.project-cta::after,
+.project__card-front::after,
+.skills__summary.btn::before,
+.skills__grid::after,
+.project-media .project-media__frame::after,
+.lang-switch__opt::before,
+.lang-switch__opt::after {
+  content: '';
   position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.bgBack {
-  width: 160%;
-  filter: blur(2px) brightness(0.5);
-}
-
-.bgMiddle {
-  width: 155%;
-  filter: blur(1px) brightness(0.9) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
-}
-
-.bgFront {
-  width: 150%;
-  filter: blur(0.5px) brightness(1) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
-}
-
-/* Hover effects (solo sin preferencia de movimiento reducido) */
-@media (prefers-reduced-motion: no-preference) {
-  .background-container:hover .bgBack {
-    transform: translate(-50%, -50%) translate(-40px, 20px);
-  }
-
-  .background-container:hover .bgMiddle {
-    transform: translate(-50%, -50%) translate(-30px, -15px);
-  }
-
-  .background-container:hover .bgFront {
-    transform: translate(-50%, -50%) translate(40px, -10px);
-  }
-}
-
-.bgBack,
-.bgMiddle,
-.bgFront {
-  transition: transform 0.5s ease-in-out;
-}
-
-/* Background MIN WIDTH 600px====================================*/
-@media (min-width: 600px) {
-  .background-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 180vh;
-    z-index: -1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    opacity: 0.3;
-  }
-
-  .bgGrain {
-    opacity: 0.6;
-  }
-
-  .bgBack,
-  .bgMiddle,
-  .bgFront {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .bgBack {
-    filter: blur(5px) brightness(0.5);
-    opacity: 0.5;
-  }
-
-  .bgMiddle {
-    filter: blur(3px) brightness(0.9) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
-    opacity: 0.6;
-  }
-
-  .bgFront {
-    filter: blur(1px) brightness(1) drop-shadow(2px 2px 5px var(--bg-layer-shadow));
-    opacity: 0.7;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .background-container:hover .bgBack {
-      transform: translate(-50%, -50%) translate(-40px, 20px);
-    }
-
-    .background-container:hover .bgMiddle {
-      transform: translate(-50%, -50%) translate(-30px, -15px);
-    }
-
-    .background-container:hover .bgFront {
-      transform: translate(-50%, -50%) translate(40px, -10px);
-    }
-  }
-
-  .bgBack,
-  .bgMiddle,
-  .bgFront {
-    transition: transform 0.5s ease-in-out;
-  }
+  inset: 0;
+  z-index: var(--grain-z, -1);
+  background: var(--grain-ink);
+  background-size: var(--grain-ink-size);
+  opacity: var(--grain-opacity, 0.2);
+  pointer-events: none;
 }

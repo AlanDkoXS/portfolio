@@ -1,22 +1,11 @@
-/* ============= Home Section ============= */
-
-#home {
-  opacity: 1;
-}
+/* === Home Section === */
 
 .home {
   position: relative;
-}
-
-.home__layer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100vw;
-  height: 100%;
-  color: var(--primary-color);
-  transform: translate(-50%, -50%);
-  transition: transform 1s ease, filter 1s ease;
+  /* The hero keeps the font's line height (not --line-height-body): the
+     mobile first screen is tuned to it, with no slack at 360x640. The
+     desktop description sets its own (below) */
+  line-height: normal;
 }
 
 .home__container {
@@ -24,40 +13,34 @@
   position: relative;
   justify-content: center;
   align-items: center;
-  row-gap: 0.1rem;
   padding: 0;
   width: 100%;
   height: 100%;
-  transform: translateY(-90px);
 
-  .home__social__link {
-    color: var(--primary-color);
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    text-align: center;
-  }
   .home__social-item {
-    margin: var(--margin-medium);
-    font-size: var(--icon-font-size);
     font-weight: var(--font-semibold);
-    transition: transform 0.3s ease-in-out;
+
     &:hover {
       transform: scale(1.2);
+    }
+
+    /* the growth eases only without "reduce motion" */
+    @media (prefers-reduced-motion: no-preference) {
+      transition: transform 0.3s ease-in-out;
     }
   }
 }
 
 .home__image {
-  width: clamp(100px, 100%, 300px);
   height: auto;
   margin: 0;
   position: relative;
   aspect-ratio: 1/1;
   overflow: hidden;
-  transform: translateX(30px) translateY(30px) scale(0.85);
+  justify-self: center;
 }
 
-.home__image--background {
+.home__image-background {
   background-image: url("/assets/img/profile_bg.svg");
   background-size: cover;
   background-position: center;
@@ -70,13 +53,19 @@
   filter: drop-shadow(2px -2px 10px var(--profile-shadow));
 }
 
-.home__image--sprite {
+.home__image-sprite {
   background-image: url("/assets/img/profile_sprite.webp");
+  /* 1x screens get the half-size strip (375px frames, ~1/3 of the bytes);
+     2x and up the full one (750px frames) */
+  background-image: image-set(
+    url("/assets/img/profile_sprite-1x.webp") 1x,
+    url("/assets/img/profile_sprite.webp") 2x
+  );
   /* 20 frames: each frame is exactly the box width at any size */
   background-size: 2000% 100%;
   background-position: 0 0;
   max-width: none;
-  filter: drop-shadow(5px -5px 5px rgba(0, 18, 25, 0.5));
+  filter: drop-shadow(5px -5px 5px color-mix(in srgb, var(--teal-950) 50%, transparent));
   width: 100%;
   height: 100%;
   position: absolute;
@@ -84,63 +73,16 @@
   left: 0;
   z-index: var(--z-fixed);
 
-}
-
-/* Look sequence, once the hero is shown (html.hero-ready, after the loader;
-   right away without JS). Frames: 0 original gaze, 1-10 turn to look,
-   11 looking, 12-16 blink. Timeline: turns at 1s, blinks once at 2s, blinks
-   twice 5s later (7s and 7.35s), turns back 8s after that (15s, turn frames
-   in reverse) to frame 0. Loops forever: each cycle lasts 22.45s, so the next
-   turn comes 8s after the gaze is back.
-   step-end holds each keyframe's frame until the next one. */
-@media (prefers-reduced-motion: no-preference) {
-  :is(html:not(.js), .hero-ready) .home__image--sprite {
-    animation: profile-look 22.45s step-end infinite;
-  }
-}
-
-.home__info {
-  .home__title,
-  .home__description {
-    /* sin relleno lateral: el texto usa el mismo ancho que los botones */
-    padding: 0.5rem 0;
-    text-align: center;
-  }
-
-  /* título y presentación a la izquierda */
-  .home__title,
-  .home__description {
-    text-align: start;
-  }
-
-  /* Saludo "tecleado" (helpers/typing.js): aparece letra por letra cuando el
-     hero se muestra; el cursor (guion bajo) va detrás de la última letra y
-     sigue parpadeando al terminar */
-  .home__title {
-    margin: 0;
-    text-transform: capitalize;
-    white-space: nowrap;
-    width: max-content;
-
-    &::after {
-      content: '';
-      display: inline-block;
-      width: 0.6ch;
-      height: 0.12em;
-      margin-left: 0.12ch;
-      background: currentColor;
-      vertical-align: baseline;
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      &::after {
-        animation: caret 1s step-end infinite;
-      }
-
-      /* mientras escribe, el cursor queda fijo (como al teclear de verdad) */
-      &.is-typing::after {
-        animation: none;
-      }
+  /* Look sequence, once the hero is shown (html.hero-ready, after the
+     loader; right away without JS). Frames: 0 original gaze, 1-10 turn to
+     look, 11 looking, 12-16 blink. Timeline: turns at 1s, blinks once at 2s,
+     blinks twice 5s later (7s and 7.35s), turns back 8s after that (15s,
+     turn frames in reverse) to frame 0. Loops forever: each cycle lasts
+     22.45s, so the next turn comes 8s after the gaze is back.
+     step-end holds each keyframe's frame until the next one. */
+  @media (prefers-reduced-motion: no-preference) {
+    :is(html:not(.js), .hero-ready) & {
+      animation: profile-look 22.45s step-end infinite;
     }
   }
 }
@@ -268,19 +210,45 @@
   }
 }
 
-@keyframes moveBackground {
-  0% {
-    transform: translateX(0);
+.home__info {
+  /* title and intro on the left; no side padding: the text uses the same
+     width as the buttons */
+  .home__title,
+  .home__description {
+    padding: 0.5rem 0;
+    text-align: start;
   }
-  100% {
-    transform: translateX(-300px);
-  }
-}
 
-/* Con JS: el saludo se oculta hasta que se empieza a escribir (evita ver el
-   texto completo un instante) */
-html.js:not(.hero-ready) .home .home__title {
-  visibility: hidden;
+  /* "Typed" greeting (helpers/typing.js): appears letter by letter when the
+     hero is shown; the caret (underscore) follows the last letter and
+     keeps blinking when done */
+  .home__title {
+    margin: 0;
+    text-transform: capitalize;
+    white-space: nowrap;
+    width: max-content;
+
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 0.6ch;
+      height: 0.12em;
+      margin-left: 0.12ch;
+      background: currentColor;
+      vertical-align: baseline;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      &::after {
+        animation: caret 1s step-end infinite;
+      }
+
+      /* while typing, the caret stays solid (like real typing) */
+      &.is-typing::after {
+        animation: none;
+      }
+    }
+  }
 }
 
 @keyframes caret {
@@ -289,218 +257,204 @@ html.js:not(.hero-ready) .home .home__title {
   }
 }
 
-/* HOME MIN WIDTH 600px ========================== */
+/* With JS: the greeting is hidden until typing starts (avoids a flash of
+   the full text) */
+html.js:not(.hero-ready) .home .home__title {
+  visibility: hidden;
+}
 
-@media (min-width: 600px) {
-  /* Estructura modificada del home */
-  .home .home__container {
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      "image title"
-      "image description"
-      "image resume-button";
-    gap: 0.75rem 2.5rem;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    min-height: 100svh;
-    /* El menú no se ve al cargar: el hero ocupa la primera pantalla completa,
-       centrado a lo alto, sin reservar espacio para el header */
-    padding: 1.5rem 2rem 1.5rem 4.5rem;
-    transform: none;
+/* === Desktop hero copy (handleResponsiveContent in language-switcher.js) === */
+
+.home .home__info .home__description--lines {
+  max-width: 62ch;
+}
+
+.home__description--lines {
+  /* The 7 phrases of 7 words read as a normal paragraph (not one row
+     per phrase), so it sounds like conversation rather than a poem */
+  .home__line {
+    display: inline;
+
+    & + .home__line::before {
+      content: ' ';
+    }
   }
 
-  .home.home {
-    padding: 0;
-  }
-
-  /* Las redes se posicionan respecto a la sección (ancho completo), no al
-     contenedor centrado: quedan pegadas a la orilla izquierda */
-  .home .home__container {
-    position: static;
-  }
-
-  /* Ajustes de la imagen */
-  .home .home__image {
-    grid-area: image;
-    width: clamp(200px, 30vw, 400px);
-    max-width: 58svh;
-    transform: none;
-    justify-self: center;
-    align-self: center;
-  }
-
-  /* Ajustes del título */
-  .home .home__info {
-    grid-area: title;
-    text-align: left;
-  }
-
-  .home .home__info {
-    align-self: end;
-  }
-
-  .home .home__info .home__title {
-    text-align: left;
-    margin: 0 0 0.75rem;
-    font-size: calc(var(--title-scale) * clamp(1.25rem, 0.5rem + 2.6svh + 0.4vw, 2.2rem));
-  }
-
-  /* Descripción integrada (incluye contenido de about). El tamaño depende del
-     alto y del ancho de la pantalla para que el hero quepa sin cortarse. */
-  .home .home__info .home__description {
-    text-align: left;
-    max-width: 62ch;
-    margin-bottom: 0.5rem;
-    /* Depende sobre todo del alto: todo el hero cabe en la primera pantalla */
-    font-size: clamp(0.8rem, 0.25rem + 1.6svh + 0.2vw, 1.15rem);
-    line-height: 1.5;
-  }
-
-  .home .home__buttons {
-    align-self: start;
-    justify-content: flex-start !important;
-  }
-
-  /* Ocultar botones excepto resume */
-  .home .home__buttons {
-    grid-area: resume-button;
-    display: flex;
-    justify-content: center;
-  }
-
-  .home .home__buttons a {
-    display: none;
-  }
-
-  .home .home__buttons a#resume-btn {
-    display: flex;
-  }
-
-  /* Ocultar sección about */
-  #about.about.section {
-    display: none;
-  }
-
-  /* Ajuste del menú de navegación */
-  .navbar__list .navbar__item a[href$="#about"] {
-    display: none;
-  }
-
-  /* Mostrar solo el botón de resume */
-  .home .home__buttons .btn {
-    width: 100%;
-    max-width: none;
-  }
-
-  /* Dentro del hero (no fijo a la ventana: no sigue el scroll) */
-  .home .home__social {
-    position: absolute;
-    top: 50%;
-    left: 0.5rem;
-    transform: translateY(-50%);
-    flex-direction: column;
-    z-index: var(--z-fixed);
-  }
-
-  .home .home__social-item {
-    margin: 0.5rem 0;
-    font-size: 1.5rem;
+  /* Intro as a normal paragraph, separated from the 7 lines by a blank line */
+  .home__intro {
+    display: block;
+    margin-bottom: 1lh;
   }
 }
 
-/* HOME MAX WIDTH 599px: todo el hero cabe en pantalla, centrado ======
-   svh = alto visible con la barra del navegador desplegada */
-@media (max-width: 599px) {
-  /* El hero ocupa una pantalla: el texto (que sigue el tamaño de letra del
-     sistema) toma lo que necesita y el retrato se encoge para llenar solo el
-     espacio que sobra. minmax(0, 1fr) evita que el contenido
-     ensanche la página con texto muy grande. */
+/* Emphasis in the intro (*…* in translations.js) */
+.home__description strong {
+  font-weight: var(--font-semibold);
+  color: var(--gold-emphasis);
+}
+
+/* === Home: width >= 600px === */
+
+@media (width >= 600px) {
+  .home {
+    padding: 0;
+
+    .home__container {
+      grid-template-columns: 1fr 2fr;
+      grid-template-rows: auto auto auto;
+      grid-template-areas:
+        "image title"
+        "image description"
+        "image resume-button";
+      gap: 0.75rem 2.5rem;
+      align-content: center;
+      min-height: 100svh;
+      /* The menu isn't visible on load: the hero fills the whole first screen,
+         vertically centered, without reserving space for the header */
+      padding: 1.5rem 2rem 1.5rem 4.5rem;
+      /* The social links are positioned relative to the section (full width),
+         not the centered container: they sit flush with the left edge */
+      position: static;
+    }
+
+    .home__image {
+      grid-area: image;
+      width: clamp(200px, 30vw, 400px);
+      max-width: 58svh;
+      align-self: center;
+    }
+
+    .home__info {
+      grid-area: title;
+      align-self: end;
+      text-align: left;
+
+      .home__title {
+        text-align: left;
+        margin: 0 0 var(--space-title);
+        font-size: calc(var(--title-scale) * clamp(1.25rem, 0.5rem + 2.6svh + 0.4vw, 2.2rem));
+      }
+
+      /* Merged description (includes the about content). Its size depends
+         mostly on the screen height, so the whole hero fits in the first
+         screen without being cut off. */
+      .home__description {
+        text-align: left;
+        max-width: 62ch;
+        margin-bottom: 0.5rem;
+        font-size: clamp(0.8rem, 0.25rem + 1.6svh + 0.2vw, 1.15rem);
+        line-height: 1.5;
+      }
+    }
+
+    /* Only the resume button is shown, full width of its column */
+    .home__buttons {
+      grid-area: resume-button;
+      display: flex;
+      align-self: start;
+      justify-content: flex-start;
+
+      a {
+        display: none;
+      }
+
+      a#resume-btn {
+        display: flex;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: none;
+      }
+    }
+
+    /* Inside the hero (not fixed to the window: doesn't follow the scroll) */
+    .home__social {
+      position: absolute;
+      top: 50%;
+      left: 0.5rem;
+      transform: translateY(-50%);
+      flex-direction: column;
+      z-index: var(--z-fixed);
+    }
+
+    .home__social-item {
+      margin: 0.5rem 0;
+      font-size: var(--social-icon-size);
+    }
+  }
+
+  /* The about content lives in the hero description: hide the About section
+     (its menu item is hidden in _header.css) */
+  #about.about.section {
+    display: none;
+  }
+}
+
+/* === Home: width < 600px (the whole hero fits on screen, centered) ===
+   svh = visible height with the browser bar expanded */
+
+@media (width < 600px) {
+  /* The hero takes one screen: the text (which follows the system font
+     size) takes what it needs and the portrait shrinks to fill only the
+     leftover space. minmax(0, 1fr) keeps the content from
+     widening the page with very large text. */
   .home {
     min-height: 100svh;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     padding: 0.25rem 0 0.6rem;
+
+    .home__container {
+      row-gap: 0;
+      min-height: 0;
+      grid-template-columns: minmax(0, 1fr);
+      /* with huge text (that wouldn't fit even without the portrait) the
+         portrait keeps a minimum size and the section grows with scroll */
+      grid-template-rows: minmax(7rem, 1fr) auto;
+      align-content: stretch;
+    }
+
+    .home__image {
+      /* height = the free space of its row; width from the 1:1 ratio */
+      height: 100%;
+      max-height: min(90vw, 370px);
+      min-height: 0;
+      max-width: 100%;
+      margin: 0 auto;
+      align-self: end;
+    }
+
+    .home__info {
+      min-width: 0;
+      /* separates the text from the social icons (the portrait shrinks to
+         make room, so the text moves up) */
+      margin-bottom: 1.5rem;
+
+      .home__description {
+        padding-block: 0.25rem;
+      }
+    }
+
+    .home__social {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .home__social-item {
+      margin: 0.15rem 1rem;
+      /* icons don't grow with the system text (they aren't text) */
+      font-size: 34px;
+    }
+
+    .home__buttons .btn {
+      /* the page's text size, not --btn-font-size: the first screen is
+         tuned to it (all four buttons fit at 360x640) */
+      font-size: inherit;
+      margin: 0.22rem 0;
+      /* button height = the text's + a fixed padding: with large text
+         all four still fit on screen */
+      padding-block: min(0.55rem, 9px);
+    }
   }
-
-  .home .home__container {
-    transform: none;
-    row-gap: 0;
-    min-height: 0;
-    grid-template-columns: minmax(0, 1fr);
-    /* con texto enorme (que ya no cabe aunque no hubiera retrato) el
-       retrato conserva un tamaño mínimo y la sección crece con scroll */
-    grid-template-rows: minmax(7rem, 1fr) auto;
-    align-content: stretch;
-  }
-
-  .home .home__image {
-    /* alto = el espacio libre de su fila; ancho por la proporción 1:1 */
-    height: 100%;
-    max-height: min(90vw, 370px);
-    min-height: 0;
-    width: auto;
-    max-width: 100%;
-    margin: 0 auto;
-    justify-self: center;
-    align-self: end;
-    transform: none;
-  }
-
-  .home .home__info {
-    min-width: 0;
-    /* separa el texto de los íconos de redes (el retrato se encoge para
-       dejar el espacio, así el texto sube) */
-    margin-bottom: 1.5rem;
-  }
-
-  .home .home__info .home__description {
-    padding-block: 0.25rem;
-  }
-
-  .home .home__social {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .home .home__social-item {
-    margin: 0.15rem 1rem;
-    /* los íconos no crecen con el texto del sistema (no son texto) */
-    font-size: 34px;
-  }
-
-  .home .home__buttons .btn {
-    margin: 0.22rem 0;
-    /* alto del botón = el del texto + un relleno fijo: con texto grande
-       los cuatro siguen cabiendo en la pantalla */
-    padding-block: min(0.55rem, 9px);
-  }
-}
-
-/* Hero en escritorio: cada una de las 7 líneas en su propio renglón */
-.home .home__info .home__description--lines {
-  max-width: 62ch;
-}
-
-/* Las 7 frases de 7 palabras se leen como un párrafo normal (no un renglón
-   por frase), para que suene a conversación y no a poema */
-.home__description--lines .home__line {
-  display: inline;
-}
-
-.home__description--lines .home__line + .home__line::before {
-  content: ' ';
-}
-
-/* Presentación como párrafo normal, separada de las 7 líneas por un renglón */
-.home__description--lines .home__intro {
-  display: block;
-  margin-bottom: 1lh;
-}
-
-/* Énfasis en la presentación (*…* en translations.js) */
-.home__description strong {
-  font-weight: var(--font-semibold);
-  color: var(--gold-emphasis);
 }

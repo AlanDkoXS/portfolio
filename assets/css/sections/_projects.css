@@ -1,18 +1,18 @@
-/* ============= Projects Section ============= */
+/* === Projects Section === */
 
 .project__container {
   position: relative;
-  /* alto = tarjeta + relleno: las flechas (top: 50%) quedan al centro de las tarjetas */
+  /* height = card + padding: the arrows (top: 50%) sit at the center of the cards */
+  /* no top margin: title -> cards is the title's margin + this padding */
   padding: 20px;
-  margin-top: 1.5rem;
-  /* Recorta solo a los lados (tarjetas fuera de vista); arriba y abajo deja
-     ver la sombra de las tarjetas */
+  /* Clips only the sides (off-screen cards); top and bottom let
+     the card shadows show */
   overflow-x: clip;
   overflow-y: visible;
 }
 
-.project__card--carousel {
-  /* el gesto horizontal es del carrusel; el vertical, del scroll de la página */
+.project__carousel {
+  /* the horizontal gesture belongs to the carousel; the vertical one, to the page scroll */
   touch-action: pan-y;
   position: relative;
   margin: 0 auto;
@@ -23,16 +23,54 @@
   align-items: center;
 }
 
+/* === Card === */
+
 .project__card {
-  /* Mismos colores que el resto de la página: dorado en claro, gris casi
-     blanco en oscuro (texto, íconos, botones, grano) */
   position: absolute;
+  left: 50%;
   width: 280px;
   height: 350px;
-  left: 50%;
   transform: translateX(-50%);
+  /* card-carousel.js moves the cards with inline transform, opacity and
+     z-index, and toggles .highlight (filter). `all` on purpose: the size
+     (viewport resize, breakpoints) and the inherited color (theme switch)
+     ease too */
   transition: all 0.3s ease;
   cursor: pointer;
+
+  &:hover .project__card-inner {
+    transform: rotateY(180deg);
+  }
+
+  /* Depth: the front one casts a wider shadow over the ones
+     behind, and those behind look slightly dimmer */
+  &.highlight {
+    filter: brightness(1);
+    /* fallback: card-carousel.js always writes an inline z-index along
+       with the class */
+    z-index: 2;
+
+    .project__card-inner {
+      box-shadow:
+        0 14px 26px rgb(0 0 0 / 0.35),
+        0 0 46px 10px rgb(0 0 0 / 0.45);
+    }
+  }
+
+  &:not(.highlight) {
+    filter: brightness(0.85);
+  }
+}
+
+/* Released (card-carousel.js sets it when a drag ends): the carousel box
+   itself eases its size changes */
+.project__carousel.smooth-return {
+  transition: all 0.2s ease;
+}
+
+/* Dragging: no transition, the cards follow the finger with no lag */
+.project__carousel.is-dragging .project__card {
+  transition: none;
 }
 
 .project__card-inner {
@@ -40,16 +78,16 @@
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  border-radius: 1rem;
-  /* Sombra que cae hacia los lados sobre las tarjetas de atrás */
+  border-radius: var(--border-radius-large);
+  /* Shadow cast sideways onto the cards behind */
   box-shadow:
     0 6px 14px rgb(0 0 0 / 0.25),
     0 0 28px 4px rgb(0 0 0 / 0.35);
   transition: box-shadow 0.3s ease;
 
-  /* Giro suave al voltear. Va después del transition de arriba y lo repite:
-     si no, ese transition (solo box-shadow) lo pisaba y el giro era instantáneo.
-     Con "reducir movimiento" la tarjeta cambia de cara sin girar. */
+  /* Smooth spin when flipping. It comes after the transition above and repeats it:
+     otherwise that transition (box-shadow only) overrode it and the spin was instant.
+     With "reduce motion" the card changes face without spinning. */
   @media (prefers-reduced-motion: no-preference) {
     transition:
       transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
@@ -57,51 +95,47 @@
   }
 }
 
-.project__card:hover .project__card-inner {
-  transform: rotateY(180deg);
-}
+/* === Card faces === */
 
-/* Front Cards */
 .project__card-front,
 .project__card-back {
-  position: absolute;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border-radius: 1rem;
+  border-radius: var(--border-radius-large);
   overflow: hidden;
+  /* same padding on both faces */
+  padding: var(--space-5);
 }
 
 .project__card-front {
+  position: absolute;
   transform: rotateY(0);
-  background-color: var(--teal-800);
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  padding: 1.25rem 1rem;
-}
+  background-color: var(--teal-800);
 
-/* Anverso: textura de grano en toda la tarjeta, de arriba abajo (sin cortes),
-   un poco más densa hacia la base. Encima de la captura y debajo del texto e
-   íconos (z-index 3) */
-.project__card-front::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: var(--grain-ink);
-  background-size: 140px;
-  -webkit-mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
-  mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
-  opacity: 0.1;
-  pointer-events: none;
+  /* Grain texture across the whole card, top to bottom (seamless), slightly
+     denser toward the base: the shared ink overlay of _background.css, above
+     the screenshot and below the text and icons (z-index 3) */
+  &::after {
+    --grain-z: 2;
+    --grain-opacity: 0.1;
+    -webkit-mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
+    mask: linear-gradient(to top, #000, rgb(0 0 0 / 0.55));
+  }
 }
 
 .project__card-back {
-  /* Reverso: degradado turquesa; en oscuro con los turquesas profundos del modo */
+  position: relative;
+  transform: rotateY(180deg);
+  justify-content: space-between;
+  gap: 1rem;
+  /* Teal gradient; in dark, with the mode's deep teals */
   background: linear-gradient(
     160deg,
     light-dark(var(--teal-600), var(--teal-deep-600)) 0%,
@@ -109,118 +143,136 @@
     light-dark(var(--teal-950), var(--teal-deep-900)) 100%
   );
   border: 1px solid var(--border-color);
-  transform: rotateY(180deg);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.25rem;
-  position: relative;
-}
 
-.project__card-back::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  background: linear-gradient(to bottom, transparent, rgb(0 18 25 / 0.6));
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* BAckground Card Images*/
-.project__image--container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-}
-
-/* Carátulas: solo cuando #projects se acerca a la pantalla (observer.js le pone
-   .is-near), así no se descargan al cargar la página. Sin JS (html sin .js) se
-   ven siempre. Todas las reglas llevan el mismo prefijo para que la versión
-   oscura siga ganando por orden, con la misma especificidad. */
-:is(html:not(.js), .projects.is-near) .project__card:nth-of-type(1) .project__image--container {
-  background-image: url("/assets/img/project_img/marvel.webp");
-}
-
-:is(html:not(.js), .projects.is-near) .project__card:nth-of-type(2) .project__image--container {
-  background-image: url("/assets/img/project_img/CRUD.webp");
-}
-
-:is(html:not(.js), .projects.is-near) .project__card:nth-of-type(3) .project__image--container {
-  background-image: url("/assets/img/project_img/rick.webp");
-}
-
-:is(html:not(.js), .projects.is-near) .project__card:nth-of-type(4) .project__image--container {
-  background-image: url("/assets/img/project_img/weather.webp");
-}
-
-:is(html:not(.js), .projects.is-near) .project__card:nth-of-type(5) .project__image--container {
-  background-image: url("/assets/img/project_img/cookie.webp");
-}
-
-:is(html:not(.js), .projects.is-near) .project__card:nth-of-type(6) .project__image--container {
-  background-image: url("/assets/img/project_img/traktl.webp");
-}
-
-/* Carátulas en modo oscuro: solo los proyectos que tienen modo oscuro propio
-   (CRUD y Traktl). Sigue al tema efectivo (sistema o botón) vía --color-scheme;
-   solo se descarga la imagen que gana en la cascada. */
-@container style(--color-scheme: dark) {
-  :is(html:not(.js), .projects.is-near) .project__card:nth-of-type(2) .project__image--container {
-    background-image: url("/assets/img/project_img/CRUD-dark.webp");
-  }
-
-  :is(html:not(.js), .projects.is-near) .project__card:nth-of-type(6) .project__image--container {
-    background-image: url("/assets/img/project_img/traktl-dark.webp");
+  /* Darker toward the base, below the text and the buttons. The stop is
+     --teal-950 at 60%, written as a literal: a color-mix() stop would switch
+     the gradient to Oklab interpolation */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 60%;
+    z-index: 1;
+    background: linear-gradient(to bottom, transparent, rgb(0 18 25 / 0.6));
+    pointer-events: none;
   }
 }
 
-/* La captura del proyecto se ve como fondo difuminado (scale evita que el
-   blur deje bordes transparentes en las orillas) */
-.project__image--container {
-  filter: blur(5px) saturate(1.15) brightness(1.1);
-  scale: 1.1;
-}
+/* === Covers === */
 
-.project__image--container::after {
-  content: "";
+/* The project screenshot shows as a blurred background (scale keeps the
+   blur from leaving transparent borders at the edges) */
+.project__image-container {
   position: absolute;
   inset: 0;
-  /* Velo oscuro que sube desde abajo: denso en la base, se aclara hacia
-     arriba (deja ver el diseño) y sigue cubriendo el texto del centro */
-  background: linear-gradient(
-    to top,
-    rgb(0 18 25 / 0.92) 0%,
-    rgb(0 18 25 / 0.72) 40%,
-    rgb(0 18 25 / 0.3) 70%,
-    rgb(0 18 25 / 0.05) 100%
-  );
-  z-index: 2;
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px) saturate(1.15) brightness(1.1);
+  scale: 1.1;
+
+  /* Dark veil rising from the bottom: dense at the base, lighter toward
+     the top (lets the design show) and still covering the centered text.
+     Stops in --teal-950, as literals (see the back's gradient above) */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(
+      to top,
+      rgb(0 18 25 / 0.92) 0%,
+      rgb(0 18 25 / 0.72) 40%,
+      rgb(0 18 25 / 0.3) 70%,
+      rgb(0 18 25 / 0.05) 100%
+    );
+  }
+}
+
+/* Cover images: only when #projects gets near the screen (project-covers.js
+   adds .is-near to it), so they aren't downloaded on page load. Without JS (html
+   without .js) they always show. Every rule, dark ones included, hangs from
+   the same prefix so they all share one specificity and the dark version wins
+   by order.
+   Dark covers: only the projects that have their own dark mode (CRUD and
+   Traktl). They follow the effective theme (system or button) via
+   --color-scheme; only the image that wins the cascade is downloaded. */
+:is(html:not(.js), .projects.is-near) .project__card {
+  &:nth-of-type(1) .project__image-container {
+    background-image: url("/assets/img/project_img/marvel.webp");
+  }
+
+  &:nth-of-type(2) .project__image-container {
+    background-image: url("/assets/img/project_img/CRUD.webp");
+
+    @container style(--color-scheme: dark) {
+      background-image: url("/assets/img/project_img/CRUD-dark.webp");
+    }
+  }
+
+  &:nth-of-type(3) .project__image-container {
+    background-image: url("/assets/img/project_img/rick.webp");
+  }
+
+  &:nth-of-type(4) .project__image-container {
+    background-image: url("/assets/img/project_img/weather.webp");
+  }
+
+  &:nth-of-type(5) .project__image-container {
+    background-image: url("/assets/img/project_img/cookie.webp");
+  }
+
+  &:nth-of-type(6) .project__image-container {
+    background-image: url("/assets/img/project_img/traktl.webp");
+
+    @container style(--color-scheme: dark) {
+      background-image: url("/assets/img/project_img/traktl-dark.webp");
+    }
+  }
+}
+
+/* === Card content === */
+
+/* Texts and icons sit above the cover veil and the front grain (z-index 2) */
+.project__title,
+.project__subtitle,
+.project__description,
+.project__tech-stack,
+.project__tech-icon {
+  position: relative;
+  z-index: 3;
+}
+
+.project__title,
+.project__subtitle,
+.project__tech-stack {
+  filter: drop-shadow(0 2px 3px color-mix(in srgb, var(--teal-950) 80%, transparent));
+}
+
+.project__title,
+.project__subtitle,
+.project__description {
+  color: var(--primary-color);
+  text-align: center;
 }
 
 .project__title,
 .project__description {
-  position: relative;
-  color: var(--primary-color);
-  text-shadow: 0 2px 6px rgb(0 18 25 / 0.9);
-  z-index: 3;
-  text-align: center;
+  text-shadow: 0 2px 6px color-mix(in srgb, var(--teal-950) 90%, transparent);
 }
 
-/* título centrado (el margen que lo sube va en la regla de abajo, después
-   del margin: 0 compartido) */
 .project__title {
-  text-align: center;
+  margin-bottom: 1.25rem;
+  font-size: calc(var(--title-scale) * 0.95rem);
+  line-height: 1.25;
+  text-transform: uppercase;
 }
 
-/* Reverso: el texto completo cabe en la tarjeta */
+.project__subtitle {
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-semibold);
+}
+
+/* Back: the full text fits in the card */
 .project__description {
   flex: 1;
   min-height: 0;
@@ -228,44 +280,13 @@
   place-items: center;
   font-size: 0.92rem;
   line-height: 1.45;
-  text-align: center;
 }
 
-.project__title,
-.project__subtitle,
-.project__tech-stack,
-.project__tech-icon {
-  position: relative;
-  z-index: 3;
-  margin: 0;
-  filter: drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
-}
-
-/* Íconos de tecnologías: sombra interna granulada (filtro de --icon-grain, como los de skills) */
-.project__tech-icon {
-  filter: var(--icon-grain) drop-shadow(0 2px 3px rgb(0 18 25 / 0.8));
-}
-
-.project__title {
-  text-transform: uppercase;
-  margin-bottom: 1.25rem;
-  font-size: calc(var(--title-scale) * 0.95rem);
-  line-height: 1.25;
-}
-
-.project__subtitle {
-  font-size: var(--normal-font-size);
-  font-weight: var(--font-semibold);
-  color: var(--primary-color);
-  text-align: center;
-  z-index: 3;
-}
-
-/* Tech stack icons: siempre en una sola línea; si no caben, se encogen */
+/* Tech stack icons: always on a single line; if they don't fit, they shrink */
 .project__tech-stack {
   display: flex;
   flex-wrap: nowrap;
-  gap: 0.6rem;
+  gap: var(--space-2);
   justify-content: center;
   align-items: center;
 }
@@ -277,168 +298,138 @@
   height: auto;
   aspect-ratio: 1;
   fill: var(--primary-color);
-  transition: transform 0.3s ease;
-  z-index: 3;
+  /* Grainy inner shadow (--icon-grain filter, like the skills ones) */
+  filter: var(--icon-grain) drop-shadow(0 2px 3px color-mix(in srgb, var(--teal-950) 80%, transparent));
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  /* the growth eases only without "reduce motion" */
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform 0.3s ease;
+  }
 }
 
-.project__tech-icon:hover {
-  transform: scale(1.1);
-}
+/* === Card buttons === */
 
-/* Buttons */
 .project__buttons {
   position: relative;
-  z-index: 2; /* por encima del degradado ::after del reverso */
+  z-index: 2; /* above the back's ::after gradient */
   display: flex;
-  gap: 0.6rem;
+  gap: var(--space-2);
   justify-content: center;
   margin-top: auto;
 }
 
 .project__button {
+  /* a shorter hard shadow than .btn: small buttons on the card */
+  --btn-offset: var(--hard-offset-sm);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding: 0.6rem 1.1rem;
-  background-color: var(--accent-color);
-  color: var(--on-accent-color);
-  /* mismo estilo cartoon que .btn: contorno de tinta y sombra dura */
-  border: 2px solid var(--teal-950);
-  border-radius: var(--border-radius-small);
-  box-shadow: 3px 3px 0 #000, var(--grain-inset-shadow);
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  line-height: normal; /* like .btn */
   font-weight: var(--font-bold);
-}
+  color: var(--on-accent-color);
+  text-decoration: none;
+  background-color: var(--accent-color);
+  /* same cartoon style as .btn: ink outline and hard shadow, in black (the
+     card faces are always dark: the light mode ink would vanish on them) */
+  border: 2px solid var(--ink-on-dark);
+  border-radius: var(--border-radius-small);
+  box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--ink-on-dark), var(--grain-inset-shadow);
+  transition:
+    transform var(--press-duration) ease,
+    box-shadow var(--press-duration) ease,
+    background-color var(--press-duration) ease;
 
-/* Solo con puntero real: en pantallas táctiles el :hover se queda "pegado" tras tocar */
-@media (hover: hover) {
-  .project__button:hover {
-    background-color: var(--btn-hover-bg);
-    color: var(--on-accent-color);
-    transform: translate(-2px, -2px);
-    box-shadow: 5px 5px 0 #000, var(--grain-inset-shadow);
+  /* Real pointer only: on touch screens :hover stays "stuck" after a tap */
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--btn-hover-bg);
+      transform: translate(-2px, -2px);
+      box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--ink-on-dark), var(--grain-inset-shadow);
+    }
+  }
+
+  &:active {
+    transform: translate(var(--btn-offset), var(--btn-offset));
+    box-shadow: 0 0 0 var(--ink-on-dark), var(--grain-inset-shadow);
+  }
+
+  /* its grainy inner shadow (::after) is the shared one of _buttons.css */
+
+  i {
+    font-size: 1.25rem;
   }
 }
 
-.project__button:active {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 #000, var(--grain-inset-shadow);
-}
+/* === Carousel arrows === */
 
-.project__button::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--grain-gold);
-  background-size: 120px;
-  -webkit-mask: var(--grain-mask);
-  mask: var(--grain-mask);
-  pointer-events: none;
-}
-
-.project__button i {
-  font-size: 1.25rem;
-}
-
-/* Navigation buttons */
 .project__nav {
-  visibility: visible;
   position: absolute;
   top: 50%;
+  z-index: var(--z-fixed);
   transform: translateY(-50%);
-  /* Mismo estilo que los botones de contorno del sitio: contorno y sombra
-     dura dorados, se rellena al pasar el mouse y se hunde al presionar */
-  background-color: var(--bg-color-section);
-  color: var(--accent-color);
-  border: 2px solid var(--accent-color);
-  border-radius: var(--border-radius-small);
-  box-shadow: 4px 4px 0 var(--accent-color);
-  width: 3rem;
-  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.15s, color 0.15s, translate 0.15s, box-shadow 0.15s;
-  z-index: var(--z-fixed);
-}
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
+  /* The look (outline, hard shadow, hover, press, focus) is the "Outlined
+     icon buttons" rule of _buttons.css */
 
-@media (hover: hover) {
-  .project__nav:hover {
-    background-color: var(--accent-color);
-    color: var(--on-accent-color);
-    translate: -2px -2px;
-    box-shadow: 6px 6px 0 var(--btn-ink-color);
+  i {
+    font-size: var(--icon-btn-glyph);
   }
 }
 
-.project__nav:active {
-  translate: 4px 4px;
-  box-shadow: 0 0 0 var(--accent-color);
-}
-
-.project__nav:focus-visible {
-  outline: 3px solid var(--accent-ink);
-  outline-offset: 3px;
-}
-
-.project__nav i {
-  font-size: 1.5rem;
-}
-
-/* Flechas en las orillas del contenido de la sección (mismo ancho máximo
-   que las demás secciones, 1024px), no en las orillas del navegador */
+/* Arrows at the edges of the section content (same max width
+   as the other sections, --container-width), not at the browser edges */
 .project__nav--prev {
-  left: max(1rem, (100% - 1024px) / 2 + 1rem);
+  left: max(1rem, (100% - var(--container-width)) / 2 + 1rem);
 }
 
 .project__nav--next {
-  right: max(1rem, (100% - 1024px) / 2 + 1rem);
+  right: max(1rem, (100% - var(--container-width)) / 2 + 1rem);
 }
 
-/* Transitions */
-.project__card--carousel.smooth-return {
-  transition: all 0.2s ease;
-}
+/* === Utils === */
 
-/* Arrastrando: sin transición, las tarjetas siguen al dedo sin retraso */
-.project__card--carousel.is-dragging .project__card {
-  transition: none;
-}
-
-.project__card.highlight {
-  filter: brightness(1);
-  z-index: 2;
-}
-
-/* Profundidad: la de enfrente proyecta una sombra más amplia sobre las de
-   atrás, y las de atrás se ven un poco más apagadas */
-.project__card.highlight .project__card-inner {
-  box-shadow:
-    0 14px 26px rgb(0 0 0 / 0.35),
-    0 0 46px 10px rgb(0 0 0 / 0.45);
-}
-
-.project__card:not(.highlight) {
-  filter: brightness(0.85);
-}
-
-/* Utils */
-.visuallyhidden {
+/* Keyboard controller of the carousel (focusable, not shown). With keyboard
+   focus it shows how to use it, at the bottom right of the carousel */
+.visually-hidden {
   position: absolute;
   z-index: -1;
   right: 0;
   opacity: 0;
+
+  /* only with JS: without it the arrow keys don't move the carousel */
+  .js &:focus-visible {
+    z-index: var(--z-fixed);
+    right: max(1rem, (100% - var(--container-width)) / 2 + 1rem);
+    bottom: 0;
+    padding: 0.25rem 0.75rem;
+    opacity: 1;
+    color: var(--primary-color);
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-small);
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset-flat);
+  }
 }
 
-/* Mobile styles */
-@media screen and (max-width: 640px) {
+/* === Responsive === */
+
+/* Narrow screens: no arrows (the carousel is swiped) and narrower cards.
+   Screen only: a narrow printed page keeps the arrows and the card width */
+@media screen and (width <= 640px) {
   .project__nav {
     display: none;
   }
@@ -449,37 +440,37 @@
   }
 }
 
-/* Escritorio: la sección cabe en una pantalla y queda centrada a lo alto.
-   El alto de las tarjetas depende del alto de la pantalla (entre 280 y 390 px)
-   y el ancho mantiene la proporción 4:5. */
-@media (min-width: 600px) {
-  #projects.section {
+/* Desktop: the section fits in one screen and is vertically centered.
+   The card height depends on the screen height (between 280 and 390 px)
+   and the width keeps the 4:5 ratio. */
+@media (width >= 600px) {
+  .projects.section {
     --card-h: clamp(280px, 100svh - 12rem, 390px);
     padding-block: 0.5rem;
   }
 
-  #projects .section__title {
+  .projects .section__title {
     margin-block: 0;
   }
 
-  #projects .project__container {
-    margin-top: 0.75rem;
+  /* the title has no margin here: the same gap comes from the container */
+  .project__container {
+    margin-top: var(--space-title);
   }
 
-  #projects .project__card--carousel,
-  #projects .project__card {
+  .project__carousel,
+  .project__card {
     height: var(--card-h);
   }
 
-  #projects .project__card {
+  .project__card {
     width: calc(var(--card-h) * 0.795);
   }
-
 }
 
-/* Pantallas bajas: tarjetas más chicas, la descripción completa sigue cabiendo */
-@media (min-width: 600px) and (max-height: 600px) {
-  #projects .project__description {
+/* Short screens: smaller text, the full description still fits */
+@media (width >= 600px) and (height <= 600px) {
+  .project__description {
     font-size: 0.8rem;
     line-height: 1.35;
   }

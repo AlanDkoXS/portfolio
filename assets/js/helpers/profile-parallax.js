@@ -1,10 +1,10 @@
-import { createTilt } from './tilt.js';
 import { prefersReducedMotion } from './motion.js';
+import { isCoarsePointer } from './viewport.js';
 
 function profileParallax() {
   const container = document.querySelector('.home__image');
-  const background = document.querySelector('.home__image--background');
-  const sprite = document.querySelector('.home__image--sprite');
+  const background = document.querySelector('.home__image-background');
+  const sprite = document.querySelector('.home__image-sprite');
 
   if (!container || !background || !sprite) return;
   if (prefersReducedMotion()) return;
@@ -26,16 +26,17 @@ function profileParallax() {
 
   container.addEventListener('mouseleave', () => moveLayers(0, 0));
 
-  // Touch devices: follow the phone tilt, relative and auto-recentering
-  if (window.matchMedia('(pointer: coarse)').matches) {
-    const tilt = createTilt();
-    const tick = (now) => {
-      const { gamma, beta } = tilt.update(now);
-      moveLayers(gamma * 0.6, -beta * 0.6); // más sutil que con el mouse
-      requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
+  // Touch devices: follow the phone tilt, relative and auto-recentering.
+  // Only while the portrait is on screen: off it, the shared tilt loop skips it.
+  // tilt.js is only downloaded on touch devices.
+  if (isCoarsePointer()) {
+    import('./tilt.js')
+      .then(({ subscribeTilt }) => {
+        const tilt = subscribeTilt(({ gamma, beta }) => moveLayers(gamma * 0.6, -beta * 0.6), { active: false }); // subtler than with the mouse
+        new IntersectionObserver(([entry]) => tilt.setActive(entry.isIntersecting)).observe(container);
+      })
+      .catch((error) => console.error('Error in profileParallax:', error));
   }
 }
 
-export default profileParallax;
+export { profileParallax };

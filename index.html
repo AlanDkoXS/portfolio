@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Respeta el tamaño de texto del sistema: Android/Chrome lo aplica al tamaño
-         base (rem) en vez de hacer zoom a toda la página -->
+    <!-- Respects the system text size: Android/Chrome applies it to the base
+         size (rem) instead of zooming the whole page -->
     <meta name="text-scale" content="scale" />
-    <!-- Tema: oscuro si el sistema está en modo oscuro; si no, por horario (oscuro de
-         18:00 a 6:00, hora local). El botón guarda una excepción hasta el siguiente
-         cambio (localStorage.theme / themeUntil).
-         Se aplica antes de pintar; sin JS se sigue al sistema. -->
+    <!-- Theme: dark if the system is in dark mode; otherwise time-based (dark from
+         18:00 to 6:00, local time). The button stores an override until the next
+         switch (localStorage.theme / themeUntil).
+         Applied before first paint; without JS the system scheme is followed. -->
+    <!-- theme:start (single source: scripts/build-i18n.mjs copies this block to resume.html and the project pages) -->
     <meta name="color-scheme" content="light dark" />
     <script>
       {
@@ -22,18 +23,19 @@
         document.querySelector('meta[name="color-scheme"]').content = t;
       }
     </script>
+    <!-- theme:end -->
     <script>
-      // El loader solo se muestra en la primera carga de la sesión: al cambiar
-      // de idioma o volver al inicio la página aparece directo
+      // The loader only shows on the first load of the session: when switching
+      // language or going back to the home page, the page appears right away
       document.documentElement.classList.add('js');
       try {
-        // También sin loader si la página se está prerenderizando (cambio de
-        // idioma): al activarse aparece lista, sin pantalla de carga
+        // Also no loader if the page is being prerendered (language switch):
+        // once activated it shows up ready, with no loading screen
         if (sessionStorage.getItem('aq-loaded') || document.prerendering)
           document.documentElement.classList.add('skip-loader');
         else
-          // Con loader: precargar ya sus pesos de Poppins (200 y 600) para que
-          // la animación arranque con la tipografía lista (loader.js la espera)
+          // With loader: preload its Poppins weights (200 and 600) right now so
+          // the animation starts with the font ready (loader.js waits for it)
           for (const w of [200, 600]) {
             const l = document.createElement('link');
             l.rel = 'preload';
@@ -45,7 +47,7 @@
           }
       } catch {}
     </script>
-    <!-- Sin JS no hay quien quite el loader: que no tape el contenido -->
+    <!-- Without JS nothing removes the loader: don't let it cover the content -->
     <noscript><style>.loader { display: none !important; }</style></noscript>
     <meta name="author" content="Alan Quintana" />
     <meta data-i18n-attr="content:meta.description"
@@ -63,7 +65,7 @@
     <link rel="alternate" hreflang="en" href="https://alanquintana.pro/" />
     <link rel="alternate" hreflang="es" href="https://alanquintana.pro/es/" />
     <link rel="alternate" hreflang="x-default" href="https://alanquintana.pro/" />
-    <!-- Perfil para asistentes de IA y agentes (EN/ES) -->
+    <!-- Profile for AI assistants and agents (EN/ES) -->
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly profile" />
     <script>
       // First visit to the English page with a Spanish browser → /es/.
@@ -102,7 +104,6 @@
     <meta property="og:site_name" content="Alan Quintana Portfolio" />
     <meta data-i18n-attr="content:meta.locale" property="og:locale" content="en_US" />
     <meta property="article:author" content="Alan Quintana" />
-    <meta name="author" content="Alan Quintana" />
     <meta name="linkedin:owner" content="https://www.linkedin.com/in/alanxs/" />
 
     <!-- Open Graph / Twitter -->
@@ -181,32 +182,53 @@
       }
     </script>
 
-    <!-- Preconnect (solo terceros que se siguen usando) -->
+    <!-- Preconnect (only third parties still in use) -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
-    <!-- Estilos: un solo archivo generado (assets/css/main.src.css → main.css,
-         incluye Boxicons recortado) -->
+    <!-- Styles: a single generated file (assets/css/main.src.css → main.css,
+         includes the Boxicons subset) -->
     <link rel="stylesheet" href="/assets/css/main.css" />
 
-    <!-- Fuentes autoalojadas: DM Sans, Outfit y Poppins del logo (en main.css) y Boxicons (solo los
-         íconos usados, ~3 KB). Se precargan para que texto e íconos aparezcan sin espera -->
+    <!-- Self-hosted fonts: DM Sans, Outfit and the logo's Poppins (in main.css) and Boxicons (only the
+         icons in use, ~3 KB). Preloaded so the hero's text and icons show up without waiting.
+         The logo's Poppins 300 is hidden at the top (the header is revealed on scroll) but laid
+         out from the first frame: it keeps its normal priority so the header never re-lays out
+         late. The loader's Poppins weights are preloaded by the script above -->
     <link rel="preload" href="/assets/fonts/dm-sans/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/outfit/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/boxicons/boxicons.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- El fondo del retrato es el LCP y es un fondo CSS: el escáner de
-         precarga no lo ve. El sprite se pide al aplicar el CSS -->
+    <!-- The portrait background is the LCP and it's a CSS background: the
+         preload scanner can't see it. The sprite is requested when the CSS applies -->
     <link rel="preload" href="/assets/img/profile_bg.svg" as="image" type="image/svg+xml" fetchpriority="high" />
 
-    <!-- Módulos del tercer nivel (main.js → helper → estos): sin esto se
-         descubren uno tras otro -->
-    <link rel="modulepreload" href="/assets/js/helpers/motion.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/tilt.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/typing.js" />
-    <link rel="modulepreload" href="/assets/js/helpers/dialog.js" />
+    <!-- Every module main.js imports up front, directly or through another
+         helper: fetched in parallel with main.js instead of one level at a time
+         after it. The ones main.js imports on demand (import()) are left out -->
+    <link rel="modulepreload" href="/assets/js/helpers/common.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/language-switcher.js" />
     <link rel="modulepreload" href="/assets/js/languages/translations.js" />
     <link rel="modulepreload" href="/assets/js/languages/translate.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/storage.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/viewport.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/auto-dark-mode.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lamp.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/motion.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/nav-menu.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/footer-year.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/google-tag-manager.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lazy.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/loader.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/typing.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/active-menu.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/card-carousel.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/contact-dialog.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/dialog.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/project-covers.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/skills-marquee.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/reset-to-home.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/form-validation.js" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon.png" />
@@ -217,17 +239,14 @@
 
     <!-- Scripts -->
     <script type="module" src="/assets/js/main.js"></script>
-
-    <!-- Prefetch Page -->
-    <link data-i18n-attr="href:resumeHref" rel="prefetch" href="/resume.html?lang=en" />
   </head>
 
   <body>
-    <!-- Filtro de sombra interna granulada para íconos SVG: dorado oscuro con
-         grano que entra desde todo el contorno y se desvanece hacia el centro
-         (radial, ~50% del ícono).
-         Se usa con filter: url(#grain-inset) -->
-    <svg class="sr-filters" width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute">
+    <!-- Grainy inner shadow filter for SVG icons: dark gold with grain
+         coming in from the whole outline and fading out toward the center
+         (radial, ~50% of the icon).
+         Used with filter: url(#grain-inset) -->
+    <svg width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute">
       <filter id="grain-inset" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
         <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="blur" />
         <feComposite in="SourceAlpha" in2="blur" operator="out" result="edge" />
@@ -243,7 +262,7 @@
         </feMerge>
       </filter>
       <!-- Same grain in warm gray (#a09367, like the tags):
-           íconos gris casi blanco del modo oscuro (ver --icon-grain en _variables.css) -->
+           pale yellow icons of dark mode (see --icon-grain in _variables.css) -->
       <filter id="grain-inset-bright" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
         <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="blur" />
         <feComposite in="SourceAlpha" in2="blur" operator="out" result="edge" />
@@ -261,42 +280,42 @@
     </svg>
 
     <!-- Loader -->
-    <div class="loader flex--container">
+    <div class="loader flex-container">
       <svg class="loader__logo">
-        <use xlink:href="/assets/img/logo.svg#logo"></use>
+        <use href="/assets/img/logo.svg#logo"></use>
       </svg>
       <span class="loader__name"
-        ><span class="loader__name--light">alan</span
-        ><span class="loader__name--semibold">quintana</span></span
+        ><span class="loader__name-light">alan</span
+        ><span class="loader__name-semibold">quintana</span></span
       >
     </div>
 
     <!-- Background -->
-    <div class="background-container bgGrain"></div>
-    <div class="background-container">
-      <svg class="background-container bgBack">
+    <div class="background background--grain"></div>
+    <div class="background">
+      <svg class="background background--back">
         <use href="/assets/img/bgBack.svg#bgBack"></use>
       </svg>
-      <svg class="background-container bgMiddle">
+      <svg class="background background--middle">
         <use href="/assets/img/bgMiddle.svg#bgMiddle"></use>
       </svg>
-      <svg class="background-container bgFront">
+      <svg class="background background--front">
         <use href="/assets/img/bgFront.svg#bgFront"></use>
       </svg>
     </div>
 
     <header class="header">
-      <nav class="navbar grid--container flex--container">
-        <a class="navbar__logo flex--container" href="#">
-          <svg class="logo">
-            <use xlink:href="/assets/img/logo.svg#logo"></use>
+      <nav class="navbar grid-container flex-container">
+        <a class="navbar__logo flex-container" href="#">
+          <svg class="navbar__logo-icon">
+            <use href="/assets/img/logo.svg#logo"></use>
           </svg>
-          <span class="navbar__logo--name">alan</span>
-          <span class="navbar__logo--lastname">quintana</span>
+          <span class="navbar__logo-name">alan</span>
+          <span class="navbar__logo-lastname">quintana</span>
         </a>
         <!-- Menu Nav -->
         <div id="nav" class="navbar__menu">
-          <ul class="navbar__list flex--container">
+          <ul class="navbar__list flex-container">
             <li class="navbar__item">
               <a data-i18n="navHome" class="navbar__link active" href="#home">Home</a>
             </li>
@@ -306,9 +325,6 @@
             <li class="navbar__item">
               <a data-i18n="navSkills" class="navbar__link" href="#skills">Skills</a>
             </li>
-            <!--                     <li class="navbar__item">
-                        <a class="navbar__link" href="#portfolio">Portfolio</a>
-                    </li> -->
             <li class="navbar__item">
               <a data-i18n="navProjects" class="navbar__link" href="#projects">Projects</a>
             </li>
@@ -319,27 +335,27 @@
               <a data-i18n="navContact" class="navbar__link" href="#contact">Contact</a>
             </li>
           </ul>
-          <div class="navbar__toggles flex--container">
-            <div class="navbar__toggle--darkmode flex--container">
+          <div class="navbar__toggles flex-container">
+            <div class="navbar__darkmode-toggle flex-container">
               <input
                 type="checkbox"
                 name="theme"
                 id="darkmode-toggle"
-                class="navbar__toggle--darkmode-input"
+                class="navbar__darkmode-input"
                 title="Dark Mode"
                 aria-label="Dark Mode"
               />
               <label
                 for="darkmode-toggle"
-                class="navbar__toggle--darkmode-label"
+                class="navbar__darkmode-label"
               >
-                <div class="icon-wrapper">
+                <div class="navbar__darkmode-icons">
                   <i
-                    class="bx bx-sun navbar__toggle--darkmode-sun"
+                    class="bx bx-sun navbar__darkmode-sun"
                     aria-hidden="true"
                   ></i>
                   <i
-                    class="bx bx-moon navbar__toggle--darkmode-moon"
+                    class="bx bx-moon navbar__darkmode-moon"
                     aria-hidden="true"
                   ></i>
                 </div>
@@ -347,39 +363,37 @@
             </div>
             <!-- Mobile menu only: caption above the language switch -->
             <span class="navbar__toggles-caption" data-i18n="navLanguage">Change language</span>
-            <div class="navbar__toggle--language flex--container">
+            <div class="navbar__language-toggle flex-container">
               <input
                 type="checkbox"
                 name="language-toggle"
                 id="language-toggle"
-                class="navbar__toggle--language-input"
+                class="navbar__language-input"
                 title="Select Language"
                 aria-label="Select Language"
               />
               <label
                 for="language-toggle"
-                class="navbar__toggle--language-label"
+                class="navbar__language-label"
               >
-                <div class="flag-wrapper">
+                <div class="navbar__language-flags">
                   <img
                     src="/assets/img/flag-en.svg"
-                    class="navbar__toggle--language-en" lang="en"
+                    class="navbar__language-en" lang="en"
                     alt="English"
-                    loading="lazy"
                     aria-hidden="true"
                   />
                   <img
                     src="/assets/img/flag-es.svg"
-                    class="navbar__toggle--language-es" lang="es"
+                    class="navbar__language-es" lang="es"
                     alt="Español"
-                    loading="lazy"
                     aria-hidden="true"
                   />
                 </div>
                 <!-- Mobile menu: two flag ghost buttons, the current language pressed (replaces the single flag) -->
                 <span class="lang-switch" aria-hidden="true"
-                  ><span class="lang-switch__opt lang-switch__opt--es"><img class="lang-switch__flag" src="/assets/img/flag-es.svg" alt="" width="18" height="18" loading="lazy" /></span
-                  ><span class="lang-switch__opt lang-switch__opt--en"><img class="lang-switch__flag" src="/assets/img/flag-en.svg" alt="" width="18" height="18" loading="lazy" /></span></span
+                  ><span class="lang-switch__opt lang-switch__opt--es"><img class="lang-switch__flag" src="/assets/img/flag-es.svg" alt="" width="18" height="18" /></span
+                  ><span class="lang-switch__opt lang-switch__opt--en"><img class="lang-switch__flag" src="/assets/img/flag-en.svg" alt="" width="18" height="18" /></span></span
                 >
               </label>
             </div>
@@ -393,7 +407,7 @@
         ></a>
       </nav>
     </header>
-    <!-- Lámpara colgante (escritorio): cambia el tema. Encendida = modo claro -->
+    <!-- Hanging lamp: theme switch. Lit = dark mode -->
     <button
       type="button"
       class="lamp"
@@ -403,25 +417,25 @@
       title="Light"
     >
       <span class="lamp__hit" aria-hidden="true"></span>
-      <img class="lamp__off" src="/assets/img/lamp_button/button-lamp_lamp_original.webp" alt="" width="300" height="300" />
+      <img class="lamp__off" src="/assets/img/lamp_button/button-lamp_lamp_original.webp" alt="" width="300" height="300" fetchpriority="low" />
       <img class="lamp__over" src="/assets/img/lamp_button/button-lamp_lamp_over.webp" alt="" width="300" height="300" loading="lazy" />
       <img class="lamp__pull" src="/assets/img/lamp_button/button-lamp_lamp_clic.webp" alt="" width="300" height="300" loading="lazy" />
-      <img class="lamp__on" src="/assets/img/lamp_button/button-lamp_lamp_active.webp" alt="" width="300" height="401" />
+      <img class="lamp__on" src="/assets/img/lamp_button/button-lamp_lamp_active.webp" alt="" width="300" height="401" fetchpriority="low" />
     </button>
 
     <main>
       <!-- Home -->
       <section id="home" tabindex="-1" class="home">
-        <div class="home__container grid--container">
+        <div class="home__container grid-container">
           <div class="home__image">
-            <div class="home__image--background"></div>
-            <div class="home__image--sprite"></div>
+            <div class="home__image-background"></div>
+            <div class="home__image-sprite"></div>
           </div>
           <div class="home__info">
             <h1 data-i18n="homeTitle" class="home__title">Hi there!</h1>
             <p data-i18n="homeDescription" class="home__description">I'm Alan, <strong>half designer, half developer</strong>, I build sites that are a joy to use, a fan of things that look good and work.</p>
           </div>
-          <ul class="home__social flex--container">
+          <ul class="home__social flex-container">
             <li class="home__social-item">
               <a
                 class="home__social-link"
@@ -442,7 +456,7 @@
                 ><i class="bx bxl-github"></i
               ></a>
             </li>
-            <!-- Desactivado: la cuenta de Dribbble todavía no es Pro (el perfil aún no se puede usar).
+            <!-- Disabled: the Dribbble account isn't Pro yet (the profile can't be used yet).
             <li class="home__social-item">
               <a
                 class="home__social-link"
@@ -475,7 +489,7 @@
               data-i18n-attr="href:resumeHref"
               class="btn btn--primary"
               id="resume-btn"
-              href="/resume.html?lang=en"
+              href="/resume?lang=en"
               rel="noreferrer nofollow"
             >See my resume</a>
             <a data-i18n="skillsButton"
@@ -494,10 +508,10 @@
 
       <!-- About -->
       <section id="about" tabindex="-1" class="about section">
-        <a href="#skills" class="section-link">
+        <a href="#skills">
           <h2 data-i18n="aboutTitle" class="section__title">About me</h2>
-          <div class="about__container grid--container">
-            <div class="about__img--container">
+          <div class="about__container grid-container">
+            <div class="about__img-container">
               <div class="about__img">
                 <img
                   src="/assets/img/aboutme.webp"
@@ -517,16 +531,16 @@
       <!-- Skills -->
       <section id="skills" tabindex="-1" class="skills section">
         <h2 data-i18n="skillsTitle" class="section__title">Skills</h2>
-        <div class="skills__container grid--container">
+        <div class="grid-container">
           <p data-i18n="skillsDescription" class="skills__description">I build scalable and efficient solutions, from interactive interfaces to complete backend systems. My goal is to create digital tools that streamline processes, enhance user engagement, and add value to your business.</p>
           <div class="skills__wrapper">
             <div class="skills__icons">
-              <!-- Desarrollo: fila en bucle infinito (4 copias de la lista; la 1.ª es la
-                   accesible). El botón de pausa (WCAG 2.2.2) va a la derecha del título;
-                   lo muestra skills_marquee.js solo si hay animación -->
+              <!-- Development: infinitely looping row (4 copies of the list; the 1st is
+                   the accessible one). The pause button (WCAG 2.2.2) sits right of the
+                   title; skills-marquee.js shows it only when there is animation -->
               <div class="skills__group skills__group--marquee">
                 <div class="skills__group-header">
-                  <h3 data-i18n="skillsDevelopmentTools" class="skills__title skills__development-tools-title">Development Tools</h3>
+                  <h3 data-i18n="skillsDevelopmentTools" class="skills__title">Development Tools</h3>
                   <button type="button" class="skills__motion-toggle" hidden data-i18n-attr="title:skillsMotion.pause" title="Pause the animation">
                     <i class="bx bx-pause" aria-hidden="true"></i>
                     <span class="skills__motion-pause" data-i18n="skillsMotion.pause">Pause the animation</span>
@@ -536,114 +550,114 @@
                 <div class="skills__marquee skills__marquee--reverse" style="--marquee-duration: 56s">
                   <div class="skills__track">
                     <ul class="skills__list">
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills" role="img" aria-label="Claude Code"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
                     </ul>
                     <ul class="skills__list" aria-hidden="true">
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills" role="img" aria-label="Claude Code"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
                     </ul>
                     <ul class="skills__list" aria-hidden="true">
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills" role="img" aria-label="Claude Code"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
                     </ul>
                     <ul class="skills__list" aria-hidden="true">
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills" role="img" aria-label="Claude Code"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconVSCode" ></use> </svg> <span class="skills__icon-title">VS Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconGit"></use> </svg> <span class="skills__icon-title">Git</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNPM"></use> </svg> <span class="skills__icon-title">NPM</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBash"></use> </svg> <span class="skills__icon-title">Bash</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon" role="img" aria-label="Claude Code"> <use href="/assets/img/skills.svg?v=9644dc8f#iconClaude"></use> </svg> <span class="skills__icon-title">Claude Code</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPnpm" ></use> </svg> <span class="skills__icon-title">pnpm</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconBun" ></use> </svg> <span class="skills__icon-title">Bun</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNetlify" ></use> </svg> <span class="skills__icon-title">Netlify</span></li>
                     </ul>
                   </div>
                 </div>
               </div>
 
-              <!-- Diseño, Frontend y Backend: acordeones nativos (funcionan sin JS) -->
+              <!-- Design, Frontend and Backend: native accordions (work without JS) -->
               <div class="skills__accordions">
                 <details class="skills__accordion">
                   <summary class="skills__summary btn btn--ghost">
-                    <h3 data-i18n="skillsDesignTools" class="skills__summary-title skills__design-tools-title">Design Tools</h3>
+                    <h3 data-i18n="skillsDesignTools" class="skills__summary-title">Design Tools</h3>
                     <i class="bx bx-chevron-down skills__summary-icon" aria-hidden="true"></i>
                   </summary>
                   <div class="skills__panel">
                     <ul class="skills__grid">
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPhotoshop" ></use> </svg> <span class="skills__icon-title">Photoshop</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconIllustrator" ></use> </svg> <span class="skills__icon-title">Illustrator</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconAFX" ></use> </svg> <span class="skills__icon-title">After Effects</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCreativeCloud" ></use> </svg> <span class="skills__icon-title">Creative Cloud</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconFigma" ></use> </svg> <span class="skills__icon-title">Figma</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconSvg"></use> </svg> <span class="skills__icon-title">SVG</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPhotoshop" ></use> </svg> <span class="skills__icon-title">Photoshop</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconIllustrator" ></use> </svg> <span class="skills__icon-title">Illustrator</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconAFX" ></use> </svg> <span class="skills__icon-title">After Effects</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconCreativeCloud" ></use> </svg> <span class="skills__icon-title">Creative Cloud</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconFigma" ></use> </svg> <span class="skills__icon-title">Figma</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconSvg"></use> </svg> <span class="skills__icon-title">SVG</span></li>
                     </ul>
                   </div>
                 </details>
                 <details class="skills__accordion">
                   <summary class="skills__summary btn btn--ghost">
-                    <h3 data-i18n="skillsFrontendTools" class="skills__summary-title skills__frontend-tools-title">Frontend Tools</h3>
+                    <h3 data-i18n="skillsFrontendTools" class="skills__summary-title">Frontend Tools</h3>
                     <i class="bx bx-chevron-down skills__summary-icon" aria-hidden="true"></i>
                   </summary>
                   <div class="skills__panel">
                     <ul class="skills__grid">
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"></use> </svg> <span class="skills__icon-title">HTML5</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"></use> </svg> <span class="skills__icon-title">CSS</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript" ></use> </svg> <span class="skills__icon-title">JavaScript</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconTypeScript" ></use> </svg> <span class="skills__icon-title">TypeScript</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact" ></use> </svg> <span class="skills__icon-title">React</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS" ></use> </svg> <span class="skills__icon-title">Vite</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReactRouter" ></use> </svg> <span class="skills__icon-title">React Router</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReactNative" ></use> </svg> <span class="skills__icon-title">React Native</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconExpo"></use> </svg> <span class="skills__icon-title">Expo</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconTailwindCSS" ></use> </svg> <span class="skills__icon-title">Tailwind CSS</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconAstro" ></use> </svg> <span class="skills__icon-title">Astro</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconHTML"></use> </svg> <span class="skills__icon-title">HTML5</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconCSS"></use> </svg> <span class="skills__icon-title">CSS</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconJavascript" ></use> </svg> <span class="skills__icon-title">JavaScript</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconTypeScript" ></use> </svg> <span class="skills__icon-title">TypeScript</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconReact" ></use> </svg> <span class="skills__icon-title">React</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconViteJS" ></use> </svg> <span class="skills__icon-title">Vite</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconReactRouter" ></use> </svg> <span class="skills__icon-title">React Router</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconReactNative" ></use> </svg> <span class="skills__icon-title">React Native</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconExpo"></use> </svg> <span class="skills__icon-title">Expo</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconTailwindCSS" ></use> </svg> <span class="skills__icon-title">Tailwind CSS</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconAstro" ></use> </svg> <span class="skills__icon-title">Astro</span></li>
                     </ul>
                   </div>
                 </details>
                 <details class="skills__accordion">
                   <summary class="skills__summary btn btn--ghost">
-                    <h3 data-i18n="skillsBackendTools" class="skills__summary-title skills__backend-tools-title">Backend Tools</h3>
+                    <h3 data-i18n="skillsBackendTools" class="skills__summary-title">Backend Tools</h3>
                     <i class="bx bx-chevron-down skills__summary-icon" aria-hidden="true"></i>
                   </summary>
                   <div class="skills__panel">
                     <ul class="skills__grid">
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNodeJS" ></use> </svg> <span class="skills__icon-title">Node.js</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconExpress" ></use> </svg> <span class="skills__icon-title">Express</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconSocketIO" ></use> </svg> <span class="skills__icon-title">Socket.IO</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNextJS" ></use> </svg> <span class="skills__icon-title">Next.js</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconAws"></use> </svg> <span class="skills__icon-title">AWS</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconFirebase" ></use> </svg> <span class="skills__icon-title">Firebase</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconDocker" ></use> </svg> <span class="skills__icon-title">Docker</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPostgreSql" ></use> </svg> <span class="skills__icon-title">PostgreSQL</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconMongoDb" ></use> </svg> <span class="skills__icon-title">MongoDB</span></li>
-                      <li class="skills__icon-container"><svg class="skills__icon icon_skills"> <use xlink:href="/assets/img/skills.svg?v=9644dc8f#iconPostman" ></use> </svg> <span class="skills__icon-title">Postman</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNodeJS" ></use> </svg> <span class="skills__icon-title">Node.js</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconExpress" ></use> </svg> <span class="skills__icon-title">Express</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconSocketIO" ></use> </svg> <span class="skills__icon-title">Socket.IO</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconNextJS" ></use> </svg> <span class="skills__icon-title">Next.js</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconAws"></use> </svg> <span class="skills__icon-title">AWS</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconFirebase" ></use> </svg> <span class="skills__icon-title">Firebase</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconDocker" ></use> </svg> <span class="skills__icon-title">Docker</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPostgreSql" ></use> </svg> <span class="skills__icon-title">PostgreSQL</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconMongoDb" ></use> </svg> <span class="skills__icon-title">MongoDB</span></li>
+                      <li class="skills__icon-container"><svg class="skills__icon"> <use href="/assets/img/skills.svg?v=9644dc8f#iconPostman" ></use> </svg> <span class="skills__icon-title">Postman</span></li>
                     </ul>
                   </div>
                 </details>
               </div>
             </div>
           </div>
-          <div class="skills__tags flex--container">
+          <div class="skills__tags flex-container">
             <h3 data-i18n="skillsTagsTitle" class="skills__tags-title">Soft Skills</h3>
-            <div class="skills__tags-container flex--container">
+            <div class="skills__tags-container flex-container">
               <span data-i18n="skillsTags.0" class="skills__tag">Responsible</span>
               <span data-i18n="skillsTags.1" class="skills__tag">Teamwork</span>
               <span data-i18n="skillsTags.2" class="skills__tag">Creative</span>
@@ -651,7 +665,7 @@
               <span data-i18n="skillsTags.4" class="skills__tag">Communicative</span>
               <span data-i18n="skillsTags.5" class="skills__tag">Sense of urgency</span>
               <span data-i18n="skillsTags.6" class="skills__tag">Detail-oriented</span>
-              <!-- medios ladrillos decorativos en las orillas de la 1.ª y 3.ª hilada -->
+              <!-- decorative half bricks at the edges of the 1st and 3rd courses -->
               <span class="skills__brick-half skills__brick-half--r1-start" aria-hidden="true"></span>
               <span class="skills__brick-half skills__brick-half--r1-end" aria-hidden="true"></span>
               <span class="skills__brick-half skills__brick-half--r3-start" aria-hidden="true"></span>
@@ -660,7 +674,6 @@
           </div>
         </div>
       </section>
-      <!-- Designs (Dribbble) -->
 
       <!-- Projects -->
       <section id="projects" tabindex="-1" class="projects section">
@@ -668,44 +681,45 @@
         <div class="project__container">
           <button
             class="project__nav project__nav--prev"
-            aria-label="Proyecto anterior"
+            data-i18n-attr="aria-label:projectsCarousel.prev"
+            aria-label="Previous project"
           >
-            <i class="bx bx-chevron-left"></i>
+            <i class="bx bx-chevron-left" aria-hidden="true"></i>
           </button>
 
-          <div class="project__card--carousel">
+          <div class="project__carousel">
             <!-- Marvel Project Card -->
-            <div class="project__card" id="1">
+            <div class="project__card">
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle1" class="project__title">Marvel Wiki</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
                       ></use>
                     </svg>
                   </div>
@@ -716,7 +730,7 @@
                   <div class="project__buttons">
                     <a
                       href="/projects/marvel-wiki/"
-                      class="project__button project__button--case"
+                      class="project__button"
                       data-i18n-attr="href:projectCase.1;aria-label:projectCase.label;title:projectCase.label"
                       aria-label="Read the case study"
                       title="Read the case study"
@@ -751,37 +765,37 @@
             </div>
 
             <!-- CRUD Users Project Card -->
-            <div class="project__card" id="2">
+            <div class="project__card">
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle2" class="project__title">CRUD Users</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
                       ></use>
                     </svg>
                   </div>
@@ -792,7 +806,7 @@
                   <div class="project__buttons">
                     <a
                       href="/projects/crud-users/"
-                      class="project__button project__button--case"
+                      class="project__button"
                       data-i18n-attr="href:projectCase.2;aria-label:projectCase.label;title:projectCase.label"
                       aria-label="Read the case study"
                       title="Read the case study"
@@ -827,37 +841,37 @@
             </div>
 
             <!-- Rick and Morty Project Card -->
-            <div class="project__card" id="3">
+            <div class="project__card">
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle3" class="project__title">Rick and Morty Wiki</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
                       ></use>
                     </svg>
                   </div>
@@ -868,7 +882,7 @@
                   <div class="project__buttons">
                     <a
                       href="/projects/rick-and-morty-wiki/"
-                      class="project__button project__button--case"
+                      class="project__button"
                       data-i18n-attr="href:projectCase.3;aria-label:projectCase.label;title:projectCase.label"
                       aria-label="Read the case study"
                       title="Read the case study"
@@ -902,37 +916,37 @@
               </div>
             </div>
             <!-- Weather App Project Card -->
-            <div class="project__card" id="4">
+            <div class="project__card">
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle4" class="project__title">Weather App</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
                       ></use>
                     </svg>
                   </div>
@@ -943,7 +957,7 @@
                   <div class="project__buttons">
                     <a
                       href="/projects/weather-app/"
-                      class="project__button project__button--case"
+                      class="project__button"
                       data-i18n-attr="href:projectCase.4;aria-label:projectCase.label;title:projectCase.label"
                       aria-label="Read the case study"
                       title="Read the case study"
@@ -977,37 +991,37 @@
               </div>
             </div>
             <!-- Fortune Cookie Project Card -->
-            <div class="project__card" id="5">
+            <div class="project__card">
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle5" class="project__title">Fortune Cookie App</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconHTML"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconCSS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconViteJS"
                       ></use>
                     </svg>
                   </div>
@@ -1018,7 +1032,7 @@
                   <div class="project__buttons">
                     <a
                       href="/projects/fortune-cookie/"
-                      class="project__button project__button--case"
+                      class="project__button"
                       data-i18n-attr="href:projectCase.5;aria-label:projectCase.label;title:projectCase.label"
                       aria-label="Read the case study"
                       title="Read the case study"
@@ -1053,37 +1067,37 @@
             </div>
 
             <!-- Traktl Project Card -->
-            <div class="project__card" id="6">
+            <div class="project__card">
               <div class="project__card-inner">
                 <!-- Front -->
                 <div class="project__card-front">
-                  <div class="project__image--container"></div>
+                  <div class="project__image-container"></div>
                   <h3 data-i18n="projectTitle6" class="project__title">Traktl</h3>
                   <p data-i18n="projectSubtitle" class="project__subtitle">Tech Stack</p>
                   <div class="project__tech-stack">
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconReact"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconReact"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconNodeJS"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconNodeJS"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconExpress"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconExpress"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconMongoDb"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconMongoDb"
                       ></use>
                     </svg>
                     <svg class="project__tech-icon">
                       <use
-                        xlink:href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
+                        href="/assets/img/skills.svg?v=9644dc8f#iconJavascript"
                       ></use>
                     </svg>
                   </div>
@@ -1094,7 +1108,7 @@
                   <div class="project__buttons">
                     <a
                       href="/projects/traktl/"
-                      class="project__button project__button--case"
+                      class="project__button"
                       data-i18n-attr="href:projectCase.6;aria-label:projectCase.label;title:projectCase.label"
                       aria-label="Read the case study"
                       title="Read the case study"
@@ -1131,13 +1145,13 @@
 
           <button
             class="project__nav project__nav--next"
-            aria-label="Siguiente proyecto"
+            data-i18n-attr="aria-label:projectsCarousel.next"
+            aria-label="Next project"
           >
-            <i class="bx bx-chevron-right"></i>
+            <i class="bx bx-chevron-right" aria-hidden="true"></i>
           </button>
-          <a href="#" class="visuallyhidden project__card--controller"
-            >Carousel controller</a
-          >
+          <a href="#" class="visually-hidden project__carousel-controller" data-i18n="projectsCarousel.keyboard"
+            >Browse the projects with the arrow keys</a>
         </div>
       </section>
 
@@ -1159,7 +1173,7 @@
             </div>
           </li>
         </ul>
-        <!-- Desactivado: la cuenta de Dribbble todavía no es Pro (el perfil aún no se puede usar).
+        <!-- Disabled: the Dribbble account isn't Pro yet (the profile can't be used yet).
         <a class="btn btn--primary designs__more" href="https://dribbble.com/Alan3XS" target="_blank" rel="noopener">See more on Dribbble</a>
         -->
       </section>
@@ -1170,7 +1184,7 @@
       <section id="contact" tabindex="-1" class="contact section">
         <h2 data-i18n="contactTitle" class="section__title">Contact</h2>
 
-        <div class="contact__container grid--container">
+        <div class="contact__container grid-container">
           <div class="contact__info">
             <p data-i18n="contactInfoDescription" class="contact__info-description">Write me 👨🏻‍💻</p>
 
@@ -1194,7 +1208,6 @@
 
                 <span class="contact__info-mail">
                   <a
-                    id="mail"
                     href="mailto:hello@alanquintana.pro"
                     target="_blank"
                     rel="noreferrer nofollow"
@@ -1274,12 +1287,12 @@
               </div>
 
               <dialog id="modal" closedby="any" aria-labelledby="modal-message">
-                <div class="modal-content">
+                <div class="modal__content">
                   <p id="modal-message" data-i18n="contactForm.formSuccess">Done! I got your message.</p>
-                  <div class="resume__modal-content">
+                  <div class="modal__actions">
                     <button
                       type="button"
-                      id="btn_close-modal"
+                      id="close-modal-button"
                       class="btn btn--primary"
                       autofocus
                     >
@@ -1299,7 +1312,7 @@
     </main>
 
     <footer class="footer section">
-      <div class="footer__container grid--container">
+      <div class="footer__container grid-container">
         <div class="footer__info">
           <h3 class="footer__title">Alan Quintana</h3>
           <span data-i18n="footerDescription" class="footer__description">Made with ❤️ and ☕. Thanks to my tutor Alejandra Olazagasti</span>

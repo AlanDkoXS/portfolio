@@ -1,16 +1,16 @@
-// Loader (solo en la primera carga de la sesión; ver script en <head>).
-// Caracteres de código caen desde arriba, se acomodan y se convierten en
-// "alanquintana"; al terminar de cargar la página se dispersan y aparece el
-// hero. Con "reducir movimiento" solo aparece el nombre y se desvanece.
+// Loader (only on the first load of the session; see the script in <head>).
+// Code characters fall from the top, settle and turn into
+// "alanquintana"; once the page finishes loading they scatter and the
+// hero appears. With "reduce motion" only the name appears and fades out.
 import { prefersReducedMotion } from './motion.js';
+import { sessionStore } from './storage.js';
 import { typeGreeting } from './typing.js';
 
 const loaderContainer = document.querySelector('.loader');
-const spriteImage = document.querySelector('.home__image');
 
-// Nunca hacer esperar más que esto, aunque algún recurso tarde
+// Never make the visitor wait longer than this, even if some resource is slow
 const MAX_WAIT_MS = 3000;
-// Pausa con el nombre ya formado antes de dispersarlo
+// Pause with the name already formed before scattering it
 const HOLD_MS = 400;
 const GLYPHS = ['{', '}', '<', '>', '/', '$', '@', '#', '&', '*', ';', '?', '=', '+', 'ñ', '3', '%', '[', ']', '_'];
 const NAME = [
@@ -20,15 +20,25 @@ const NAME = [
 
 const random = (min, max) => min + Math.random() * (max - min);
 
+// Resolves when the hero is shown (html.hero-ready): right away when the loader
+// is skipped, otherwise when it leaves. Effects that only matter once the hero
+// is visible wait for it (main.js).
+let markHeroReady;
+export const heroReady = new Promise((resolve) => (markHeroReady = resolve));
+const showHero = () => {
+  document.documentElement.classList.add('hero-ready');
+  typeGreeting();
+  markHeroReady();
+};
+
 function buildName(word) {
-  // Reemplaza los dos <span> del nombre por letras animables. Devuelve una
-  // promesa que se cumple cuando aterriza la última letra.
+  // Replaces the name's two <span>s with animatable letters. Returns a
+  // promise that resolves when the last letter lands.
   let resolveDone;
   const done = new Promise((resolve) => (resolveDone = resolve));
   const total = NAME.reduce((n, [part]) => n + part.length, 0);
   let landed = 0;
-  word.textContent = '';
-  word.setAttribute('aria-label', 'alanquintana');
+  const chars = [];
   let i = 0;
   for (const [part, weight] of NAME) {
     for (const char of part) {
@@ -42,20 +52,22 @@ function buildName(word) {
       span.style.setProperty('--sx', `${random(-45, 45).toFixed(1)}vw`);
       span.style.setProperty('--sy', `${random(-40, 40).toFixed(1)}vh`);
       span.style.setProperty('--sr', `${random(-180, 180).toFixed(0)}deg`);
-      // Al aterrizar, el símbolo se convierte en la letra real
+      // On landing, the symbol turns into the real letter
       span.addEventListener('animationend', (e) => {
         if (e.animationName !== 'loader-char-fall') return;
         span.textContent = char;
         if (++landed === total) resolveDone();
       });
-      word.append(span);
+      chars.push(span);
     }
   }
+  word.setAttribute('aria-label', 'alanquintana');
+  word.replaceChildren(...chars);
   return done;
 }
 
-// Poppins 200/600 (precargadas desde el <head>) y el logo (sprite externo de
-// <use>). Con tope de ASSETS_WAIT_MS: con red lenta la animación empieza igual.
+// Poppins 200/600 (preloaded from the <head>) and the logo (external <use>
+// sprite). Capped at ASSETS_WAIT_MS: on a slow network the animation starts anyway.
 const ASSETS_WAIT_MS = 1200;
 function assetsReady() {
   const fonts = document.fonts
@@ -69,21 +81,19 @@ function assetsReady() {
 function loader() {
   let done = false;
 
-  // Ya se vio en esta sesión: el <head> lo ocultó; solo arrancar el sprite
+  // Already seen this session: the <head> hid it
   if (document.documentElement.classList.contains('skip-loader')) {
-    spriteImage?.classList.add('animate');
-    document.documentElement.classList.add('hero-ready');
-    typeGreeting();
+    showHero();
     return;
   }
 
   const word = loaderContainer?.querySelector('.loader__name');
   const animated = Boolean(word) && !prefersReducedMotion();
-  // El logo y el nombre se muestran (y la animación empieza) cuando ya
-  // cargaron la tipografía y el logo; mientras, solo se ve el fondo
+  // The logo and the name are shown (and the animation starts) once the
+  // typeface and the logo have loaded; meanwhile, only the background is visible
   const nameReady = assetsReady().then(() => {
     loaderContainer?.classList.add('loader--ready');
-    if (!animated) return; // sin animación, el nombre ya está "listo"
+    if (!animated) return; // without animation, the name is already "ready"
     loaderContainer.classList.add('loader--animated');
     return buildName(word).then(() => new Promise((r) => setTimeout(r, HOLD_MS)));
   });
@@ -93,40 +103,31 @@ function loader() {
     done = true;
 
     if (loaderContainer) {
-      // Las letras se dispersan hacia el fondo mientras el loader se desvanece
+      // The letters scatter toward the background while the loader fades out
       loaderContainer.classList.add('loader--hidden');
     }
-    try {
-      sessionStorage.setItem('aq-loaded', '1');
-    } catch {
-      /* sin almacenamiento: el loader saldrá en cada carga */
-    }
+    // No storage: the loader will show on every load
+    sessionStore.set('aq-loaded', '1');
 
-    // El saludo empieza a escribirse cuando el loader ya se está yendo
-    setTimeout(() => {
-      document.documentElement.classList.add('hero-ready');
-      typeGreeting();
-    }, 350);
-
-    setTimeout(() => {
-      spriteImage?.classList.add('animate');
-    }, 500);
+    // The greeting starts typing when the loader is already leaving
+    setTimeout(showHero, 350);
   };
 
-  // Se oculta cuando la página cargó Y el nombre terminó de formarse
-  // (el tope de MAX_WAIT_MS sigue aplicando)
+  // It hides when the page has loaded AND the name has finished forming
+  // (the MAX_WAIT_MS cap still applies)
   const hideAfterMinimum = () => {
     nameReady.then(hide);
   };
 
   // main.js runs this at DOMContentLoaded, but with a warm cache `load`
-  // may already have fired; in that case hide right away.
+  // may already have fired; in that case don't wait for it.
   if (document.readyState === 'complete') {
     hideAfterMinimum();
   } else {
     window.addEventListener('load', hideAfterMinimum, { once: true });
-    setTimeout(hide, MAX_WAIT_MS);
   }
+  // Either way, never longer than MAX_WAIT_MS (e.g. if the name never forms)
+  setTimeout(hide, MAX_WAIT_MS);
 }
 
-export default loader;
+export { loader };

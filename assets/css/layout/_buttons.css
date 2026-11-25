@@ -1,11 +1,11 @@
-/* ============= Buttons ============= */
+/* === Buttons === */
 
-/* Estilo cartoon, a juego con las ilustraciones: color plano, contorno de tinta
-   y sombra dura desplazada (sin difuminado ni degradados). Al presionar, el
-   botón "se hunde" sobre su sombra. */
+/* Cartoon style, matching the illustrations: flat color, ink outline
+   and offset hard shadow (no blur or gradients). When pressed, the
+   button "sinks" onto its shadow. */
 .btn {
   --btn-ink: var(--btn-ink-color);
-  --btn-offset: 4px;
+  --btn-offset: var(--hard-offset);
 
   position: relative;
   isolation: isolate;
@@ -19,16 +19,18 @@
   margin: var(--margin-small) 0;
 
   font-family: inherit;
-  font-size: inherit;
+  font-size: var(--btn-font-size);
+  /* height = one line + the padding: the font's own line, not the body's */
+  line-height: normal;
   font-weight: var(--font-bold);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  /* Con texto del sistema grande el botón no se sale de la pantalla: su
-     texto pasa a otra línea en vez de forzar una sola. Sin balance: en una
-     caja con fondo/borde no cambia el ancho y solo deja hueco dentro */
+  /* With large system text the button doesn't overflow the screen: its text
+     wraps to another line instead of forcing a single one. No balance: in a box
+     with background/border it doesn't change the width and only leaves a gap inside */
   max-width: 100%;
-  /* break-word (no anywhere): solo parte una palabra si no cabe sola en
-     la línea; anywhere encogía el botón y partía "ENGL/ISH" */
+  /* break-word (not anywhere): only breaks a word if it doesn't fit alone
+     on the line; anywhere shrank the button and broke "ENGL/ISH" */
   overflow-wrap: break-word;
   text-align: center;
   color: var(--on-accent-color);
@@ -40,101 +42,129 @@
 
   cursor: pointer;
   transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    background-color 0.15s ease,
-    color 0.15s ease;
+    transform var(--press-duration) ease,
+    box-shadow var(--press-duration) ease,
+    background-color var(--press-duration) ease,
+    color var(--press-duration) ease;
+
+  /* Its grainy inner shadow (::after) is defined below, shared with the
+     other gold pieces: here only the buttons' own grain and mask, which
+     change with the scheme (see _variables.css) */
+  &::after {
+    --inset-grain: var(--btn-grain);
+    --inset-grain-mask: var(--btn-grain-mask);
+  }
+
+  i {
+    font-size: 1.25em;
+    transition: transform 0.2s ease;
+  }
+
+  &:active {
+    transform: translate(var(--btn-offset), var(--btn-offset));
+    box-shadow: 0 0 0 var(--btn-ink), var(--btn-inset-shadow);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 }
 
-/* Sombra interna granulada (abajo y derecha, la luz viene de arriba-izquierda
-   como la sombra dura). Queda detrás del texto gracias a isolation. */
-.btn::after {
+/* === Grainy inner shadow (shared) ===
+   Grain at the bottom and right of a gold piece (the light comes from the
+   top left, like the hard shadow); it stays behind the text thanks to the
+   host's isolation. Defined once for the buttons, the card buttons, the
+   tech tags of the case pages and the soft-skill bricks; each one can swap
+   the image (--inset-grain) or the mask (--inset-grain-mask) on the
+   pseudo-element itself. */
+.btn::after,
+.project__button::after,
+.project-stack li::after,
+.skills__tag::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--btn-grain);
-  background-size: 120px;
-  -webkit-mask: var(--btn-grain-mask);
-  mask: var(--btn-grain-mask);
+  background: var(--inset-grain, var(--grain-gold));
+  background-size: var(--grain-gold-size);
+  -webkit-mask: var(--inset-grain-mask, var(--grain-mask));
+  mask: var(--inset-grain-mask, var(--grain-mask));
   pointer-events: none;
 }
 
-.btn i {
-  font-size: 1.25em;
-  transition: transform 0.2s ease;
+/* Desktop: every button is capped; the ones that need more width reset it
+   (max-width: none) in their own partial */
+@media (width >= 600px) {
+  .btn {
+    max-width: 300px;
+  }
 }
 
-
-.btn:active {
-  transform: translate(var(--btn-offset), var(--btn-offset));
-  box-shadow: 0 0 0 var(--btn-ink), var(--btn-inset-shadow);
+/* Primary (main actions): the default .btn look, solid gold. The modifier
+   names it in the markup; it repeats .btn's fill so that it means the same
+   wherever it's used */
+.btn--primary {
+  color: var(--on-accent-color);
+  background: var(--accent-color);
 }
 
-.btn:focus-visible {
-  outline: 3px solid var(--accent-ink);
-  outline-offset: 4px;
-}
-
-.btn:disabled,
-.btn[aria-disabled='true'] {
-  opacity: 0.55;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-/* Secundario: mismo contorno y sombra, sin relleno; se rellena en hover */
+/* Secondary: same outline and shadow, no fill; it fills on hover */
 .btn--ghost {
-  color: var(--primary-color); /* turquesa oscuro en claro, dorado en oscuro */
+  color: var(--primary-color); /* dark teal in light, gold in dark */
   background: transparent;
-  border-color: var(--accent-ink); /* tinta en claro, dorado en oscuro */
+  border-color: var(--accent-ink); /* ink in light, gold in dark */
   box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--accent-color);
+
+  /* Without a fill there is no inner shadow; it appears when filled on hover */
+  &::after {
+    opacity: 0;
+  }
 }
 
-/* Sin relleno no hay sombra interna; aparece al rellenarse en hover */
-.btn--ghost::after {
-  opacity: 0;
-}
-
-/* Hover solo con puntero real: en pantallas táctiles se queda "pegado" tras tocar */
+/* Hover only with a real pointer: on touch screens it stays "stuck" after a tap */
 @media (hover: hover) {
   .btn:hover {
     background: var(--btn-hover-bg);
     transform: translate(-2px, -2px);
     box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--btn-inset-shadow);
+
+    /* The grain rises a bit on hover */
+    &::after {
+      --inset-grain-mask: var(--btn-grain-mask-hover);
+    }
+
+    i {
+      transform: translateX(2px);
+    }
   }
 
-  /* El grano sube un poco al pasar el mouse */
-  .btn:hover::after {
-    -webkit-mask: var(--btn-grain-mask-hover);
-    mask: var(--btn-grain-mask-hover);
-  }
-
-  .btn:hover i {
-    transform: translateX(2px);
-  }
-
+  /* The lifted shadow comes from .btn:hover */
   .btn--ghost:hover {
     color: var(--on-accent-color);
     background: var(--accent-color);
-    box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink), var(--btn-inset-shadow);
-  }
 
-  .btn--ghost:hover::after {
-    opacity: 1;
+    &::after {
+      opacity: 1;
+    }
   }
 }
 
-/* Móvil / táctil: sin hover el grano se quedaba en su versión chica y, en
-   pantallas de alta densidad, los puntos del ruido salen tan finos que casi no
-   se ven. Aquí va más extendido (la máscara del hover) y con la variante de
-   puntos más grandes y densos. */
-@media (hover: none), (max-width: 599px) {
+/* Mobile / touch: without hover the grain stayed in its small version and,
+   on high-density screens, the noise dots come out so fine they're barely
+   visible. Here it spreads further (the hover mask) and uses the variant
+   with larger, denser dots. */
+@media (hover: none), (width < 600px) {
   .btn::after {
-    background: var(--btn-grain-strong);
-    background-size: 120px;
-    -webkit-mask: var(--btn-grain-mask-hover);
-    mask: var(--btn-grain-mask-hover);
+    --inset-grain: var(--btn-grain-strong);
+    --inset-grain-mask: var(--btn-grain-mask-hover);
   }
 }
 
@@ -142,5 +172,47 @@
   .btn,
   .btn i {
     transition: none;
+  }
+}
+
+/* === Outlined icon buttons ===
+   Carousel arrows (.project__nav) and the marquee pause button
+   (.skills__motion-toggle): gold outline and hard shadow on the page
+   background, filled on hover and sunk onto the shadow when pressed. Each one
+   sets its size and position in its partial; --btn-offset is the length of
+   the hard shadow (the pause button shortens it). */
+.project__nav,
+.skills__motion-toggle {
+  --btn-offset: var(--hard-offset);
+
+  color: var(--accent-color);
+  background-color: var(--bg-color-section);
+  border: 2px solid var(--accent-color);
+  border-radius: var(--border-radius-small);
+  box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--accent-color);
+  cursor: pointer;
+  transition:
+    background-color var(--press-duration),
+    color var(--press-duration),
+    translate var(--press-duration),
+    box-shadow var(--press-duration);
+
+  @media (hover: hover) {
+    &:hover {
+      color: var(--on-accent-color);
+      background-color: var(--accent-color);
+      translate: -2px -2px;
+      box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--btn-ink-color);
+    }
+  }
+
+  &:active {
+    translate: var(--btn-offset) var(--btn-offset);
+    box-shadow: 0 0 0 var(--accent-color);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
   }
 }

@@ -1,9 +1,7 @@
-// Perfil para buscadores de IA y agentes: lo usa scripts/build-i18n.mjs para
-// generar /llms.txt (índice) y /llms-full.txt (perfil completo EN + ES),
-// junto con scripts/data/projects.mjs y scripts/cv/data.mjs.
-// Solo hechos verificables (sitio, CV, beaniwa.com, repositorios).
-
-export const SITE = 'https://alanquintana.pro';
+// Profile for AI search engines and agents: scripts/build-i18n.mjs uses it to
+// generate /llms.txt (index) and /llms-full.txt (full profile EN + ES),
+// together with scripts/data/projects.mjs and scripts/cv/data.mjs.
+// Verifiable facts only (site, CV, beaniwa.com, repositories).
 
 export default {
   name: 'Alan Quintana',

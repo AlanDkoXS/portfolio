@@ -1,121 +1,80 @@
-/* ============= Contact Section ============= */
+/* === Contact Section === */
 
-.contact {
-  .contact__container {
-    gap: 2rem;
-    .contact__info {
-      .contatc__info-data {
-        font-style: normal;
-        display: flex;
-        color: inherit;
-        text-decoration: none;
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-      }
-    }
+.contact .contact__container {
+  gap: 2rem;
 
-    .contact__info-data {
-      .contact__form a {
-        color: inherit;
-        text-decoration: none;
-      }
+  /* The surface itself (background, shadow, grain) is shared with the case
+     pages' call to action: see "Shared surface" at the end of this file */
+  .contact__form {
+    width: 100%;
+    margin: 0 auto;
+    /* same as the case pages' CTA; desktop has its own (below) */
+    padding: var(--surface-padding);
+  }
 
-      .contact__form a:visited {
-        color: inherit;
-      }
-    }
+  .contact__form .contact__form-container {
+    width: 100%;
+  }
 
-    .contact__form {
-      width: 100%;
-      padding: 3rem 1.5rem 2rem;
-      /* Más claro que los campos para que se distingan; con textura sutil */
-      position: relative;
-      isolation: isolate;
-      background-color: var(--bg-color-buttons);
-      border-radius: var(--border-radius-large);
-      box-shadow: 0 8px 24px var(--shadow-color);
-
-      &::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        border-radius: inherit;
-        background: var(--grain-ink);
-        background-size: 140px;
-        opacity: 0.25;
-        pointer-events: none;
-      }
-      margin: 0 auto;
-
-      .contact__form-container {
-        width: 100%;
-        
-        .contact__form-group {
-          margin-bottom: .5rem;
-
-          .contact__form-label {
-            display: block;
-            margin-bottom: .5rem;
-            margin-top: .5rem;
-          }
-
-          .contact__form-input {
-            width: 100%;
-            font-family: inherit;
-            /* altura de input normal (~44px): relleno en px para que no
-               crezca con el tamaño de texto del sistema; solo el mensaje
-               es más alto y crece */
-            padding: 10px 14px;
-            font-size: 1rem;
-            line-height: 1.5;
-            field-sizing: fixed;
-            font-weight: 600;
-            border-radius: var(--border-radius-default);
-            background-color: var(--input-bg);
-            color: var(--primary-color);
-            border: 0;
-            transition: outline-color 0.2s ease;
-
-            /* Al enfocar, el mismo contorno dorado que los botones
-               (.btn:focus-visible) */
-            &:focus {
-              outline: 3px solid var(--accent-ink);
-              outline-offset: 4px;
-            }
-          }
-
-          /* Mensaje: empieza al doble de alto que los demás campos y crece
-             con el texto (field-sizing; send_form.js lo imita en
-             navegadores sin soporte) hasta un tope, luego hace scroll */
-          textarea.contact__form-input {
-            resize: none;
-            field-sizing: content;
-            min-block-size: calc(2 * (1lh + 20px));
-            max-block-size: min(12lh, 40svh);
-            overflow-y: auto;
-          }
-        }
-      }
-
-      .contact__form-button {
-        width: 100% !important;
-        max-width: none !important;
-        margin-top: var(--mr-4);
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        text-align: center;
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-      }
-    }
+  .contact__form .contact__form-button {
+    width: 100%;
+    max-width: none;
+    margin-top: 0;
+    margin-inline: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
   }
 }
 
-/* Datos de contacto: ícono + texto alineados, sin cortes raros */
+.contact .contact__container .contact__form .contact__form-container .contact__form-group {
+  margin-bottom: 0.5rem;
+
+  .contact__form-label {
+    display: block;
+    margin-block: 0.5rem;
+  }
+
+  .contact__form-input {
+    width: 100%;
+    font-family: inherit;
+    /* regular input height (~44px): padding in px so it doesn't
+       grow with the system text size; only the message
+       is taller and grows */
+    padding: 10px 14px;
+    font-size: 1rem;
+    line-height: 1.5;
+    field-sizing: fixed;
+    font-weight: 600;
+    border-radius: var(--border-radius-default);
+    background-color: var(--input-bg);
+    color: var(--primary-color);
+    border: 0;
+    transition: outline-color 0.2s ease;
+
+    /* On focus, the same gold outline as the buttons
+       (.btn:focus-visible) */
+    &:focus {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-offset);
+    }
+  }
+
+  /* Message: starts at twice the height of the other fields and grows
+     with the text (field-sizing; contact-form.js mimics it in
+     browsers without support) up to a cap, then scrolls */
+  textarea.contact__form-input {
+    resize: none;
+    field-sizing: content;
+    min-block-size: calc(2 * (1lh + 20px));
+    max-block-size: min(12lh, 40svh);
+    overflow-y: auto;
+  }
+}
+
+/* Contact details: icon + text aligned, no awkward breaks */
 .contact__info-data {
   display: grid;
   gap: 0.75rem;
@@ -126,7 +85,7 @@
 .contact__info-item {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: var(--space-2);
   min-width: 0;
 
   i {
@@ -141,44 +100,35 @@
   }
 }
 
-/* CONTACT MIN WIDTH 600px ========================== */
-@media (min-width: 600px) {
+/* === Contact: width >= 600px ===
+   The whole section fits in one screen (also when zoomed) */
+
+@media (width >= 600px) {
   .contact {
+    &.section {
+      padding-block: 0.75rem;
+    }
+
+    .section__title {
+      margin-block: 0 var(--space-title);
+    }
+
     .contact__container {
       grid-template-columns: minmax(220px, 0.8fr) 1.6fr;
       align-items: start;
+      gap: 1.5rem 2rem;
     }
   }
 
   .contact__info-item {
     font-size: 1rem;
   }
-}
-
-/* Escritorio: toda la sección cabe en una pantalla (también con zoom) */
-@media (min-width: 600px) {
-  .contact.section {
-    padding-block: 0.75rem;
-  }
-
-  .contact .section__title {
-    margin-block: 0 0.75rem;
-  }
-
-  .contact .contact__container {
-    gap: 1.5rem 2rem;
-  }
 
   #contact .contact__container .contact__form {
     padding: clamp(1rem, 3svh, 1.75rem) 1.5rem;
   }
 
-  .contact__form-title {
-    font-size: calc(var(--title-scale) * clamp(1rem, 0.6rem + 1.2vw, 1.3rem));
-    margin-bottom: 0.25rem;
-  }
-
-  /* Nombre y correo lado a lado; asunto, mensaje y botón a todo lo ancho */
+  /* Name and email side by side; subject, message and button full width */
   #contact .contact__container .contact__form .contact__form-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -218,49 +168,75 @@
   }
 }
 
-/* Pantallas bajas (laptops con zoom): se quita lo redundante para que todo
-   el formulario quepa sin hacer scroll */
-@media (min-width: 600px) and (max-height: 720px) {
-  #contact .section__title {
-    margin-block: 0 0.4rem;
-  }
+/* === Contact: short screens (zoomed laptops) ===
+   Redundant parts are removed so the whole form fits without scrolling */
 
-  #contact .contact__container .contact__form {
-    padding-block: 0.9rem;
-  }
-
-  #contact .contact__form-title {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-  }
-
-  #contact .contact__container .contact__form .contact__form-container {
-    .contact__form-group .contact__form-label {
-      margin-block: 0.25rem 0.2rem;
-      font-size: 0.9rem;
+@media (width >= 600px) and (height <= 720px) {
+  #contact {
+    .section__title {
+      margin-block: 0 0.4rem;
     }
 
-    .contact__form-button {
-      margin-top: 0.6rem;
-      padding-block: 0.6rem;
+    .contact__container .contact__form {
+      padding-block: 0.9rem;
+    }
+
+    /* visually hidden: still read by screen readers */
+    .contact__form-title {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    .contact__container .contact__form .contact__form-container {
+      .contact__form-group .contact__form-label {
+        margin-block: 0.25rem 0.2rem;
+        font-size: 0.9rem;
+      }
+
+      .contact__form-button {
+        margin-top: 0.6rem;
+        padding-block: 0.6rem;
+      }
     }
   }
 }
 
-/* Textura visible en el formulario y en el "¿Tienes un proyecto en mente?" de
-   las páginas de caso (mismo estilo): los puntos del grano de la página, en una
-   capa propia encima del grano oscuro. Los dos llevan exactamente lo mismo. */
+/* === Shared surface: contact form + case page call to action ===
+   The form and the "Have a project in mind?" block of the case pages
+   (.project-cta, laid out in _project-page.css) carry exactly the same
+   surface: lighter than the fields so they stand out, soft shadow and two
+   texture layers behind the content (::before = page grain dots,
+   ::after = dark grain painted over them). */
+
+.contact .contact__container .contact__form,
+.project-cta {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--surface-raised-bg);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-soft-md);
+}
+
+/* Page grain dots */
 .contact .contact__container .contact__form::before,
 .project-cta::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  border-radius: inherit;
   background: url('/assets/img/bgGrain-tile.webp') 0 0 / 256px 256px;
+  border-radius: inherit;
   opacity: 0.1;
   pointer-events: none;
+}
+
+/* Dark grain over the dots: the shared ink overlay of _background.css, a
+   bit denser and following the rounded corners */
+.contact .contact__container .contact__form::after,
+.project-cta::after {
+  --grain-opacity: 0.25;
+  border-radius: inherit;
 }

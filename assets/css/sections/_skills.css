@@ -1,48 +1,35 @@
-/* ============= Skills Section ============= */
+/* === Skills Section === */
 
-.skills__wrapper .skills__icon-container {
+.skills__icons {
+  display: grid;
+  /* minmax(0, …) and min-width: 0: the looping row is very wide (max-content)
+     and without this it would widen the column and the whole page */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.skills__group {
+  min-width: 0;
+}
+
+/* Group title ("Development Tools"): a positioned box. Its header carries
+   the h3's bottom margin, so the pause button stays centred on the title */
+.skills__title {
+  position: relative;
+  gap: var(--gap-small);
+  margin-block-end: 0;
+}
+
+/* === Tech icon (looping row and accordion grids) === */
+
+.skills__icon-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-size: var(--small-font-size);
-  margin: var(--margin-small);
-}
-
-.skills__icons {
-  gap: var(--gap-medium);
-}
-.skills__title {
-  margin: var(--margin-medium);
-}
-
-.skills__wrapper .skills__icons {
-  display: grid;
-  /* minmax(0, …) y min-width: 0: la fila en bucle es muy ancha (max-content)
-     y sin esto ensancharía la columna y toda la página */
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1.5rem;
-  min-width: 0;
-}
-
-.skills__group,
-.skills__marquee {
-  min-width: 0;
-}
-
-.skills__wrapper .skills__icons .skills__title {
-  text-align: start;
-  position: relative;
-  gap: var(--gap-small);
-}
-
-.skills__wrapper .skills__icons .skills__title::after {
-  content: '';
-  position: absolute;
-  bottom: -0.5rem;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .skills__icon {
@@ -50,8 +37,13 @@
   height: 64px;
   object-fit: contain;
   fill: var(--primary-color);
-  /* Sombra interna granulada, como los botones (filtro #grain-inset en index.html) */
+  /* Grainy inner shadow, like the buttons (#grain-inset filter in index.html) */
   filter: var(--icon-grain);
+
+  @media (width >= 600px) {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .skills__icon-title {
@@ -59,76 +51,100 @@
   white-space: nowrap;
 }
 
-.skills__tags-container {
-  margin-top: 1rem;
-}
+/* === Development: title + pause button === */
 
-.skills__tags {
+/* Title on the left and the pause button at the right edge */
+.skills__group-header {
   display: flex;
-  flex-direction: column;
-  /* Separada de las filas de tecnologías de arriba */
-  margin-top: clamp(2.5rem, 6vw, 4rem);
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-block: 2rem var(--space-title);
 }
 
-.skills__tags .skills__tags-title {
-  align-self: stretch; /* a la izquierda, aunque .flex--container centra */
-  margin-bottom: 0.25rem;
+/* Pause / resume button: the look (outline, hard shadow, hover, press,
+   focus) is the "Outlined icon buttons" rule of _buttons.css, with a
+   shorter shadow */
+.skills__motion-toggle {
+  --btn-offset: var(--hard-offset-sm);
+
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
+  padding: 0;
+  font: inherit;
+
+  &[hidden] {
+    display: none;
+  }
+
+  i {
+    font-size: var(--icon-btn-glyph);
+  }
+
+  /* Icon only: the text is left for screen readers */
+  span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 
-.skills__tags .skills__tags-container {
-  /* ver "muro de ladrillos" al final */
-  margin-top: 0.75rem;
+.skills__motion-play,
+.skills__icons.is-paused .skills__motion-pause {
+  display: none;
 }
 
-/* ============= Filas en bucle infinito (una por stack) =============
-   Cada fila tiene 4 copias de la lista (la 1.ª es la accesible; las demás
-   aria-hidden) y se desplaza de izquierda a derecha la mitad de su ancho,
-   así el bucle no tiene saltos. Cada fila define --marquee-duration. */
+.skills__icons.is-paused .skills__motion-play {
+  display: inline;
+}
+
+/* === Development: infinite looping row === */
+
+/* The row has 4 copies of the list (the 1st is the accessible one; the rest
+   aria-hidden) and moves by half its width, so the loop has no jumps.
+   The row defines --marquee-duration inline. */
 .skills__marquee {
   --marquee-gap: 1.25rem;
-  /* Decorativo: no se puede tocar, seleccionar ni arrastrar */
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
-  /* De orilla a orilla del navegador, aunque la sección tenga márgenes
-     (body ya tiene overflow-x: hidden, así que no aparece scroll lateral) */
+  /* Edge to edge of the browser, even if the section has margins
+     (body already has overflow-x: hidden, so no sideways scroll appears) */
   --viewport-w: calc(100vw - var(--scrollbar-w, 0px));
   width: var(--viewport-w);
+  min-width: 0;
   margin-inline: calc(50% - var(--viewport-w) / 2);
   overflow: hidden;
+  /* Decorative: can't be tapped, selected or dragged */
+  pointer-events: none;
 }
 
 .skills__track {
   display: flex;
   width: max-content;
-}
 
-.skills__list {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--marquee-gap);
-  /* el hueco entre copias = el hueco entre íconos: periodo exacto */
-  padding-inline-end: var(--marquee-gap);
-}
-
-.skills__wrapper .skills__list .skills__icon-container {
-  margin: 0;
-  min-width: 96px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .skills__track {
+  @media (prefers-reduced-motion: no-preference) {
     animation: skills-marquee var(--marquee-duration, 40s) linear infinite;
     will-change: transform;
   }
 
-  /* Solo se detiene con el botón de pausa (no con el mouse) */
+  /* With "reduce motion": no loop, a single copy in centered rows */
+  @media (prefers-reduced-motion: reduce) {
+    width: auto;
+  }
+}
+
+/* Only stops with the pause button (not on hover) */
+@media (prefers-reduced-motion: no-preference) {
   .skills__icons.is-paused .skills__track {
     animation-play-state: paused;
   }
 }
 
-/* Frontend y Desarrollo van en sentido contrario */
+/* Rows with --reverse run in the opposite direction */
 .skills__marquee--reverse .skills__track {
   animation-direction: reverse;
 }
@@ -142,13 +158,18 @@
   }
 }
 
-/* Con "reducir movimiento": sin bucle, una sola copia en filas centradas */
-@media (prefers-reduced-motion: reduce) {
-  .skills__track {
-    width: auto;
+.skills__list {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--marquee-gap);
+  /* the gap between copies = the gap between icons: exact period */
+  padding-inline-end: var(--marquee-gap);
+
+  .skills__icon-container {
+    min-width: 96px;
   }
 
-  .skills__list {
+  @media (prefers-reduced-motion: reduce) {
     flex-wrap: wrap;
     justify-content: center;
     padding: 0;
@@ -159,113 +180,42 @@
   }
 }
 
-/* Botón pausar / reanudar: mismo estilo que los botones de contorno del
-   sitio (contorno y sombra dura dorados) */
-.skills__motion-toggle {
-  /* a la derecha del título de Desarrollo (ver .skills__group-header) */
-  flex: none;
-  display: inline-grid;
-  place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  padding: 0;
-  font: inherit;
-  font-size: 1.25rem;
-  color: var(--accent-color);
-  background: var(--bg-color-section);
-  border: 2px solid var(--accent-color);
-  border-radius: var(--border-radius-small);
-  box-shadow: 3px 3px 0 var(--accent-color);
-  cursor: pointer;
-  transition: background-color 0.15s, color 0.15s, translate 0.15s, box-shadow 0.15s;
+/* === Design, Frontend and Backend: accordions === */
 
-  @media (hover: hover) {
-    &:hover {
-      color: var(--on-accent-color);
-      background: var(--accent-color);
-      translate: -2px -2px;
-      box-shadow: 5px 5px 0 var(--btn-ink-color);
-    }
-  }
-
-  &:active {
-    translate: 3px 3px;
-    box-shadow: 0 0 0 var(--accent-color);
-  }
-
-  &:focus-visible {
-    outline: 3px solid var(--accent-ink);
-    outline-offset: 3px;
-  }
-
-  &[hidden] {
-    display: none;
-  }
-}
-
-.skills__motion-toggle i {
-  font-size: 1.6rem;
-}
-
-/* Solo ícono: el texto queda para lectores de pantalla */
-.skills__motion-toggle span {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.skills__motion-play,
-.skills__icons.is-paused .skills__motion-pause {
-  display: none;
-}
-
-.skills__icons.is-paused .skills__motion-play {
-  display: inline;
-}
-
-/* SKILLS MIN WIDTH 600px ========================== */
-@media (min-width: 600px) {
-  .skills .skills__wrapper .skills__icon {
-    width: 100px;
-    height: 100px;
-  }
-}
-
-
-
-/* ============= Desarrollo: título + botón de pausa =============
-   Título a la izquierda y el botón de pausa en la orilla derecha */
-.skills__group-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-block: 2rem 1.25rem;
-
-  .skills__title {
-    margin: 0;
-  }
-}
-
-/* ============= Diseño, Frontend y Backend: acordeones =============
-   <details> nativo (abre/cierra sin JS). El encabezado usa el estilo de los
-   botones de contorno (.btn .btn--ghost) y el panel es una caja con el mismo
-   contorno y sombra dura. */
+/* Native <details> (opens/closes without JS). The header uses the outline
+   button style (.btn .btn--ghost) and the panel is a box with the same
+   outline and hard shadow. */
 .skills__accordions {
   display: grid;
   gap: 1.25rem;
   margin-top: 1.5rem;
 }
 
+/* Open/close with a height transition where animating to auto is possible */
+@media (prefers-reduced-motion: no-preference) {
+  .skills__accordion {
+    interpolate-size: allow-keywords;
+
+    &::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition:
+        block-size 0.3s ease,
+        content-visibility 0.3s allow-discrete;
+    }
+
+    &[open]::details-content {
+      block-size: auto;
+    }
+  }
+}
+
 .skills__summary.btn {
-  box-sizing: border-box; /* summary no hereda el border-box global */
+  box-sizing: border-box; /* summary doesn't inherit the global border-box */
   justify-content: space-between;
-  /* 4px menos: su sombra termina donde la de la caja del panel */
-  width: calc(100% - 4px);
-  max-width: none; /* el header de escritorio limita .btn a 300px */
+  /* its shadow ends where the panel box's does */
+  width: calc(100% - var(--hard-offset));
+  max-width: none; /* .btn is capped at 300px on desktop (_buttons.css) */
   margin: 0;
   list-style: none;
   text-align: start;
@@ -274,35 +224,20 @@
     display: none;
   }
 
-  &:focus-visible {
-    outline: 3px solid var(--accent-ink);
-    outline-offset: 4px;
+  /* Same background as the panel box: the footer's (darker than the
+     page) with its own grain (::before, the shared ink overlay of
+     _background.css; ::after is the button grain). On hover it fills with
+     gold like any ghost button and the ink grain goes away. */
+  &:not(:hover) {
+    background-color: var(--footer-bg);
+  }
+
+  &:hover::before {
+    opacity: 0;
   }
 }
 
-/* Mismo fondo que la caja del panel: el del footer (más oscuro que la
-   página) con su propio grano. Al pasar el mouse se rellena de dorado como
-   cualquier botón ghost. */
-.skills__summary.btn:not(:hover) {
-  background-color: var(--footer-bg);
-}
-
-.skills__summary.btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--grain-ink);
-  background-size: 140px;
-  opacity: 0.2;
-  pointer-events: none;
-}
-
-.skills__summary.btn:hover::before {
-  opacity: 0;
-}
-
-/* el título hereda el estilo del botón (mayúsculas, color, tamaño) */
+/* the title inherits the button style (uppercase, color, size) */
 .skills__summary-title {
   margin: 0;
   font: inherit;
@@ -312,7 +247,6 @@
 
 .skills__summary-icon {
   flex: none;
-  font-size: 1.75rem;
   transition: rotate 0.25s ease;
 }
 
@@ -320,112 +254,89 @@
   rotate: 180deg;
 }
 
-/* Hueco a la derecha y abajo para que la sombra de la caja no se recorte */
+/* Gap on the right and bottom so the box shadow isn't clipped */
 .skills__panel {
-  padding: 1rem 4px 4px 0;
+  padding: 1rem var(--hard-offset) var(--hard-offset) 0;
 }
 
 .skills__grid {
   display: grid;
-  /* móvil: siempre 3 por fila (con auto-fill en rem, el texto grande del
-     sistema dejaba solo 2) */
+  /* mobile: always 3 per row (with auto-fill in rem, large system
+     text left only 2) */
   grid-template-columns: repeat(3, minmax(0, 1fr));
   container-type: inline-size;
   gap: 1.25rem 0.5rem;
   padding: 1.25rem 0.5rem;
   border: 2px solid var(--accent-ink);
   border-radius: var(--border-radius-small);
-  box-shadow: 4px 4px 0 var(--accent-color);
-  /* fondo del footer (más oscuro que la página) con su propio grano */
+  box-shadow: var(--hard-offset) var(--hard-offset) 0 var(--accent-color);
+  /* footer background (darker than the page) with its own grain (::after,
+     the shared ink overlay of _background.css) */
   position: relative;
   isolation: isolate;
   overflow: hidden;
   background-color: var(--footer-bg);
 
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--grain-ink);
-    background-size: 140px;
-    opacity: 0.2;
-    pointer-events: none;
-  }
-
-  .skills__icon-container {
-    margin: 0;
+  @media (width >= 600px) {
+    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+    padding: 1.5rem;
   }
 
   .skills__icon {
     width: 56px;
     height: 56px;
+
+    @media (width >= 600px) {
+      width: 72px;
+      height: 72px;
+    }
   }
 
-  /* el nombre se ajusta al ancho de la caja (cqi): con texto grande del
-     sistema "Creative Cloud" o "Tailwind CSS" caben en una línea */
+  /* the name scales with the box width (cqi): with large system
+     text "Creative Cloud" or "Tailwind CSS" fit on one line */
   .skills__icon-title {
-    white-space: nowrap; /* nombre en una sola línea */
     font-size: min(var(--small-font-size), 3.7cqi);
   }
 }
 
-@media (min-width: 600px) {
-  .skills .skills__wrapper .skills__grid .skills__icon {
-    width: 72px;
-    height: 72px;
-  }
+/* === Soft skills: brick wall === */
 
-  .skills__grid {
-    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
-    padding: 1.5rem;
+.skills__tags {
+  display: flex;
+  flex-direction: column;
+  /* Separated from the tech rows above */
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+
+  /* 6 columns; each brick spans 2. Three alternating courses like a
+     real bond: 1st and 3rd with 2 bricks offset by half a brick (with
+     decorative half bricks at the edges) and the 2nd with 3 bricks.
+     The gap is the mortar joint. The text scales with the brick
+     width (cqi of the wall) so long words don't overflow.
+     (.skills__tags prefix: it has to beat .flex-container) */
+  .skills__tags-container {
+    container-type: inline-size;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: minmax(3.25rem, auto);
+    gap: 6px;
+    /* .flex-container centers: here each brick fills its cell */
+    align-items: stretch;
+    justify-items: stretch;
+    justify-content: normal;
+    width: 100%;
+    max-width: 44rem;
+    align-self: flex-start;
   }
 }
 
-/* Abrir/cerrar con transición de altura donde se puede animar a auto */
-@media (prefers-reduced-motion: no-preference) {
-  .skills__accordion {
-    interpolate-size: allow-keywords;
-  }
-
-  .skills__accordion::details-content {
-    block-size: 0;
-    overflow: clip;
-    transition:
-      block-size 0.3s ease,
-      content-visibility 0.3s allow-discrete;
-  }
-
-  .skills__accordion[open]::details-content {
-    block-size: auto;
-  }
-}
-
-/* ============= Habilidades blandas: muro de ladrillos =============
-   6 columnas; cada ladrillo ocupa 2. Tres hiladas alternadas como un
-   aparejo real: 1.ª y 3.ª con 2 ladrillos corridos medio ladrillo (con
-   medios ladrillos decorativos en las orillas) y la 2.ª con 3 ladrillos.
-   La separación es la junta de mortero. El texto se ajusta al ancho del
-   ladrillo (cqi del muro) para que las palabras largas no se salgan. */
-.skills__tags .skills__tags-container {
-  container-type: inline-size;
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-auto-rows: minmax(3.25rem, auto);
-  gap: 6px;
-  /* .flex--container centra: aquí cada ladrillo llena su celda */
-  align-items: stretch;
-  justify-items: stretch;
-  justify-content: normal;
-  width: 100%;
-  max-width: 44rem;
-  align-self: flex-start;
+.skills__tags-title {
+  align-self: stretch; /* on the left, even though .flex-container centers */
 }
 
 .skills__brick-half {
-  border-radius: 3px;
+  border-radius: 3px; /* like the bricks */
   background: var(--primary-color);
-  box-shadow: inset 0 0 14px rgb(176 136 20 / 0.62);
+  box-shadow: inset 0 0 14px color-mix(in srgb, var(--gold-700) 62%, transparent);
   opacity: 0.55;
 }
 
@@ -434,7 +345,7 @@
 .skills__brick-half--r3-start { grid-area: 3 / 1; }
 .skills__brick-half--r3-end { grid-area: 3 / 6; }
 
-.skills__tags .skills__tag {
+.skills__tag {
   display: grid;
   place-items: center;
   min-width: 0;
@@ -442,43 +353,38 @@
   text-align: center;
   line-height: 1.2;
   font-weight: var(--font-bold);
-  /* ~11 caracteres caben en un ladrillo; con texto grande del sistema no
-     se sale, se ajusta al ancho del muro */
+  /* ~11 characters fit in a brick; with large system text it doesn't
+     overflow, it scales with the wall width */
   font-size: min(var(--small-font-size), 3.8cqi);
   hyphens: auto;
   overflow-wrap: break-word;
   color: var(--bg-color-section);
   background-color: var(--primary-color);
+  /* 3px on purpose, between --border-radius-xs and -small: a brick's
+     slightly worn corner, not a token */
   border-radius: 3px;
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  /* cara del ladrillo: borde interior más oscuro y un poco de relieve */
+  /* brick face: darker inner border and a bit of relief */
   box-shadow:
-    inset 0 0 14px rgb(176 136 20 / 0.62),
+    inset 0 0 14px color-mix(in srgb, var(--gold-700) 62%, transparent),
     inset 0 -3px 0 rgb(120 90 10 / 0.35);
-}
 
-/* 1.ª hilada (corrida medio ladrillo) */
-.skills__tags .skills__tag:nth-child(1) { grid-area: 1 / 2 / auto / span 2; }
-.skills__tags .skills__tag:nth-child(2) { grid-area: 1 / 4 / auto / span 2; }
-/* 2.ª hilada: 3 ladrillos completos */
-.skills__tags .skills__tag:nth-child(3) { grid-area: 2 / 1 / auto / span 2; }
-.skills__tags .skills__tag:nth-child(4) { grid-area: 2 / 3 / auto / span 2; }
-.skills__tags .skills__tag:nth-child(5) { grid-area: 2 / 5 / auto / span 2; }
-/* 3.ª hilada (corrida medio ladrillo) */
-.skills__tags .skills__tag:nth-child(6) { grid-area: 3 / 2 / auto / span 2; }
-.skills__tags .skills__tag:nth-child(7) { grid-area: 3 / 4 / auto / span 2; }
+  /* 1st course (offset by half a brick) */
+  &:nth-child(1) { grid-area: 1 / 2 / auto / span 2; }
+  &:nth-child(2) { grid-area: 1 / 4 / auto / span 2; }
+  /* 2nd course: 3 full bricks */
+  &:nth-child(3) { grid-area: 2 / 1 / auto / span 2; }
+  &:nth-child(4) { grid-area: 2 / 3 / auto / span 2; }
+  &:nth-child(5) { grid-area: 2 / 5 / auto / span 2; }
+  /* 3rd course (offset by half a brick) */
+  &:nth-child(6) { grid-area: 3 / 2 / auto / span 2; }
+  &:nth-child(7) { grid-area: 3 / 4 / auto / span 2; }
 
-/* Grano dorado oscuro que entra desde todo el borde hacia el centro */
-.skills__tags .skills__tag::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--grain-gold);
-  background-size: 120px;
-  -webkit-mask: var(--grain-mask-all);
-  mask: var(--grain-mask-all);
-  pointer-events: none;
+  /* Dark gold grain coming in from the whole border toward the center:
+     the shared grainy inner shadow of _buttons.css with a radial mask */
+  &::after {
+    --inset-grain-mask: var(--grain-mask-all);
+  }
 }

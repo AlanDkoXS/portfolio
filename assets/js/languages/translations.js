@@ -31,10 +31,10 @@ const translations = {
       },
     },
   },
-  /* El CV abre en el idioma de la página desde donde se llega (?lang=) */
+  /* The CV opens in the language of the page it's reached from (?lang=) */
   resumeHref: {
-    en: '/resume.html?lang=en',
-    es: '/resume.html?lang=es',
+    en: '/resume?lang=en',
+    es: '/resume?lang=es',
   },
   /* <-- Nav Bar --> */
   navHome: {
@@ -49,10 +49,6 @@ const translations = {
     en: 'Skills',
     es: 'Habilidades',
   },
-  /*     navPortfolio: {
-      en: 'Portfolio',
-      es: 'Portafolio',
-    }, */
   navProjects: {
     en: 'Projects',
     es: 'Proyectos',
@@ -108,7 +104,7 @@ const translations = {
     en: 'Portrait of Alan Quintana',
     es: 'Retrato de Alan Quintana',
   },
-  // Enlace de cada tarjeta de proyecto a su página de caso (scripts/data/projects.mjs)
+  // Link from each project card to its case-study page (scripts/data/projects.mjs)
   projectCase: {
     en: {
       label: 'Read the case study',
@@ -129,12 +125,12 @@ const translations = {
       6: '/es/proyectos/traktl/',
     },
   },
-  // Íconos de demo y código en las tarjetas de proyectos
+  // Demo and code icons on the project cards
   projectLinks: {
     en: { demo: 'See the demo', code: 'Check out the code' },
     es: { demo: 'Mira la demo', code: 'Revisa el código' },
   },
-  // Lámpara colgante (botón de tema en escritorio)
+  // Hanging lamp (theme button on desktop)
   lamp: {
     en: 'Light',
     es: 'Luz',
@@ -143,8 +139,8 @@ const translations = {
     en: { pause: 'Pause the animation', play: 'Play the animation' },
     es: { pause: 'Pausa la animación', play: 'Reanuda la animación' },
   },
-  // Hero en escritorio: después de la presentación (homeDescription),
-  // 7 líneas de 7 palabras cada una
+  // Desktop hero: after the intro (homeDescription),
+  // 7 lines of 7 words each
   heroLines: {
     en: [
       "I started drawing; now I build websites,",
@@ -225,6 +221,12 @@ const translations = {
     en: 'Projects',
     es: 'Proyectos',
   },
+  // Carousel controls: arrow buttons and the keyboard controller link
+  // (hidden until it gets keyboard focus)
+  projectsCarousel: {
+    en: { prev: 'Previous project', next: 'Next project', keyboard: 'Browse the projects with the arrow keys' },
+    es: { prev: 'Proyecto anterior', next: 'Siguiente proyecto', keyboard: 'Recorre los proyectos con las flechas del teclado' },
+  },
   projectSubtitle: {
     en: 'Tech Stack',
     es: 'Tecnologías',
@@ -298,7 +300,9 @@ const translations = {
       subject: 'Subject',
       message: 'Message',
       send: 'Send your message',
+      sending: 'Sending...',
       formSuccess: 'Done! I got your message.',
+      formError: "Your message didn't go through. Write to me at hello@alanquintana.pro",
       close: 'Got it',
     },
     es: {
@@ -307,7 +311,9 @@ const translations = {
       subject: 'Asunto',
       message: 'Mensaje',
       send: 'Envía tu mensaje',
+      sending: 'Enviando...',
       formSuccess: '¡Listo! Recibí tu mensaje.',
+      formError: 'Tu mensaje no se envió. Escríbeme a hola@alanquintana.pro',
       close: 'Entendido',
     },
   },

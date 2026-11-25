@@ -1,51 +1,65 @@
-/* ============= Modal ============= */
+/* === Modal === */
 
-.modal-content {
+.modal__content {
   color: var(--primary-color);
-  background-color: var(--surface-color);
+  background-color: var(--surface-card-bg);
   padding: 2rem;
-  border: 1px solid var(--border-color);
+  border: var(--surface-card-border);
   border-radius: var(--border-radius-large);
-  box-shadow: 0 12px 32px var(--shadow-color);
+  box-shadow: var(--shadow-soft-lg);
   width: 100%;
   position: relative;
+
+  /* Texts of both dialogs (resume download and home contact confirmation) */
+  h2,
+  p {
+    text-align: center;
+  }
+
+  p {
+    margin: 0.25rem 0 1rem;
+    color: var(--text-muted);
+  }
 }
 
-/* Botón X para cerrar (resume) */
+/* X button to close (resume) */
 .modal__close {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
   display: grid;
   place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  font-size: 1.5rem;
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
+  font-size: var(--icon-btn-glyph);
   color: var(--primary-color);
   background: transparent;
   border: none;
   border-radius: var(--border-radius-small);
   cursor: pointer;
 
-  &:hover {
-    background: var(--bg-color-buttons);
+  /* Real pointer only: on touch screens :hover stays "stuck" after a tap */
+  @media (hover: hover) {
+    &:hover {
+      background: var(--bg-color-buttons);
+    }
   }
 
   &:focus-visible {
-    outline: 3px solid var(--accent-ink);
-    outline-offset: 2px;
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset-flat);
   }
 }
 
-.resume__modal-content {
+.modal__actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
 
-  /* Los botones no se encogen por debajo de su palabra: con texto del
-     sistema grande, si no caben juntos uno baja a la siguiente línea */
+  /* Buttons don't shrink below their word: with large system text,
+     if they don't fit together one drops to the next line */
   .btn {
     flex: 1 1 0;
     min-width: max-content;

@@ -1,46 +1,29 @@
 /**
  * Main Application File
- * Orchestrates the initialization and management of the portfolio website
+ * Orchestrates the initialization and management of the portfolio website.
+ * Only what the first screen needs is imported up front; the rest is imported
+ * on demand (see LAZY STEPS) so the first load fetches less JavaScript.
  */
 
 // ---------------------------
 // MODULE IMPORTS
 // ---------------------------
-// UI Components
-import loader from "./helpers/loader.js";
-import activeMenu from "./helpers/activeMenu.js";
-import navMenu from "./helpers/nav_menu.js";
-import { cardCarousel } from "./helpers/cardCarousel.js";
-import { closeModal } from "./helpers/close-modal.js";
-import initObserver from "./helpers/observer.js";
-import skillsMarquee from "./helpers/skills_marquee.js";
-import lamp from "./helpers/lamp.js";
+// Shared with the resume and project pages
+import { commonSteps } from './helpers/common.js';
 
-// Visual Effects
-import ParallaxEffect from "./helpers/parallax.js";
-import profileParallax from "./helpers/profile_parallax.js";
-import SnowEffect from "./helpers/snow-effect.js";
-import { setAutoDarkMode } from "./helpers/auto-dark-mode.js";
+// UI Components
+import { loader, heroReady } from './helpers/loader.js';
+import { activeMenu } from './helpers/active-menu.js';
+import { cardCarousel } from './helpers/card-carousel.js';
+import { setupContactDialog } from './helpers/contact-dialog.js';
+import { observeProjectCovers } from './helpers/project-covers.js';
+import { skillsMarquee } from './helpers/skills-marquee.js';
 
 // Functionality
-import updateDateYear from "./helpers/date_updater.js";
-import resetToHome from "./helpers/reload_page.js";
-import sendEmail from "./helpers/send_form.js";
-import switchLanguages from "./helpers/switchLanguages.js";
-
-// External Services
-import { loadGoogleTagManager } from "./helpers/google-tag-manager.js";
-// EmailJS lo carga send_form.js cuando se usa el formulario
-
-// ---------------------------
-// APPLICATION STATE
-// ---------------------------
-const AppState = {
-  isLoading: true,
-  isDarkMode: false,
-  currentLanguage: "en",
-  isMenuOpen: false,
-};
+import { resetToHome } from './helpers/reset-to-home.js';
+import { prefersReducedMotion } from './helpers/motion.js';
+import { addFieldValidationListeners } from './helpers/form-validation.js';
+import { loadStep, onIdle } from './helpers/lazy.js';
 
 // ---------------------------
 // ERROR HANDLING
@@ -52,153 +35,147 @@ const AppState = {
  */
 const handleError = (error, context) => {
   console.error(`Error in ${context}:`, error);
-  // Future implementation: error reporting system
 };
 
 // ---------------------------
-// CONSOLE LOGO
+// LAZY STEPS
+// ---------------------------
+// Each one is isolated like a group below: a failed download or start is
+// reported under its name (lazy.js) and doesn't affect anything else.
+
+// ASCII logo in the console: nobody needs it before the page is idle
+const showConsoleLogo = () =>
+  onIdle(() => loadStep('displayConsoleLogo', () => import('./helpers/console-logo.js'), (m) => m.displayConsoleLogo()));
+
+// Hero parallax (background layers, then the portrait; on touch devices both
+// import tilt.js): once the hero is shown and the browser is idle, within half
+// a second (it's above the fold). Never with reduced motion, where both keep
+// everything still.
+const PARALLAX_IDLE_MS = 500;
+const startParallax = () => {
+  if (prefersReducedMotion()) return;
+  const start = () =>
+    loadStep(
+      'initializeVisualEffects',
+      () => Promise.all([import('./helpers/parallax.js'), import('./helpers/profile-parallax.js')]),
+      ([{ parallaxEffect }, { profileParallax }]) => {
+        parallaxEffect.init();
+        profileParallax();
+      },
+    );
+  heroReady.then(() => onIdle(start, PARALLAX_IDLE_MS));
+};
+
+// Contact form: each field is validated on blur from the start (that feedback
+// can't wait for a download). The sending part (contact-form.js, which brings
+// EmailJS on the first use) is imported when #contact first gets within 400px
+// of the viewport (the signal that loads the project covers) or, at the latest,
+// on the first focus or pointer inside the form. Until it's ready a submit is held
+// (the form has no action: it would reload the page with the fields in the
+// URL) and sent again once the module has started.
+let loadContactForm = () => {};
+const deferContactForm = () => {
+  const form = document.getElementById('form');
+  if (!form) return;
+
+  addFieldValidationListeners();
+
+  let inUse = false;
+  let ready = null;
+
+  const load = () =>
+    (ready ??= loadStep('initContactForm', () => import('./helpers/contact-form.js'), (m) => {
+      m.initContactForm({ inUse });
+      // Started: from here on the module handles everything
+      form.removeEventListener('focusin', onUse);
+      form.removeEventListener('pointerdown', onUse);
+      form.removeEventListener('submit', holdSubmit);
+      return true;
+    }).then((started) => {
+      if (!started) ready = null; // failed: the next use tries again
+      return started;
+    }));
+
+  function onUse() {
+    inUse = true;
+    load();
+  }
+  // Only one held submit is sent again (with the last submitter): a double
+  // click or a second Enter while waiting must not send the message twice
+  // (once started, contact-form.js disables the button while sending)
+  let heldSubmitter;
+  let holding = false;
+  function holdSubmit(event) {
+    event.preventDefault();
+    heldSubmitter = event.submitter;
+    if (holding) return;
+    holding = true;
+    load().then((started) => {
+      holding = false;
+      if (started) form.requestSubmit(heldSubmitter);
+    });
+  }
+  loadContactForm = load;
+
+  form.addEventListener('focusin', onUse);
+  form.addEventListener('pointerdown', onUse);
+  form.addEventListener('submit', holdSubmit);
+};
+
+// Sections that got near the viewport (project-covers.js). The projects
+// carousel is not imported on demand like the form: laying the cards out after
+// the page has been painted once changes how Chrome rasterizes the scaled side
+// cards (text/shadow anti-aliasing), so it starts with the page as before.
+const onSectionNear = (section) => {
+  if (section.id === 'contact') loadContactForm();
+};
+
+// ---------------------------
+// INITIALIZATION GROUPS
 // ---------------------------
 
 /**
- * Display ASCII logo in console
+ * Run in this order after the loader and the language. Each group is
+ * isolated: an error inside one is reported under its name and skips the rest
+ * of that group, not the following groups.
  */
-const displayConsoleLogo = () => {
-  const logo = `
-%c    ___    __                ____        _       __                   
-%c   /   |  / /___ _____      / __ \\__  __(_)___  / /_____ _____  ____ _
-%c  / /| | / / __ \`/ __ \\    / / / / / / / / __ \\/ __/ __ \`/ __ \\/ __ \`/
-%c / ___ |/ / /_/ / / / /   / /_/ / /_/ / / / / / /_/ /_/ / / / / /_/ / 
-%c/_/  |_/_/\\__,_/_/ /_/    \\___\\_\\__,_/_/_/ /_/\\__/\\__,_/_/ /_/\\__,_/  
-%c
-%c🚀 Hello! Welcome to my portfolio
-%c💻 Full Stack Designer & Developer
-%c🌐 https://alanquintana.pro
-%c📧 Contact: https://www.linkedin.com/in/alanxs/
-%c
-%c💡 Interested in collaborating? Let's talk!
-  `;
+const INIT_GROUPS = [
+  // Theme follows the system; the toggle stores an override (see auto-dark-mode.js)
+  ['setupDarkMode', [commonSteps.theme, commonSteps.lamp]],
 
-  const styles = [
-    "color: #6366f1; font-weight: bold;", // Line 1
-    "color: #8b5cf6; font-weight: bold;", // Line 2
-    "color: #a855f7; font-weight: bold;", // Line 3
-    "color: #c084fc; font-weight: bold;", // Line 4
-    "color: #d8b4fe; font-weight: bold;", // Line 5
-    "color: #e9d5ff;", // Empty line
-    "color: #10b981; font-size: 16px; font-weight: bold;", // Welcome
-    "color: #059669; font-size: 14px;", // Description
-    "color: #0891b2; font-size: 14px;", // URL
-    "color: #0e7490; font-size: 14px;", // Contact
-    "color: #64748b;", // Empty line
-    "color: #f59e0b; font-size: 16px; font-weight: bold;", // Call to action
-  ];
+  // Third-party scripts, off the critical path: GTM is injected when the
+  // browser is idle; EmailJS loads when the contact form is used. Nothing here
+  // is awaited, so a slow or blocked CDN can't delay the UI.
+  ['loadExternalResources', [commonSteps.analytics]],
 
-  console.log(logo, ...styles);
-};
+  [
+    'initializeUIComponents',
+    [
+      // Navigation and menu
+      activeMenu,
+      commonSteps.navMenu,
+      resetToHome,
+      // UI Components (the covers' signal also loads the contact form)
+      cardCarousel,
+      () => observeProjectCovers({ onNear: onSectionNear }),
+      skillsMarquee,
+      setupContactDialog,
+    ],
+  ],
 
-// ---------------------------
-// INITIALIZATION FUNCTIONS
-// ---------------------------
+  // Parallax effects, then seasonal effects (both on demand)
+  ['initializeVisualEffects', [startParallax, commonSteps.snow]],
 
-/**
- * Initialize UI components
- */
-const initializeUIComponents = async () => {
+  // Footer year and the contact form (its sending part on demand)
+  ['initializeFunctionalities', [commonSteps.footerYear, deferContactForm]],
+];
+
+const runGroup = ([name, steps]) => {
   try {
-    // Navigation and menu
-    activeMenu();
-    navMenu();
-    resetToHome();
-
-    // UI Components
-    cardCarousel();
-    initObserver();
-    skillsMarquee();
-    closeModal();
+    for (const step of steps) step();
   } catch (error) {
-    handleError(error, "initializeUIComponents");
+    handleError(error, name);
   }
-};
-
-/**
- * Initialize visual effects
- */
-const initializeVisualEffects = () => {
-  try {
-    // Parallax effects
-    ParallaxEffect.init();
-    profileParallax();
-
-    // Seasonal effects
-    SnowEffect.init();
-  } catch (error) {
-    handleError(error, "initializeVisualEffects");
-  }
-};
-
-/**
- * Initialize core functionalities
- */
-const initializeFunctionalities = () => {
-  try {
-    // Date updater
-    updateDateYear();
-
-    // Email handling
-    sendEmail();
-  } catch (error) {
-    handleError(error, "initializeFunctionalities");
-  }
-};
-
-/**
- * Third-party scripts, off the critical path: GTM is injected after `load`
- * when the browser is idle; EmailJS loads when the contact form is used.
- * Nothing here is awaited, so a slow or blocked CDN can't delay the UI.
- */
-const loadExternalResources = () => {
-  try {
-    loadGoogleTagManager();
-  } catch (error) {
-    handleError(error, "loadExternalResources");
-  }
-};
-
-/**
- * Configure dark mode functionality
- */
-const setupDarkMode = () => {
-  try {
-    // Theme follows the system; the toggle stores an override (see auto-dark-mode.js)
-    setAutoDarkMode();
-    lamp();
-    AppState.isDarkMode = document.body.getAttribute("data-theme") === "dark";
-  } catch (error) {
-    handleError(error, "setupDarkMode");
-  }
-};
-
-/**
- * Set up page visibility handling
- */
-const setupVisibilityHandler = () => {
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      document.body.classList.add("reduce-motion");
-    } else {
-      document.body.classList.remove("reduce-motion");
-    }
-  });
-};
-
-/**
- * Set up resource cleanup on page unload
- */
-const setupCleanup = () => {
-  window.addEventListener("beforeunload", () => {
-    SnowEffect.destroy();
-    // Additional resource cleanup can be added here
-  });
 };
 
 // ---------------------------
@@ -208,40 +185,21 @@ const setupCleanup = () => {
 /**
  * Main initialization function
  */
-const initialize = async () => {
+const initialize = () => {
   try {
-    // Display console logo
-    displayConsoleLogo();
+    // Console logo, when idle
+    showConsoleLogo();
 
     // Loading screen
     loader();
 
-    // Apply detected language right away
-    switchLanguages();
+    // Apply detected language right away (an error here stops everything)
+    commonSteps.language();
 
-    // Theme right away too
-    setupDarkMode();
-
-    // Third-party scripts (not awaited)
-    loadExternalResources();
-
-    // Initialize main components
-    await initializeUIComponents();
-
-    // Initialize visual effects
-    initializeVisualEffects();
-
-    // Initialize functionalities
-    initializeFunctionalities();
-
-    // Set up system event handlers
-    setupVisibilityHandler();
-    setupCleanup();
-
-    // Mark as loaded
-    AppState.isLoading = false;
+    // Theme right away too, then the rest
+    INIT_GROUPS.forEach(runGroup);
   } catch (error) {
-    handleError(error, "initialize");
+    handleError(error, 'initialize');
   }
 };
 
@@ -251,14 +209,5 @@ const initialize = async () => {
 
 // Initialize on DOM content loaded.
 // Responsive home text (home + about merged on desktop) lives in
-// switchLanguages.js so it stays in the selected language.
-document.addEventListener("DOMContentLoaded", initialize);
-
-// Global error handlers
-window.addEventListener("error", (event) => {
-  handleError(event.error, "window.error");
-});
-
-window.addEventListener("unhandledrejection", (event) => {
-  handleError(event.reason, "unhandledrejection");
-});
+// language-switcher.js so it stays in the selected language.
+document.addEventListener('DOMContentLoaded', initialize);

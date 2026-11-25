@@ -4,7 +4,7 @@
  *   'homeTitle'          → translations.homeTitle[lang]
  *   'contactForm.name'   → translations.contactForm[lang].name
  *   'skillsTags.2'       → translations.skillsTags[lang][2]
- * Shared by switchLanguages.js (browser) and scripts/build-i18n.mjs (Node).
+ * Shared by language-switcher.js (browser) and scripts/build-i18n.mjs (Node).
  */
 export function translate(translations, key, lang) {
   const [rootKey, ...rest] = key.split('.');

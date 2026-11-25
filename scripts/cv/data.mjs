@@ -1,14 +1,14 @@
-// Contenido del CV (EN/ES). `node scripts/build-cv.mjs` genera:
+// CV content (EN/ES). `node scripts/build-cv.mjs` generates:
 //   assets/docs/[ENG] Alan Quintana.pdf
 //   assets/docs/[ESP] Alan Quintana.pdf
-//   assets/docs/resume.pdf  (página 1 = EN, página 2 = ES; la usa /resume)
-// Cada CV debe caber en UNA página carta: pdf_loader.js muestra la página 1
-// para inglés y la 2 para español. El script falla si alguno se desborda.
+//   assets/docs/resume.pdf  (page 1 = EN, page 2 = ES; used by /resume)
+// Each CV must fit on ONE Letter page: pdf-loader.js shows page 1
+// for English and page 2 for Spanish. The script fails if either overflows.
 
 export const contact = {
   web: 'www.alanquintana.pro',
   phone: '+52 614 110 5668',
-  // Correo por idioma (todos llegan al mismo buzón)
+  // Email per language (they all reach the same inbox)
   email: { en: 'hello@alanquintana.pro', es: 'hola@alanquintana.pro' },
 };
 

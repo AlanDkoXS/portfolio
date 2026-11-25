@@ -4,13 +4,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Respeta el tamaño de texto del sistema: Android/Chrome lo aplica al tamaño
-         base (rem) en vez de hacer zoom a toda la página -->
+    <!-- Respects the system text size: Android/Chrome applies it to the base
+         size (rem) instead of zooming the whole page -->
     <meta name="text-scale" content="scale" />
-    <!-- Tema: oscuro si el sistema está en modo oscuro; si no, por horario (oscuro de
-         18:00 a 6:00, hora local). El botón guarda una excepción hasta el siguiente
-         cambio (localStorage.theme / themeUntil).
-         Se aplica antes de pintar; sin JS se sigue al sistema. -->
+    <!-- Theme: dark if the system is in dark mode; otherwise time-based (dark from
+         18:00 to 6:00, local time). The toggle stores an override until the next
+         switch (localStorage.theme / themeUntil).
+         Applied before first paint; without JS the system scheme is used. -->
     <meta name="color-scheme" content="light dark" />
     <script>
       {
@@ -24,8 +24,8 @@
       }
     </script>
     <script>
-      // Igual que el home: navegador en español (sin elección guardada en
-      // localStorage "lang") → versión en español de este proyecto
+      // Same as the home page: Spanish browser (no choice stored in
+      // localStorage "lang") → Spanish version of this project
       try {
         const pref = localStorage.getItem('lang');
         const langs = navigator.languages || [navigator.language || ''];
@@ -107,58 +107,64 @@
     <link rel="preload" href="/assets/fonts/dm-sans/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/outfit/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/poppins/poppins-300-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/poppins/poppins-600-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/boxicons/boxicons.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon.png" />
 
     <script type="module">
-      import switchLanguages from '/assets/js/helpers/switchLanguages.js';
-      import { setAutoDarkMode } from '/assets/js/helpers/auto-dark-mode.js';
-      import lamp from '/assets/js/helpers/lamp.js';
-      import navMenu from '/assets/js/helpers/nav_menu.js';
-      import ParallaxEffect from '/assets/js/helpers/parallax.js';
-      import SnowEffect from '/assets/js/helpers/snow-effect.js';
-      import updateDateYear from '/assets/js/helpers/date_updater.js';
-      import { loadGoogleTagManager } from '/assets/js/helpers/google-tag-manager.js';
-      loadGoogleTagManager();
+      import { initCommon } from '/assets/js/helpers/common.js';
+      import { parallaxEffect } from '/assets/js/helpers/parallax.js';
+      initCommon(['analytics']);
       document.addEventListener('DOMContentLoaded', () => {
-        switchLanguages();
-        setAutoDarkMode();
-        lamp();
-        navMenu();
-        ParallaxEffect.init();
-        SnowEffect.init();
-        updateDateYear();
+        initCommon(['language', 'theme', 'lamp', 'navMenu']);
+        parallaxEffect.init();
+        initCommon(['snow', 'footerYear']);
       });
     </script>
+    <!-- Every module common.js and parallax.js bring in: fetched now instead of
+         one level at a time after them. Imported on demand: snow-effect.js
+         (only in season) and tilt.js (only on touch devices) -->
+    <link rel="modulepreload" href="/assets/js/helpers/language-switcher.js" />
+    <link rel="modulepreload" href="/assets/js/languages/translations.js" />
+    <link rel="modulepreload" href="/assets/js/languages/translate.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/storage.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/viewport.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/auto-dark-mode.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lamp.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/motion.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/nav-menu.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/footer-year.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/google-tag-manager.js" />
+    <link rel="modulepreload" href="/assets/js/helpers/lazy.js" />
   </head>
 
   <body class="project-page">
-    <!-- Fondo: mismas texturas que el home (grano + capas con parallax) -->
-    <div class="background-container bgGrain"></div>
-    <div class="background-container">
-      <svg class="background-container bgBack" aria-hidden="true">
+    <!-- Background: same textures as the home page (grain + parallax layers) -->
+    <div class="background background--grain"></div>
+    <div class="background">
+      <svg class="background background--back" aria-hidden="true">
         <use href="/assets/img/bgBack.svg#bgBack"></use>
       </svg>
-      <svg class="background-container bgMiddle" aria-hidden="true">
+      <svg class="background background--middle" aria-hidden="true">
         <use href="/assets/img/bgMiddle.svg#bgMiddle"></use>
       </svg>
-      <svg class="background-container bgFront" aria-hidden="true">
+      <svg class="background background--front" aria-hidden="true">
         <use href="/assets/img/bgFront.svg#bgFront"></use>
       </svg>
     </div>
 
     <header class="header">
-      <nav class="navbar grid--container flex--container">
-        <a class="navbar__logo flex--container" href="/">
-          <svg class="logo">
-            <use xlink:href="/assets/img/logo.svg#logo"></use>
+      <nav class="navbar grid-container flex-container">
+        <a class="navbar__logo flex-container" href="/">
+          <svg class="navbar__logo-icon">
+            <use href="/assets/img/logo.svg#logo"></use>
           </svg>
-          <span class="navbar__logo--name">alan</span>
-          <span class="navbar__logo--lastname">quintana</span>
+          <span class="navbar__logo-name">alan</span>
+          <span class="navbar__logo-lastname">quintana</span>
         </a>
         <!-- Menu Nav -->
         <div id="nav" class="navbar__menu">
-          <ul class="navbar__list flex--container">
+          <ul class="navbar__list flex-container">
             <li class="navbar__item">
               <a data-i18n="navHome" class="navbar__link" href="/">Home</a>
             </li>
@@ -168,9 +174,6 @@
             <li class="navbar__item">
               <a data-i18n="navSkills" class="navbar__link" href="/#skills">Skills</a>
             </li>
-            <!--                     <li class="navbar__item">
-                        <a class="navbar__link" href="/#portfolio">Portfolio</a>
-                    </li> -->
             <li class="navbar__item">
               <a data-i18n="navProjects" class="navbar__link" href="/#projects">Projects</a>
             </li>
@@ -181,27 +184,27 @@
               <a data-i18n="navContact" class="navbar__link" href="/#contact">Contact</a>
             </li>
           </ul>
-          <div class="navbar__toggles flex--container">
-            <div class="navbar__toggle--darkmode flex--container">
+          <div class="navbar__toggles flex-container">
+            <div class="navbar__darkmode-toggle flex-container">
               <input
                 type="checkbox"
                 name="theme"
                 id="darkmode-toggle"
-                class="navbar__toggle--darkmode-input"
+                class="navbar__darkmode-input"
                 title="Dark Mode"
                 aria-label="Dark Mode"
               />
               <label
                 for="darkmode-toggle"
-                class="navbar__toggle--darkmode-label"
+                class="navbar__darkmode-label"
               >
-                <div class="icon-wrapper">
+                <div class="navbar__darkmode-icons">
                   <i
-                    class="bx bx-sun navbar__toggle--darkmode-sun"
+                    class="bx bx-sun navbar__darkmode-sun"
                     aria-hidden="true"
                   ></i>
                   <i
-                    class="bx bx-moon navbar__toggle--darkmode-moon"
+                    class="bx bx-moon navbar__darkmode-moon"
                     aria-hidden="true"
                   ></i>
                 </div>
@@ -209,39 +212,37 @@
             </div>
             <!-- Mobile menu only: caption above the language switch -->
             <span class="navbar__toggles-caption" data-i18n="navLanguage">Change language</span>
-            <div class="navbar__toggle--language flex--container">
+            <div class="navbar__language-toggle flex-container">
               <input
                 type="checkbox"
                 name="language-toggle"
                 id="language-toggle"
-                class="navbar__toggle--language-input"
+                class="navbar__language-input"
                 title="Select Language"
                 aria-label="Select Language"
               />
               <label
                 for="language-toggle"
-                class="navbar__toggle--language-label"
+                class="navbar__language-label"
               >
-                <div class="flag-wrapper">
+                <div class="navbar__language-flags">
                   <img
                     src="/assets/img/flag-en.svg"
-                    class="navbar__toggle--language-en" lang="en"
+                    class="navbar__language-en" lang="en"
                     alt="English"
-                    loading="lazy"
                     aria-hidden="true"
                   />
                   <img
                     src="/assets/img/flag-es.svg"
-                    class="navbar__toggle--language-es" lang="es"
+                    class="navbar__language-es" lang="es"
                     alt="Español"
-                    loading="lazy"
                     aria-hidden="true"
                   />
                 </div>
                 <!-- Mobile menu: two flag ghost buttons, the current language pressed (replaces the single flag) -->
                 <span class="lang-switch" aria-hidden="true"
-                  ><span class="lang-switch__opt lang-switch__opt--es"><img class="lang-switch__flag" src="/assets/img/flag-es.svg" alt="" width="18" height="18" loading="lazy" /></span
-                  ><span class="lang-switch__opt lang-switch__opt--en"><img class="lang-switch__flag" src="/assets/img/flag-en.svg" alt="" width="18" height="18" loading="lazy" /></span></span
+                  ><span class="lang-switch__opt lang-switch__opt--es"><img class="lang-switch__flag" src="/assets/img/flag-es.svg" alt="" width="18" height="18" /></span
+                  ><span class="lang-switch__opt lang-switch__opt--en"><img class="lang-switch__flag" src="/assets/img/flag-en.svg" alt="" width="18" height="18" /></span></span
                 >
               </label>
             </div>
@@ -255,7 +256,7 @@
         ></a>
       </nav>
     </header>
-    <!-- Lámpara colgante (escritorio): cambia el tema. Encendida = modo claro -->
+    <!-- Hanging lamp: theme switch. Lit = dark mode -->
     <button
       type="button"
       class="lamp"
@@ -265,21 +266,21 @@
       title="Light"
     >
       <span class="lamp__hit" aria-hidden="true"></span>
-      <img class="lamp__off" src="/assets/img/lamp_button/button-lamp_lamp_original.webp" alt="" width="300" height="300" />
+      <img class="lamp__off" src="/assets/img/lamp_button/button-lamp_lamp_original.webp" alt="" width="300" height="300" fetchpriority="low" />
       <img class="lamp__over" src="/assets/img/lamp_button/button-lamp_lamp_over.webp" alt="" width="300" height="300" loading="lazy" />
       <img class="lamp__pull" src="/assets/img/lamp_button/button-lamp_lamp_clic.webp" alt="" width="300" height="300" loading="lazy" />
-      <img class="lamp__on" src="/assets/img/lamp_button/button-lamp_lamp_active.webp" alt="" width="300" height="401" />
+      <img class="lamp__on" src="/assets/img/lamp_button/button-lamp_lamp_active.webp" alt="" width="300" height="401" fetchpriority="low" />
     </button>
 
     <main>
-      <div class="project-back grid--container">
+      <div class="project-back grid-container">
         <a class="btn btn--ghost project-back__link" href="/#projects">
           <i class="bx bx-chevron-left" aria-hidden="true"></i> Back to projects
         </a>
       </div>
 
       <article>
-        <header class="project-hero grid--container">
+        <header class="project-hero grid-container">
           <p class="project-hero__kind">React app · 2024</p>
           <h1 class="project-hero__title">Fortune Cookie</h1>
           <p class="project-hero__tagline">Open a virtual fortune cookie and get a new phrase every time.</p>
@@ -293,22 +294,22 @@
           </div>
         </header>
 
-        <div class="project-media grid--container" role="group" aria-label="Screenshots">
+        <div class="project-media grid-container" role="group" aria-label="Screenshots">
           <figure class="project-media__desktop">
             <span class="project-media__frame">
-              <img class="if-light" src="/assets/img/project_img/desktop/cookie.webp" alt="Fortune Cookie on desktop" width="1280" height="800" fetchpriority="high" />
+              <img class="project-media__img-light" src="/assets/img/project_img/desktop/cookie.webp" alt="Fortune Cookie on desktop" width="1280" height="800" fetchpriority="high" />
             </span>
             <figcaption>Desktop</figcaption>
           </figure>
           <figure class="project-media__mobile">
             <span class="project-media__frame">
-              <img class="if-light" src="/assets/img/project_img/mobile/cookie.webp" alt="Fortune Cookie on mobile" width="390" height="844" loading="lazy" />
+              <img class="project-media__img-light" src="/assets/img/project_img/mobile/cookie.webp" alt="Fortune Cookie on mobile" width="390" height="844" loading="lazy" />
             </span>
             <figcaption>Mobile</figcaption>
           </figure>
         </div>
 
-        <div class="project-body grid--container">
+        <div class="project-body grid-container">
           <section class="project-body__block">
             <h2>Overview</h2>
             <p>Fortune Cookie is a small, playful React app: press “Try” and a new message appears, just like breaking a real fortune cookie.</p>
@@ -342,7 +343,7 @@
         </div>
       </article>
 
-      <nav class="project-pager grid--container" aria-label="More projects">
+      <nav class="project-pager grid-container" aria-label="More projects">
         <div class="project-pager__item project-pager__item--prev">
           <a class="btn btn--ghost project-pager__link" href="/projects/weather-app/" rel="prev" aria-describedby="pager-prev"><i class="bx bx-chevron-left" aria-hidden="true"></i> Previous</a>
           <p class="project-pager__title" id="pager-prev">Weather App</p>
@@ -353,7 +354,7 @@
         </div>
       </nav>
 
-      <section class="project-cta grid--container">
+      <section class="project-cta grid-container">
         <h2>Have a project in mind?</h2>
         <p>I design and build web applications that look good and are easy to use. Let’s talk about yours.</p>
         <a class="btn btn--primary" href="/#contact">Write to me</a>
@@ -361,7 +362,7 @@
     </main>
 
     <footer class="footer section">
-      <div class="footer__container grid--container">
+      <div class="footer__container grid-container">
         <div class="footer__info">
           <h3 class="footer__title">Alan Quintana</h3>
           <span data-i18n="footerDescription" class="footer__description">Made with ❤️ and ☕. Thanks to my tutor Alejandra Olazagasti</span>
