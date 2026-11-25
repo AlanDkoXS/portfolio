@@ -8,8 +8,9 @@
   --header-height: 60px;
   --container-width: 1024px; /* every block's max width, side padding included */
   /* Top of the first block below the fixed navbar (the Back button of the
-     case pages and the resume) */
-  --page-top-offset: calc(var(--header-height) + 1.75rem);
+     case pages and the resume). Phones: close to the bar, so the CV of the
+     resume keeps its room; desktop value below */
+  --page-top-offset: calc(var(--header-height) + 0.75rem);
 
   /* Colors
      ========================================================================== */
@@ -206,6 +207,7 @@
 @media (width >= 600px) {
   :root {
     --header-height: 3.5rem; /* compact desktop bar */
+    --page-top-offset: calc(var(--header-height) + 1.75rem);
     /* Scales with the width: with zoom or on small laptops it doesn't look huge */
     --normal-font-size: clamp(0.95rem, 0.6rem + 0.8vw, 1.15rem);
     --small-font-size: 1rem;
