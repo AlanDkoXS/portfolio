@@ -26,7 +26,7 @@
   aspect-ratio: 4 / 3;
   /* same size as the menu links (_header.css) */
   font-size: 1.15rem;
-  border-radius: 2px;
+  border-radius: var(--border-radius-xs);
   overflow: hidden;
   /* still desaturated on hover; it only brightens a little */
   filter: saturate(0.35) brightness(0.92);
@@ -192,7 +192,7 @@
       height: 1.15em;
       aspect-ratio: 4 / 3;
       overflow: hidden;
-      border-radius: 2px;
+      border-radius: var(--border-radius-xs);
       box-shadow: var(--hard-offset) var(--hard-offset) 0 var(--btn-ink-color);
       pointer-events: auto;
       transition:

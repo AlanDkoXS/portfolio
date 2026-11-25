@@ -204,6 +204,7 @@
 
   /* Borders
      ========================================================================== */
+  --border-radius-xs: 2px; /* tiny pieces: flags, list bullets */
   --border-radius-small: 0.25rem;
   --border-radius-default: 0.5rem;
   --border-radius-large: 1rem;

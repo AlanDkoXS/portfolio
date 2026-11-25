@@ -334,7 +334,7 @@
 }
 
 .skills__brick-half {
-  border-radius: 3px;
+  border-radius: 3px; /* like the bricks */
   background: var(--primary-color);
   box-shadow: inset 0 0 14px color-mix(in srgb, var(--gold-700) 62%, transparent);
   opacity: 0.55;
@@ -360,6 +360,8 @@
   overflow-wrap: break-word;
   color: var(--bg-color-section);
   background-color: var(--primary-color);
+  /* 3px on purpose, between --border-radius-xs and -small: a brick's
+     slightly worn corner, not a token */
   border-radius: 3px;
   position: relative;
   isolation: isolate;
