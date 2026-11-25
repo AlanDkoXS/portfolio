@@ -323,6 +323,9 @@
 }
 
 .project__button {
+  /* a shorter hard shadow than .btn: small buttons on the card */
+  --btn-offset: 3px;
+
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -335,10 +338,11 @@
   color: var(--on-accent-color);
   text-decoration: none;
   background-color: var(--accent-color);
-  /* same cartoon style as .btn: ink outline and hard shadow */
-  border: 2px solid var(--teal-950);
+  /* same cartoon style as .btn: ink outline and hard shadow, in black (the
+     card faces are always dark: the light mode ink would vanish on them) */
+  border: 2px solid var(--ink-on-dark);
   border-radius: var(--border-radius-small);
-  box-shadow: 3px 3px 0 #000, var(--grain-inset-shadow);
+  box-shadow: var(--btn-offset) var(--btn-offset) 0 var(--ink-on-dark), var(--grain-inset-shadow);
   transition:
     transform var(--press-duration) ease,
     box-shadow var(--press-duration) ease,
@@ -349,13 +353,13 @@
     &:hover {
       background-color: var(--btn-hover-bg);
       transform: translate(-2px, -2px);
-      box-shadow: 5px 5px 0 #000, var(--grain-inset-shadow);
+      box-shadow: calc(var(--btn-offset) + 2px) calc(var(--btn-offset) + 2px) 0 var(--ink-on-dark), var(--grain-inset-shadow);
     }
   }
 
   &:active {
-    transform: translate(3px, 3px);
-    box-shadow: 0 0 0 #000, var(--grain-inset-shadow);
+    transform: translate(var(--btn-offset), var(--btn-offset));
+    box-shadow: 0 0 0 var(--ink-on-dark), var(--grain-inset-shadow);
   }
 
   /* its grainy inner shadow (::after) is the shared one of _buttons.css */

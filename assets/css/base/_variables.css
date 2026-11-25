@@ -61,6 +61,7 @@
   /* Button outline and hard shadow: on the deeper background black is
      used so the shadow still stands out */
   --btn-ink-color: light-dark(var(--teal-deep-800), #000); /* button shadow/outline; in light, the dark mode background */
+  --ink-on-dark: #000; /* the same ink on the always-dark card faces (both schemes) */
 
   /* Grain
      ========================================================================== */
