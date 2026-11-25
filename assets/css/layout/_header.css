@@ -325,15 +325,15 @@ body:has(#pdf-container) .header {
   position: relative;
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
   color: var(--primary-color);
   border-radius: var(--border-radius-small);
   -webkit-tap-highlight-color: transparent;
 
   i {
     grid-area: 1 / 1;
-    font-size: 2.25rem;
+    font-size: var(--icon-btn-glyph);
     transition:
       opacity 0.2s ease,
       rotate 0.3s ease,

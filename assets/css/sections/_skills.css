@@ -69,18 +69,17 @@
   flex: none;
   display: inline-grid;
   place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
   padding: 0;
   font: inherit;
-  font-size: 1.25rem;
 
   &[hidden] {
     display: none;
   }
 
   i {
-    font-size: 1.6rem;
+    font-size: var(--icon-btn-glyph);
   }
 
   /* Icon only: the text is left for screen readers */

@@ -178,6 +178,10 @@
   --space-12: 3rem;
   --space-16: 4rem;
   --button-padding: 0.8rem; /* buttons keep their own (between steps 3 and 4) */
+  /* Icon-only buttons (marquee pause, carousel arrows, modal close, burger):
+     one touch-sized square and glyph, capped so they don't grow with text */
+  --icon-btn-size: min(2.75rem, 44px);
+  --icon-btn-glyph: min(1.5rem, 24px);
   --space-title: var(--space-3); /* from a heading to its content */
   --surface-padding: var(--space-12) var(--space-6); /* contact form (mobile) and case page CTA */
   --margin-small: var(--space-2);

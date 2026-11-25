@@ -29,9 +29,9 @@
   right: 0.5rem;
   display: grid;
   place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  font-size: 1.5rem;
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
+  font-size: var(--icon-btn-glyph);
   color: var(--primary-color);
   background: transparent;
   border: none;
