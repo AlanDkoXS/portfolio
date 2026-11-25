@@ -108,6 +108,14 @@
   }
 }
 
+/* Primary (main actions): the default .btn look, solid gold. The modifier
+   names it in the markup; it repeats .btn's fill so that it means the same
+   wherever it's used */
+.btn--primary {
+  color: var(--on-accent-color);
+  background: var(--accent-color);
+}
+
 /* Secondary: same outline and shadow, no fill; it fills on hover */
 .btn--ghost {
   color: var(--primary-color); /* dark teal in light, gold in dark */
