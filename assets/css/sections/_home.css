@@ -448,6 +448,9 @@ html.js:not(.hero-ready) .home .home__title {
     }
 
     .home__buttons .btn {
+      /* the page's text size, not --btn-font-size: the first screen is
+         tuned to it (all four buttons fit at 360x640) */
+      font-size: inherit;
       margin: 0.22rem 0;
       /* button height = the text's + a fixed padding: with large text
          all four still fit on screen */

@@ -129,6 +129,9 @@
   --title-font-size: calc(1rem + 0.5vw);
   --title-scale: 1.5; /* all headings (h1–h6) are 1.5× */
   --line-height-body: 1.5; /* running text */
+  /* Buttons have their own size (not each page's reading scale): 14.4px
+     on phones, up to 16.8px on desktop */
+  --btn-font-size: clamp(0.9rem, 0.8rem + 0.4vw, 1.05rem);
   --btn-small-font-size: 0.875rem; /* compact buttons (Back) */
 
   /* Font Weights */

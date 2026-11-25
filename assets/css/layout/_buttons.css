@@ -19,7 +19,7 @@
   margin: var(--margin-small) 0;
 
   font-family: inherit;
-  font-size: inherit;
+  font-size: var(--btn-font-size);
   /* height = one line + the padding: the font's own line, not the body's */
   line-height: normal;
   font-weight: var(--font-bold);
