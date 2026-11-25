@@ -57,7 +57,7 @@
     /* same width as the content of the other blocks (max width - padding) */
     width: min(100% - 2rem, var(--container-width) - 2rem);
     margin-block: 0 4rem;
-    padding: 3rem 1.5rem;
+    padding: var(--surface-padding);
   }
 }
 

@@ -150,6 +150,7 @@
      ========================================================================== */
   --button-padding: 0.8rem;
   --space-title: 0.75rem; /* from a heading to its content */
+  --surface-padding: 3rem 1.5rem; /* contact form (mobile) and case page CTA */
   --margin-small: 0.5rem;
   --gap-small: 0.5rem;
 
